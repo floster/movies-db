@@ -1,2 +1,3 @@
-console.log('it works');
+import tmdb from "./js/tmdb";
 
+tmdb.getPopulars();
