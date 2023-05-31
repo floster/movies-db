@@ -1,31 +1,37 @@
-import { API_BASE, API_KEY } from "./config";
-
-interface Movie {
-  id: number;
-  genre_ids: number[];
-  title: string;
-  overview: string;
-  release_date: Date;
-}
+import { API_BASE, API_KEY, API_POSTER_BASE, API_BACKDROP_BASE } from "./config";
+import { RawMovie, Movie } from "./types";
 
 class TMDB {
   async #getJSON(url: string): Promise<any> {
-    const response: Response = await fetch(url);
-    const data: any = await response.json();
-    return data;
+    try {
+      const response: Response = await fetch(url);
+      const data: any = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error("☠️☠️☠️ Error fetching data");
+    }
   }
 
-  async getPopulars(): Promise<void> {
+  #normalizeMovies(movies:RawMovie[]):Movie[] {
+    return movies.map(movie => {
+      return {
+        id: movie.id,
+        title: movie.title,
+        overview: movie.overview,
+        genres: movie.genre_ids,
+        released: movie.release_date,
+        votes: movie.vote_average,
+        poster: `${API_POSTER_BASE}${movie.poster_path}`,
+        backdrop: `${API_BACKDROP_BASE}${movie.backdrop_path}`
+      }
+    })
+  }
+
+  async getPopulars(): Promise<Movie[]> {
     const url = `${API_BASE}/movie/popular${API_KEY}`;
     const data = await this.#getJSON(url);
-    const populars: Array<Movie> = data.results;
-    console.log(populars);
-
-    populars.forEach(popular => {
-      console.log(
-        `${popular.title} - ${new Date(popular.release_date).getFullYear()}`
-      );
-    });
+    const movies: Array<Movie> = this.#normalizeMovies(data.results);
+    return movies;
   }
 }
 
