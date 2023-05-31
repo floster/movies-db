@@ -1,6 +1,6 @@
 <template>
   <ul class="app-list">
-    <li v-for="popular in populars">
+    <li v-for="popular in populars" :key="popular.id">
       <movie-tile :movie="popular"></movie-tile>
     </li>
   </ul>
