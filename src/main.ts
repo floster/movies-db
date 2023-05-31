@@ -1,3 +1,6 @@
-import tmdb from "./js/tmdb";
+import { createApp } from "vue";
 
-tmdb.getPopulars();
+import App from "./App.vue";
+
+const app = createApp(App); 
+app.mount('#app');
