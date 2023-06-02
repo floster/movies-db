@@ -1,37 +1,37 @@
 <template>
-  <ul class="app-list">
-    <li v-for="popular in populars" :key="popular.id">
-      <movie-tile :movie="popular"></movie-tile>
+  <ul class="app-list flex flex-col gap-1 list-none m-0 p-0">
+    <li
+      v-for="item in data"
+      :key="data.id"
+      class="app-list__item border border-solid border-transparent hover:border-slate-200 hover:shadow-sm rounded-md overflow-hidden"
+    >
+      <movie-row :movie="item"></movie-row>
     </li>
   </ul>
 </template>
 
 <script lang="ts">
-import tmdb from "../tmdb";
-import MovieTile from "./MovieTile.vue";
+import { Movie } from "../types";
+import MovieRow from "./MovieRow.vue";
 
 export default {
   components: {
-    MovieTile,
+    MovieRow,
   },
 
-  async setup() {
-    const populars = await tmdb.getPopulars();
-
-    return {
-      populars,
-    };
+  props: {
+    data: {
+      type: Object as () => Movie,
+      required: true,
+    },
   },
 };
 </script>
 
 <style lang="scss">
 .app-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  &__item {
+    overflow: hidden;
+  }
 }
 </style>

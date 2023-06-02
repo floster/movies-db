@@ -1,8 +1,14 @@
+interface genre {
+  id: number;
+  name: string;
+}
+
 export interface RawMovie {
   id: number;
   title: string;
+  tagline: string;
   overview: string;
-  genre_ids: number[];
+  genres: genre[];
   release_date: Date;
   backdrop_path: string;
   poster_path: string;
@@ -12,10 +18,22 @@ export interface RawMovie {
 export interface Movie {
   id: number;
   title: string;
+  tagline: string,
   overview: string;
-  genres: number[];
+  genres: genre[];
   released: Date;
   votes: number;
   poster: string;
   backdrop: string;
+}
+
+export interface Populars {
+  movies: Movie[],
+  page: number,
+  pages: number
+}
+
+export interface MoviePage {
+  page: number;
+  movies: Movie[];
 }

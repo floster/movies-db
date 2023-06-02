@@ -1,15 +1,15 @@
 <template>
   <Suspense>
-    <app-list></app-list>
+    <main-view></main-view>
   </Suspense>
 </template>
 
 <script lang="ts">
-import AppList from "./js/components/AppList.vue";
+import MainView from "./js/views/MainView.vue";
 
 export default {
   components: {
-    AppList,
+    MainView,
   },
 };
 </script>

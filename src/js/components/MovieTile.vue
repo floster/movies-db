@@ -1,18 +1,24 @@
 <template>
-  <article class="movie-tile">
-    <picture class="movie-tile__picture">
+  <div
+    class="movie-tile card card-compact w-96 bg-base-100 shadow-xl"
+    :data-position="movie.id + 1"
+  >
+    <figure class="movie-tile__figure">
       <img :src="movie.poster" :alt="movie.title" />
-    </picture>
-    <div class="movie-tile__info">
-      <h2 class="movie-tile__title">{{ movie.title }}</h2>
-      <p class="movie-tile__description">{{ movie.overview }}</p>
+    </figure>
+    <div class="movie-tile__body card-body">
+      <h2 class="movie-tile__title card-title">{{ movie.title }}</h2>
+      <p class="movie-tile__tagline">{{ movie.tagline }}</p>
+      <div class="card-actions justify-end">
+        <!-- <button class="btn btn-primary">Buy Now</button> -->
+      </div>
     </div>
-  </article>
+  </div>
 </template>
 
 <script lang="ts">
-import { PropType } from "vue";
-import { Movie } from "../types";
+import { PropType } from 'vue';
+import { Movie } from '../types';
 
 export default {
   props: {
@@ -26,18 +32,16 @@ export default {
 
 <style lang="scss">
 .movie-tile {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+  &::before {
+    content: attr(data-position);
+  }
 
-  &__picture {
-    width: 8rem;
-    flex-shrink: 0;
-    font-size: 0;
+  &__tagline {
+    font-style: italic;
 
-    img {
-      width: 100%;
-      height: auto;
+    &::before,
+    &::after {
+      content: '"';
     }
   }
 }
