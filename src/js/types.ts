@@ -33,7 +33,7 @@ export interface Populars {
   pages: number
 }
 
-export interface MoviePage {
+export interface MoviesPage {
   page: number;
   movies: Movie[];
 }

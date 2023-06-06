@@ -4,7 +4,12 @@
       <h2 class="app-section__title mr-auto text-xl text-sky-800">
         {{ title }}
       </h2>
-      <app-pagination v-if="hasPagination"></app-pagination>
+      <app-pagination
+        v-if="hasPagination"
+        :page="paginationPage"
+        @pageIncrease="$emit('pageIncrease')"
+        @pageDecrease="$emit('pageDecrease')"
+      ></app-pagination>
     </header>
   </div>
 </template>
@@ -20,7 +25,9 @@ export default {
       required: false,
       default: false,
     },
+    paginationPage: Number,
   },
+  emits: ['pageIncrease', 'pageDecrease'],
   components: {
     AppPagination,
   },

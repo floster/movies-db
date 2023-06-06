@@ -3,6 +3,9 @@
     <app-section-header
       :title="title"
       :hasPagination="pagination"
+      :paginationPage="paginationPage"
+      @pageIncrease="$emit('pageIncrease')"
+      @pageDecrease="$emit('pageDecrease')"
     ></app-section-header>
     <slot></slot>
   </section>
@@ -15,7 +18,9 @@ export default {
     extraClass: String,
     title: String,
     pagination: Boolean,
+    paginationPage: Number,
   },
+  emits: ['pageIncrease', 'pageDecrease'],
   components: {
     AppSectionHeader,
   },

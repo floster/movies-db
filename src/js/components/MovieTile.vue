@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="movie-tile card card-compact w-96 bg-base-100 shadow-xl"
-    :data-position="movie.id + 1"
-  >
+  <div class="movie-tile card card-compact w-96 bg-base-100 shadow-xl">
     <figure class="movie-tile__figure">
       <img :src="movie.poster" :alt="movie.title" />
     </figure>
@@ -32,10 +29,6 @@ export default {
 
 <style lang="scss">
 .movie-tile {
-  &::before {
-    content: attr(data-position);
-  }
-
   &__tagline {
     font-style: italic;
 
