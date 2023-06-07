@@ -7,6 +7,7 @@
     ></app-select>
     <app-pagination
       :page="currentPage"
+      :max="totalPages"
       @page-changed="onPageChange"
     ></app-pagination>
   </app-section-header>
@@ -51,27 +52,36 @@ export default {
     const options = OPTIONS_MOVIE_LIST;
 
     const currentPage = ref(1);
+    const totalPages = ref(0);
+
+    // TODO: get max pages and send it to pagination
     const selectedList = ref<MovieListTypes>(props.initialList);
 
     const movies = ref([] as Movie[]);
-    movies.value = await tmdb.getPopularsPage(
+    const response = await tmdb.getMovieListPage(
       currentPage.value,
       selectedList.value
     );
+
+    movies.value = response.movies;
+    totalPages.value = response.pages;
 
     function listChanged(newList: MovieListTypes) {
       selectedList.value = newList;
     }
     watch(selectedList, async newList => {
       currentPage.value = 1;
-      movies.value = await tmdb.getPopularsPage(currentPage.value, newList);
+      const response = await tmdb.getMovieListPage(currentPage.value, newList);
+      movies.value = response.movies;
+      totalPages.value = response.pages;
     });
 
     function onPageChange(newPage: number) {
       currentPage.value = newPage;
     }
     watch(currentPage, async newPage => {
-      movies.value = await tmdb.getPopularsPage(newPage, selectedList.value);
+      const response = await tmdb.getMovieListPage(newPage, selectedList.value);
+      movies.value = response.movies;
     });
 
     return {
@@ -79,6 +89,7 @@ export default {
       selectedList,
       listChanged,
       currentPage,
+      totalPages,
       onPageChange,
       movies,
     };

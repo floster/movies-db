@@ -5,7 +5,7 @@ import {
   API_BACKDROP_BASE,
   MOVIE_LIST_TYPES,
 } from './config';
-import { RawMovie, Movie, MovieListTypes } from './types';
+import { RawMovie, Movie, MovieListTypes, ListData } from './types';
 
 class TMDB {
   async #getJSON(url: string): Promise<any> {
@@ -45,27 +45,41 @@ class TMDB {
   }
 
   // get standart TMDB 'page' with 20 movies
-  async #getPopulars(page: number, listType: MovieListTypes): Promise<Movie[]> {
+  async #getMovieList(page: number, listType: MovieListTypes): Promise<ListData> {
     if (MOVIE_LIST_TYPES.includes(listType)) {
       const url = `${API_BASE}/movie/${listType}${API_KEY}&page=${page}`;
       const data = await this.#getJSON(url);
+
+      const pages = {
+        page: data.page,
+        pages: data.total_pages
+      };
       const movies: Array<Movie> = this.#normalizeMovies(data.results);
 
-      return movies;
+      return {
+        movies,
+        ...pages
+      };
     } else {
       throw new Error(`🔴 Wrong Movie List type: ${listType}`);
     }
   }
 
-  async getPopularsPage(
+  async getMovieListPage(
     page: number,
     listType: MovieListTypes
-  ): Promise<Movie[]> {
+  ): Promise<ListData> {
     const requiredPage = this.#calcPage(page);
-    const fullPage = await this.#getPopulars(requiredPage, listType);
+    const listData = await this.#getMovieList(requiredPage, listType);
 
-    const res = this.#isEven(page) ? fullPage.slice(10) : fullPage.slice(0, 10);
-    return res;
+    const movies = this.#isEven(page) ? listData.movies.slice(10) : listData.movies.slice(0, 10);
+    return {
+      movies: movies,
+      page: listData.page,
+      // total pages will be x2 more because above we split each TMDB-provided page in 2 pages
+      // (to show 10 movies in a row instead of 20)
+      pages: listData.pages * 2,
+    };
   }
 
   async getMovie(id: number = 646): Promise<Movie> {

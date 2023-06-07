@@ -27,6 +27,12 @@ export interface Movie {
   backdrop: string;
 }
 
+export interface ListData {
+  movies: Movie[],
+  page: number,
+  pages: number
+}
+
 // <AppSelect> component should recieve an array with following items:
 export interface SelectOptions {
   title: String;
