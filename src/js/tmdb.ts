@@ -4,6 +4,7 @@ import {
   API_POSTER_BASE,
   API_BACKDROP_BASE,
   MOVIE_LIST_TYPES,
+  POSTER_NO_IMAGE
 } from './config';
 import { RawMovie, Movie, MovieListTypes, ListData } from './types';
 
@@ -19,6 +20,7 @@ class TMDB {
   }
 
   #normalizeMovie(movie: RawMovie): Movie {
+    const poster = movie.poster_path ? `${API_POSTER_BASE}${movie.poster_path}` : POSTER_NO_IMAGE;
     return {
       id: movie.id,
       title: movie.title,
@@ -27,7 +29,7 @@ class TMDB {
       genres: movie.genres,
       released: movie.release_date,
       votes: movie.vote_average,
-      poster: `${API_POSTER_BASE}${movie.poster_path}`,
+      poster: poster,
       backdrop: `${API_BACKDROP_BASE}${movie.backdrop_path}`,
     };
   }
