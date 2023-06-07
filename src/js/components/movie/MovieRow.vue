@@ -1,21 +1,23 @@
 <template>
   <article
     class="movie-row flex items-center gap-4 border-l-4 border-slate-300 hover:border-sky-500"
-    :data-position="movie.place"
   >
-    <picture class="movie-row__picture w-12">
-      <img :src="movie.poster" :alt="movie.title" />
-    </picture>
+    <movie-poster
+      :src="movie.poster"
+      :alt="movie.title"
+      extraClass="movie-row__poster"
+    ></movie-poster>
     <div class="movie-row__info pr-4">
       <h2 class="movie-row__title">{{ movie.title }}</h2>
-      <!-- <p class="movie-row__description">{{ movie.overview }}</p> -->
     </div>
   </article>
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue';
-import { Movie } from '../types';
+import { PropType, ref } from 'vue';
+import { Movie } from '../../types';
+
+import MoviePoster from './MoviePoster.vue';
 
 export default {
   props: {
@@ -23,17 +25,31 @@ export default {
       type: Object as PropType<Movie>,
       required: true,
     },
-    title: String,
+  },
+
+  components: {
+    MoviePoster,
+  },
+
+  setup() {
+    const isImageLoading = ref(true);
+
+    function imageLoading() {
+      isImageLoading.value = false;
+    }
+
+    return {
+      isImageLoading,
+      imageLoading,
+    };
   },
 };
 </script>
 
 <style lang="scss">
 .movie-row {
-  &__picture {
-    max-width: 8rem;
-    flex-shrink: 0;
-    font-size: 0;
+  &__poster {
+    width: 3rem;
 
     img {
       width: 100%;
