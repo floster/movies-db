@@ -30,10 +30,6 @@ export default {
 
 <style lang="scss">
 .movie-row {
-  &::before {
-    content: attr(data-position);
-  }
-
   &__picture {
     max-width: 8rem;
     flex-shrink: 0;

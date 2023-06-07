@@ -1,5 +1,11 @@
-import { API_BASE, API_KEY, API_POSTER_BASE, API_BACKDROP_BASE, PARTS_PER_PAGE } from './config';
-import { RawMovie, Movie } from './types';
+import {
+  API_BASE,
+  API_KEY,
+  API_POSTER_BASE,
+  API_BACKDROP_BASE,
+  MOVIE_LIST_TYPES,
+} from './config';
+import { RawMovie, Movie, MovieListTypes } from './types';
 
 class TMDB {
   async #getJSON(url: string): Promise<any> {
@@ -39,18 +45,24 @@ class TMDB {
   }
 
   // get standart TMDB 'page' with 20 movies
-  async #getPopulars(page: number, topRated: boolean): Promise<Movie[]> {
-    const popularsType = topRated ? 'top_rated' : 'popular';
-    const url = `${API_BASE}/movie/${popularsType}${API_KEY}&page=${page}`;
-    const data = await this.#getJSON(url);
-    const movies: Array<Movie> = this.#normalizeMovies(data.results);
+  async #getPopulars(page: number, listType: MovieListTypes): Promise<Movie[]> {
+    if (MOVIE_LIST_TYPES.includes(listType)) {
+      const url = `${API_BASE}/movie/${listType}${API_KEY}&page=${page}`;
+      const data = await this.#getJSON(url);
+      const movies: Array<Movie> = this.#normalizeMovies(data.results);
 
-    return movies;
+      return movies;
+    } else {
+      throw new Error(`🔴 Wrong Movie List type: ${listType}`);
+    }
   }
 
-  async getPopularsPage(page: number, topRated: boolean): Promise<Movie[]> {
+  async getPopularsPage(
+    page: number,
+    listType: MovieListTypes
+  ): Promise<Movie[]> {
     const requiredPage = this.#calcPage(page);
-    const fullPage = await this.#getPopulars(requiredPage, topRated);
+    const fullPage = await this.#getPopulars(requiredPage, listType);
 
     const res = this.#isEven(page) ? fullPage.slice(10) : fullPage.slice(0, 10);
     return res;

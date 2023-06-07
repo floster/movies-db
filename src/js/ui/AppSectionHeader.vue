@@ -1,35 +1,17 @@
 <template>
-  <div>
-    <header v-if="title" class="app-section-header flex items-center mb-4">
+  <header class="app-section-header flex items-center mb-4">
+    <slot>
       <h2 class="app-section__title mr-auto text-xl text-sky-800">
         {{ title }}
       </h2>
-      <app-pagination
-        v-if="hasPagination"
-        :page="paginationPage"
-        @pageIncrease="$emit('pageIncrease')"
-        @pageDecrease="$emit('pageDecrease')"
-      ></app-pagination>
-    </header>
-  </div>
+    </slot>
+  </header>
 </template>
 
 <script lang="ts">
-import AppPagination from '../components/AppPagination.vue';
-
 export default {
   props: {
     title: String,
-    hasPagination: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    paginationPage: Number,
-  },
-  emits: ['pageIncrease', 'pageDecrease'],
-  components: {
-    AppPagination,
   },
 };
 </script>

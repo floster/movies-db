@@ -1,4 +1,4 @@
-interface genre {
+interface Genre {
   id: number;
   name: string;
 }
@@ -8,7 +8,7 @@ export interface RawMovie {
   title: string;
   tagline: string;
   overview: string;
-  genres: genre[];
+  genres: Genre[];
   release_date: Date;
   backdrop_path: string;
   poster_path: string;
@@ -20,20 +20,18 @@ export interface Movie {
   title: string;
   tagline: string,
   overview: string;
-  genres: genre[];
+  genres: Genre[];
   released: Date;
   votes: number;
   poster: string;
   backdrop: string;
 }
 
-export interface Populars {
-  movies: Movie[],
-  page: number,
-  pages: number
+// <AppSelect> component should recieve an array with following items:
+export interface SelectOptions {
+  title: String;
+  value: MovieListTypes;
 }
 
-export interface MoviesPage {
-  page: number;
-  movies: Movie[];
-}
+// possible Movie List types to get from TMDB
+export type MovieListTypes = 'top_rated' | 'popular' | 'upcoming' | 'now_playing';

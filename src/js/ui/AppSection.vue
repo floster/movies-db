@@ -1,12 +1,6 @@
 <template>
-  <section :class="classes">
-    <app-section-header
-      :title="title"
-      :hasPagination="pagination"
-      :paginationPage="paginationPage"
-      @pageIncrease="$emit('pageIncrease')"
-      @pageDecrease="$emit('pageDecrease')"
-    ></app-section-header>
+  <section class="app-section" :class="classes">
+    <app-section-header v-if="title" :title="title"></app-section-header>
     <slot></slot>
   </section>
 </template>
@@ -15,19 +9,23 @@
 import AppSectionHeader from './AppSectionHeader.vue';
 export default {
   props: {
-    extraClass: String,
+    extraClass: {
+      type: String,
+      default: '',
+    },
+    span: {
+      type: String,
+      default: '',
+    },
     title: String,
-    pagination: Boolean,
-    paginationPage: Number,
   },
-  emits: ['pageIncrease', 'pageDecrease'],
   components: {
     AppSectionHeader,
   },
 
   setup(props) {
-    const colSpan = props.extraClass ? ` m-${props.extraClass}` : '';
-    const classes = `app-section${colSpan}`;
+    const span = props.span ? `col-span-${props.span}` : '';
+    const classes = `${props.extraClass} ${span}`;
 
     return {
       classes,

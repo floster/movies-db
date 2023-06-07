@@ -1,0 +1,87 @@
+<template>
+  <app-section-header>
+    <app-select
+      :options="options"
+      :defaultOption="selectedList"
+      @option-changed="listChanged"
+    ></app-select>
+    <app-pagination
+      :page="currentPage"
+      @page-changed="onPageChange"
+    ></app-pagination>
+  </app-section-header>
+  <ul class="app-list flex flex-col gap-1 list-none m-0 p-0">
+    <li
+      v-for="movie in movies"
+      :key="movie.id"
+      class="app-list__item border border-solid border-transparent hover:border-slate-200 hover:shadow-sm rounded-md overflow-hidden"
+    >
+      <movie-row :movie="movie"></movie-row>
+    </li>
+  </ul>
+</template>
+
+<script lang="ts">
+import tmdb from '../tmdb';
+import { Movie, MovieListTypes } from '../types';
+import { OPTIONS_MOVIE_LIST } from '../config';
+
+import { ref, watch } from 'vue';
+
+import MovieRow from '../components/movie/MovieRow.vue';
+import AppSelect from '../components/AppSelect.vue';
+import AppPagination from '../components/AppPagination.vue';
+
+export default {
+  components: {
+    MovieRow,
+    AppSelect,
+    AppPagination,
+  },
+
+  props: {
+    initialList: {
+      type: String as () => MovieListTypes,
+      required: false,
+      default: 'popular',
+    },
+  },
+
+  async setup(props) {
+    const options = OPTIONS_MOVIE_LIST;
+
+    const currentPage = ref(1);
+    const selectedList = ref<MovieListTypes>(props.initialList);
+
+    const movies = ref([] as Movie[]);
+    movies.value = await tmdb.getPopularsPage(
+      currentPage.value,
+      selectedList.value
+    );
+
+    function listChanged(newList: MovieListTypes) {
+      selectedList.value = newList;
+    }
+    watch(selectedList, async newList => {
+      currentPage.value = 1;
+      movies.value = await tmdb.getPopularsPage(currentPage.value, newList);
+    });
+
+    function onPageChange(newPage: number) {
+      currentPage.value = newPage;
+    }
+    watch(currentPage, async newPage => {
+      movies.value = await tmdb.getPopularsPage(newPage, selectedList.value);
+    });
+
+    return {
+      options,
+      selectedList,
+      listChanged,
+      currentPage,
+      onPageChange,
+      movies,
+    };
+  },
+};
+</script>
