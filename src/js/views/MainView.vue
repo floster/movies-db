@@ -3,7 +3,7 @@
     <app-section extraClass="m-populars">
       <movie-list initialList="top_rated"></movie-list>
     </app-section>
-    <app-section extraClass="m-random" title="Random Movie">
+    <app-section extraClass="m-random">
       <random-movie></random-movie>
     </app-section>
   </app-page>

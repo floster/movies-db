@@ -5,6 +5,7 @@ interface Genre {
 
 export interface RawMovie {
   id: number;
+  adult: boolean;
   title: string;
   tagline: string;
   overview: string;
@@ -13,18 +14,28 @@ export interface RawMovie {
   backdrop_path: string;
   poster_path: string;
   vote_average: number;
+  popularity: number;
 }
 
 export interface Movie {
   id: number;
+  adult: boolean;
   title: string;
-  tagline: string,
+  tagline: string;
   overview: string;
   genres: Genre[];
   released: Date;
+  year: number;
   votes: number;
   poster: string;
   backdrop: string;
+}
+
+export interface MovieListRespose {
+  page: number;
+  results: RawMovie[];
+  total_pages: number;
+  total_results: number;
 }
 
 export interface ListData {

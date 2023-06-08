@@ -1,5 +1,7 @@
 <template>
-  <div class="movie-tile card card-compact w-96 bg-base-100 shadow-xl">
+  <div
+    class="movie-tile card card-compact w-96 bg-base-100 shadow-xl overflow-hidden"
+  >
     <movie-poster
       :src="movie.poster"
       :alt="movie.title"
