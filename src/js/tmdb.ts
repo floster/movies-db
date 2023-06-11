@@ -5,7 +5,7 @@ import {
   API_BACKDROP_BASE,
   MOVIE_LIST_TYPES,
   POSTER_NO_IMAGE,
-  MOVIES_1000,
+  MOVIES_500,
 } from './config';
 import {
   RawMovie,
@@ -131,7 +131,7 @@ class TMDB {
 
   async #getMoviesID(): Promise<number[]> {
     const ids = new Set<number>();
-    for (let page = 1; page <= 50; page++) {
+    for (let page = 1; page <= 25; page++) {
       const movies = await this.#discoverMovies(page);
       movies.results.forEach(movie => ids.add(movie.id));
     }
@@ -140,8 +140,7 @@ class TMDB {
   }
 
   async getRandomMovie(): Promise<Movie> {
-    const ids = MOVIES_1000;
-    console.log(ids);
+    const ids = MOVIES_500;
     const randomIdx = Math.floor(Math.random() * ids.length) + 1;
     const randomID = ids[randomIdx - 1];
     const movie = await this.getMovie(randomID);
