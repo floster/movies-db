@@ -7,7 +7,7 @@
       :alt="movie.title"
       extraClass="movie-tile__poster"
     ></movie-poster>
-    <button-favorite></button-favorite>
+    <button-favorite :id="movie.id"></button-favorite>
     <div
       class="movie-tile__rating radial-progress bg-info text-info-content border-4 border-info"
       style="--value: 0; --size: 3.5rem"

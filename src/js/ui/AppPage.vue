@@ -1,6 +1,6 @@
 <template>
   <div
-    class="page grid grid-cols-3 gap-12 p-4 mb-6 rounded-lg bg-white shadow-lg"
+    class="page grid grid-cols-3 gap-12 p-4 rounded-lg bg-white shadow-lg"
     :class="extraClass"
   >
     <slot></slot>

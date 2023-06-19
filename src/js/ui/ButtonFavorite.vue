@@ -1,5 +1,8 @@
 <template>
-  <button class="button-favorite btn btn-square p-2 glass hover:text-red-500">
+  <button
+    class="button-favorite btn btn-square p-2 glass hover:text-red-500"
+    @click="addFavorite"
+  >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
       <path fill="none" d="M0 0h256v256H0z" />
       <path
@@ -22,7 +25,35 @@
   </button>
 </template>
 <script lang="ts">
-export default {};
+import { store } from '../store';
+
+export default {
+  props: {
+    id: {
+      type: Number,
+      required: true,
+    },
+    isMovie: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+  },
+
+  setup(props) {
+    function addFavorite() {
+      if (props.isMovie) {
+        store.addMovie(props.id);
+      } else {
+        store.addCollection(props.id);
+      }
+    }
+
+    return {
+      addFavorite,
+    };
+  },
+};
 </script>
 <style lang="scss">
 .button-favorite {

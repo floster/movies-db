@@ -5,7 +5,6 @@ import {
   API_BACKDROP_BASE,
   MOVIE_LIST_TYPES,
   POSTER_NO_IMAGE,
-  MOVIES_500,
 } from './config';
 import {
   RawMovie,
@@ -13,6 +12,8 @@ import {
   MovieListRespose, MovieListTypes,
   ListData,
 } from './types';
+
+import { store } from './store';
 
 class TMDB {
   async #getJSON(url: string): Promise<any> {
@@ -140,7 +141,7 @@ class TMDB {
   }
 
   async getRandomMovie(): Promise<Movie> {
-    const ids = MOVIES_500;
+    const ids = store.top500;
     const randomIdx = Math.floor(Math.random() * ids.length) + 1;
     const randomID = ids[randomIdx - 1];
     const movie = await this.getMovie(randomID);

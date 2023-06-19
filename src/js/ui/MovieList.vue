@@ -52,9 +52,8 @@ export default {
     const options = OPTIONS_MOVIE_LIST;
 
     const currentPage = ref(1);
-    const totalPages = ref(0);
+    const totalPages = ref(1);
 
-    // TODO: get max pages and send it to pagination
     const selectedList = ref<MovieListTypes>(props.initialList);
 
     const movies = ref([] as Movie[]);

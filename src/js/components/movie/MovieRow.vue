@@ -7,7 +7,7 @@
       :alt="movie.title"
       extraClass="movie-row__poster"
     ></movie-poster>
-    <button-favorite></button-favorite>
+    <button-favorite :id="movie.id"></button-favorite>
     <div class="movie-row__info pr-4">
       <h2 class="movie-row__title">{{ movie.title }}</h2>
     </div>
@@ -67,7 +67,7 @@ export default {
   .button-favorite {
     position: absolute;
     top: 50%;
-    right: 0;
+    right: 0.5rem;
 
     transform: translate(100%, -50%);
   }
