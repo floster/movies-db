@@ -1,7 +1,7 @@
 <template>
-  <header class="app-section-header flex items-center mb-4">
+  <header class="app-section-header">
     <slot>
-      <h2 class="app-section__title mr-auto text-xl text-sky-800">
+      <h2 class="app-section__title">
         {{ title }}
       </h2>
     </slot>

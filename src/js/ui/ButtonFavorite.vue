@@ -1,8 +1,5 @@
 <template>
-  <button
-    class="button-favorite btn btn-square p-2 glass hover:text-red-500"
-    @click="addFavorite"
-  >
+  <button class="button-favorite" @click="addFavorite">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
       <path fill="none" d="M0 0h256v256H0z" />
       <path

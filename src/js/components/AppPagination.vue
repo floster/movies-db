@@ -1,8 +1,8 @@
 <template>
-  <div class="join">
-    <button class="join-item btn btn-xs" @click="pageDecrease">◀︎</button>
-    <button class="join-item btn-xs" disabled>{{ page }} / {{ max }}</button>
-    <button class="join-item btn btn-xs" @click="pageIncrease">►</button>
+  <div class="app-pagination">
+    <button class="app-pagination__page" @click="pageDecrease">◀︎</button>
+    <span class="app-pagination__counter" disabled>{{ page }} / {{ max }}</span>
+    <button class="app-pagination__page" @click="pageIncrease">►</button>
   </div>
 </template>
 

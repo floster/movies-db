@@ -1,14 +1,12 @@
 <template>
-  <article
-    class="movie-row relative flex items-center gap-4 border-l-4 border-slate-300 hover:border-sky-500"
-  >
+  <article class="movie-row">
     <movie-poster
       :src="movie.poster"
       :alt="movie.title"
       extraClass="movie-row__poster"
     ></movie-poster>
     <button-favorite :id="movie.id"></button-favorite>
-    <div class="movie-row__info pr-4">
+    <div class="movie-row__info">
       <h2 class="movie-row__title">{{ movie.title }}</h2>
     </div>
   </article>

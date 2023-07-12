@@ -1,5 +1,5 @@
 <template>
-  <picture class="movie-poster relative shrink-0" :class="extraClass">
+  <picture class="movie-poster" :class="extraClass">
     <app-loader v-show="isImageLoading"></app-loader>
     <img :src="src" :alt="title" @load="imageLoading" />
   </picture>

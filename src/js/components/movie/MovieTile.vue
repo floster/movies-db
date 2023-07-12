@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="movie-tile relative card card-compact w-96 bg-base-100 shadow-xl rounded-lg overflow-hidden"
-  >
+  <div class="movie-tile">
     <movie-poster
       :src="movie.poster"
       :alt="movie.title"
@@ -9,16 +7,16 @@
     ></movie-poster>
     <button-favorite :id="movie.id"></button-favorite>
     <div
-      class="movie-tile__rating radial-progress bg-info text-info-content border-4 border-info"
+      class="movie-tile__rating"
       style="--value: 0; --size: 3.5rem"
       :style="styles"
     >
       {{ rating }}
     </div>
-    <div class="movie-tile__body card-body">
-      <h2 class="movie-tile__title card-title">{{ movie.title }}</h2>
-      <p class="movie-tile__tagline italic text-base">{{ movie.tagline }}</p>
-      <div class="card-actions justify-end"></div>
+    <div class="movie-tile__body">
+      <h2 class="movie-tile__title">{{ movie.title }}</h2>
+      <p class="movie-tile__tagline">{{ movie.tagline }}</p>
+      <div class="card-actions"></div>
     </div>
   </div>
 </template>

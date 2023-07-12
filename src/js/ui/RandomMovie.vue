@@ -1,8 +1,8 @@
 <template>
-  <header class="random-movie__header flex items-center mb-8 mt-4">
-    <h2 class="mr-auto text-xl text-sky-800">Random movie</h2>
-    <button class="btn btn-square btn-sm" @click="refreshMovie">
-      <span v-if="isLoading" class="loading loading-spinner"></span>
+  <header class="random-movie__header">
+    <h2 class="">Random movie</h2>
+    <button class="" @click="refreshMovie">
+      <span v-if="isLoading" class="">loader</span>
       <svg
         v-else
         xmlns="http://www.w3.org/2000/svg"

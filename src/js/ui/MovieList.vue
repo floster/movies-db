@@ -11,12 +11,8 @@
       @page-changed="onPageChange"
     ></app-pagination>
   </app-section-header>
-  <ul class="app-list flex flex-col gap-1 list-none m-0 p-0">
-    <li
-      v-for="movie in movies"
-      :key="movie.id"
-      class="app-list__item border border-solid border-transparent hover:border-slate-200 hover:shadow-sm rounded-md overflow-hidden"
-    >
+  <ul class="app-list">
+    <li v-for="movie in movies" :key="movie.id" class="app-list__item">
       <movie-row :movie="movie"></movie-row>
     </li>
   </ul>

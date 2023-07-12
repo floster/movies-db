@@ -1,6 +1,6 @@
 <template>
   <select
-    class="select select-lg mr-auto pl-0 max-w-xs"
+    class="app-select"
     @change="$emit('option-changed', current)"
     v-model="current"
   >

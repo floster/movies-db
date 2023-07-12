@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="page grid grid-cols-3 gap-12 p-4 rounded-lg bg-white shadow-lg"
-    :class="extraClass"
-  >
+  <div class="app-page" :class="extraClass">
     <slot></slot>
   </div>
 </template>
