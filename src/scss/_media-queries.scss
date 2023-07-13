@@ -1,0 +1,11 @@
+$media: (
+  'md': $breakpoint-sm,
+  'lg': $breakpoint-md,
+  'xl': $breakpoint-lg,
+);
+
+@mixin media($breakpoint) {
+  @media (width >= map-get($media, $breakpoint)) {
+    @content;
+  }
+}

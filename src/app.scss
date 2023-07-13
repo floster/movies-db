@@ -1,0 +1,8 @@
+@import './scss/variables';
+@import './scss/media-queries';
+
+body {
+  @include media('md') {
+    background-color: var(--color-grey-100);
+  }
+}
