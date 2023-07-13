@@ -1,15 +1,15 @@
 <template>
-  <Suspense>
-    <main-view></main-view>
-  </Suspense>
+  <h1>{{ text }}</h1>
 </template>
 
 <script lang="ts">
-import MainView from "./js/views/MainView.vue";
-
 export default {
-  components: {
-    MainView,
+  setup() {
+    const text = `Here I am`;
+
+    return {
+      text,
+    };
   },
 };
 </script>

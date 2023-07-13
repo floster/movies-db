@@ -9,7 +9,8 @@ import {
 import {
   RawMovie,
   Movie,
-  MovieListRespose, MovieListTypes,
+  // MovieListRespose,
+  MovieListTypes,
   ListData,
 } from './types';
 
@@ -119,26 +120,26 @@ class TMDB {
     }
   }
 
-  async #discoverMovies(page = 1): Promise<MovieListRespose> {
-    try {
-      const queryParams = `&include_adult=false&language=en-US&release_date.gte=2000&sort_by=popularity.desc&page=${page}`;
-      const url = `${API_BASE}/discover/movie/${API_KEY}${queryParams}`;
-      const data = await this.#getJSON(url);
-      return data;
-    } catch (error) {
-      throw error;
-    }
-  }
+  // async #discoverMovies(page = 1): Promise<MovieListRespose> {
+  //   try {
+  //     const queryParams = `&include_adult=false&language=en-US&release_date.gte=2000&sort_by=popularity.desc&page=${page}`;
+  //     const url = `${API_BASE}/discover/movie/${API_KEY}${queryParams}`;
+  //     const data = await this.#getJSON(url);
+  //     return data;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
 
-  async #getMoviesID(): Promise<number[]> {
-    const ids = new Set<number>();
-    for (let page = 1; page <= 25; page++) {
-      const movies = await this.#discoverMovies(page);
-      movies.results.forEach(movie => ids.add(movie.id));
-    }
+  // async #getMoviesID(): Promise<number[]> {
+  //   const ids = new Set<number>();
+  //   for (let page = 1; page <= 25; page++) {
+  //     const movies = await this.#discoverMovies(page);
+  //     movies.results.forEach(movie => ids.add(movie.id));
+  //   }
     
-    return Array.from(ids);
-  }
+  //   return Array.from(ids);
+  // }
 
   async getRandomMovie(): Promise<Movie> {
     const ids = store.top500;
