@@ -1,8 +1,8 @@
 .app-header {
     background-color: var(--color-secondary-darken);
     box-shadow: var(--shadow-md);
-    padding-top: var(--gap-sm);
-    padding-bottom: var(--gap-sm);
+    padding-top: var(--gap-xs);
+    padding-bottom: var(--gap-xs);
 
     &__inner {
         display: flex;

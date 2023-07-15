@@ -1,0 +1,10 @@
+@mixin poster($size: lg) {
+    @if $size ==sm {
+        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow);
+    }
+
+    @else if $size ==lg {
+        border-radius: var(--radius);
+    }
+}

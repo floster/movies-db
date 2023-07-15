@@ -17,6 +17,9 @@
 </head>
 
 <body class="">
+  <!-- <div id="app" class="container"></div> -->
+  <!-- <script type="module" src="/src/app.ts"></script> -->
+
   <header class="app-header container">
     <div class="app-header__inner container__inner">
       <a class="app-header__logo flex" href="/" aria-label="go to homepage">
@@ -38,8 +41,53 @@
       </nav>
     </div>
   </header>
-  <!-- <div id="app" class="container"></div> -->
-  <!-- <script type="module" src="/src/app.ts"></script> -->
+  <main class="app-main container">
+    <div class="app-main__inner container__inner l-main">
+      <aside class="sidebar">
+        <div class="app-select m-custom">
+          <span class="app-select__arrow">
+            <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="src/assets/sprite.svg#chevron_down" />
+            </svg>
+          </span>
+          <select name="" id="">
+            <option value="1">now playing</option>
+            <option value="2">popular</option>
+            <option value="3">top rated</option>
+            <option value="4">upcoming</option>
+          </select>
+        </div>
+        <div class="l-movies-list">
+          <div class="movie-row">
+            <img class="movie-row__img" src="./src/assets/6nDZExrDKIXvSAghsFKVFRVJuSf.png"
+              alt="2 Fast 2 Furious poster">
+            <div class="movie-row__info">
+              <h3 class="movie-row__title">2 Fast 2 Furious</h3>
+              <p class="movie-row__description">2003</p>
+            </div>
+            <button class="movie-row__button button m-icon m-primary m-sm">
+              <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                <use href="src/assets/sprite.svg#fire" />
+              </svg>
+            </button>
+          </div>
+          <div class="movie-row">
+            <img class="movie-row__img" src="./src/assets/46xqGOwHbh2TH2avWSw3SMXph4E.png"
+              alt="The Fast and the Furious: Tokyo Drift poster">
+            <div class="movie-row__info">
+              <h3 class="movie-row__title">The Fast and the Furious: Tokyo Drift</h3>
+              <p class="movie-row__description">2006</p>
+            </div>
+            <button class="movie-row__button button m-icon m-primary m-sm m-active">
+              <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                <use href="src/assets/sprite.svg#fire" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
 </body>
 
 </html>

@@ -1,0 +1,24 @@
+.l-main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gap-lg);
+
+    @include media(md) {
+        grid-template-columns: 1fr 2fr;
+        gap: var(--gap-sm);
+    }
+
+    @include media(lg) {
+        gap: var(--gap-md);
+    }
+
+    @include media(xl) {
+        gap: var(--gap-xl);
+    }
+}
+
+.l-movies-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+}

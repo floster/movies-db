@@ -31,13 +31,29 @@
             box-shadow: none;
         }
 
-        .svg-icon {
-            height: var(--control-height-md);
-            width: var(--control-height-md);
+        &.m-sm {
+            .svg-icon {
+                height: var(--control-height-xs);
+                width: var(--control-height-xs);
 
-            @include media('lg') {
-                height: var(--control-height-lg);
-                width: var(--control-height-lg);
+                @include media(lg) {
+                    height: var(--control-height-sm);
+                    width: var(--control-height-sm);
+                }
+            }
+        }
+
+        &.m-active {
+            color: var(--color-primary);
+        }
+
+        .svg-icon {
+            height: var(--control-height-sm);
+            width: var(--control-height-sm);
+
+            @include media(lg) {
+                height: var(--control-height-md);
+                width: var(--control-height-md);
             }
         }
     }

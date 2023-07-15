@@ -1,7 +1,7 @@
 .container {
   width: 100%;
-  padding-left: var(--gap-sm);
-  padding-right: var(--gap-sm);
+  padding-left: var(--gap-xs);
+  padding-right: var(--gap-xs);
 
   @include media(md) {
     padding-left: var(--gap-sm);
