@@ -1,8 +1,7 @@
 @import './scss/variables';
 @import './scss/media-queries';
+@import './scss/grid';
+@import './scss/general';
 
-body {
-  @include media('md') {
-    background-color: var(--color-grey-100);
-  }
-}
+@import './scss/components/all';
+@import './scss/ui/all';

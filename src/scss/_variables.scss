@@ -1,87 +1,43 @@
-// colors
-$color-primary: #e63946;
-$color-secondary: #439fd9;
-$color-secondary-dimmed: #e1f0f9;
-$color-secondary-darken: #185277;
-$color-accent: #f9dc5c;
-$color-accent-dimmed: #fdf5d3;
-$color-white: #ffffff;
-$color-grey-100: #f5f5f4;
-$color-grey-200: #e0e1dd;
-$color-grey-500: #778da9;
-$color-grey-700: #415a77;
-$color-grey-800: #1b263b;
-$color-grey-900: #0d1b2a;
-
-$text-color: $color-grey-800;
-$text-color-light: $color-grey-500;
-
-// fonts
-$font-family: 'Merriweather Sans', sans-serif;
-$font-weight: 300;
-$line-height: 1.3;
-
-// font sizes
-$font-size-sm: 0.75rem;
-$font-size: 1rem;
-$font-size-5: 1.25rem;
-$font-size-4: 1.5rem;
-$font-size-3: 2rem;
-$font-size-2: 2.5rem;
-$font-size-1: 3rem;
-
-// borders
-$radius-sm: 0.25rem;
-$radius: 0.5rem;
-
-// gaps
-$gap-xs: 0.5rem;
-$gap-sm: 1rem;
-$gap-md: 1.5rem;
-$gap-lg: 2rem;
-$gap-xl: 2.5rem;
-$gap-xxl: 3.75rem;
-
-// breakpoints
 $breakpoint-sm: 744px;
 $breakpoint-md: 1024px;
 $breakpoint-lg: 1400px;
 
 :root {
-  --color-primary: #e63946;
-  --color-secondary: #439fd9;
-  --color-secondary-dimmed: #e1f0f9;
-  --color-secondary-darken: #185277;
-  --color-accent: #f9dc5c;
-  --color-accent-dimmed: #fdf5d3;
-  --color-white: #ffffff;
-  --color-grey-100: #f5f5f4;
-  --color-grey-200: #e0e1dd;
-  --color-grey-500: #778da9;
-  --color-grey-700: #415a77;
-  --color-grey-800: #1b263b;
-  --color-grey-900: #0d1b2a;
+  --color-primary: hsla(0, 100%, 50%, 1);
+  --color-secondary: hsl(207, 75%, 50%);
+  --color-secondary-dimmed: hsla(207, 75%, 95%, 1);
+  --color-secondary-darken: hsla(207, 75%, 30%, 1);
+  --color-accent: hsla(48, 95%, 65%, 1);
+  --color-accent-dimmed: hsla(48, 95%, 90%, 1);
+  --color-white: hsla(0, 0%, 100%, 1);
+  --color-grey-100: hsla(60, 5%, 96%, 1);
+  --color-grey-200: hsl(75, 6%, 87%, 1);
+  --color-grey-500: hsla(214, 23%, 56%, 1);
+  --color-grey-700: hsla(212, 29%, 36%, 1);
+  --color-grey-800: hsla(212, 32%, 25%, 1);
+  --color-grey-900: hsla(211, 53%, 11%, 1);
 
-  --text-color: #1b263b;
-  --text-color-light: #778da9;
+  --font-size-sm: 0.75rem; // 12px
+  --font-size: 1rem; // 16px
+  --font-size-5: 1.25rem; // 20px
+  --font-size-4: 1.5rem; // 24px
+  --font-size-3: 2rem; // 32px
+  --font-size-2: 2.5rem; // 40px
+  --font-size-1: 3rem; // 48px
 
-  --font-size-sm: 0.75rem;
-  --font-size: 1rem;
-  --font-size-5: 1.25rem;
-  --font-size-4: 1.5rem;
-  --font-size-3: 2rem;
-  --font-size-2: 2.5rem;
-  --font-size-1: 3rem;
+  --control-height-sm: 1.25rem; // 20px
+  --control-height-md: 1.5rem; // 24px
+  --control-height-lg: 2rem; // 32px
 
-  --radius-sm: 0.25rem;
-  --radius: 0.5rem;
+  --radius-sm: 0.25rem; // 4px
+  --radius: 0.5rem; // 8px
 
-  --gap-xs: 0.5rem;
-  --gap-sm: 1rem;
-  --gap-md: 1.5rem;
-  --gap-lg: 2rem;
-  --gap-xl: 2.5rem;
-  --gap-xxl: 3.75rem;
+  --gap-xs: 0.5rem; // 8px
+  --gap-sm: 1rem; // 16px
+  --gap-md: 1.5rem; // 24px
+  --gap-lg: 2rem; // 32px
+  --gap-xl: 2.5rem; // 40px
+  --gap-xxl: 3.75rem; // 60px
 
   --shadow-sm: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
     0px 1px 2px -1px rgba(0, 0, 0, 0.1);
@@ -93,17 +49,15 @@ $breakpoint-lg: 1400px;
     0px 8px 10px -6px rgba(0, 0, 0, 0.1);
   --shadow-xl: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
   --shadow-stack: 12px 12px 0px 0px #f5f5f4, 6px 6px 0px 0px #e0e1dd;
-}
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+  // general
+  --font-family: 'Merriweather Sans', sans-serif;
+  --line-height: 1.3;
+  --font-weight: 300;
 
-body {
-  font-family: $font-family;
-  font-weight: $font-weight;
-  line-height: $line-height;
-  color: $text-color;
+  // dark/light
+  --body-color: var(--color-grey-100);
+  --body-color-dark: var(--color-grey-700);
+  --text-color: var(--color-grey-800);
+  --text-color-light: var(--color-grey-500);
 }

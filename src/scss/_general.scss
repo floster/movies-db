@@ -1,0 +1,50 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  line-height: var(--line-height);
+  color: var(--text-color);
+  background-color: var(--body-color);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+
+  // TODO: remove debugging info
+  &::before {
+    content: 'sm';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 999;
+    pointer-events: none;
+    font-size: var(--font-size-sm);
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    border-radius: var(--radius-sm);
+    padding: 0 var(--gap-xs);
+  }
+
+  @include media(md) {
+    &::before {
+      content: 'md';
+    }
+  }
+
+  @include media(lg) {
+    &::before {
+      content: 'lg';
+    }
+  }
+
+  @include media(xl) {
+    &::before {
+      content: 'xl';
+    }
+  }
+}

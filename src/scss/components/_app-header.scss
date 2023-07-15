@@ -1,0 +1,28 @@
+.app-header {
+    background-color: var(--color-secondary-darken);
+    box-shadow: var(--shadow-md);
+    padding-top: var(--gap-sm);
+    padding-bottom: var(--gap-sm);
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__logo-svg {
+        @include media(md) {
+            height: var(--control-height-md);
+        }
+
+        @include media(md) {
+            height: var(--control-height-lg);
+        }
+    }
+
+    &__nav {
+        display: flex;
+        align-items: center;
+        gap: var(--gap-sm)
+    }
+}

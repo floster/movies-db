@@ -1,0 +1,34 @@
+.container {
+  width: 100%;
+  padding-left: var(--gap-sm);
+  padding-right: var(--gap-sm);
+
+  @include media(md) {
+    padding-left: var(--gap-sm);
+    padding-right: var(--gap-sm);
+  }
+
+  @include media(lg) {
+    padding-left: var(--gap-md);
+    padding-right: var(--gap-md);
+  }
+
+  @include media(xl) {
+    padding-left: var(--gap-xxl);
+    padding-right: var(--gap-xxl);
+  }
+
+  &__inner {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+.grid {
+  display: grid;
+}
+
+.flex {
+  display: flex;
+}

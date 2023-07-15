@@ -1,18 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300;0,700;1,300&display=swap"
-      rel="stylesheet"
-    />
-    <title>Movies DB</title>
-  </head>
-  <body class="">
-    <div id="app" class="container"></div>
-    <script type="module" src="/src/app.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300;0,700;1,300&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="./src/app.scss" />
+  <title>Movies DB</title>
+</head>
+
+<body class="">
+  <header class="app-header container">
+    <div class="app-header__inner container__inner">
+      <a class="app-header__logo flex" href="/" aria-label="go to homepage">
+        <svg class="app-header__logo-svg" viewBox="0 0 727 97" height="20" aria-hidden="true">
+          <use href="src/assets/sprite.svg#logo_light" />
+        </svg>
+      </a>
+      <nav class="app-header__nav">
+        <a class="button m-icon m-primary" href="/" aria-label="go to favorites">
+          <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
+            <use href="src/assets/sprite.svg#fire" />
+          </svg>
+        </a>
+        <button class="button m-icon m-secondary" aria-label="open search dialog">
+          <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
+            <use href="src/assets/sprite.svg#search" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+  <!-- <div id="app" class="container"></div> -->
+  <!-- <script type="module" src="/src/app.ts"></script> -->
+</body>
+
 </html>
