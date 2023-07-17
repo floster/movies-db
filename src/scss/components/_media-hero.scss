@@ -1,5 +1,5 @@
 .media-hero {
-    @include poster(lg);
+    @include poster;
 
     background-image: var(--gradient-dark), var(--backdrop-image);
     background-repeat: no-repeat;
@@ -26,7 +26,7 @@
     }
 
     &__img {
-        @include poster(lg);
+        @include poster;
 
         width: 100%;
     }
