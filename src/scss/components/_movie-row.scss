@@ -6,10 +6,15 @@
     padding-right: var(--gap-lg);
     width: 100%;
     overflow: hidden;
+    transition: box-shadow 0.1s linear;
 
     @include media(lg) {
         gap: var(--gap-md);
         padding-right: var(--gap-xl);
+    }
+
+    &:hover {
+        box-shadow: var(--shadow);
     }
 
     &__img {

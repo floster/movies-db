@@ -1,0 +1,26 @@
+.favorite-toggle {
+    display: flex;
+    padding: var(--gap-xs);
+
+    input {
+        appearance: none;
+        margin: 0;
+
+        &:checked {
+            +.svg-icon {
+                color: var(--color-primary);
+            }
+        }
+    }
+
+    .svg-icon {
+        height: var(--control-height-xs);
+        width: var(--control-height-xs);
+        color: var(--color-grey-200);
+
+        @include media(lg) {
+            height: var(--control-height-sm);
+            width: var(--control-height-sm);
+        }
+    }
+}
