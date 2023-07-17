@@ -28,7 +28,8 @@
         </svg>
       </a>
       <nav class="app-header__nav">
-        <a class="button m-icon m-primary" href="/" aria-label="go to favorites">
+        <a class="button m-open-favorites has-items m-icon m-primary" href="/" aria-label="go to favorites"
+          data-favorites-count="88">
           <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
             <use href="src/assets/sprite.svg#fire" />
           </svg>
@@ -41,53 +42,79 @@
       </nav>
     </div>
   </header>
-  <main class="app-main container">
-    <div class="app-main__inner container__inner l-main">
+  <div class="container">
+    <div class="l-main app-content container__inner">
       <aside class="sidebar">
-        <div class="app-select m-custom">
-          <span class="app-select__arrow">
+        <div class="app-select m-custom" aria-labelledby="moviesTypeSelect">
+          <span class="app-select__arrow" aria-hidden="true">
             <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
               <use href="src/assets/sprite.svg#chevron_down" />
             </svg>
           </span>
-          <select name="" id="">
-            <option value="1">now playing</option>
+          <select name="movies type" id="moviesTypeSelect" aria-label="current movies type">
+            <option value="1" selected>now playing</option>
             <option value="2">popular</option>
             <option value="3">top rated</option>
             <option value="4">upcoming</option>
           </select>
         </div>
-        <div class="l-movies-list">
-          <div class="movie-row">
-            <img class="movie-row__img" src="./src/assets/6nDZExrDKIXvSAghsFKVFRVJuSf.png"
+        <div class="l-movies-list" role="list">
+          <div class="movie-row" role="listitem" aria-label="2 Fast 2 Furious">
+            <img class="movie-row__img" src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png"
               alt="2 Fast 2 Furious poster">
             <div class="movie-row__info">
               <h3 class="movie-row__title">2 Fast 2 Furious</h3>
               <p class="movie-row__description">2003</p>
             </div>
-            <button class="movie-row__button button m-icon m-primary m-sm">
+            <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
+              <input type="checkbox" name="toggleFavoriteCheckbox" id="">
               <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
                 <use href="src/assets/sprite.svg#fire" />
               </svg>
-            </button>
+            </label>
           </div>
-          <div class="movie-row">
-            <img class="movie-row__img" src="./src/assets/46xqGOwHbh2TH2avWSw3SMXph4E.png"
+          <div class="movie-row" role="listitem" aria-label="The Fast and the Furious: Tokyo Drift">
+            <img class="movie-row__img" src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png"
               alt="The Fast and the Furious: Tokyo Drift poster">
             <div class="movie-row__info">
               <h3 class="movie-row__title">The Fast and the Furious: Tokyo Drift</h3>
               <p class="movie-row__description">2006</p>
             </div>
-            <button class="movie-row__button button m-icon m-primary m-sm m-active">
+            <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
+              <input type="checkbox" name="toggleFavoriteCheckbox" id="" checked>
               <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
                 <use href="src/assets/sprite.svg#fire" />
               </svg>
-            </button>
+            </label>
           </div>
         </div>
       </aside>
+      <main class="app-main">
+        <section class="random-media media-hero" style="--backdrop-image: url(./assets/backdrop_light.png)">
+          <picture class="media-hero__picture">
+            <source srcset="./src/assets/poster_bOFaAXmWWXC3Rbv4u4uM9ZSzRXP.png" media="(min-width: 744px)">
+            <source srcset="./src/assets/poster_fiVW06jE7z9YnO4trhaMEdclSiC.png" media="(min-width: 1024px)">
+            <img class="media-hero__img" src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png"
+              alt="2 Fast 2 Furious poster">
+          </picture>
+          <div class="media-hero__content">
+            <h2 class="media-hero__title">The Fast and the Furious Collection</h2>
+            <p class="media-hero__description">An action film series centered on illegal street racing and heists.</p>
+          </div>
+          <footer class="media-hero__footer">
+            <div class="app-progress" style="--value: 65" role="progressbar" aria-valuenow="75" aria-valuemin="0"
+              aria-valuemax="100">6.5</div>
+            <span class="icon-labeled">
+              <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
+                <use href="src/assets/sprite.svg#stack" />
+              </svg>
+              <span class="icon-labeled__label">10 parts</span>
+            </span>
+          </footer>
+        </section>
+      </main>
     </div>
-  </main>
+  </div>
 </body>
 
 </html>

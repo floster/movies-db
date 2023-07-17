@@ -1,0 +1,25 @@
+.icon-labeled {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    color: var(--color-secondary);
+
+    &.m-text_light {
+        color: var(--color-grey-100);
+    }
+
+    &__label {
+        font-size: var(--font-size);
+        font-weight: bold;
+    }
+
+    .svg-icon {
+        width: var(--control-height-xs);
+        height: var(--control-height-xs);
+
+        @include media(md) {
+            width: var(--control-height-sm);
+            height: var(--control-height-sm);
+        }
+    }
+}
