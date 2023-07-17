@@ -21,6 +21,29 @@
         box-shadow: var(--shadow-sm);
     }
 
+    &.m-open-favorites {
+        position: relative;
+
+        &.has-items {
+            &::after {
+                content: attr(data-favorites-count);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                width: var(--control-height-xs);
+                height: var(--control-height-xs);
+                background-color: var(--color-secondary);
+                border-radius: 9999px;
+                color: var(--color-grey-100);
+                font-size: .7rem;
+                line-height: var(--control-height-xs);
+            }
+        }
+    }
+
     &.m-icon {
         color: var(--color-grey-200);
         padding: var(--gap-xs);

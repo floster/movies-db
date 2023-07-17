@@ -6,7 +6,7 @@ $breakpoint-lg: 1400px;
   --color-primary: hsla(0, 100%, 50%, 1);
   --color-secondary: hsl(207, 75%, 50%);
   --color-secondary-dimmed: hsla(207, 75%, 95%, 1);
-  --color-secondary-darken: hsla(207, 75%, 30%, 1);
+  --color-secondary-darken: rgb(19, 82, 134);
   --color-accent: hsla(48, 95%, 65%, 1);
   --color-accent-dimmed: hsla(48, 95%, 90%, 1);
   --color-white: hsla(0, 0%, 100%, 1);
@@ -14,8 +14,10 @@ $breakpoint-lg: 1400px;
   --color-grey-200: hsl(75, 6%, 87%, 1);
   --color-grey-500: hsla(214, 23%, 56%, 1);
   --color-grey-700: hsla(212, 29%, 36%, 1);
-  --color-grey-800: hsla(212, 32%, 25%, 1);
-  --color-grey-900: hsla(211, 53%, 11%, 1);
+  --color-grey-800: rgb(43, 62, 84);
+  --color-grey-900: rgb(13, 28, 43);
+
+  --gradient-dark: linear-gradient(200deg, rgba(10, 44, 72, 0.85) 70%, rgba(19, 82, 134, .9) 100%);
 
   --font-size-sm: 0.75rem; // 12px
   --font-size: 1rem; // 16px
@@ -58,6 +60,7 @@ $breakpoint-lg: 1400px;
   --font-weight: 300;
 
   // dark/light
+  --header-color: linear-gradient(200deg, rgba(10, 44, 72, 1) 40%, rgba(19, 82, 134, 1) 100%);
   --body-color: var(--color-grey-100);
   --body-color-dark: var(--color-grey-700);
   --text-color: var(--color-grey-800);

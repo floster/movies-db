@@ -1,8 +1,14 @@
 .app-header {
-    background-color: var(--color-secondary-darken);
-    box-shadow: var(--shadow-md);
+    background: rgb(13, 28, 43);
+    background: var(--header-color);
+    box-shadow: var(--shadow);
     padding-top: var(--gap-xs);
     padding-bottom: var(--gap-xs);
+
+    @include media(lg) {
+        padding-top: var(--gap-sm);
+        padding-bottom: var(--gap-sm);
+    }
 
     &__inner {
         display: flex;
@@ -16,7 +22,7 @@
         }
 
         @include media(md) {
-            height: var(--control-height-lg);
+            height: var(--control-height-md);
         }
     }
 
