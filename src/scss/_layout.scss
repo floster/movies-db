@@ -21,6 +21,17 @@
     @include media(xl) {
         gap: var(--gap-xl);
     }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-lg);
+        min-width: 1px;
+
+        @include media(lg) {
+            gap: var(--gap-xl);
+        }
+    }
 }
 
 .l-movies-list {

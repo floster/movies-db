@@ -1,0 +1,35 @@
+.app-section {
+    display: flex;
+    flex-direction: column;
+
+    &.m-random_media &__header {
+        @include media(lg) {
+            margin-bottom: calc(var(--gap-sm) * -1);
+        }
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+
+        .button {
+            margin-right: auto;
+        }
+    }
+
+    &__title {
+        font-size: var(--font-size-4);
+        font-weight: bold;
+        color: var(--color-secondary-dimmed);
+        text-align: right;
+
+        @include media(lg) {
+            font-size: var(--font-size-2);
+        }
+
+        @include media(xl) {
+            font-size: var(--font-size-1);
+        }
+    }
+}

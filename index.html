@@ -89,41 +89,200 @@
           </div>
         </div>
       </aside>
-      <main class="app-main">
-        <section class="random-media media-hero" style="--backdrop-image: url(./assets/backdrop_light.png)">
-          <picture class="media-hero__picture">
-            <source srcset="./src/assets/poster_bOFaAXmWWXC3Rbv4u4uM9ZSzRXP.png" media="(min-width: 744px)">
-            <source srcset="./src/assets/poster_fiVW06jE7z9YnO4trhaMEdclSiC.png" media="(min-width: 1024px)">
-            <img class="media-hero__img" src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png"
-              alt="2 Fast 2 Furious poster">
-          </picture>
-          <div class="media-hero__content">
-            <h2 class="media-hero__title">The Fast and the Furious Collection</h2>
-            <p class="media-hero__description">An action film series centered on illegal street racing and heists.</p>
+      <main class="l-main__content">
+        <section class="app-section m-random_media">
+          <header class="app-section__header">
+            <h2 class="app-section__title">random collection</h2>
+          </header>
+          <div class="media-hero" style="--backdrop-image: url(./assets/backdrop_light.png)">
+            <picture class="media-hero__picture">
+              <source srcset="./src/assets/poster_bOFaAXmWWXC3Rbv4u4uM9ZSzRXP.png" media="(min-width: 744px)">
+              <source srcset="./src/assets/poster_fiVW06jE7z9YnO4trhaMEdclSiC.png" media="(min-width: 1024px)">
+              <img class="media-hero__img" src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png"
+                alt="2 Fast 2 Furious poster">
+            </picture>
+            <div class="media-hero__content">
+              <h2 class="media-hero__title">The Fast and the Furious Collection</h2>
+              <p class="media-hero__description">An action film series centered on illegal street racing and heists.</p>
+            </div>
+            <footer class="media-hero__footer">
+              <div class="app-progress" style="--value: 65" role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">6.5</div>
+              <span class="icon-labeled">
+                <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
+                  <use href="src/assets/sprite.svg#stack" />
+                </svg>
+                <span class="icon-labeled__label">10 parts</span>
+              </span>
+            </footer>
           </div>
-          <footer class="media-hero__footer">
-            <div class="app-progress" style="--value: 65" role="progressbar" aria-valuenow="75" aria-valuemin="0"
-              aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">6.5</div>
-            <span class="icon-labeled">
-              <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
-                <use href="src/assets/sprite.svg#stack" />
-              </svg>
-              <span class="icon-labeled__label">10 parts</span>
-            </span>
-          </footer>
         </section>
-        <article class="movie-card">
-          <picture class="movie-card__picture">
-            <img src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png" alt="2 fast 2 furious poster"
-              class="movie-card__img">
-          </picture>
-          <div class="movie-card__content">
-            <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-              aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
-            <p class="movie-card__label">2003</p>
-            <h3 class="movie-card__title">2 Fast 2 Furious</h3>
+
+        <section class="app-section">
+          <header class="app-section__header">
+            <a href="/" class="button">explore all</a>
+            <h2 class="app-section__title">trending movies</h2>
+          </header>
+          <div class="app-carousel has-scroll">
+            <div class="app-carousel__track">
+              <div class="app-carousel__item movie-card">
+                <picture class="movie-card__picture">
+                  <img src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png" alt="2 fast 2 furious poster"
+                    class="movie-card__img">
+                </picture>
+                <div class="movie-card__content">
+                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                  <p class="movie-card__label">2003</p>
+                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
+                </div>
+              </div>
+              <div class="app-carousel__item movie-card">
+                <picture class="movie-card__picture">
+                  <img src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png" alt="2 fast 2 furious poster"
+                    class="movie-card__img">
+                </picture>
+                <div class="movie-card__content">
+                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                  <p class="movie-card__label">2003</p>
+                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
+                </div>
+              </div>
+              <div class="app-carousel__item movie-card">
+                <picture class="movie-card__picture">
+                  <img src="./src/assets/poster_bOFaAXmWWXC3Rbv4u4uM9ZSzRXP.png" alt="2 fast 2 furious poster"
+                    class="movie-card__img">
+                </picture>
+                <div class="movie-card__content">
+                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                  <p class="movie-card__label">2003</p>
+                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
+                </div>
+              </div>
+              <div class="app-carousel__item movie-card">
+                <picture class="movie-card__picture">
+                  <img src="./src/assets/poster_dImWM7GJqryWJO9LHa3XQ8DD5NH.png" alt="2 fast 2 furious poster"
+                    class="movie-card__img">
+                </picture>
+                <div class="movie-card__content">
+                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                  <p class="movie-card__label">2003</p>
+                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
+                </div>
+              </div>
+              <div class="app-carousel__item movie-card">
+                <picture class="movie-card__picture">
+                  <img src="./src/assets/poster_fiVW06jE7z9YnO4trhaMEdclSiC.png" alt="2 fast 2 furious poster"
+                    class="movie-card__img">
+                </picture>
+                <div class="movie-card__content">
+                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                  <p class="movie-card__label">2003</p>
+                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
+                </div>
+              </div>
+              <div class="app-carousel__item movie-card">
+                <picture class="movie-card__picture">
+                  <img src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png" alt="2 fast 2 furious poster"
+                    class="movie-card__img">
+                </picture>
+                <div class="movie-card__content">
+                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                  <p class="movie-card__label">2003</p>
+                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
+                </div>
+              </div>
+            </div>
           </div>
-        </article>
+        </section>
+
+        <section class="app-section">
+          <header class="app-section__header">
+            <a href="/" class="button">explore all</a>
+            <h2 class="app-section__title">trending TV shows</h2>
+          </header>
+          <div class="app-carousel has-scroll">
+            <div class="app-carousel__track">
+              <div class="app-carousel__item movie-card">
+                <picture class="movie-card__picture">
+                  <img src="./src/assets/poster_dImWM7GJqryWJO9LHa3XQ8DD5NH.png" alt="2 fast 2 furious poster"
+                    class="movie-card__img">
+                </picture>
+                <div class="movie-card__content">
+                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                  <p class="movie-card__label">2003</p>
+                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
+                </div>
+              </div>
+              <div class="app-carousel__item movie-card">
+                <picture class="movie-card__picture">
+                  <img src="./src/assets/poster_fiVW06jE7z9YnO4trhaMEdclSiC.png" alt="2 fast 2 furious poster"
+                    class="movie-card__img">
+                </picture>
+                <div class="movie-card__content">
+                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                  <p class="movie-card__label">2003</p>
+                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
+                </div>
+              </div>
+              <div class="app-carousel__item movie-card">
+                <picture class="movie-card__picture">
+                  <img src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png" alt="2 fast 2 furious poster"
+                    class="movie-card__img">
+                </picture>
+                <div class="movie-card__content">
+                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                  <p class="movie-card__label">2003</p>
+                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
+                </div>
+              </div>
+              <div class="app-carousel__item movie-card">
+                <picture class="movie-card__picture">
+                  <img src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png" alt="2 fast 2 furious poster"
+                    class="movie-card__img">
+                </picture>
+                <div class="movie-card__content">
+                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                  <p class="movie-card__label">2003</p>
+                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
+                </div>
+              </div>
+              <div class="app-carousel__item movie-card">
+                <picture class="movie-card__picture">
+                  <img src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png" alt="2 fast 2 furious poster"
+                    class="movie-card__img">
+                </picture>
+                <div class="movie-card__content">
+                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                  <p class="movie-card__label">2003</p>
+                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
+                </div>
+              </div>
+              <div class="app-carousel__item movie-card">
+                <picture class="movie-card__picture">
+                  <img src="./src/assets/poster_bOFaAXmWWXC3Rbv4u4uM9ZSzRXP.png" alt="2 fast 2 furious poster"
+                    class="movie-card__img">
+                </picture>
+                <div class="movie-card__content">
+                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                  <p class="movie-card__label">2003</p>
+                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   </div>

@@ -13,8 +13,8 @@
     text-decoration: none;
 
     &:hover {
-        filter: brightness(.98);
-        box-shadow: var(--shadow-md);
+        filter: brightness(.99);
+        box-shadow: var(--shadow);
     }
 
     &:active {
