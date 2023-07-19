@@ -13,7 +13,7 @@
     grid-template-areas:
         "image content"
         "image footer";
-    gap: var(--gap-xs);
+    gap: var(--gap-sm) var(--gap-xs);
     padding: var(--gap-sm);
 
     @include media(lg) {
@@ -43,7 +43,7 @@
 
     &__title {
         color: var(--color-grey-100);
-        font-size: var(--font-size-5);
+        font-size: var(--font-size);
 
         @include media(lg) {
             font-size: var(--font-size-4);
@@ -56,7 +56,12 @@
 
     &__description {
         color: var(--color-grey-200);
+        font-size: var(--font-size-sm);
         font-style: italic;
+
+        @include media(md) {
+            font-size: var(--font-size);
+        }
     }
 
     &__footer {

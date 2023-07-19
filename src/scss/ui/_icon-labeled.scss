@@ -9,8 +9,12 @@
     }
 
     &__label {
-        font-size: var(--font-size);
+        font-size: var(--font-size-sm);
         font-weight: bold;
+
+        @include media(md) {
+            font-size: var(--font-size);
+        }
     }
 
     .svg-icon {
