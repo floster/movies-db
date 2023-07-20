@@ -1,18 +1,27 @@
-.l-main {
+.container {
+    width: calc(100% - var(--container-gap) * 2);
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.l-content {
     display: grid;
-    grid-template-columns: 1fr;
     gap: var(--gap-lg);
     margin-top: var(--gap-sm);
     margin-bottom: var(--gap-sm);
     padding: var(--gap-xs);
 
+    border-radius: var(--radius);
+    background-color: var(--color-white);
+    box-shadow: var(--shadow);
+
     @include media(md) {
-        grid-template-columns: 1fr 2fr;
-        gap: var(--gap-sm);
+        gap: var(--gap-sm) var(--gap-lg);
     }
 
     @include media(lg) {
-        gap: var(--gap-md);
+        gap: var(--gap-md) var(--gap-xl);
         margin-top: var(--gap-md);
         margin-bottom: var(--gap-md);
         padding: var(--gap-sm);
@@ -22,19 +31,18 @@
         gap: var(--gap-xl);
     }
 
-    &__content {
-        display: flex;
-        flex-direction: column;
-        gap: var(--gap-lg);
-        min-width: 1px;
+    &.m-main_page {
+        grid-template-columns: 1fr;
 
-        @include media(lg) {
-            gap: var(--gap-xl);
+        @include media(md) {
+            grid-template-columns: 1fr 2fr;
         }
     }
+
 }
 
-.l-movies-list {
+// sidebar on main page
+.l-movies_list {
     display: flex;
     flex-direction: column;
     gap: var(--gap-sm);
@@ -44,4 +52,42 @@
     @include media(md) {
         max-height: initial;
     }
+}
+
+// content on main page
+.l-main_page_content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg);
+    min-width: 1px;
+
+    @include media(lg) {
+        gap: var(--gap-xl);
+    }
+}
+
+.l-tiles_grid {
+    display: grid;
+    gap: var(--gap-xs);
+
+    @include media(md) {
+        gap: var(--gap-sm);
+    }
+
+    &.m-movies {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+
+        @include media(md) {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+    }
+
+    &.m-people {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+
+        @include media(md) {
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        }
+    }
+
 }

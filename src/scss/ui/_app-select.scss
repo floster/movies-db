@@ -1,38 +1,56 @@
 .app-select {
     position: relative;
-    height: var(--control-height-lg);
-    border-radius: var(--radius);
-    background-color: var(--color-white);
-    font-size: var(--font-size-4);
-    font-weight: bold;
-    line-height: 1;
-    overflow: hidden;
-
-    @include media(lg) {
-        height: var(--control-height-xl);
-        font-size: var(--font-size-2);
-    }
-
-    @include media(xl) {
-        font-size: var(--font-size-1);
-    }
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
 
     select {
-        width: 100%;
-        height: 100%;
-        appearance: none;
-        padding-right: var(--gap-lg);
+        height: var(--control-height-lg);
+        width: auto;
+        padding: 0 var(--gap-md);
+        background-color: var(--color-grey-100);
         border: none;
+        border-radius: var(--radius);
+        font-size: var(--font-size);
+        color: var(--color-grey-700);
+    }
+
+    &.m-huge {
+        height: var(--control-height-lg);
+        border-radius: var(--radius);
         background-color: var(--color-white);
-        font-size: inherit;
-        color: var(--color-secondary-dimmed);
+        font-size: var(--font-size-4);
+        font-weight: bold;
+        line-height: 1;
+        overflow: hidden;
 
         @include media(lg) {
-            padding-right: var(--gap-xl);
+            height: var(--control-height-xl);
+            font-size: var(--font-size-2);
         }
 
-        option {
-            font-size: .5em;
+        @include media(xl) {
+            font-size: var(--font-size-1);
+        }
+
+        select {
+            width: 100%;
+            height: 100%;
+            appearance: none;
+            padding: 0;
+            padding-right: var(--gap-lg);
+            background-color: var(--color-white);
+            font-size: inherit;
+            font-weight: bold;
+            color: var(--color-secondary-dimmed);
+
+            @include media(lg) {
+                padding-right: var(--gap-xl);
+            }
+
+            option {
+                font-size: .5em;
+            }
         }
     }
 

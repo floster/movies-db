@@ -1,5 +1,6 @@
 .icon-labeled {
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
     gap: var(--gap-xs);
     color: var(--color-secondary);
@@ -11,6 +12,7 @@
     &__label {
         font-size: var(--font-size-sm);
         font-weight: bold;
+        white-space: nowrap;
 
         @include media(md) {
             font-size: var(--font-size);

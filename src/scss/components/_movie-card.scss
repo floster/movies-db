@@ -34,8 +34,13 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        gap: var(--gap-sm);
-        padding: var(--gap-sm);
+        gap: var(--gap-xs);
+        padding: var(--gap-xs) var(--gap-sm) var(--gap-sm);
+
+        @include media(md) {
+            gap: var(--gap-sm);
+            padding: var(--gap-sm);
+        }
     }
 
     &__label {
@@ -44,8 +49,12 @@
     }
 
     &__title {
-        font-size: var(--font-size);
+        font-size: var(--font-size-sm);
         font-weight: bold;
+
+        @include media(md) {
+            font-size: var(--font-size);
+        }
     }
 
     .app-progress {

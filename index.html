@@ -13,15 +13,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300;0,700;1,300&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="./src/app.scss" />
-  <title>Movies DB</title>
+  <title>index - Movies DB</title>
 </head>
 
 <body class="">
-  <!-- <div id="app" class="container"></div> -->
-  <script type="module" src="/src/app.ts"></script>
-
-  <header class="app-header container">
-    <div class="app-header__inner container__inner">
+  <header class="app-header">
+    <div class="app-header__inner container">
       <a class="app-header__logo flex" href="/" aria-label="go to homepage">
         <svg class="app-header__logo-svg" viewBox="0 0 727 97" height="20" aria-hidden="true">
           <use href="src/assets/sprite.svg#logo_light" />
@@ -42,143 +39,143 @@
       </nav>
     </div>
   </header>
-  <div class="container">
-    <div class="l-main app-content container__inner">
-      <aside class="sidebar">
-        <div class="app-select m-custom" aria-labelledby="moviesTypeSelect">
-          <span class="app-select__arrow" aria-hidden="true">
-            <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
-              <use href="src/assets/sprite.svg#chevron_down" />
+  <div class="l-content m-main_page container">
+    <aside class="sidebar">
+      <div class="app-select m-huge" aria-labelledby="moviesTypeSelect">
+        <span class="app-select__arrow" aria-hidden="true">
+          <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
+            <use href="src/assets/sprite.svg#chevron_down" />
+          </svg>
+        </span>
+        <select name="movies type" id="moviesTypeSelect" aria-label="current movies type">
+          <option value="1" selected>now playing</option>
+          <option value="2">popular</option>
+          <option value="3">top rated</option>
+          <option value="4">upcoming</option>
+        </select>
+      </div>
+      <div class="l-movies_list" role="list">
+        <div class="movie-row" role="listitem" aria-label="2 Fast 2 Furious">
+          <img class="movie-row__img" src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png"
+            alt="2 Fast 2 Furious poster">
+          <div class="movie-row__content">
+            <h3 class="movie-row__title">2 Fast 2 Furious</h3>
+            <p class="movie-row__description">2003</p>
+          </div>
+          <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
+            <input type="checkbox" name="toggleFavoriteCheckbox" id="">
+            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="src/assets/sprite.svg#fire" />
             </svg>
-          </span>
-          <select name="movies type" id="moviesTypeSelect" aria-label="current movies type">
-            <option value="1" selected>now playing</option>
-            <option value="2">popular</option>
-            <option value="3">top rated</option>
-            <option value="4">upcoming</option>
-          </select>
+          </label>
         </div>
-        <div class="l-movies-list" role="list">
-          <div class="movie-row" role="listitem" aria-label="2 Fast 2 Furious">
-            <img class="movie-row__img" src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png"
-              alt="2 Fast 2 Furious poster">
-            <div class="movie-row__content">
-              <h3 class="movie-row__title">2 Fast 2 Furious</h3>
-              <p class="movie-row__description">2003</p>
-            </div>
-            <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
-              <input type="checkbox" name="toggleFavoriteCheckbox" id="">
-              <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                <use href="src/assets/sprite.svg#fire" />
-              </svg>
-            </label>
+        <div class="movie-row" role="listitem" aria-label="The Fast and the Furious: Tokyo Drift">
+          <img class="movie-row__img" src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png"
+            alt="The Fast and the Furious: Tokyo Drift poster">
+          <div class="movie-row__content">
+            <h3 class="movie-row__title">The Fast and the Furious: Tokyo Drift</h3>
+            <p class="movie-row__description">2006</p>
           </div>
-          <div class="movie-row" role="listitem" aria-label="The Fast and the Furious: Tokyo Drift">
-            <img class="movie-row__img" src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png"
-              alt="The Fast and the Furious: Tokyo Drift poster">
-            <div class="movie-row__content">
-              <h3 class="movie-row__title">The Fast and the Furious: Tokyo Drift</h3>
-              <p class="movie-row__description">2006</p>
-            </div>
-            <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
-              <input type="checkbox" name="toggleFavoriteCheckbox" id="" checked>
-              <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                <use href="src/assets/sprite.svg#fire" />
-              </svg>
-            </label>
-          </div>
-          <div class="movie-row" role="listitem" aria-label="2 Fast 2 Furious">
-            <img class="movie-row__img" src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png"
-              alt="2 Fast 2 Furious poster">
-            <div class="movie-row__content">
-              <h3 class="movie-row__title">2 Fast 2 Furious</h3>
-              <p class="movie-row__description">2003</p>
-            </div>
-            <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
-              <input type="checkbox" name="toggleFavoriteCheckbox" id="">
-              <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                <use href="src/assets/sprite.svg#fire" />
-              </svg>
-            </label>
-          </div>
-          <div class="movie-row" role="listitem" aria-label="The Fast and the Furious: Tokyo Drift">
-            <img class="movie-row__img" src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png"
-              alt="The Fast and the Furious: Tokyo Drift poster">
-            <div class="movie-row__content">
-              <h3 class="movie-row__title">The Fast and the Furious: Tokyo Drift</h3>
-              <p class="movie-row__description">2006</p>
-            </div>
-            <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
-              <input type="checkbox" name="toggleFavoriteCheckbox" id="" checked>
-              <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                <use href="src/assets/sprite.svg#fire" />
-              </svg>
-            </label>
-          </div>
-          <div class="movie-row" role="listitem" aria-label="2 Fast 2 Furious">
-            <img class="movie-row__img" src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png"
-              alt="2 Fast 2 Furious poster">
-            <div class="movie-row__content">
-              <h3 class="movie-row__title">2 Fast 2 Furious</h3>
-              <p class="movie-row__description">2003</p>
-            </div>
-            <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
-              <input type="checkbox" name="toggleFavoriteCheckbox" id="">
-              <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                <use href="src/assets/sprite.svg#fire" />
-              </svg>
-            </label>
-          </div>
-          <div class="movie-row" role="listitem" aria-label="The Fast and the Furious: Tokyo Drift">
-            <img class="movie-row__img" src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png"
-              alt="The Fast and the Furious: Tokyo Drift poster">
-            <div class="movie-row__content">
-              <h3 class="movie-row__title">The Fast and the Furious: Tokyo Drift</h3>
-              <p class="movie-row__description">2006</p>
-            </div>
-            <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
-              <input type="checkbox" name="toggleFavoriteCheckbox" id="" checked>
-              <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                <use href="src/assets/sprite.svg#fire" />
-              </svg>
-            </label>
-          </div>
-          <div class="movie-row" role="listitem" aria-label="2 Fast 2 Furious">
-            <img class="movie-row__img" src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png"
-              alt="2 Fast 2 Furious poster">
-            <div class="movie-row__content">
-              <h3 class="movie-row__title">2 Fast 2 Furious</h3>
-              <p class="movie-row__description">2003</p>
-            </div>
-            <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
-              <input type="checkbox" name="toggleFavoriteCheckbox" id="">
-              <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                <use href="src/assets/sprite.svg#fire" />
-              </svg>
-            </label>
-          </div>
-          <div class="movie-row" role="listitem" aria-label="The Fast and the Furious: Tokyo Drift">
-            <img class="movie-row__img" src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png"
-              alt="The Fast and the Furious: Tokyo Drift poster">
-            <div class="movie-row__content">
-              <h3 class="movie-row__title">The Fast and the Furious: Tokyo Drift</h3>
-              <p class="movie-row__description">2006</p>
-            </div>
-            <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
-              <input type="checkbox" name="toggleFavoriteCheckbox" id="" checked>
-              <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                <use href="src/assets/sprite.svg#fire" />
-              </svg>
-            </label>
-          </div>
+          <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
+            <input type="checkbox" name="toggleFavoriteCheckbox" id="" checked>
+            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="src/assets/sprite.svg#fire" />
+            </svg>
+          </label>
         </div>
-      </aside>
-      <main class="l-main__content">
-        <section class="app-section m-random_media">
-          <header class="app-section__header">
-            <h2 class="app-section__title">random collection</h2>
-          </header>
-          <div class="media-hero" style="--backdrop-image: url(./assets/backdrop_light.png)">
+        <div class="movie-row" role="listitem" aria-label="2 Fast 2 Furious">
+          <img class="movie-row__img" src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png"
+            alt="2 Fast 2 Furious poster">
+          <div class="movie-row__content">
+            <h3 class="movie-row__title">2 Fast 2 Furious</h3>
+            <p class="movie-row__description">2003</p>
+          </div>
+          <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
+            <input type="checkbox" name="toggleFavoriteCheckbox" id="">
+            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="src/assets/sprite.svg#fire" />
+            </svg>
+          </label>
+        </div>
+        <div class="movie-row" role="listitem" aria-label="The Fast and the Furious: Tokyo Drift">
+          <img class="movie-row__img" src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png"
+            alt="The Fast and the Furious: Tokyo Drift poster">
+          <div class="movie-row__content">
+            <h3 class="movie-row__title">The Fast and the Furious: Tokyo Drift</h3>
+            <p class="movie-row__description">2006</p>
+          </div>
+          <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
+            <input type="checkbox" name="toggleFavoriteCheckbox" id="" checked>
+            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="src/assets/sprite.svg#fire" />
+            </svg>
+          </label>
+        </div>
+        <div class="movie-row" role="listitem" aria-label="2 Fast 2 Furious">
+          <img class="movie-row__img" src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png"
+            alt="2 Fast 2 Furious poster">
+          <div class="movie-row__content">
+            <h3 class="movie-row__title">2 Fast 2 Furious</h3>
+            <p class="movie-row__description">2003</p>
+          </div>
+          <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
+            <input type="checkbox" name="toggleFavoriteCheckbox" id="">
+            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="src/assets/sprite.svg#fire" />
+            </svg>
+          </label>
+        </div>
+        <div class="movie-row" role="listitem" aria-label="The Fast and the Furious: Tokyo Drift">
+          <img class="movie-row__img" src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png"
+            alt="The Fast and the Furious: Tokyo Drift poster">
+          <div class="movie-row__content">
+            <h3 class="movie-row__title">The Fast and the Furious: Tokyo Drift</h3>
+            <p class="movie-row__description">2006</p>
+          </div>
+          <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
+            <input type="checkbox" name="toggleFavoriteCheckbox" id="" checked>
+            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="src/assets/sprite.svg#fire" />
+            </svg>
+          </label>
+        </div>
+        <div class="movie-row" role="listitem" aria-label="2 Fast 2 Furious">
+          <img class="movie-row__img" src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png"
+            alt="2 Fast 2 Furious poster">
+          <div class="movie-row__content">
+            <h3 class="movie-row__title">2 Fast 2 Furious</h3>
+            <p class="movie-row__description">2003</p>
+          </div>
+          <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
+            <input type="checkbox" name="toggleFavoriteCheckbox" id="">
+            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="src/assets/sprite.svg#fire" />
+            </svg>
+          </label>
+        </div>
+        <div class="movie-row" role="listitem" aria-label="The Fast and the Furious: Tokyo Drift">
+          <img class="movie-row__img" src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png"
+            alt="The Fast and the Furious: Tokyo Drift poster">
+          <div class="movie-row__content">
+            <h3 class="movie-row__title">The Fast and the Furious: Tokyo Drift</h3>
+            <p class="movie-row__description">2006</p>
+          </div>
+          <label class="movie-row__button favorite-toggle" aria-label="add movie to favorites">
+            <input type="checkbox" name="toggleFavoriteCheckbox" id="" checked>
+            <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="src/assets/sprite.svg#fire" />
+            </svg>
+          </label>
+        </div>
+      </div>
+    </aside>
+    <main class="l-main_page_content">
+      <section class="app-section m-random_media">
+        <header class="app-section__header">
+          <h2 class="app-section__title">random collection</h2>
+        </header>
+        <div class="media-hero m-random" style="--backdrop-image: url(./assets/backdrop_light.png)">
+          <div class="media-hero__inner">
             <picture class="media-hero__picture">
               <source srcset="./src/assets/poster_bOFaAXmWWXC3Rbv4u4uM9ZSzRXP.png" media="(min-width: 744px)">
               <source srcset="./src/assets/poster_fiVW06jE7z9YnO4trhaMEdclSiC.png" media="(min-width: 1024px)">
@@ -187,188 +184,198 @@
             </picture>
             <div class="media-hero__content">
               <h2 class="media-hero__title">The Fast and the Furious Collection</h2>
-              <p class="media-hero__description">An action film series centered on illegal street racing and heists.</p>
+              <p class="media-hero__description">An action film series centered on illegal street racing and heists.
+              </p>
             </div>
             <footer class="media-hero__footer">
-              <div class="app-progress" style="--value: 65" role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">6.5</div>
-              <span class="icon-labeled">
-                <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
-                  <use href="src/assets/sprite.svg#stack" />
+              <div class="media-hero__stats">
+                <div class="app-progress" style="--value: 65" role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                  aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">6.5</div>
+                <span class="icon-labeled">
+                  <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
+                    <use href="src/assets/sprite.svg#stack" />
+                  </svg>
+                  <span class="icon-labeled__label">10 parts</span>
+                </span>
+              </div>
+
+              <label class="favorite-toggle" aria-label="add movie to favorites">
+                <input type="checkbox" name="toggleFavoriteCheckbox" id="">
+                <svg class="svg-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                  <use href="src/assets/sprite.svg#fire" />
                 </svg>
-                <span class="icon-labeled__label">10 parts</span>
-              </span>
+              </label>
             </footer>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="app-section">
-          <header class="app-section__header">
-            <a href="/" class="button">explore all</a>
-            <h2 class="app-section__title">trending movies</h2>
-          </header>
-          <div class="app-carousel has-scroll">
-            <div class="app-carousel__track">
-              <div class="app-carousel__item movie-card">
-                <picture class="movie-card__picture">
-                  <img src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png" alt="2 fast 2 furious poster"
-                    class="movie-card__img">
-                </picture>
-                <div class="movie-card__content">
-                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
-                  <p class="movie-card__label">2003</p>
-                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
-                </div>
+      <section class="app-section">
+        <header class="app-section__header">
+          <a href="/" class="button">explore all</a>
+          <h2 class="app-section__title">trending movies</h2>
+        </header>
+        <div class="app-carousel has-scroll">
+          <div class="app-carousel__track">
+            <div class="app-carousel__item movie-card">
+              <picture class="movie-card__picture">
+                <img src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png" alt="2 fast 2 furious poster"
+                  class="movie-card__img">
+              </picture>
+              <div class="movie-card__content">
+                <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                  aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                <p class="movie-card__label">2003</p>
+                <h3 class="movie-card__title">2 Fast 2 Furious</h3>
               </div>
-              <div class="app-carousel__item movie-card">
-                <picture class="movie-card__picture">
-                  <img src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png" alt="2 fast 2 furious poster"
-                    class="movie-card__img">
-                </picture>
-                <div class="movie-card__content">
-                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
-                  <p class="movie-card__label">2003</p>
-                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
-                </div>
+            </div>
+            <div class="app-carousel__item movie-card">
+              <picture class="movie-card__picture">
+                <img src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png" alt="2 fast 2 furious poster"
+                  class="movie-card__img">
+              </picture>
+              <div class="movie-card__content">
+                <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                  aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                <p class="movie-card__label">2003</p>
+                <h3 class="movie-card__title">2 Fast 2 Furious</h3>
               </div>
-              <div class="app-carousel__item movie-card">
-                <picture class="movie-card__picture">
-                  <img src="./src/assets/poster_bOFaAXmWWXC3Rbv4u4uM9ZSzRXP.png" alt="2 fast 2 furious poster"
-                    class="movie-card__img">
-                </picture>
-                <div class="movie-card__content">
-                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
-                  <p class="movie-card__label">2003</p>
-                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
-                </div>
+            </div>
+            <div class="app-carousel__item movie-card">
+              <picture class="movie-card__picture">
+                <img src="./src/assets/poster_bOFaAXmWWXC3Rbv4u4uM9ZSzRXP.png" alt="2 fast 2 furious poster"
+                  class="movie-card__img">
+              </picture>
+              <div class="movie-card__content">
+                <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                  aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                <p class="movie-card__label">2003</p>
+                <h3 class="movie-card__title">2 Fast 2 Furious</h3>
               </div>
-              <div class="app-carousel__item movie-card">
-                <picture class="movie-card__picture">
-                  <img src="./src/assets/poster_dImWM7GJqryWJO9LHa3XQ8DD5NH.png" alt="2 fast 2 furious poster"
-                    class="movie-card__img">
-                </picture>
-                <div class="movie-card__content">
-                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
-                  <p class="movie-card__label">2003</p>
-                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
-                </div>
+            </div>
+            <div class="app-carousel__item movie-card">
+              <picture class="movie-card__picture">
+                <img src="./src/assets/poster_dImWM7GJqryWJO9LHa3XQ8DD5NH.png" alt="2 fast 2 furious poster"
+                  class="movie-card__img">
+              </picture>
+              <div class="movie-card__content">
+                <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                  aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                <p class="movie-card__label">2003</p>
+                <h3 class="movie-card__title">2 Fast 2 Furious</h3>
               </div>
-              <div class="app-carousel__item movie-card">
-                <picture class="movie-card__picture">
-                  <img src="./src/assets/poster_fiVW06jE7z9YnO4trhaMEdclSiC.png" alt="2 fast 2 furious poster"
-                    class="movie-card__img">
-                </picture>
-                <div class="movie-card__content">
-                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
-                  <p class="movie-card__label">2003</p>
-                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
-                </div>
+            </div>
+            <div class="app-carousel__item movie-card">
+              <picture class="movie-card__picture">
+                <img src="./src/assets/poster_fiVW06jE7z9YnO4trhaMEdclSiC.png" alt="2 fast 2 furious poster"
+                  class="movie-card__img">
+              </picture>
+              <div class="movie-card__content">
+                <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                  aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                <p class="movie-card__label">2003</p>
+                <h3 class="movie-card__title">2 Fast 2 Furious</h3>
               </div>
-              <div class="app-carousel__item movie-card">
-                <picture class="movie-card__picture">
-                  <img src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png" alt="2 fast 2 furious poster"
-                    class="movie-card__img">
-                </picture>
-                <div class="movie-card__content">
-                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
-                  <p class="movie-card__label">2003</p>
-                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
-                </div>
+            </div>
+            <div class="app-carousel__item movie-card">
+              <picture class="movie-card__picture">
+                <img src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png" alt="2 fast 2 furious poster"
+                  class="movie-card__img">
+              </picture>
+              <div class="movie-card__content">
+                <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                  aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                <p class="movie-card__label">2003</p>
+                <h3 class="movie-card__title">2 Fast 2 Furious</h3>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="app-section">
-          <header class="app-section__header">
-            <a href="/" class="button">explore all</a>
-            <h2 class="app-section__title">trending TV shows</h2>
-          </header>
-          <div class="app-carousel has-scroll">
-            <div class="app-carousel__track">
-              <div class="app-carousel__item movie-card">
-                <picture class="movie-card__picture">
-                  <img src="./src/assets/poster_dImWM7GJqryWJO9LHa3XQ8DD5NH.png" alt="2 fast 2 furious poster"
-                    class="movie-card__img">
-                </picture>
-                <div class="movie-card__content">
-                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
-                  <p class="movie-card__label">2003</p>
-                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
-                </div>
+      <section class="app-section">
+        <header class="app-section__header">
+          <a href="/" class="button">explore all</a>
+          <h2 class="app-section__title">trending TV shows</h2>
+        </header>
+        <div class="app-carousel has-scroll">
+          <div class="app-carousel__track">
+            <div class="app-carousel__item movie-card">
+              <picture class="movie-card__picture">
+                <img src="./src/assets/poster_dImWM7GJqryWJO9LHa3XQ8DD5NH.png" alt="2 fast 2 furious poster"
+                  class="movie-card__img">
+              </picture>
+              <div class="movie-card__content">
+                <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                  aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                <p class="movie-card__label">2003</p>
+                <h3 class="movie-card__title">2 Fast 2 Furious</h3>
               </div>
-              <div class="app-carousel__item movie-card">
-                <picture class="movie-card__picture">
-                  <img src="./src/assets/poster_fiVW06jE7z9YnO4trhaMEdclSiC.png" alt="2 fast 2 furious poster"
-                    class="movie-card__img">
-                </picture>
-                <div class="movie-card__content">
-                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
-                  <p class="movie-card__label">2003</p>
-                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
-                </div>
+            </div>
+            <div class="app-carousel__item movie-card">
+              <picture class="movie-card__picture">
+                <img src="./src/assets/poster_fiVW06jE7z9YnO4trhaMEdclSiC.png" alt="2 fast 2 furious poster"
+                  class="movie-card__img">
+              </picture>
+              <div class="movie-card__content">
+                <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                  aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                <p class="movie-card__label">2003</p>
+                <h3 class="movie-card__title">2 Fast 2 Furious</h3>
               </div>
-              <div class="app-carousel__item movie-card">
-                <picture class="movie-card__picture">
-                  <img src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png" alt="2 fast 2 furious poster"
-                    class="movie-card__img">
-                </picture>
-                <div class="movie-card__content">
-                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
-                  <p class="movie-card__label">2003</p>
-                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
-                </div>
+            </div>
+            <div class="app-carousel__item movie-card">
+              <picture class="movie-card__picture">
+                <img src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png" alt="2 fast 2 furious poster"
+                  class="movie-card__img">
+              </picture>
+              <div class="movie-card__content">
+                <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                  aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                <p class="movie-card__label">2003</p>
+                <h3 class="movie-card__title">2 Fast 2 Furious</h3>
               </div>
-              <div class="app-carousel__item movie-card">
-                <picture class="movie-card__picture">
-                  <img src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png" alt="2 fast 2 furious poster"
-                    class="movie-card__img">
-                </picture>
-                <div class="movie-card__content">
-                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
-                  <p class="movie-card__label">2003</p>
-                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
-                </div>
+            </div>
+            <div class="app-carousel__item movie-card">
+              <picture class="movie-card__picture">
+                <img src="./src/assets/poster_6nDZExrDKIXvSAghsFKVFRVJuSf.png" alt="2 fast 2 furious poster"
+                  class="movie-card__img">
+              </picture>
+              <div class="movie-card__content">
+                <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                  aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                <p class="movie-card__label">2003</p>
+                <h3 class="movie-card__title">2 Fast 2 Furious</h3>
               </div>
-              <div class="app-carousel__item movie-card">
-                <picture class="movie-card__picture">
-                  <img src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png" alt="2 fast 2 furious poster"
-                    class="movie-card__img">
-                </picture>
-                <div class="movie-card__content">
-                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
-                  <p class="movie-card__label">2003</p>
-                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
-                </div>
+            </div>
+            <div class="app-carousel__item movie-card">
+              <picture class="movie-card__picture">
+                <img src="./src/assets/poster_46xqGOwHbh2TH2avWSw3SMXph4E.png" alt="2 fast 2 furious poster"
+                  class="movie-card__img">
+              </picture>
+              <div class="movie-card__content">
+                <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                  aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                <p class="movie-card__label">2003</p>
+                <h3 class="movie-card__title">2 Fast 2 Furious</h3>
               </div>
-              <div class="app-carousel__item movie-card">
-                <picture class="movie-card__picture">
-                  <img src="./src/assets/poster_bOFaAXmWWXC3Rbv4u4uM9ZSzRXP.png" alt="2 fast 2 furious poster"
-                    class="movie-card__img">
-                </picture>
-                <div class="movie-card__content">
-                  <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-                    aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
-                  <p class="movie-card__label">2003</p>
-                  <h3 class="movie-card__title">2 Fast 2 Furious</h3>
-                </div>
+            </div>
+            <div class="app-carousel__item movie-card">
+              <picture class="movie-card__picture">
+                <img src="./src/assets/poster_bOFaAXmWWXC3Rbv4u4uM9ZSzRXP.png" alt="2 fast 2 furious poster"
+                  class="movie-card__img">
+              </picture>
+              <div class="movie-card__content">
+                <div class="app-progress" style="--value: 85" role="progressbar" aria-valuenow="85" aria-valuemin="0"
+                  aria-valuemax="100" aria-label="The Fast and the Furious Collection rating is 6.5">8.5</div>
+                <p class="movie-card__label">2003</p>
+                <h3 class="movie-card__title">2 Fast 2 Furious</h3>
               </div>
             </div>
           </div>
-        </section>
-      </main>
-    </div>
+        </div>
+      </section>
+    </main>
   </div>
 </body>
 

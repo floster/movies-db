@@ -10,7 +10,6 @@
     transition: box-shadow 0.1s linear;
 
     @include media(lg) {
-        gap: var(--gap-md);
         padding-right: var(--gap-xl);
     }
 
