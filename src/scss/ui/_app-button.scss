@@ -1,4 +1,4 @@
-.button {
+.app-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -79,6 +79,22 @@
                 height: var(--control-height-md);
                 width: var(--control-height-md);
             }
+        }
+    }
+
+    &.m-close {
+        @extend .m-icon;
+
+        color: inherit;
+        opacity: .25;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        .svg-icon {
+            width: var(--control-height-xs);
+            height: var(--control-height-xs);
         }
     }
 

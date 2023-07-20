@@ -25,13 +25,13 @@
         </svg>
       </a>
       <nav class="app-header__nav">
-        <a class="button m-open-favorites has-items m-icon m-primary" href="/" aria-label="go to favorites"
+        <a class="app-button m-open-favorites has-items m-icon m-primary" href="/" aria-label="go to favorites"
           data-favorites-count="88">
           <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
             <use href="src/assets/sprite.svg#fire" />
           </svg>
         </a>
-        <button class="button m-icon m-secondary" aria-label="open search dialog">
+        <button class="app-button m-icon m-secondary" aria-label="open search dialog">
           <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
             <use href="src/assets/sprite.svg#search" />
           </svg>
@@ -212,7 +212,7 @@
 
       <section class="app-section">
         <header class="app-section__header">
-          <a href="/" class="button">explore all</a>
+          <a href="/" class="app-button">explore all</a>
           <h2 class="app-section__title">trending movies</h2>
         </header>
         <div class="app-carousel has-scroll">
@@ -295,7 +295,7 @@
 
       <section class="app-section">
         <header class="app-section__header">
-          <a href="/" class="button">explore all</a>
+          <a href="/" class="app-button">explore all</a>
           <h2 class="app-section__title">trending TV shows</h2>
         </header>
         <div class="app-carousel has-scroll">
@@ -377,6 +377,23 @@
       </section>
     </main>
   </div>
+
+  <div class="app-alert m-info" role="alert">
+    <button class="app-alert__close app-button m-close" aria-label="Close alert">
+      <svg class="svg-icon" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+        <use href="src/assets/sprite.svg#close" />
+      </svg>
+    </button>
+    <p class="app-alert__message">
+      <strong>The Fast and The furious Collection</strong>
+      →
+      <svg class="svg-icon" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+        <use href="src/assets/sprite.svg#fire_solid" />
+      </svg>
+    </p>
+  </div>
+
+  <script type="module" src="./src/app.ts"></script>
 </body>
 
 </html>
