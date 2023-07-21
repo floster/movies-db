@@ -5,6 +5,9 @@ const appAlertCloseBtn = document.querySelector('.app-alert__close') as HTMLButt
 const searchDialog = document.querySelector('.search-dialog') as HTMLDialogElement;
 const openSearchDialogBtn = document.querySelector('.open-search') as HTMLButtonElement;
 
+const mediaHeroPlaceholder = document.querySelector('.media-hero__placeholder') as HTMLDivElement;
+const mediaHeroInner = document.querySelector('.media-hero__inner') as HTMLDivElement;
+
 /**
  * Opens the app alert
  * @param {boolean} delayedClose - true if need to close the alert after a delay of 3 seconds.
@@ -45,3 +48,9 @@ searchDialog.addEventListener('click', (event) => {
         searchDialog.close();
     }
 });
+
+// dummy show placeholder then content for media-hero
+setTimeout(() => {
+    mediaHeroPlaceholder.classList.add('is-hidden');
+    mediaHeroInner.classList.remove('is-hidden');
+}, 3000);

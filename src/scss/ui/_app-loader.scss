@@ -1,6 +1,7 @@
 .app-loader {
     --loader-size: 3rem;
 
+    display: none;
     width: var(--loader-size);
     height: var(--loader-size);
     border-radius: 50%;
@@ -13,7 +14,6 @@
     bottom: 0;
     margin: auto;
     z-index: 10;
-
 
     &::before,
     &::after {
@@ -30,6 +30,10 @@
         border-color: var(--color-grey-500);
         animation: prixClipFix 2s linear infinite, rotate 0.5s linear infinite reverse;
         inset: 6px;
+    }
+
+    &.is-visible {
+        display: block;
     }
 }
 

@@ -51,6 +51,11 @@
         }
     }
 
+    &__placeholder {
+        position: relative;
+        display: flex;
+    }
+
     &__picture {
         grid-area: image;
         display: flex;
@@ -149,6 +154,13 @@
 
         @include media(md) {
             width: auto;
+        }
+    }
+
+    &__placeholder,
+    &__inner {
+        &.is-hidden {
+            display: none;
         }
     }
 }
