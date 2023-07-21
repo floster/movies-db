@@ -1,6 +1,9 @@
 const favoriteTogglers = document.querySelectorAll('.favorite-toggle');
 const appAlert = document.querySelector('.app-alert') as HTMLElement;
-const appAlertCloseBtn = document.querySelector('.app-alert__close') as HTMLElement;
+const appAlertCloseBtn = document.querySelector('.app-alert__close') as HTMLButtonElement;
+
+const searchDialog = document.querySelector('.search-dialog') as HTMLDialogElement;
+const openSearchDialogBtn = document.querySelector('.open-search') as HTMLButtonElement;
 
 /**
  * Opens the app alert
@@ -31,3 +34,14 @@ favoriteTogglers.forEach((toggler) => {
     });
 });
 
+openSearchDialogBtn.addEventListener('click', _ => {
+    searchDialog.showModal();
+});
+
+// close dialog by clicking on the backdrop
+searchDialog.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    if (target.nodeName === 'DIALOG') {
+        searchDialog.close();
+    }
+});
