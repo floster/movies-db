@@ -1,6 +1,7 @@
 .movie-card {
     @include poster;
 
+    position: relative;
     display: flex;
     flex-direction: column;
     box-shadow: var(--shadow);
@@ -28,6 +29,13 @@
         width: 100%;
         height: auto;
         transition: transform 0.2s ease-out;
+    }
+
+    &__favorite {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
     }
 
     &__content {
