@@ -4,15 +4,16 @@
     display: flex;
     align-items: center;
     gap: var(--gap-sm);
-    padding-right: var(--gap-lg);
+    // padding-right: var(--gap-lg);
     width: 100%;
-    overflow: hidden;
     transition: box-shadow 0.1s linear;
+    border-radius: var(--radius);
 
     @include media(lg) {
-        padding-right: var(--gap-xl);
+        // padding-right: var(--gap-xl);
     }
 
+    &:focus-within,
     &:hover {
         box-shadow: var(--shadow);
     }
@@ -36,11 +37,12 @@
         overflow: hidden;
     }
 
-    &__title {
-        font-size: var(--font-size);
+    &__title,
+    &__label {
+        font-size: var(--tile-text-font-size);
     }
 
-    &__description {
+    &__label {
         color: var(--color-secondary);
     }
 

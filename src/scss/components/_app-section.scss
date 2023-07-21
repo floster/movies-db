@@ -6,12 +6,6 @@
         gap: var(--gap-sm);
     }
 
-    &.m-random_media &__header {
-        @include media(lg) {
-            margin-bottom: calc(var(--gap-xs) * -1);
-        }
-    }
-
     &.m-movie_crew {
         border-bottom-left-radius: var(--radius);
         border-bottom-right-radius: var(--radius);
@@ -35,6 +29,11 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-bottom: calc(var(--gap-xs) * -1);
+
+        &.m-align_right {
+            justify-content: flex-end;
+        }
 
         .button {
             margin-right: auto;
