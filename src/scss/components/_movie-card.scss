@@ -19,6 +19,16 @@
         transform: scale(1.04);
     }
 
+    &.m-collection {
+        box-shadow: var(--shadow-stack-grey);
+
+        &:focus-within,
+        &:hover {
+            box-shadow: var(--shadow-stack-secondary);
+            cursor: pointer;
+        }
+    }
+
     &__picture {
         @include poster;
 
