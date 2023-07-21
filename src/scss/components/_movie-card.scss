@@ -8,11 +8,13 @@
     max-width: 100%;
     transition: box-shadow 0.2s ease-out;
 
+    &:focus-within,
     &:hover {
         box-shadow: var(--shadow-md-secondary);
         cursor: pointer;
     }
 
+    &:focus-within &__img,
     &:hover &__img {
         transform: scale(1.04);
     }

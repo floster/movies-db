@@ -49,8 +49,29 @@ body {
   }
 }
 
+mark {
+  background-color: var(--color-accent);
+  color: var(--color-accent-darken);
+}
+
 img {
   height: auto;
+}
+
+input,
+button {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+
+  &:focus {
+    outline: 1px solid var(--color-secondary);
+    box-shadow: var(--shadow-md-secondary);
+  }
+
+  &:invalid {
+    outline: 1px solid var(--color-primary);
+    box-shadow: var(--shadow-md-primary);
+  }
 }
 
 h1,

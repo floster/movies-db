@@ -91,3 +91,13 @@
     }
 
 }
+
+.l-search_header {
+    margin-top: var(--gap-sm);
+    margin-bottom: var(--gap-sm);
+
+    @include media(lg) {
+        margin-top: var(--gap-lg);
+        margin-bottom: var(--gap-lg);
+    }
+}
