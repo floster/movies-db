@@ -34,7 +34,7 @@
         }
 
         @include media(lg) {
-            gap: var(--gap-sm);
+            gap: var(--gap-lg);
 
             padding-top: var(--gap-md);
             padding-bottom: var(--gap-md);

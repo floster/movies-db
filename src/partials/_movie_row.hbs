@@ -1,0 +1,9 @@
+<div class="movie-row" role="listitem" aria-label="{{part.title}}">
+    <img class="movie-row__img" src="./src/assets/poster_{{part.id}}.png" alt="{{part.title}} poster">
+    <div class="movie-row__content">
+        <h3 class="movie-row__title">{{part.title}}</h3>
+        <p class="movie-row__label">2003</p>
+    </div>
+
+    {{> _app_favorite favorite=part.favorite }}
+</div>

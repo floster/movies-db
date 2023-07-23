@@ -1,4 +1,4 @@
-.movie-card {
+.app-tile {
     @include poster;
 
     position: relative;
@@ -43,13 +43,6 @@
         transition: transform 0.2s ease-out;
     }
 
-    &__favorite {
-        position: absolute;
-        top: 0;
-        right: 0;
-        z-index: 1;
-    }
-
     &__content {
         position: relative;
         display: flex;
@@ -70,6 +63,13 @@
 
     &__label {
         color: var(--color-secondary);
+    }
+
+    .app-favorite {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
     }
 
     .app-progress {

@@ -5,7 +5,7 @@
     gap: var(--gap-xs);
     color: var(--color-secondary);
 
-    &.m-text_light {
+    &.m-text_light &__label {
         color: var(--color-grey-100);
     }
 

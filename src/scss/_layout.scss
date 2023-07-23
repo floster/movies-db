@@ -74,10 +74,10 @@
 
 .l-tiles_grid {
     display: grid;
-    gap: var(--gap-xs);
+    gap: var(--gap-md) var(--gap-xs);
 
     @include media(md) {
-        gap: var(--gap-sm);
+        gap: var(--gap-lg) var(--gap-sm);
     }
 
     &.m-movies {
