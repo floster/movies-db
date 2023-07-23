@@ -1,4 +1,4 @@
-const favoriteTogglers = document.querySelectorAll('.favorite-toggle');
+const favoriteTogglers = document.querySelectorAll('.app-favorite');
 const appAlert = document.querySelector('.app-alert') as HTMLElement;
 const appAlertCloseBtn = document.querySelector('.app-alert__close') as HTMLButtonElement;
 

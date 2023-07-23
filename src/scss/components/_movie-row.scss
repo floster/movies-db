@@ -11,6 +11,7 @@
     &:focus-within,
     &:hover {
         box-shadow: var(--shadow);
+        cursor: pointer;
 
         .movie-row__title {
             @include link-hover;

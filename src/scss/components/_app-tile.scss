@@ -11,11 +11,15 @@
     &:focus-within,
     &:hover {
         box-shadow: var(--shadow-md-secondary);
-    }
+        cursor: pointer;
 
-    &:focus-within &__img,
-    &:hover &__img {
-        transform: scale(1.04);
+        .app-tile__title {
+            @include link-hover;
+        }
+
+        .app-tile__img {
+            transform: scale(1.04);
+        }
     }
 
     &.m-collection {

@@ -8,6 +8,15 @@
         background-image: var(--gradient-dark), var(--backdrop-image);
     }
 
+    &:focus-within,
+    &:hover {
+        cursor: pointer;
+
+        .media-hero__title {
+            @include link-hover;
+        }
+    }
+
     &.m-random {
         @include poster;
     }
