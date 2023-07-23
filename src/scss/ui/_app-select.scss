@@ -4,8 +4,16 @@
     align-items: center;
     gap: var(--gap-xs);
 
+    &__label {
+        display: none;
+
+        @include media(md) {
+            display: block;
+        }
+    }
+
     select {
-        height: var(--control-height-lg);
+        height: var(--control-height-md);
         width: auto;
         padding: 0 var(--gap-md);
         background-color: var(--color-grey-100);
@@ -13,10 +21,14 @@
         border-radius: var(--radius);
         font-size: var(--font-size);
         color: var(--color-grey-700);
+
+        @include media(md) {
+            height: var(--control-height-lg);
+        }
     }
 
     &.m-huge {
-        height: var(--control-height-lg);
+        height: var(--control-height-md);
         border-radius: var(--radius);
         background-color: var(--color-white);
         font-size: var(--font-size-4);

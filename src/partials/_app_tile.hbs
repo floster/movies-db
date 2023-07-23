@@ -1,27 +1,31 @@
-<div class="app-tile {{#if collection}}m-collection{{/if}} {{#if carousel}}app-carousel__item{{/if}} ">
-    <picture class="app-tile__picture">
-        {{#if actor}}
-        <img src="./src/assets/actor_{{tile.id}}.png" alt="{{tile.title}} image" class="app-tile__img">
+{{#if actor}}
+<div class="app-tile m-actor">
+    {{else}}
+    {{#if collection}}
+    <a href="collection.html" class="app-tile m-collection">
         {{else}}
-        <img src="./src/assets/poster_{{tile.id}}.png" alt="{{tile.title}} poster" class="app-tile__img">
-        {{/if}}
-    </picture>
-    {{#unless actor}}
-    {{> _app_favorite favorite=tile.favorite }}
-    {{/unless}}
-    <div class="app-tile__content">
-        {{#unless actor}}
-        {{> _app_progress rating=tile.rating }}
-        {{/unless}}
-        <p class="app-tile__label">{{tile.label}}</p>
-        {{#if actor}}
-        <h3 class="app-tile__title">{{tile.title}}</h3>
-        {{else}}
-        {{#if collection}}
-        <h3 class="app-tile__title"><a href="collection.html">{{tile.title}}</a></h3>
-        {{else}}
-        <h3 class="app-tile__title"><a href="movie.html">{{tile.title}}</a></h3>
-        {{/if}}
-        {{/if}}
-    </div>
+        <a href="movie.html" class="app-tile m-movie{{#if carousel}} app-carousel__item{{/if}} ">
+            {{/if}}
+            {{/if}}
+            <picture class="app-tile__picture">
+                {{#if actor}}
+                <img src="./src/assets/actor_{{tile.id}}.png" alt="{{tile.title}} image" class="app-tile__img">
+                {{else}}
+                <img src="./src/assets/poster_{{tile.id}}.png" alt="{{tile.title}} poster" class="app-tile__img">
+                {{/if}}
+            </picture>
+            {{#unless actor}}
+            {{> _app_favorite favorite=tile.favorite }}
+            {{/unless}}
+            <div class="app-tile__content">
+                {{#unless actor}}
+                {{> _app_progress rating=tile.rating }}
+                {{/unless}}
+                <p class="app-tile__label">{{tile.label}}</p>
+                <h3 class="app-tile__title">{{tile.title}}</h3>
+            </div>
+            {{#if actor}}
 </div>
+{{else}}
+</a>
+{{/if}}

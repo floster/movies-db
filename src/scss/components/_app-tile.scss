@@ -8,17 +8,20 @@
     max-width: 100%;
     transition: box-shadow 0.2s ease-out;
 
-    &:focus-within,
-    &:hover {
-        box-shadow: var(--shadow-md-secondary);
-        cursor: pointer;
+    &:not(.m-actor) {
 
-        .app-tile__title {
-            @include link-hover;
-        }
+        &:focus-within,
+        &:hover {
+            box-shadow: var(--shadow-md-secondary);
+            cursor: pointer;
 
-        .app-tile__img {
-            transform: scale(1.04);
+            .app-tile__title {
+                @include link-hover;
+            }
+
+            .app-tile__img {
+                transform: scale(1.04);
+            }
         }
     }
 

@@ -3,16 +3,17 @@
 
     &__input {
         width: 100%;
-        height: var(--control-height-xl);
+        height: var(--control-height-lg);
         padding-left: var(--gap-sm);
         padding-right: calc(var(--control-height-sm) * 2 + var(--gap-sm) * 3);
         background-color: var(--color-white);
         border: none;
         border-radius: var(--radius);
-        box-shadow: var(--shadow-lg);
+        box-shadow: var(--shadow-md);
         font-size: var(--font-size-5);
 
         @include media(md) {
+            height: var(--control-height-xl);
             font-size: var(--font-size-2);
         }
 

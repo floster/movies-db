@@ -1,42 +1,47 @@
-<div class="media-hero {{extra_class}}" style="--backdrop-image: url(./assets/{{data.backdrop}}.png)">
-    <div class="media-hero__inner {{#unless extra_class}}container{{/unless}}">
-        <picture class="media-hero__picture">
-            <source srcset="./src/assets/{{data.poster}}.png" media="(min-width: 744px)">
-            <source srcset="./src/assets/{{data.poster}}.png" media="(min-width: 1024px)">
-            <img class="media-hero__img" src="./src/assets/{{data.poster}}.png" alt="{{data.title}}">
-        </picture>
-        <div class="media-hero__content">
-            {{#if extra_class}}
-            <h2 class="media-hero__title"><a href="collection.html">{{data.title}}</a></h2>
-            {{else}}}
-            <h2 class="media-hero__title">{{data.title}}</h2>
-            {{/if}}
-            {{#if data.subtitle}}
-            <h3 class="media-hero__subtitle">{{data.subtitle}}</h3>
-            {{/if}}
-            {{#if data.tags}}
-            <ul class="media-hero__tags">
-                {{#each data.tags as |tag|}}
-                <li>{{tag}}</li>
-                {{/each}}
-            </ul>
-            {{/if}}
+{{#if extra_class}}
+<a href="collection.html" class="media-hero {{extra_class}}"
+    style="--backdrop-image: url(./assets/{{data.backdrop}}.png)">
+    {{else}}
+    <div class="media-hero {{extra_class}}" style="--backdrop-image: url(./assets/{{data.backdrop}}.png)">
+        {{/if}}
+        <div class="media-hero__inner {{#unless extra_class}}container{{/unless}}">
+            <picture class="media-hero__picture">
+                <source srcset="./src/assets/{{data.poster}}.png" media="(min-width: 744px)">
+                <source srcset="./src/assets/{{data.poster}}.png" media="(min-width: 1024px)">
+                <img class="media-hero__img" src="./src/assets/{{data.poster}}.png" alt="{{data.title}}">
+            </picture>
+            <div class="media-hero__content">
+                <h2 class="media-hero__title">{{data.title}}</h2>
+                {{#if data.subtitle}}
+                <h3 class="media-hero__subtitle">{{data.subtitle}}</h3>
+                {{/if}}
+                {{#if data.tags}}
+                <ul class="media-hero__tags">
+                    {{#each data.tags as |tag|}}
+                    <li>{{tag}}</li>
+                    {{/each}}
+                </ul>
+                {{/if}}
 
-            <p class="media-hero__description">{{data.description}}</p>
-        </div>
-        <footer class="media-hero__footer">
-            <div class="media-hero__stats">
-                {{> _app_progress rating=data.rating }}
-                <span class="icon-labeled {{#if data.extra_info.light}}m-text_light{{/if}}">
-                    <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
-                        <use href="src/assets/sprite.svg#{{data.extra_info.icon}}" />
-                    </svg>
-                    <span class="icon-labeled__label">{{data.extra_info.label}}</span>
-                </span>
-
+                <p class="media-hero__description">{{data.description}}</p>
             </div>
+            <footer class="media-hero__footer">
+                <div class="media-hero__stats">
+                    {{> _app_progress rating=data.rating }}
+                    <span class="icon-labeled {{#if data.extra_info.light}}m-text_light{{/if}}">
+                        <svg class="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
+                            <use href="src/assets/sprite.svg#{{data.extra_info.icon}}" />
+                        </svg>
+                        <span class="icon-labeled__label">{{data.extra_info.label}}</span>
+                    </span>
 
-            {{> _app_favorite favorite=data.favorite }}
-        </footer>
-    </div>
+                </div>
+
+                {{> _app_favorite favorite=data.favorite }}
+            </footer>
+        </div>
+        {{#if extra_class}}
+</a>
+{{else}}
 </div>
+{{/if}}

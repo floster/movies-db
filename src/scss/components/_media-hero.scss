@@ -8,17 +8,17 @@
         background-image: var(--gradient-dark), var(--backdrop-image);
     }
 
-    &:focus-within,
-    &:hover {
-        cursor: pointer;
-
-        .media-hero__title {
-            @include link-hover;
-        }
-    }
-
     &.m-random {
         @include poster;
+
+        &:focus-within,
+        &:hover {
+            cursor: pointer;
+
+            .media-hero__title {
+                @include link-hover;
+            }
+        }
     }
 
     &__inner {
@@ -88,6 +88,14 @@
     &__title {
         color: var(--color-grey-100);
         font-size: var(--font-size-4);
+
+        @include media(xl) {
+            font-size: var(--font-size-3);
+        }
+    }
+
+    &.m-random &__title {
+        font-size: var(--font-size-5);
 
         @include media(xl) {
             font-size: var(--font-size-3);

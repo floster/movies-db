@@ -19,7 +19,7 @@
     flex-shrink: 0;
 
     @include media(md) {
-        --size: var(--control-height-lg);
+        --size: var(--control-height-md);
     }
 
     &::before {

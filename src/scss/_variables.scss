@@ -28,8 +28,8 @@
   --control-height-xxs: 1rem; // 20px
   --control-height-xs: 1.25rem; // 20px
   --control-height-sm: 1.5rem; // 24px
-  --control-height-md: 2rem; // 32px
-  --control-height-lg: 2.5rem; // 40px
+  --control-height-md: 2.5rem; // 32px
+  --control-height-lg: 3rem; // 40px
   --control-height-xl: 4rem; // 60px
 
   --radius-sm: 0.25rem; // 4px
@@ -58,7 +58,7 @@
     0px 8px 10px -6px rgba(0, 0, 0, 0.1);
   --shadow-xl: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
   --shadow-stack: 2px 2px white, 3px 3px hsl(212, 32%, 80%), 5px 5px white, 6px 6px hsl(212, 32%, 80%), 8px 8px white, 9px 9px hsl(212, 32%, 80%);
-  --shadow-inset: rgba(13, 28, 43, .2) 0px -40px 40px -30px inset;
+  --shadow-inset: rgba(13, 28, 43, .2) 0px -40px 40px -40px inset;
 
   --shadow-stack-grey: hsl(212, 32%, 77%) 2px 4px, hsl(212, 32%, 85%) 4px 8px, hsl(212, 32%, 92%) 6px 12px;
   --shadow-stack-secondary: hsl(207, 75%, 80%) 2px 4px, hsl(207, 75%, 87%) 4px 8px, hsl(207, 75%, 95%) 6px 12px;
