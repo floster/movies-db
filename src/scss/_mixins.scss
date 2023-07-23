@@ -8,3 +8,10 @@
         border-radius: var(--radius);
     }
 }
+
+@mixin link-hover {
+    cursor: pointer;
+    text-decoration: var(--color-secondary) solid underline;
+    text-decoration-thickness: 2px;
+    text-decoration-skip-ink: auto;
+}

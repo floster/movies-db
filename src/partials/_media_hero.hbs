@@ -6,7 +6,11 @@
             <img class="media-hero__img" src="./src/assets/{{data.poster}}.png" alt="{{data.title}}">
         </picture>
         <div class="media-hero__content">
+            {{#if extra_class}}
+            <h2 class="media-hero__title"><a href="collection.html">{{data.title}}</a></h2>
+            {{else}}}
             <h2 class="media-hero__title">{{data.title}}</h2>
+            {{/if}}
             {{#if data.subtitle}}
             <h3 class="media-hero__subtitle">{{data.subtitle}}</h3>
             {{/if}}

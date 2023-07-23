@@ -33,6 +33,10 @@
             font-size: var(--font-size-1);
         }
 
+        &:focus-within {
+            border: 2px solid var(--color-active);
+        }
+
         select {
             width: 100%;
             height: 100%;

@@ -14,6 +14,14 @@
         {{> _app_progress rating=tile.rating }}
         {{/unless}}
         <p class="app-tile__label">{{tile.label}}</p>
+        {{#if actor}}
         <h3 class="app-tile__title">{{tile.title}}</h3>
+        {{else}}
+        {{#if collection}}
+        <h3 class="app-tile__title"><a href="collection.html">{{tile.title}}</a></h3>
+        {{else}}
+        <h3 class="app-tile__title"><a href="movie.html">{{tile.title}}</a></h3>
+        {{/if}}
+        {{/if}}
     </div>
 </div>

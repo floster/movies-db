@@ -4,18 +4,17 @@
     display: flex;
     align-items: center;
     gap: var(--gap-sm);
-    // padding-right: var(--gap-lg);
     width: 100%;
     transition: box-shadow 0.1s linear;
     border-radius: var(--radius);
 
-    @include media(lg) {
-        // padding-right: var(--gap-xl);
-    }
-
     &:focus-within,
     &:hover {
         box-shadow: var(--shadow);
+
+        .movie-row__title {
+            @include link-hover;
+        }
     }
 
     &__img {
@@ -34,7 +33,6 @@
         flex-direction: column;
         gap: var(--gap-xs);
         flex-grow: 1;
-        overflow: hidden;
     }
 
     &__title,
