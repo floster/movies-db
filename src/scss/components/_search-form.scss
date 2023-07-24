@@ -41,19 +41,15 @@
         z-index: 1;
         transform: translateY(-50%);
 
+        &:hover {
+            svg {
+                opacity: 1;
+            }
+        }
+
         svg {
-            width: var(--control-height-xs);
-            height: var(--control-height-xs);
             color: var(--color-secondary);
-
-            &:hover {
-                color: var(--color-secondary-darken);
-            }
-
-            @include media(lg) {
-                width: var(--control-height-md);
-                height: var(--control-height-md);
-            }
+            opacity: 0.5;
         }
 
         @include media(lg) {
