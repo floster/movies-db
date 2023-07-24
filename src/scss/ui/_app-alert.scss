@@ -2,6 +2,7 @@
     position: fixed;
     right: 0;
     bottom: 10vh;
+    z-index: 10;
     max-width: 90vw;
     display: flex;
     align-items: center;
@@ -32,5 +33,9 @@
         display: flex;
         align-items: center;
         gap: var(--gap-xs);
+    }
+
+    .svg-icon {
+        flex-shrink: 0;
     }
 }

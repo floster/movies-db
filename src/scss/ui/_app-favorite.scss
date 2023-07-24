@@ -31,14 +31,9 @@
     }
 
     .svg-icon {
-        height: var(--control-height-xs);
-        width: var(--control-height-xs);
+        height: var(--control-height-sm);
+        width: var(--control-height-sm);
         color: var(--color-grey-200);
-
-        @include media(lg) {
-            height: var(--control-height-sm);
-            width: var(--control-height-sm);
-        }
 
         &.m-solid {
             display: none;

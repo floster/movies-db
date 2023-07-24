@@ -88,7 +88,9 @@
         color: inherit;
         opacity: .25;
 
-        &:hover {
+        &:hover,
+        &:active,
+        &:focus-visible {
             opacity: 1;
         }
 

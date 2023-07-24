@@ -10,18 +10,15 @@
     }
 
     &__label {
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size);
         font-weight: bold;
         white-space: nowrap;
-
-        @include media(md) {
-            font-size: var(--font-size);
-        }
     }
 
     .svg-icon {
-        width: var(--control-height-xs);
-        height: var(--control-height-xs);
+        flex-shrink: 0;
+        width: var(--control-height-sm);
+        height: var(--control-height-sm);
 
         @include media(md) {
             width: var(--control-height-sm);
