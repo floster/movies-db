@@ -18,9 +18,4 @@ export default defineConfig({
       }
     })
   ],
-  build: {
-    rollupOptions: {
-      input: ['index.hbs']
-    }
-  }
 })
