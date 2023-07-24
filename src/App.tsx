@@ -1,13 +1,21 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from 'react';
+import './app.scss'
+import AppHeader from './components/AppHeader';
+import AppSection from './components/AppSection';
+import { MainPageSidebar } from './components/MainPageSidebar';
+import data from './data.json'
 
 function App() {
-  const [count, setCount] = useState(8)
+  const [movies] = useState(data.parts);
 
   return (
-    <div>
-      React works {count}
-    </div>
+    <>
+      <AppHeader />
+      <div className="l-content m-main_page container">
+        <MainPageSidebar movies={movies} />
+      </div>
+      <AppSection />
+    </>
   )
 }
 
