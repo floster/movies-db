@@ -230,7 +230,8 @@
                 "label": "2h 35m",
                 "icon": "clock",
                 "light": true
-            }
+            },
+            "part_of": "The Fast and The Furious Collection"
         },
         "collection": {
             "poster": "poster_30",

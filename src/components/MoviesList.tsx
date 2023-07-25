@@ -6,7 +6,7 @@ export const MoviesList = (props: { movies: Part[] }) => {
 
     return (
         <div className="movies-list l-movies_list" role="list">
-            {movies.map((movie) => <MovieRow movie={movie} />)}
+            {movies.map((movie) => <MovieRow movie={movie} key={movie.id} />)}
         </div>
     )
 }
