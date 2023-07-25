@@ -2,11 +2,12 @@ import React from 'react';
 
 type AppSectionProps = {
     children: React.ReactNode;
+    extraClass?: string;
 }
 
-export const AppSection = ({ children }: AppSectionProps) => {
+export const AppSection = ({ children, extraClass }: AppSectionProps) => {
     return (
-        <section className="app-section m-random_media">
+        <section className={`app-section ${extraClass}`}>
             {children}
         </section>
     )

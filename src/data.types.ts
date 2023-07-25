@@ -27,6 +27,12 @@ export interface TileData {
     id: number;
     title: string;
     label: string;
-    rating: number;
-    favorite: boolean;
+    rating?: number;
+    favorite?: boolean;
+}
+
+export interface MemberData {
+    id: number;
+    name: string;
+    label: string;
 }

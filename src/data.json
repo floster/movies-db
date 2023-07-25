@@ -269,23 +269,28 @@
     "movie": {
         "crew": [
             {
-                "title": "Screenplay, Story",
+                "id": 1,
+                "label": "Screenplay, Story",
                 "name": "Dan Mazeau"
             },
             {
-                "title": "Screenplay, Story",
+                "id": 2,
+                "label": "Screenplay, Story",
                 "name": "Justin Lin"
             },
             {
-                "title": "Characters",
+                "id": 3,
+                "label": "Characters",
                 "name": "Gary Scott Thompson"
             },
             {
-                "title": "Director",
+                "id": 4,
+                "label": "Director",
                 "name": "Louis Leterrier"
             },
             {
-                "title": "Story",
+                "id": 5,
+                "label": "Story",
                 "name": "Zach Dean"
             }
         ],
