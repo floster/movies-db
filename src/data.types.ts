@@ -22,3 +22,11 @@ export interface HeroData {
     },
     part_of?: string;
 }
+
+export interface TileData {
+    id: number;
+    title: string;
+    label: string;
+    rating: number;
+    favorite: boolean;
+}
