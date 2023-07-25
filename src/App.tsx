@@ -7,19 +7,19 @@ import data from './data.json'
 import AppSectionHeader from './components/AppSectionHeader';
 import MediaHero from './components/MediaHero';
 import AppCarousel from './components/AppCarousel';
-import MovieCrew from './components/MovieCrew';
-import AppTile from './components/AppTile';
+// import MovieCrew from './components/MovieCrew';
+// import AppTile from './components/AppTile';
 import SearchForm from './components/SearchForm';
 import { AppDialog } from './components/AppDialog';
 
 function App() {
   const [movies] = useState(data.parts);
-  const [collections] = useState(data.collections);
+  // const [collections] = useState(data.collections);
   const [heroRandom] = useState(data.hero.random);
-  const [heroMovie] = useState(data.hero.movie);
-  const [heroCollection] = useState(data.hero.collection);
-  const [movieCrew] = useState(data.movie.crew);
-  const [movieCast] = useState(data.movie.cast);
+  // const [heroMovie] = useState(data.hero.movie);
+  // const [heroCollection] = useState(data.hero.collection);
+  // const [movieCrew] = useState(data.movie.crew);
+  // const [movieCast] = useState(data.movie.cast);
   const [trandingMovies] = useState(data.tranding_movies);
   const [trandingShows] = useState(data.tranding_shows);
   const [isSearchFormOpen, setIsSearchFormOpen] = useState(false);
@@ -32,6 +32,7 @@ function App() {
       <AppHeader openSearch={openSearchDialog} />
 
       {/* ================= Search results Page =================  */}
+      {/*
       <section className="l-search_header container">
         <SearchForm />
       </section>
@@ -58,6 +59,7 @@ function App() {
           </div>
         </AppSection>
       </div>
+      */}
       {/* ================= Collection Page =================  */}
       {/*
       <section className="movie-header">
@@ -93,7 +95,6 @@ function App() {
       </section>
       */}
       {/* ================= Main page =================  */}
-      {/* 
       <div className="l-content m-main_page container">
         <MainPageSidebar movies={movies} />
         <main className="l-main_page_content">
@@ -113,7 +114,6 @@ function App() {
           </AppSection>
         </main>
       </div>
-      */}
 
       <AppDialog isOpened={isSearchFormOpen} onClose={closeSearchDialog}>
         <SearchForm />

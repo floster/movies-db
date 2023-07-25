@@ -40,5 +40,7 @@
 
     .svg-icon {
         flex-shrink: 0;
+        width: var(--control-height-xs);
+        height: var(--control-height-xs);
     }
 }

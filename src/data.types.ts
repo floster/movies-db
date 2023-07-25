@@ -1,7 +1,7 @@
 export interface Part {
     id: number;
     title: string;
-    label: number;
+    label: string;
     favorite: boolean;
     rating: number;
 }

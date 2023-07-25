@@ -17,7 +17,7 @@
 
         &:checked {
             ~.svg-icon {
-                color: var(--color-primary);
+                color: var(--color-accent);
 
                 &.m-solid {
                     display: block;
