@@ -11,7 +11,7 @@ export const MovieRow = (props: { movie: Part }) => {
                 <p className="movie-row__label">{movie.label}</p>
             </div>
 
-            <AppFavorite checked={movie.favorite} />
+            <AppFavorite checked={movie.favorite} title={movie.title} />
         </a>
     )
 }

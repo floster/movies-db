@@ -1,10 +1,10 @@
 import { AppFavorite } from "./AppFavorite";
 import AppPicture from "./AppPicture";
 import AppProgress from "./AppProgress";
-import PartOf from "./PartOf";
+import MoviePartOf from "./MoviePartOf";
+import SvgIcon from "./SvgIcon";
 
 import { HeroData } from "../data.types";
-import sprite from '../assets/sprite.svg';
 
 interface MediaHeroProps {
     data: HeroData;
@@ -33,21 +33,19 @@ export default function MediaHero({ data, isRandom }: MediaHeroProps) {
 
                 <p className="media-hero__description">{data.description}</p>
 
-                {data.part_of && <PartOf title={data.part_of} />}
+                {data.part_of && <MoviePartOf title={data.part_of} />}
             </div>
             <footer className="media-hero__footer">
                 <div className="media-hero__stats">
                     <AppProgress value={data.rating} />
                     <span className={`icon-labeled ${data.extra_info.light ? 'm-text_light' : ''}`}>
-                        <svg className="svg-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
-                            <use href={`${sprite}#${data.extra_info.icon}`} />
-                        </svg>
+                        <SvgIcon icon={data.extra_info.icon} />
                         <span className="icon-labeled__label">{data.extra_info.label}</span>
                     </span>
 
                 </div>
 
-                <AppFavorite checked={data.favorite} />
+                <AppFavorite checked={data.favorite} title={data.title} />
             </footer>
         </div>
     )

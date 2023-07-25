@@ -18,9 +18,9 @@ export default function AppTile({ tile, type, isCarouselItem }: AppTileProps) {
                 <img src={`./src/assets/${isActorTile ? 'actor' : 'poster'}_${tile.id}.png`} alt={`${tile.title} ${type === 'actor' ? 'image' : 'poster'}`} className="app-tile__img" />
             </picture>
 
-            {(type !== 'actor') && <AppFavorite checked={tile.favorite} />}
+            {(type !== 'actor') && <AppFavorite checked={tile.favorite!} title={tile.title} />}
             <div className="app-tile__content">
-                {(type !== 'actor') && <AppProgress value={tile.rating} />}
+                {(type !== 'actor') && <AppProgress value={tile.rating!} />}
                 <p className="app-tile__label">{tile.label}</p>
                 <h3 className="app-tile__title">{tile.title}</h3>
             </div>

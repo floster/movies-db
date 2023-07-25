@@ -20,10 +20,6 @@
         @include media(md) {
             height: var(--control-height-md);
         }
-
-        @include media(md) {
-            height: var(--control-height-md);
-        }
     }
 
     &__nav {

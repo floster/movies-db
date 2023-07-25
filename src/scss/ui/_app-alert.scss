@@ -15,13 +15,16 @@
 
     opacity: 0;
     transform: translateX(100%);
+    transition: opacity 0.2s linear, transform 0.3s linear;
 
-    &.is-open {
-        animation: slide-in 0.5s var(--easing-in) both;
+    &.is-opened {
+        opacity: 1;
+        transform: translateX(0);
     }
 
-    &.is-close {
-        animation: slide-out 0.5s var(--easing-out) both;
+    &.is-closed {
+        opacity: 0;
+        transform: translateX(100%);
     }
 
     &.m-info {

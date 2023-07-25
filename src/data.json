@@ -4,77 +4,77 @@
         {
             "id": 1,
             "title": "The Fast and the Furious",
-            "label": 2001,
+            "label": "2001",
             "favorite": false,
             "rating": 5.5
         },
         {
             "id": 2,
             "title": "2 Fast 2 Furious",
-            "label": 2003,
+            "label": "2003",
             "favorite": true,
             "rating": 6.5
         },
         {
             "id": 3,
             "title": "The Fast and the Furious: Tokyo Drift",
-            "label": 2006,
+            "label": "2006",
             "favorite": false,
             "rating": 7.8
         },
         {
             "id": 4,
             "title": "Fast & Furious",
-            "label": 2009,
+            "label": "2009",
             "favorite": false,
             "rating": 4.3
         },
         {
             "id": 5,
             "title": "Fast Five",
-            "label": 2011,
+            "label": "2011",
             "favorite": true,
             "rating": 3.2
         },
         {
             "id": 6,
             "title": "Fast & Furious 6",
-            "label": 2013,
+            "label": "2013",
             "favorite": true,
             "rating": 6.1
         },
         {
             "id": 7,
             "title": "Furious 7",
-            "label": 2015,
+            "label": "2015",
             "favorite": false,
             "rating": 5.1
         },
         {
             "id": 8,
             "title": "The Fate of the Furious",
-            "label": 2017,
+            "label": "2017",
             "favorite": false,
             "rating": 8.8
         },
         {
             "id": 9,
             "title": "F9",
-            "label": 2021,
+            "label": "2021",
             "favorite": true,
             "rating": 5.3
         },
         {
             "id": 10,
             "title": "Fast X",
-            "label": 2023,
+            "label": "2023",
             "favorite": true,
             "rating": 9
         },
         {
             "id": 11,
             "title": "Fast X: The Final Ride",
-            "label": 2024,
+            "label": "2024",
             "favorite": false,
             "rating": 0
         }

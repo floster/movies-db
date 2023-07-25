@@ -28,11 +28,15 @@
     &__header {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-end;
         margin-bottom: calc(var(--gap-xs) * -1);
 
-        &.m-align_right {
-            justify-content: flex-end;
+        &.m-align_start {
+            justify-content: flex-start;
+        }
+
+        .app-select {
+            margin-left: auto;
         }
 
         .button {

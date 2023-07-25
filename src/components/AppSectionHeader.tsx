@@ -2,14 +2,15 @@ import AppSelect from './AppSelect'
 
 interface AppSectionHeaderProps {
     title: string;
-    hasSelect: boolean;
+    hasSelect?: boolean;
+    alignStart?: boolean;
 }
 
-export default function AppSectionHeader(props: AppSectionHeaderProps) {
+export default function AppSectionHeader({ title, hasSelect, alignStart }: AppSectionHeaderProps) {
     return (
-        <header className="app-section__header m-align_right">
-            <h2 className="app-section__title">{props.title}</h2>
-            {props.hasSelect && <AppSelect />}
+        <header className={`app-section__header ${alignStart ? 'm-align_start' : ''}`}>
+            <h2 className="app-section__title">{title}</h2>
+            {hasSelect && <AppSelect />}
         </header>
     )
 }
