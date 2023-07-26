@@ -7,12 +7,10 @@ interface Props {
 }
 
 export default function SvgIcon({ icon, extraClass, logo }: Props) {
-    const width = logo ? 'auto' : '32';
-    const height = logo ? 'auto' : '32';
     const viewBox = logo ? '0 0 720 100' : '0 0 32 32';
 
     return (
-        <svg className={`svg-icon ${extraClass}`} width={width} height={height} viewBox={viewBox} aria-hidden="true">
+        <svg className={`svg-icon ${extraClass}`} viewBox={viewBox} aria-hidden="true">
             <use href={`${sprite}#${icon}`} />
         </svg>
     )

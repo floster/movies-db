@@ -9,7 +9,7 @@ export default function AppCarousel({ items }: Props) {
     return (
         <div className="app-carousel has-scroll">
             <div className="app-carousel__track">
-                {items.map((item) => <AppTile tile={item} type="movie" isCarouselItem={true} />)}
+                {items.map((item) => <AppTile tile={item} type="movie" isCarouselItem={true} key={item.id} />)}
             </div>
         </div>
     )
