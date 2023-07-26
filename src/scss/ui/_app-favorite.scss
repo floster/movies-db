@@ -2,8 +2,9 @@
     display: flex;
     padding: var(--gap-xs);
 
+    &:active,
     &:focus-within {
-        outline: 1px solid var(--color-secondary);
+        outline: 2px solid var(--color-secondary-dimmed);
     }
 
     input {

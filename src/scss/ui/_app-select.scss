@@ -45,8 +45,10 @@
             font-size: var(--font-size-1);
         }
 
+        &:active,
         &:focus-within {
-            border: 2px solid var(--color-secondary);
+            // border: 1px solid var(--color-secondary);
+            outline: 4px solid var(--color-secondary-dimmed);
         }
 
         select {

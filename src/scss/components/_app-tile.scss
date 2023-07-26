@@ -10,13 +10,17 @@
 
     &:not(.m-actor) {
 
-        &:focus-within,
+        &:active,
+        &:focus-visible {
+            outline: 2px solid var(--color-secondary-dimmed);
+        }
+
         &:hover {
             box-shadow: var(--shadow-md-secondary);
             cursor: pointer;
 
             .app-tile__title {
-                @include link-hover;
+                color: var(--color-secondary);
             }
 
             .app-tile__img {
@@ -62,13 +66,14 @@
         }
     }
 
-    &__label,
     &__title {
         font-size: var(--tile-text-font-size)
     }
 
     &__label {
-        color: var(--color-secondary);
+        font-size: var(--font-size-sm);
+        font-weight: bold;
+        color: var(--text-color-light);
     }
 
     .app-favorite {

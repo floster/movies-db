@@ -1,18 +1,20 @@
 :root {
   --color-primary: rgb(230, 57, 70);
-  --color-secondary: rgb(32, 137, 223);
-  --color-secondary-dimmed: hsla(207, 75%, 95%, 1);
-  --color-secondary-darken: rgb(19, 82, 134);
+  --color-secondary: hsl(207, 75%, 50%);
+  --color-secondary-dimmed: hsl(208, 76%, 95%);
+  --color-secondary-darken: hsl(207, 75%, 30%);
   --color-accent: hsla(48, 95%, 65%, 1);
   --color-accent-darken: rgb(74, 65, 24);
   --color-accent-dimmed: hsla(48, 95%, 90%, 1);
   --color-active: rgb(135, 43, 255);
   --color-white: hsla(0, 0%, 100%, 1);
-  --color-grey-100: hsla(60, 5%, 96%, 1);
-  --color-grey-200: hsl(75, 6%, 87%, 1);
-  --color-grey-500: hsla(214, 23%, 56%, 1);
-  --color-grey-700: hsla(212, 29%, 36%, 1);
-  --color-grey-800: rgba(43, 62, 84, 1);
+  --color-grey-100: rgb(245, 245, 244);
+  --color-grey-200: rgb(223, 224, 220);
+  --color-grey-300: rgb(207, 207, 201);
+  --color-grey-400: rgb(178, 190, 181);
+  --color-grey-500: rgb(117, 139, 169);
+  --color-grey-700: rgb(65, 90, 118);
+  --color-grey-800: rgb(43, 62, 84);
   --color-grey-900: rgb(13, 28, 43);
 
   --gradient-dark: linear-gradient(200deg, rgba(10, 44, 72, 0.85) 70%, rgba(19, 82, 134, .9) 100%);
@@ -82,7 +84,7 @@
   --body-color: var(--color-grey-100);
   --body-color-dark: var(--color-grey-700);
   --text-color: var(--color-grey-700);
-  --text-color-light: var(--color-grey-500);
+  --text-color-light: hsl(208, 40%, 80%);
 
   // dynamic container gap
   --container-gap: var(--gap-xs);

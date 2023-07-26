@@ -10,13 +10,12 @@ export const POSTER_NO_IMAGE =
   'https://via.placeholder.com/300x450/dfe8ec/d95959/?text=No+Image';
 
 export const OPTIONS_MOVIE_LIST: SelectOptions[] = [
-  {title: 'Now Playing', value: 'now_playing'},
-  {title: 'Popular', value: 'popular'},
-  {title: 'Top Rated', value: 'top_rated'},
-  {title: 'Upcoming', value: 'upcoming'},
+  { title: 'Now Playing', value: 'now_playing' },
+  { title: 'Top Rated', value: 'top_rated' },
+  { title: 'Upcoming', value: 'upcoming' },
 ];
 
-export const MOVIE_LIST_TYPES = ['now_playing', 'popular', 'top_rated', 'upcoming'];
+export const MOVIE_LIST_TYPES = ['now_playing', 'top_rated', 'upcoming'];
 
 export const MOVIES_1000 = [
   603692, 502356, 569094, 385687, 447277, 890771, 713704, 640146, 879444,

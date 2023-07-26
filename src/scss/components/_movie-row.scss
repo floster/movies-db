@@ -8,13 +8,17 @@
     transition: box-shadow 0.1s linear;
     border-radius: var(--radius);
 
-    &:focus-within,
+    &:active,
+    &:focus-visible {
+        outline: 2px solid var(--color-secondary-dimmed);
+    }
+
     &:hover {
         box-shadow: var(--shadow);
         cursor: pointer;
 
         .movie-row__title {
-            @include link-hover;
+            color: var(--color-secondary);
         }
     }
 
@@ -36,12 +40,22 @@
         flex-grow: 1;
     }
 
-    &__title,
-    &__label {
+    &__title {
         font-size: var(--tile-text-font-size);
     }
 
     &__label {
-        color: var(--color-secondary);
+        color: var(--text-color-light);
+        font-size: var(--font-size-sm);
+        font-weight: bold;
+    }
+
+    &__rating {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-size: var(--font-size-5);
+        font-weight: bold;
+        color: var(--color-secondary-dimmed);
     }
 }

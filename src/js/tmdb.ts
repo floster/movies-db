@@ -8,6 +8,7 @@ import {
 } from './config';
 import {
   RawMovie,
+  RawList,
   Movie,
   // MovieListRespose,
   MovieListTypes,
@@ -15,12 +16,12 @@ import {
 } from './types';
 
 class TMDB {
-  async #getJSON(url: string): Promise<any> {
+  async #getJSON<T>(url: string): Promise<T> {
     const response: Response = await fetch(url);
 
     if (!response.ok) throw new Error(`getJSON: Error fetching data for URL: ${url}`);
 
-    const data: any = await response.json();
+    const data: T = await response.json();
     return data;
   }
 
@@ -30,19 +31,25 @@ class TMDB {
       : POSTER_NO_IMAGE;
     const releaseDate = new Date(movie.release_date);
     const year = releaseDate.getFullYear();
-    return {
+    // get only month and day from release date 'Jul 19'
+    const formatedDate = releaseDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).split(',')[0];
+
+    const normalizedData: Movie = {
       id: movie.id,
       adult: movie.adult,
       title: movie.title,
-      tagline: movie.tagline,
       overview: movie.overview,
-      genres: movie.genres,
-      released: movie.release_date,
-      year: year,
-      votes: movie.vote_average,
+      released: { date: formatedDate, year },
+      rating: movie.vote_average,
+      votes: movie.vote_count,
       poster: poster,
       backdrop: `${API_BACKDROP_BASE}${movie.backdrop_path}`,
-    };
+    }
+
+    normalizedData.genres = movie.genres ? movie.genres : [];
+    normalizedData.tagline = movie.tagline ? movie.tagline : '-';
+
+    return normalizedData;
   }
 
   #normalizeMovies(movies: RawMovie[]): Movie[] {
@@ -58,19 +65,30 @@ class TMDB {
   }
 
   // get standart TMDB 'page' with 20 movies
-  async #getMovieList(
+  async getMoviesList(
     page: number,
     listType: MovieListTypes
   ): Promise<ListData> {
     if (MOVIE_LIST_TYPES.includes(listType)) {
-      const url = `${API_BASE}/movie/${listType}${API_KEY}&page=${page}`;
-      const data = await this.#getJSON(url);
+      let url = '';
+      if (listType === 'upcoming') {
+        const currentDate = new Date();
+        const oneWeekLater = new Date(currentDate.getTime() + 2 * 24 * 60 * 60 * 1000);
+        const oneWeekLaterStr = oneWeekLater.toISOString().split('T')[0];
+        // get movies that will be released the day after tomorrow
+        url = `${API_BASE}/discover/movie${API_KEY}&region=UA&sort_by=primary_release_date.asc&primary_release_date.gte=${oneWeekLaterStr}`;
+      } else url = `${API_BASE}/movie/${listType}${API_KEY}&page=${page}`;
+      const data: RawList = await this.#getJSON(url);
+      console.log(data);
+
 
       const pages = {
         page: data.page,
         pages: data.total_pages,
       };
       const movies: Array<Movie> = this.#normalizeMovies(data.results);
+      console.log(`🟢 listType recieved: ${listType}`);
+      console.log(movies);
 
       return {
         movies,
@@ -86,7 +104,7 @@ class TMDB {
     listType: MovieListTypes
   ): Promise<ListData> {
     const requiredPage = this.#calcPage(page);
-    const listData = await this.#getMovieList(requiredPage, listType);
+    const listData = await this.getMoviesList(requiredPage, listType);
 
     const movies = this.#isEven(page)
       ? listData.movies.slice(10)
@@ -103,9 +121,9 @@ class TMDB {
   async getMovie(id: number): Promise<Movie> {
     const url = `${API_BASE}/movie/${id}${API_KEY}`;
     const data = await this.#getJSON(url);
-    console.log(data);
+    // console.log(data);
 
-    const movie = this.#normalizeMovie(data);
+    const movie = this.#normalizeMovie(data as RawMovie);
 
     return movie;
   }

@@ -12,6 +12,7 @@ import SearchForm from './components/SearchForm';
 import AppDialog from './components/AppDialog';
 
 import data from './data.json'
+import tmdb from './js/tmdb'
 
 function App() {
   const [movies] = useState(data.parts);
@@ -97,7 +98,7 @@ function App() {
       */}
       {/* ================= Main page =================  */}
       <div className="l-content m-main_page container">
-        <MainPageSidebar movies={movies} />
+        <MainPageSidebar />
         <main className="l-main_page_content">
           <AppSection extraClass="m-random_media">
             <AppSectionHeader title="random collection" />
