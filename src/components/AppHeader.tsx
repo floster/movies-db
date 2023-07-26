@@ -1,10 +1,10 @@
 import SvgIcon from "./SvgIcon";
 
-type Props = {
+interface Props {
     openSearch: () => void;
 }
 
-const AppHeader = ({ openSearch }: Props) => {
+export default function AppHeader({ openSearch }: Props) {
     return (
         <header className="app-header">
             <div className="app-header__inner container">
@@ -24,5 +24,3 @@ const AppHeader = ({ openSearch }: Props) => {
         </header>
     )
 }
-
-export default AppHeader

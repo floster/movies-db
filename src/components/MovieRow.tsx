@@ -1,7 +1,7 @@
-import { AppFavorite } from "./AppFavorite"
+import AppFavorite from "./AppFavorite"
 import { Part } from "../data.types"
 
-export const MovieRow = (props: { movie: Part }) => {
+export default function MovieRow(props: { movie: Part }) {
     const movie = props.movie;
     return (
         <a href="movie.html" className="movie-row" role="listitem" aria-label={movie.title}>

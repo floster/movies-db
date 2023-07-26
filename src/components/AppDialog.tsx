@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
 
-type Props = {
+interface Props {
     children: React.ReactNode;
     isOpened: boolean;
     onClose: () => void;
 }
 
-export const AppDialog = ({ children, isOpened, onClose }: Props) => {
+export default function AppDialog({ children, isOpened, onClose }: Props) {
     const ref = useRef<HTMLDialogElement>(null);
 
     const dialogOnClick = (e: React.MouseEvent<HTMLDialogElement>) => {

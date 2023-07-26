@@ -1,4 +1,4 @@
-import { AppFavorite } from "./AppFavorite";
+import AppFavorite from "./AppFavorite";
 import AppPicture from "./AppPicture";
 import AppProgress from "./AppProgress";
 import MoviePartOf from "./MoviePartOf";
@@ -6,13 +6,13 @@ import SvgIcon from "./SvgIcon";
 
 import { HeroData } from "../data.types";
 
-interface MediaHeroProps {
+interface Props {
     data: HeroData;
     isRandom: boolean;
 
 }
 
-export default function MediaHero({ data, isRandom }: MediaHeroProps) {
+export default function MediaHero({ data, isRandom }: Props) {
     const backdrop = `url(./src/assets/${data.backdrop}.png)`;
 
     const renderTags = () => {

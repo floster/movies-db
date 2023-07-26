@@ -1,9 +1,9 @@
-interface AppPictureProps {
+interface Props {
     img: string;
     alt: string;
 }
 
-export default function AppPicture({ img, alt }: AppPictureProps) {
+export default function AppPicture({ img, alt }: Props) {
     return (
         <picture className="media-hero__picture">
             <source srcSet={`./src/assets/${img}.png`} media="(min-width: 744px)" />

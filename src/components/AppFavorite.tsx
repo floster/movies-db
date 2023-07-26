@@ -1,12 +1,12 @@
 import { useState } from "react";
 import SvgIcon from "./SvgIcon";
 
-interface AppFavoriteProps {
+interface Props {
     checked: boolean;
     title: string;
 }
 
-export const AppFavorite = ({ checked, title }: AppFavoriteProps) => {
+export default function AppFavorite({ checked, title }: Props) {
     const [checkedState, setCheckedState] = useState(checked);
     const toggleCheckedState = () => setCheckedState(!checkedState);
 
@@ -19,4 +19,4 @@ export const AppFavorite = ({ checked, title }: AppFavoriteProps) => {
             </label>
         </>
     );
-};
+}

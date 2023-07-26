@@ -1,8 +1,8 @@
-interface AppProgressProps {
+interface Props {
     value: number;
 }
 
-export default function AppProgress({ value }: AppProgressProps) {
+export default function AppProgress({ value }: Props) {
     const wholeValue = value * 10;
 
     return (

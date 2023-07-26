@@ -1,8 +1,8 @@
-import { AppSelectCustom } from './AppSelectCustom'
-import { MoviesList } from './MoviesList'
+import AppSelectCustom from './AppSelectCustom'
+import MoviesList from './MoviesList'
 import { Part } from '../data.types'
 
-export const MainPageSidebar = (props: { movies: Part[] }) => {
+export default function MainPageSidebar(props: { movies: Part[] }) {
     return (
         <aside className="sidebar">
             <AppSelectCustom />

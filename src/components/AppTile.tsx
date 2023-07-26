@@ -1,14 +1,14 @@
 import { TileData } from "../data.types";
-import { AppFavorite } from "./AppFavorite";
+import AppFavorite from "./AppFavorite";
 import AppProgress from "./AppProgress";
 
-interface AppTileProps {
+interface Props {
     tile: TileData;
     type: 'actor' | 'movie' | 'collection';
     isCarouselItem?: boolean;
 }
 
-export default function AppTile({ tile, type, isCarouselItem }: AppTileProps) {
+export default function AppTile({ tile, type, isCarouselItem }: Props) {
     const isActorTile = type === 'actor';
     const carouselItemClass = isCarouselItem ? ' app-carousel__item' : '';
 

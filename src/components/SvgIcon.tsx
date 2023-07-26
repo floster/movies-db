@@ -1,6 +1,6 @@
 import sprite from '../assets/sprite.svg';
 
-type Props = {
+interface Props {
     icon: string;
     extraClass?: string;
     logo?: boolean;

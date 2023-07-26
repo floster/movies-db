@@ -1,10 +1,10 @@
 import SvgIcon from "./SvgIcon";
 
-interface PartOfProps {
+interface Props {
     title: string;
 }
 
-export default function PartOf({ title }: PartOfProps) {
+export default function PartOf({ title }: Props) {
     return (
         <div className="part-of">
             <span className="icon-labeled">

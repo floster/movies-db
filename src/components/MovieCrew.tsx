@@ -1,10 +1,10 @@
 import { MemberData } from "../data.types"
 
-interface MovieCrewProps {
+interface Props {
     members: MemberData[];
 }
 
-export default function MovieCrew({ members }: MovieCrewProps) {
+export default function MovieCrew({ members }: Props) {
     const memberItem = (data: MemberData) => {
         return (
             <li className="crew-item" key={data.id}>

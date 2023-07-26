@@ -1,11 +1,11 @@
 import React from 'react';
 
-type AppSectionProps = {
+interface Props {
     children: React.ReactNode;
     extraClass?: string;
 }
 
-export const AppSection = ({ children, extraClass }: AppSectionProps) => {
+export default function AppSection({ children, extraClass }: Props) {
     return (
         <section className={`app-section ${extraClass}`}>
             {children}

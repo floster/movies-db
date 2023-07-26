@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import SvgIcon from "./SvgIcon";
 
-type Props = {
+interface Props {
     isOpened: boolean;
     onClose: () => void;
     text: string;

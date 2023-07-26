@@ -1,6 +1,6 @@
 import SvgIcon from "./SvgIcon"
 
-export const AppSelectCustom = () => {
+export default function AppSelectCustom() {
     return (
         <div className="app-select m-huge" aria-labelledby="moviesTypeSelect">
             <span className="app-select__arrow" aria-hidden="true">

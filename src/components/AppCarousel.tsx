@@ -1,11 +1,11 @@
 import { TileData } from "../data.types";
 import AppTile from "./AppTile";
 
-interface AppCarouselProps {
+interface Props {
     items: TileData[];
 }
 
-export default function AppCarousel({ items }: AppCarouselProps) {
+export default function AppCarousel({ items }: Props) {
     return (
         <div className="app-carousel has-scroll">
             <div className="app-carousel__track">

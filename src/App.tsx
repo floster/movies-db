@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import './app.scss'
 import AppHeader from './components/AppHeader';
-import { AppSection } from './components/AppSection';
-import { MainPageSidebar } from './components/MainPageSidebar';
-import data from './data.json'
+import AppSection from './components/AppSection';
+import MainPageSidebar from './components/MainPageSidebar';
 import AppSectionHeader from './components/AppSectionHeader';
 import MediaHero from './components/MediaHero';
 import AppCarousel from './components/AppCarousel';
 // import MovieCrew from './components/MovieCrew';
 // import AppTile from './components/AppTile';
 import SearchForm from './components/SearchForm';
-import { AppDialog } from './components/AppDialog';
+import AppDialog from './components/AppDialog';
+
+import data from './data.json'
 
 function App() {
   const [movies] = useState(data.parts);
