@@ -17,6 +17,7 @@ export const OPTIONS_MOVIE_LIST: SelectOptions[] = [
 
 export const MOVIE_LIST_TYPES = ['now_playing', 'top_rated', 'upcoming'];
 
+export const FAST_COLLECTION_ID = 9485;
 export const MOVIES_1000 = [
   603692, 502356, 569094, 385687, 447277, 890771, 713704, 640146, 879444,
   447365, 840326, 882569, 76600, 1018494, 1107872, 1073140, 324857, 893712,

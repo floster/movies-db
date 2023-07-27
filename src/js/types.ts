@@ -3,61 +3,108 @@ interface Genre {
   name: string;
 }
 
-export interface RawMovie {
-  id: number;
+// <AppSelect> component should recieve an array with following items:
+export interface SelectOptions {
+  title: string;
+  value: ListTypes;
+}
+
+// comes with 'collection' and 'list' requests
+export interface RawPart {
   adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  media_type?: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+export interface Part {
+  adult: boolean;
+  backdrop: string;
+  id: number;
+  overview: string;
+  popularity: number;
+  poster: string;
+  released: { date: string, year: number },
+  title: string;
+  votes: { average: number, count: number };
+}
+
+// possible Movie List types to get from TMDB
+export type ListTypes = 'top_rated' | 'upcoming' | 'now_playing';
+
+// comes with 'top_rated', 'upcoming' and 'now_playing' requests
+export interface RawListData {
+  dates?: { maximum: Date, minimum: Date };
+  page: number;
+  results: RawPart[];
+  total_pages: number;
+  total_results: number;
+}
+
+// formated RawListData
+export interface ListData {
+  movies: Part[],
+  page: number,
+  pages: number
+}
+
+// TODO: check if RawMovie is the same as RawPart
+export interface RawMovie {
+  adult: boolean;
+  backdrop_path: string;
+  genres: Genre[];
+  id: number;
   title: string;
   tagline: string;
   overview: string;
-  genres: Genre[];
   release_date: Date;
-  backdrop_path: string;
   poster_path: string;
   vote_average: number;
   vote_count: number;
   popularity: number;
 }
 
-export interface RawList {
-  dates?: { maximum: Date, minimum: Date };
-  page: number;
-  results: RawMovie[];
-  total_pages: number;
-  total_results: number;
-}
-
+// TODO: check if this can be used both for Movie and Part
 export interface Movie {
-  id: number;
   adult: boolean;
-  title: string;
-  tagline?: string;
-  overview: string;
-  genres?: Genre[];
-  released: { date: string, year: number },
-  votes: number;
-  rating: number;
-  poster: string;
   backdrop: string;
-}
-
-export interface MovieListRespose {
-  page: number;
-  results: RawMovie[];
-  total_pages: number;
-  total_results: number;
-}
-
-export interface ListData {
-  movies: Movie[],
-  page: number,
-  pages: number
-}
-
-// <AppSelect> component should recieve an array with following items:
-export interface SelectOptions {
+  genres?: number[];
+  id: number;
   title: string;
-  value: MovieListTypes;
+  overview: string;
+  rating: number;
+  released: { date: string, year: number },
+  tagline?: string;
+  votes: number;
+  poster: string;
 }
 
-// possible Movie List types to get from TMDB
-export type MovieListTypes = 'top_rated' | 'upcoming' | 'now_playing';
+export interface RawCollection {
+  backdrop_path: string;
+  id: number;
+  name: string;
+  overview: string;
+  parts: RawPart[];
+  poster_path: string;
+}
+
+export interface Collection {
+  backdrop: string;
+  id: number;
+  name: string;
+  overview: string;
+  parts: Part[];
+  partsCount: number;
+  poster: string;
+}

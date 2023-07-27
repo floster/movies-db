@@ -15,7 +15,6 @@ import data from './data.json'
 import tmdb from './js/tmdb'
 
 function App() {
-  const [movies] = useState(data.parts);
   // const [collections] = useState(data.collections);
   const [heroRandom] = useState(data.hero.random);
   // const [heroMovie] = useState(data.hero.movie);
@@ -28,6 +27,8 @@ function App() {
 
   const openSearchDialog = () => setIsSearchFormOpen(true);
   const closeSearchDialog = () => setIsSearchFormOpen(false);
+
+  tmdb.getCollection();
 
   return (
     <>

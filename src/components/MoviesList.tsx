@@ -1,9 +1,9 @@
-import { Movie, MovieListTypes } from '../js/types'
+import { Part, ListTypes } from '../js/types'
 import MovieRow from "./MovieRow";
 
 interface Props {
-    movies: Movie[] | [];
-    listType: MovieListTypes;
+    movies: Part[] | [];
+    listType: ListTypes;
 }
 
 export default function MoviesList({ movies, listType }: Props) {

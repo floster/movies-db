@@ -1,9 +1,9 @@
 import AppFavorite from "./AppFavorite"
-import { Movie, MovieListTypes } from '../js/types'
+import { Part, ListTypes } from '../js/types'
 
 interface Props {
-    movie: Movie;
-    listType: MovieListTypes
+    movie: Part;
+    listType: ListTypes
 }
 
 export default function MovieRow({ movie, listType }: Props) {
@@ -13,7 +13,7 @@ export default function MovieRow({ movie, listType }: Props) {
             <div className="movie-row__content">
                 <h3 className="movie-row__title">{movie.title}</h3>
                 <p className="movie-row__label">{movie.released.date}{listType !== 'upcoming' ? ', ' + movie.released.year : ''}</p>
-                {/* {listType !== 'upcoming' && <span className="movie-row__rating">{movie.rating} / {movie.votes} votes</span>} */}
+                {/* {listType !== 'upcoming' && <span className="movie-row__rating">{movie.popularity}</span>} */}
             </div>
 
             <AppFavorite checked={false} title={movie.title} />
