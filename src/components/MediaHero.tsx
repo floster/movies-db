@@ -5,14 +5,16 @@ import AppPicture from "./AppPicture";
 import SvgIcon from "./SvgIcon";
 
 import { Collection } from "../js/types";
+import AppSpinner from "./AppSpinner";
 
 interface Props {
     data: Collection;
     isRandom: boolean;
     isFavorite: boolean;
+    isLoading: boolean;
 }
 
-export default function MediaHero({ data, isRandom, isFavorite }: Props) {
+export default function MediaHero({ data, isRandom, isFavorite, isLoading }: Props) {
     // const renderTags = () => {
     //     if (data.tags) {
     //         const tags = data.tags.map((tag: string) => <li>{tag}</li>)
@@ -53,6 +55,7 @@ export default function MediaHero({ data, isRandom, isFavorite }: Props) {
     return (
         isRandom
             ? <a href="collection.html" className="media-hero m-random" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
+                <AppSpinner visible={isLoading} />
                 {heroInner}
             </a>
             : <div className="media-hero" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>

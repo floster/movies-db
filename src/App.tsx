@@ -18,6 +18,7 @@ import tmdb from './js/tmdb'
 
 function App() {
   const [randomCollection, setRandomCollection] = useState({} as Collection);
+  const [isRandomCollectionLoading, setIsRandomCollectionLoading] = useState(false);
   // const [collections] = useState(data.collections);
   // const [heroMovie] = useState(data.hero.movie);
   // const [heroCollection] = useState(data.hero.collection);
@@ -35,8 +36,10 @@ function App() {
   }, []);
 
   const getRandomCollection = async () => {
+    setIsRandomCollectionLoading(true);
     const randomCollection = await tmdb.getRandomCollection();
     setRandomCollection(randomCollection);
+    setIsRandomCollectionLoading(false);
   }
 
   return (
@@ -112,7 +115,7 @@ function App() {
         <main className="l-main_page_content">
           <AppSection extraClass="m-random_media">
             <AppSectionHeader title="random collection" />
-            <MediaHero data={randomCollection} isRandom={true} isFavorite={true} />
+            <MediaHero data={randomCollection} isRandom={true} isFavorite={true} isLoading={isRandomCollectionLoading} />
           </AppSection>
 
           <AppSection>
