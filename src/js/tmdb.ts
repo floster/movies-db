@@ -19,8 +19,8 @@ import {
   ListData,
 } from './types';
 
-class TMDB {
-  async #getJSON<T>(url: string): Promise<T> {
+export default class TMDB {
+  static async #getJSON<T>(url: string): Promise<T> {
     const response: Response = await fetch(url);
 
     if (!response.ok) throw new Error(`getJSON: Error fetching data for URL: ${url}`);
@@ -29,7 +29,7 @@ class TMDB {
     return data;
   }
 
-  #formatPartData(movie: RawPart): Part {
+  static #formatPartData(movie: RawPart): Part {
     const poster = movie.poster_path
       ? `${API_POSTER_BASE}${movie.poster_path}`
       : POSTER_NO_IMAGE;
@@ -53,12 +53,12 @@ class TMDB {
     return formatedData;
   }
 
-  #formatPartsData(movies: RawPart[]): Part[] {
+  static #formatPartsData(movies: RawPart[]): Part[] {
     return movies.map(movie => this.#formatPartData(movie));
   }
 
   // get page with 20 of 'top_rated', 'upcoming' and 'now_playing' movies
-  async getMoviesList(
+  static async getMoviesList(
     page: number,
     listType: ListTypes
   ): Promise<ListData> {
@@ -90,7 +90,7 @@ class TMDB {
     }
   }
 
-  async getCollection(id = FAST_COLLECTION_ID) {
+  static async getCollection(id = FAST_COLLECTION_ID) {
     const url = `${API_BASE}/collection/${id}${API_KEY}&language=en-US`;
     const data: RawCollection = await this.#getJSON(url);
     console.log('RawCollection', data);
@@ -108,10 +108,9 @@ class TMDB {
     return collection;
   }
 
-  async getRandomCollection() {
+  static async getRandomCollection() {
     const randomCollectionId = COLLECTIONS[Math.floor(Math.random() * COLLECTIONS.length)];
     return await this.getCollection(randomCollectionId);
   }
 }
 
-export default new TMDB();
