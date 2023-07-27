@@ -1,20 +1,35 @@
-import AppFavorite from "./AppFavorite";
+import SvgIcon from "./SvgIcon";
 import AppPicture from "./AppPicture";
+import AppSpinner from "./AppSpinner";
+import AppFavorite from "./AppFavorite";
 // import AppProgress from "./AppProgress";
 // import MoviePartOf from "./MoviePartOf";
-import SvgIcon from "./SvgIcon";
 
 import { Collection } from "../js/types";
-import AppSpinner from "./AppSpinner";
+import { useEffect, useState } from "react";
+import { useFetch } from "../hooks/useFetch";
+import tmdb from "../js/tmdb";
 
 interface Props {
-    data: Collection;
-    isRandom: boolean;
-    isFavorite: boolean;
-    isLoading: boolean;
+    id?: number;
+    type: 'random' | 'collection' | 'movie';
 }
 
-export default function MediaHero({ data, isRandom, isFavorite, isLoading }: Props) {
+export default function MediaHero({ id, type }: Props) {
+    const [data, setData] = useState({} as Collection);
+
+    const [getData, isDataLoading, dataError] = useFetch(async () => {
+        let data: Collection;
+        if (type === 'random') {
+            data = await tmdb.getRandomCollection();
+            setData(data);
+        }
+    })
+
+    useEffect(() => {
+        getData()
+    }, []);
+
     // const renderTags = () => {
     //     if (data.tags) {
     //         const tags = data.tags.map((tag: string) => <li>{tag}</li>)
@@ -25,7 +40,7 @@ export default function MediaHero({ data, isRandom, isFavorite, isLoading }: Pro
     const backdrop = `url(${data.backdrop})`;
 
     const heroInner = (
-        <div className={`media-hero__inner ${!isRandom && 'container'}`}>
+        <div className={`media-hero__inner ${type !== 'random' && 'container'}`}>
             <AppPicture img={data.poster} alt={data.name} />
             <div className="media-hero__content">
                 <h2 className="media-hero__title">{data.name}</h2>
@@ -47,19 +62,21 @@ export default function MediaHero({ data, isRandom, isFavorite, isLoading }: Pro
 
                 </div>
 
-                <AppFavorite checked={isFavorite} title={data.name} />
+                <AppFavorite checked={true} title={data.name} />
             </footer>
         </div>
     )
 
     return (
-        isRandom
-            ? <a href="collection.html" className="media-hero m-random" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
-                <AppSpinner visible={isLoading} />
-                {heroInner}
-            </a>
-            : <div className="media-hero" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
-                {heroInner}
-            </div>
+        dataError
+            ? <p className="error-message">🔴 Error occured while fetching data</p>
+            : type === 'random'
+                ? <a href="collection.html" className="media-hero m-random" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
+                    <AppSpinner visible={isDataLoading as boolean} />
+                    {heroInner}
+                </a>
+                : <div className="media-hero" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
+                    {heroInner}
+                </div>
     )
 }

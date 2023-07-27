@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './app.scss'
 import AppHeader from './components/AppHeader';
 import AppSection from './components/AppSection';
@@ -11,14 +11,9 @@ import AppCarousel from './components/AppCarousel';
 import SearchForm from './components/SearchForm';
 import AppDialog from './components/AppDialog';
 
-import { Collection } from "./js/types";
-
 import data from './data.json'
-import tmdb from './js/tmdb'
 
-function App() {
-  const [randomCollection, setRandomCollection] = useState({} as Collection);
-  const [isRandomCollectionLoading, setIsRandomCollectionLoading] = useState(false);
+export default function App() {
   // const [collections] = useState(data.collections);
   // const [heroMovie] = useState(data.hero.movie);
   // const [heroCollection] = useState(data.hero.collection);
@@ -30,17 +25,6 @@ function App() {
 
   const openSearchDialog = () => setIsSearchFormOpen(true);
   const closeSearchDialog = () => setIsSearchFormOpen(false);
-
-  useEffect(() => {
-    getRandomCollection()
-  }, []);
-
-  const getRandomCollection = async () => {
-    setIsRandomCollectionLoading(true);
-    const randomCollection = await tmdb.getRandomCollection();
-    setRandomCollection(randomCollection);
-    setIsRandomCollectionLoading(false);
-  }
 
   return (
     <>
@@ -115,7 +99,7 @@ function App() {
         <main className="l-main_page_content">
           <AppSection extraClass="m-random_media">
             <AppSectionHeader title="random collection" />
-            <MediaHero data={randomCollection} isRandom={true} isFavorite={true} isLoading={isRandomCollectionLoading} />
+            <MediaHero type='random' />
           </AppSection>
 
           <AppSection>
@@ -136,5 +120,3 @@ function App() {
     </>
   )
 }
-
-export default App
