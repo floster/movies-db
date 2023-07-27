@@ -5,7 +5,8 @@ import {
   API_BACKDROP_BASE,
   MOVIE_LIST_TYPES,
   POSTER_NO_IMAGE,
-  FAST_COLLECTION_ID
+  FAST_COLLECTION_ID,
+  COLLECTIONS
 } from './config';
 
 import {
@@ -105,6 +106,11 @@ class TMDB {
     }
 
     return collection;
+  }
+
+  async getRandomCollection() {
+    const randomCollectionId = COLLECTIONS[Math.floor(Math.random() * COLLECTIONS.length)];
+    return await this.getCollection(randomCollectionId);
   }
 }
 
