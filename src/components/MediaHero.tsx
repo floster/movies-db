@@ -72,7 +72,7 @@ export default function MediaHero({ type }: Props) {
 
     return (
         dataError
-            ? <p className="error-message">🔴 Error occured while fetching data</p>
+            ? <p className="error-message">🔴 Error occured while fetching Random Collection data</p>
             : type === 'random'
                 ? <a href={`collection/${data.id}`} className="media-hero m-random" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
                     <AppSpinner visible={isDataLoading as boolean} />

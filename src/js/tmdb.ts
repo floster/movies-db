@@ -1,4 +1,6 @@
 import {
+  LOCALES,
+  CURRENT_LOCALE,
   API_BASE,
   API_KEY,
   API_POSTER_BASE,
@@ -17,12 +19,15 @@ import {
   RawListData,
   ListTypes,
   ListData,
-  MediaType
+  MediaType,
+  AvalableLocales,
 } from './types';
 
 export default class TMDB {
   static async #getJSON<T>(url: string): Promise<T> {
-    const response: Response = await fetch(url);
+    const urlWithLocale = `${url}${TMDB.#getLocaleParam(CURRENT_LOCALE)}`;
+
+    const response: Response = await fetch(`${API_BASE}${urlWithLocale}${API_KEY}`);
 
     if (!response.ok) throw new Error(`getJSON: Error fetching data for URL: ${url}`);
 
@@ -30,27 +35,37 @@ export default class TMDB {
     return data;
   }
 
-  static #formatPartData(movie: RawPart): Part {
-    const poster = movie.poster_path
-      ? `${API_POSTER_BASE}${movie.poster_path}`
+  static #getLocaleParam(locale: AvalableLocales): string {
+    return `&language=${locale}&region=${LOCALES[locale]}`;
+  }
+
+  static #formatDate(date: Date) {
+    const localeString = `${CURRENT_LOCALE}-${LOCALES[CURRENT_LOCALE]}`; // 'en-US'
+    const full = date.toLocaleDateString(localeString, { month: 'short', day: 'numeric', year: 'numeric' });
+    const year = date.getFullYear();
+    return { full, year };
+  }
+
+  static #formatPartData(part: RawPart): Part {
+    const poster = part.poster_path
+      ? `${API_POSTER_BASE}${part.poster_path}`
       : POSTER_NO_IMAGE;
 
-    const dateProp = movie.release_date ? movie['release_date'] : movie['first_air_date'];
-    const releaseDate = new Date(dateProp!);
-    const year = releaseDate.getFullYear();
-    // get only month and day from release date, for ex. 'Jul 19'
-    const formatedDate = releaseDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).split(',')[0];
+    // if part is a tv show, then it has 'first_air_date' property
+    // if part is a movie, then it has 'release_date' property
+    const dateProp = part.release_date ? part['release_date'] : part['first_air_date'];
+    const date = this.#formatDate(new Date(dateProp!));
 
     const formatedData: Part = {
-      adult: movie.adult,
-      backdrop: `${API_BACKDROP_BASE}${movie.backdrop_path}`,
-      id: movie.id,
-      overview: movie.overview,
-      popularity: movie.popularity,
+      adult: part.adult,
+      backdrop: `${API_BACKDROP_BASE}${part.backdrop_path}`,
+      id: part.id,
+      overview: part.overview,
+      popularity: part.popularity,
       poster: poster,
-      released: { date: formatedDate, year },
-      title: movie.title,
-      votes: { average: movie.vote_count, count: movie.vote_count },
+      released: { date: date.full, year: date.year },
+      title: part.title,
+      votes: { average: part.vote_count, count: part.vote_count },
     }
 
     return formatedData;
@@ -60,7 +75,7 @@ export default class TMDB {
     return movies.map(movie => this.#formatPartData(movie));
   }
 
-  // get page with 20 of 'top_rated', 'upcoming' and 'now_playing' movies
+  // get page with 20 of 'top_rated', 'upcoming' or 'now_playing' movies
   static async getMoviesList(
     page: number,
     listType: ListTypes
@@ -71,22 +86,18 @@ export default class TMDB {
         const oneWeekLater = new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000);
         const oneWeekLaterStr = oneWeekLater.toISOString().split('T')[0];
         // get movies that will be released starts from tomorrow
-        url = `${API_BASE}/discover/movie${API_KEY}&region=UA&sort_by=primary_release_date.asc&primary_release_date.gte=${oneWeekLaterStr}`;
+        url = `/discover/movie?sort_by=primary_release_date.asc&primary_release_date.gte=${oneWeekLaterStr}`;
       } else {
-        url = `${API_BASE}/movie/${listType}${API_KEY}&page=${page}`;
-
+        url = `/movie/${listType}?page=${page}`;
       }
-      const data: RawListData = await this.#getJSON(url);
 
-      const pages = {
-        page: data.page,
-        pages: data.total_pages,
-      };
+      const data: RawListData = await this.#getJSON(url);
       const movies: Part[] = this.#formatPartsData(data.results);
 
       return {
         movies,
-        ...pages,
+        current_page: data.page,
+        total_pages: data.total_pages,
       };
     } else {
       throw new Error(`🔴 Wrong Movie List type: ${listType}`);
@@ -94,9 +105,8 @@ export default class TMDB {
   }
 
   static async getCollection(id = FAST_COLLECTION_ID) {
-    const url = `${API_BASE}/collection/${id}${API_KEY}&language=en-US`;
+    const url = `/collection/${id}?`;
     const data: RawCollection = await this.#getJSON(url);
-    console.log('RawCollection', data);
 
     const collection: Collection = {
       backdrop: `${API_BACKDROP_BASE}${data.backdrop_path}`,
@@ -117,7 +127,7 @@ export default class TMDB {
   }
 
   static async getTrending(type: MediaType, period: 'day' | 'week' = 'week') {
-    const url = `${API_BASE}/trending/${type}/${period}${API_KEY}`;
+    const url = `/trending/${type}/${period}?`;
     const data: RawListData = await this.#getJSON(url);
 
     const movies: Part[] = this.#formatPartsData(data.results);

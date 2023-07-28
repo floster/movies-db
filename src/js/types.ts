@@ -12,6 +12,9 @@ export interface SelectOptions {
 export type AppTileType = 'movie' | 'collection' | 'actor';
 export type MediaType = 'movie' | 'tv';
 
+export type AvalableLocales = 'en' | 'uk' | 'de';
+export type Locale = { [key in AvalableLocales]: string };
+
 // comes with 'collection' and 'list' requests
 export interface RawPart {
   adult: boolean;
@@ -59,8 +62,8 @@ export interface RawListData {
 // formated RawListData
 export interface ListData {
   movies: Part[],
-  page: number,
-  pages: number
+  current_page: number,
+  total_pages: number
 }
 
 // TODO: check if RawMovie is the same as RawPart
