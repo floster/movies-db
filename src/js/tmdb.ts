@@ -20,23 +20,22 @@ import {
   ListTypes,
   ListData,
   MediaType,
-  AvalableLocales,
 } from './types';
 
 export default class TMDB {
-  static async #getJSON<T>(url: string): Promise<T> {
-    const urlWithLocale = `${url}${TMDB.#getLocaleParam(CURRENT_LOCALE)}`;
+  static async #getJSON<T>(url: string, params: string = ''): Promise<T> {
+    const fetchUrl = `${API_BASE}${url}`;
+    const fetchParams = new URLSearchParams(params);
+    fetchParams.append('api_key', API_KEY);
+    fetchParams.append('language', CURRENT_LOCALE);
+    fetchParams.append('region', LOCALES[CURRENT_LOCALE]);
 
-    const response: Response = await fetch(`${API_BASE}${urlWithLocale}${API_KEY}`);
+    const response: Response = await fetch(fetchUrl + '?' + fetchParams.toString());
 
     if (!response.ok) throw new Error(`getJSON: Error fetching data for URL: ${url}`);
 
     const data: T = await response.json();
     return data;
-  }
-
-  static #getLocaleParam(locale: AvalableLocales): string {
-    return `&language=${locale}&region=${LOCALES[locale]}`;
   }
 
   static #formatDate(date: Date) {
@@ -82,16 +81,19 @@ export default class TMDB {
   ): Promise<ListData> {
     if (MOVIE_LIST_TYPES.includes(listType)) {
       let url = '';
+      let params = '';
       if (listType === 'upcoming') {
         const oneWeekLater = new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000);
         const oneWeekLaterStr = oneWeekLater.toISOString().split('T')[0];
         // get movies that will be released starts from tomorrow
-        url = `/discover/movie?sort_by=primary_release_date.asc&primary_release_date.gte=${oneWeekLaterStr}`;
+        url = `/discover/movie`;
+        params = `sort_by=primary_release_date.asc&primary_release_date.gte=${oneWeekLaterStr}`;
       } else {
-        url = `/movie/${listType}?page=${page}`;
+        url = `/movie/${listType}`;
+        params = `page=${page}`;
       }
 
-      const data: RawListData = await this.#getJSON(url);
+      const data: RawListData = await this.#getJSON(url, params);
       const movies: Part[] = this.#formatPartsData(data.results);
 
       return {
@@ -105,7 +107,7 @@ export default class TMDB {
   }
 
   static async getCollection(id = FAST_COLLECTION_ID) {
-    const url = `/collection/${id}?`;
+    const url = `/collection/${id}`;
     const data: RawCollection = await this.#getJSON(url);
 
     const collection: Collection = {
@@ -127,7 +129,7 @@ export default class TMDB {
   }
 
   static async getTrending(type: MediaType, period: 'day' | 'week' = 'week') {
-    const url = `/trending/${type}/${period}?`;
+    const url = `/trending/${type}/${period}`;
     const data: RawListData = await this.#getJSON(url);
 
     const movies: Part[] = this.#formatPartsData(data.results);
