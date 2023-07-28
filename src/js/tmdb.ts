@@ -140,8 +140,6 @@ export default class TMDB {
   static async getTrending(type: MediaType, period: 'day' | 'week' = 'week') {
     const url = `/trending/${type}/${period}`;
     const data: RawListData = await this.#getJSON(url);
-    console.log(data);
-
 
     const movies: Part[] = this.#formatPartsData(data.results);
 
