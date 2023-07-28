@@ -9,19 +9,23 @@ export interface SelectOptions {
   value: ListTypes;
 }
 
+export type AppTileType = 'movie' | 'collection' | 'actor';
+export type MediaType = 'movie' | 'tv';
+
 // comes with 'collection' and 'list' requests
 export interface RawPart {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
   id: number;
-  media_type?: string;
+  media_type?: MediaType;
   original_language: string;
   original_title: string;
   overview: string;
   popularity: number;
   poster_path: string;
-  release_date: string;
+  release_date?: string; // only for movies
+  first_air_date?: string; // only for tv
   title: string;
   video: boolean;
   vote_average: number;

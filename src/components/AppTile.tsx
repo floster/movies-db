@@ -1,10 +1,11 @@
-import { TileData } from "../data.types";
+import { Part, AppTileType } from "../js/types";
 import AppFavorite from "./AppFavorite";
+import AppPicture from "./AppPicture";
 import AppProgress from "./AppProgress";
 
 interface Props {
-    tile: TileData;
-    type: 'actor' | 'movie' | 'collection';
+    tile: Part;
+    type: AppTileType;
     isCarouselItem?: boolean;
 }
 
@@ -14,14 +15,12 @@ export default function AppTile({ tile, type, isCarouselItem }: Props) {
 
     const tileInner = (
         <>
-            <picture className="app-tile__picture">
-                <img src={`./src/assets/${isActorTile ? 'actor' : 'poster'}_${tile.id}.png`} alt={`${tile.title} ${type === 'actor' ? 'image' : 'poster'}`} className="app-tile__img" />
-            </picture>
+            <AppPicture img={tile.poster} alt={tile.title + ' poster'} />
 
-            {(type !== 'actor') && <AppFavorite checked={tile.favorite!} title={tile.title} />}
+            {(type !== 'actor') && <AppFavorite checked={true} title={tile.title} />}
             <div className="app-tile__content">
-                {(type !== 'actor') && <AppProgress value={tile.rating!} />}
-                <p className="app-tile__label">{tile.label}</p>
+                {(type !== 'actor') && <AppProgress value={tile.votes.count} />}
+                <p className="app-tile__label">{tile.released.date}, {tile.released.year}</p>
                 <h3 className="app-tile__title">{tile.title}</h3>
             </div>
         </>
@@ -32,7 +31,7 @@ export default function AppTile({ tile, type, isCarouselItem }: Props) {
             ? <div className="app-tile m-actor">
                 {tileInner}
             </div>
-            : <a href={`${type}.html`} className={`app-tile m-${type}${carouselItemClass}`}>
+            : <a href={`${type}/${tile.id}`} className={`app-tile m-${type}${carouselItemClass}`}>
                 {tileInner}
             </a>
     )

@@ -15,7 +15,7 @@ interface Props {
     type: 'random' | 'collection' | 'movie';
 }
 
-export default function MediaHero({ id, type }: Props) {
+export default function MediaHero({ type }: Props) {
     const [data, setData] = useState({} as Collection);
 
     const [getData, isDataLoading, dataError] = useFetch(async () => {
@@ -27,7 +27,10 @@ export default function MediaHero({ id, type }: Props) {
     })
 
     useEffect(() => {
-        getData()
+        const fetchData = async () => {
+            await (getData as () => Promise<void>)();
+        };
+        fetchData();
     }, []);
 
     // const renderTags = () => {
@@ -71,7 +74,7 @@ export default function MediaHero({ id, type }: Props) {
         dataError
             ? <p className="error-message">🔴 Error occured while fetching data</p>
             : type === 'random'
-                ? <a href="collection.html" className="media-hero m-random" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
+                ? <a href={`collection/${data.id}`} className="media-hero m-random" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
                     <AppSpinner visible={isDataLoading as boolean} />
                     {heroInner}
                 </a>

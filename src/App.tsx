@@ -11,16 +11,12 @@ import AppCarousel from './components/AppCarousel';
 import SearchForm from './components/SearchForm';
 import AppDialog from './components/AppDialog';
 
-import data from './data.json'
-
 export default function App() {
   // const [collections] = useState(data.collections);
   // const [heroMovie] = useState(data.hero.movie);
   // const [heroCollection] = useState(data.hero.collection);
   // const [movieCrew] = useState(data.movie.crew);
   // const [movieCast] = useState(data.movie.cast);
-  const [trandingMovies] = useState(data.tranding_movies);
-  const [trandingShows] = useState(data.tranding_shows);
   const [isSearchFormOpen, setIsSearchFormOpen] = useState(false);
 
   const openSearchDialog = () => setIsSearchFormOpen(true);
@@ -104,12 +100,12 @@ export default function App() {
 
           <AppSection>
             <AppSectionHeader title="trending movies" />
-            <AppCarousel items={trandingMovies} />
+            <AppCarousel itemsType='movie' />
           </AppSection>
 
           <AppSection>
             <AppSectionHeader title="trending TV shows" />
-            <AppCarousel items={trandingShows} />
+            <AppCarousel itemsType='tv' />
           </AppSection>
         </main>
       </div>

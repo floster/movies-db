@@ -17,6 +17,7 @@ import {
   RawListData,
   ListTypes,
   ListData,
+  MediaType
 } from './types';
 
 export default class TMDB {
@@ -33,7 +34,9 @@ export default class TMDB {
     const poster = movie.poster_path
       ? `${API_POSTER_BASE}${movie.poster_path}`
       : POSTER_NO_IMAGE;
-    const releaseDate = new Date(movie.release_date);
+
+    const dateProp = movie.release_date ? movie['release_date'] : movie['first_air_date'];
+    const releaseDate = new Date(dateProp!);
     const year = releaseDate.getFullYear();
     // get only month and day from release date, for ex. 'Jul 19'
     const formatedDate = releaseDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).split(',')[0];
@@ -111,6 +114,15 @@ export default class TMDB {
   static async getRandomCollection() {
     const randomCollectionId = COLLECTIONS[Math.floor(Math.random() * COLLECTIONS.length)];
     return await this.getCollection(randomCollectionId);
+  }
+
+  static async getTrending(type: MediaType, period: 'day' | 'week' = 'week') {
+    const url = `${API_BASE}/trending/${type}/${period}${API_KEY}`;
+    const data: RawListData = await this.#getJSON(url);
+
+    const movies: Part[] = this.#formatPartsData(data.results);
+
+    return movies;
   }
 }
 
