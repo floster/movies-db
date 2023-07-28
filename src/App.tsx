@@ -107,6 +107,11 @@ export default function App() {
             <AppSectionHeader title="trending TV shows" />
             <AppCarousel itemsType='tv' />
           </AppSection>
+
+          <AppSection>
+            <AppSectionHeader title="trending poeple" />
+            <AppCarousel itemsType='person' />
+          </AppSection>
         </main>
       </div>
 

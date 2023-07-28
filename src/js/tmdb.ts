@@ -46,9 +46,11 @@ export default class TMDB {
   }
 
   static #formatPartData(part: RawPart): Part {
+    // if part is a movie or tv show then poster is under 'poster_path' property
+    // if part is a person then poster is under 'profile_path' property
     const poster = part.poster_path
       ? `${API_POSTER_BASE}${part.poster_path}`
-      : POSTER_NO_IMAGE;
+      : part.profile_path ? `${API_POSTER_BASE}${part.profile_path}` : POSTER_NO_IMAGE;
 
     // if part is a tv show, then it has 'first_air_date' property
     // if part is a movie, then it has 'release_date' property
@@ -59,12 +61,19 @@ export default class TMDB {
       adult: part.adult,
       backdrop: `${API_BACKDROP_BASE}${part.backdrop_path}`,
       id: part.id,
+      type: part.media_type,
       overview: part.overview,
       popularity: part.popularity,
       poster: poster,
       released: { date: date.full, year: date.year },
-      title: part.title,
+      title: part.title! || part.name!,
       votes: { average: part.vote_count, count: part.vote_count },
+    }
+
+    if (part.media_type !== 'person') {
+      formatedData.released = { date: date.full, year: date.year }
+    } else {
+      formatedData.department = part.known_for_department;
     }
 
     return formatedData;
@@ -131,6 +140,8 @@ export default class TMDB {
   static async getTrending(type: MediaType, period: 'day' | 'week' = 'week') {
     const url = `/trending/${type}/${period}`;
     const data: RawListData = await this.#getJSON(url);
+    console.log(data);
+
 
     const movies: Part[] = this.#formatPartsData(data.results);
 

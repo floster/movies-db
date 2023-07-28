@@ -10,7 +10,7 @@ export interface SelectOptions {
 }
 
 export type AppTileType = 'movie' | 'collection' | 'actor';
-export type MediaType = 'movie' | 'tv';
+export type MediaType = 'movie' | 'tv' | 'person';
 
 export type AvalableLocales = 'en' | 'uk' | 'de';
 export type Locale = { [key in AvalableLocales]: string };
@@ -21,15 +21,18 @@ export interface RawPart {
   backdrop_path: string;
   genre_ids: number[];
   id: number;
-  media_type?: MediaType;
+  media_type: MediaType;
   original_language: string;
   original_title: string;
   overview: string;
   popularity: number;
-  poster_path: string;
-  release_date?: string; // only for movies
-  first_air_date?: string; // only for tv
-  title: string;
+  poster_path?: string;  // only for movies and tv
+  profile_path?: string; // only for people
+  release_date?: string;        // only for movies
+  first_air_date?: string;      // only for tv
+  known_for_department: string; // only for people
+  title?: string;
+  name?: string;
   video: boolean;
   vote_average: number;
   vote_count: number;
@@ -39,10 +42,12 @@ export interface Part {
   adult: boolean;
   backdrop: string;
   id: number;
+  type: MediaType;
   overview: string;
   popularity: number;
   poster: string;
-  released: { date: string, year: number },
+  released?: { date: string, year: number },
+  department?: string;
   title: string;
   votes: { average: number, count: number };
 }
