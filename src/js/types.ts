@@ -49,7 +49,7 @@ export interface Part {
   released?: { date: string, year: number },
   department?: string;
   title: string;
-  votes: { average: number, count: number };
+  votes: { average: string, count: number };
 }
 
 // possible Movie List types to get from TMDB

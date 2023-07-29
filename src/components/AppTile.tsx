@@ -17,7 +17,7 @@ export default function AppTile({ tile, isCarouselItem }: Props) {
 
             {(tile.type !== 'person') && <AppFavorite checked={true} title={tile.title} />}
             <div className="app-tile__content">
-                {(tile.type !== 'person') && <AppProgress value={tile.votes.count} />}
+                {(tile.type !== 'person') && <AppProgress value={tile.votes.average} />}
                 {(tile.type === 'person')
                     ? <p className="app-tile__label">{tile.department}</p>
                     : <p className="app-tile__label">{tile.released?.date}</p>

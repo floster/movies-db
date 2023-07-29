@@ -20,7 +20,7 @@ export const LOCALES: Locale = {
   uk: 'UA',
   de: 'DE',
 };
-export const CURRENT_LOCALE: AvalableLocales = 'uk';
+export const CURRENT_LOCALE: AvalableLocales = 'en';
 
 
 
