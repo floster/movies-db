@@ -1,16 +1,21 @@
+import { BelongsToCollection } from "../js/types";
 import SvgIcon from "./SvgIcon";
 
 interface Props {
-    title: string;
+    data: BelongsToCollection | null;
 }
 
-export default function PartOf({ title }: Props) {
+export default function PartOf({ data }: Props) {
     return (
-        <div className="part-of">
-            <span className="icon-labeled">
-                <SvgIcon icon="stack" />
-                <span className="icon-labeled__label">part of <a href="collection.html">{title}</a></span>
-            </span>
-        </div>
+        <>
+            {data && (
+                <div className="part-of">
+                    <span className="icon-labeled">
+                        <SvgIcon icon="stack" />
+                        <span className="icon-labeled__label">part of <a href={`collection/${data.id}`}>{data.name}</a></span>
+                    </span>
+                </div>
+            )}
+        </>
     )
 }
