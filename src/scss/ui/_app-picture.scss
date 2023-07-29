@@ -1,0 +1,13 @@
+.app-picture {
+    display: flex;
+    align-self: start;
+
+    &__img {
+        @include poster;
+
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        transition: transform 0.2s ease-out;
+    }
+}

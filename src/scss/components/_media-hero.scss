@@ -66,16 +66,8 @@
         display: flex;
     }
 
-    &__picture {
+    .app-picture {
         grid-area: image;
-        display: flex;
-        align-self: start;
-    }
-
-    &__img {
-        @include poster;
-
-        width: 100%;
     }
 
     &__content {

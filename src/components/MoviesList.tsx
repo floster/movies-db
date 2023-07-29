@@ -1,5 +1,5 @@
 import { Part, ListTypes } from '../js/types'
-import MovieRow from "./MovieRow";
+import AppTile from "./AppTile";
 
 interface Props {
     movies: Part[] | [];
@@ -9,7 +9,7 @@ interface Props {
 export default function MoviesList({ movies, listType }: Props) {
     return (
         <div className="movies-list l-movies_list" role="list">
-            {movies.map((movie) => <MovieRow movie={movie} key={movie.id} listType={listType} />)}
+            {movies.map((movie) => <AppTile tile={movie} key={movie.id} isRow={true} listType={listType} />)}
         </div>
     )
 }

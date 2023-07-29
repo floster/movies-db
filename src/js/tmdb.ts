@@ -67,7 +67,7 @@ export default class TMDB {
       poster: poster,
       released: { date: date.full, year: date.year },
       title: part.title! || part.name!,
-      votes: { average: part.vote_average.toFixed(1), count: part.vote_count },
+      votes: { average: part.vote_average?.toFixed(1), count: part.vote_count },
     }
 
     if (part.media_type !== 'person') {

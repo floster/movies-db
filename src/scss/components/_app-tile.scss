@@ -1,12 +1,10 @@
 .app-tile {
-    @include poster;
-
     position: relative;
     display: flex;
     flex-direction: column;
-    box-shadow: var(--shadow);
     max-width: 100%;
     transition: box-shadow 0.2s ease-out;
+    border-radius: var(--radius);
 
     &:not(.m-actor) {
 
@@ -39,30 +37,63 @@
         }
     }
 
-    &__picture {
-        @include poster;
-
-        display: flex;
-        flex-shrink: 0;
-        overflow: hidden;
+    &:not(.m-row) {
+        box-shadow: var(--shadow);
     }
 
-    &__img {
+    &.m-row {
+        flex-direction: row;
+        flex-shrink: 0;
+        align-items: center;
+        gap: var(--gap-sm);
         width: 100%;
-        height: auto;
-        transition: transform 0.2s ease-out;
+
+        &:active,
+        &:focus-visible {
+            outline: 2px solid var(--color-secondary-dimmed);
+        }
+
+        &:hover {
+            box-shadow: var(--shadow);
+            cursor: pointer;
+
+            .movie-row__title {
+                color: var(--color-secondary);
+            }
+        }
+
+        .app-picture {
+            width: 3.73rem;
+        }
+
+        .app-picture__img {
+            @include poster(sm);
+        }
+
+        .app-favorite {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    .app-picture {
+        flex-shrink: 0;
     }
 
     &__content {
         position: relative;
         display: flex;
         flex-direction: column;
+        flex-grow: 1;
         gap: var(--gap-xs);
-        padding: var(--gap-xs) var(--gap-sm) var(--gap-sm);
 
-        @include media(md) {
-            gap: var(--gap-sm);
-            padding: var(--gap-sm);
+        .app-tile:not(.m-row) & {
+            padding: var(--gap-xs) var(--gap-sm) var(--gap-sm);
+
+            @include media(md) {
+                gap: var(--gap-sm);
+                padding: var(--gap-sm);
+            }
         }
     }
 
@@ -74,6 +105,10 @@
         font-size: var(--font-size-sm);
         font-weight: bold;
         color: var(--text-color-light);
+
+        .app-tile.m-row & {
+            order: 2;
+        }
     }
 
     .app-favorite {
@@ -88,5 +123,14 @@
         right: var(--gap-sm);
         top: 0;
         transform: translateY(-50%);
+    }
+
+    &__rating {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-size: var(--font-size-5);
+        font-weight: bold;
+        color: var(--color-secondary-dimmed);
     }
 }

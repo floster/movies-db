@@ -1,9 +1,9 @@
 interface Props {
-    value: number;
+    value: string;
 }
 
 export default function AppProgress({ value }: Props) {
-    const wholeValue = value * 10;
+    const wholeValue = +value * 10;
 
     return (
         <div className="app-progress" style={{ "--value": wholeValue } as React.CSSProperties} role="progressbar" aria-valuenow={wholeValue}

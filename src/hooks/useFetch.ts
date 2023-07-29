@@ -9,6 +9,7 @@ export const useFetch = (callback: () => Promise<void>) => {
             setIsLoading(true);
             await callback();
         } catch (error) {
+            console.error('⚠️⚠️⚠️', error);
             setError(error);
         } finally {
             setIsLoading(false);
