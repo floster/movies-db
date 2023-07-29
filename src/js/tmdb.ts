@@ -20,6 +20,8 @@ import {
   ListTypes,
   ListData,
   MediaType,
+  Movie,
+  RawMovie,
 } from './types';
 
 export default class TMDB {
@@ -38,6 +40,11 @@ export default class TMDB {
     return data;
   }
 
+  /**
+   * Formats a date object 
+   * @param date - The date object to be formatted.
+   * @returns An object with the 'MMM DD, YYYY' date and the year itself.
+   */
   static #formatDate(date: Date) {
     const localeString = `${CURRENT_LOCALE}-${LOCALES[CURRENT_LOCALE]}`; // 'en-US'
     const full = date.toLocaleDateString(localeString, { month: 'short', day: 'numeric', year: 'numeric' });
@@ -83,6 +90,34 @@ export default class TMDB {
     return movies.map(movie => this.#formatPartData(movie));
   }
 
+  static #formatMovieData(movie: RawMovie): Movie {
+    const poster = movie.poster_path
+      ? `${API_POSTER_BASE}${movie.poster_path}`
+      : POSTER_NO_IMAGE;
+
+    const date = this.#formatDate(new Date(movie.release_date));
+
+    const formatedData: Movie = {
+      adult: movie.adult,
+      backdrop: `${API_BACKDROP_BASE}${movie.backdrop_path}`,
+      belongs_to_collection: movie.belongs_to_collection || null,
+      budget: movie.budget,
+      genres: movie.genres,
+      id: movie.id,
+      overview: movie.overview,
+      popularity: movie.popularity,
+      poster: poster,
+      released: { date: date.full, year: date.year },
+      revenue: movie.revenue,
+      status: movie.status,
+      tagline: movie.tagline,
+      title: movie.title,
+      votes: { average: movie.vote_average?.toFixed(1), count: movie.vote_count },
+    }
+
+    return formatedData;
+  }
+
   // get page with 20 of 'top_rated', 'upcoming' or 'now_playing' movies
   static async getMoviesList(
     page: number,
@@ -122,7 +157,7 @@ export default class TMDB {
     const collection: Collection = {
       backdrop: `${API_BACKDROP_BASE}${data.backdrop_path}`,
       id: data.id,
-      name: data.name,
+      title: data.name,
       overview: data.overview,
       parts: this.#formatPartsData(data.parts),
       partsCount: data.parts.length,
@@ -144,6 +179,15 @@ export default class TMDB {
     const movies: Part[] = this.#formatPartsData(data.results);
 
     return movies;
+  }
+
+  static async getMovie(id: number) {
+    const url = `/movie/${id}`;
+    const data: RawMovie = await this.#getJSON(url);
+
+    const movie = this.#formatMovieData(data);
+
+    return movie;
   }
 }
 

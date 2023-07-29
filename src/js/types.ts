@@ -1,6 +1,13 @@
-interface Genre {
+export interface Genre {
   id: number;
   name: string;
+}
+
+export interface BelongsToCollection {
+  id: number;
+  name: string;
+  poster_path: string;
+  backdrop_path: string;
 }
 
 // <AppSelect> component should recieve an array with following items:
@@ -71,35 +78,50 @@ export interface ListData {
   total_pages: number
 }
 
-// TODO: check if RawMovie is the same as RawPart
 export interface RawMovie {
-  adult: boolean;
-  backdrop_path: string;
-  genres: Genre[];
-  id: number;
-  title: string;
-  tagline: string;
-  overview: string;
-  release_date: Date;
-  poster_path: string;
-  vote_average: number;
-  vote_count: number;
-  popularity: number;
+  adult: boolean,
+  backdrop_path: string,
+  belongs_to_collection: BelongsToCollection | null,
+  budget: number,
+  genres: Genre[],
+  homepage: string,
+  id: number,
+  imdb_id: string,
+  original_language: string,
+  original_title: string,
+  overview: string,
+  popularity: number,
+  poster_path: string,
+  production_companies: [],
+  production_countries: [],
+  release_date: Date,
+  revenue: number,
+  runtime: number,
+  spoken_languages: [],
+  status: string,
+  tagline: string,
+  title: string,
+  video: false,
+  vote_average: number,
+  vote_count: number
 }
 
-// TODO: check if this can be used both for Movie and Part
 export interface Movie {
   adult: boolean;
   backdrop: string;
-  genres?: number[];
+  belongs_to_collection: BelongsToCollection | null,
+  budget: number,
+  genres: Genre[];
   id: number;
-  title: string;
   overview: string;
-  rating: number;
-  released: { date: string, year: number },
-  tagline?: string;
-  votes: number;
+  popularity: number,
   poster: string;
+  released: { date: string, year: number },
+  revenue: number,
+  status: string,
+  tagline: string;
+  title: string;
+  votes: { average: string, count: number };
 }
 
 export interface RawCollection {
@@ -114,7 +136,7 @@ export interface RawCollection {
 export interface Collection {
   backdrop: string;
   id: number;
-  name: string;
+  title: string;
   overview: string;
   parts: Part[];
   partsCount: number;
