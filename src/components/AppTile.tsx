@@ -17,7 +17,7 @@ export default function AppTile({ tile, isCarouselItem, isRow = false, listType 
     if (isRow) classes.push('m-row');
 
     return (
-        <a href={`${tile.type}/${tile.id}`} className={classes.join(' ')}>
+        <a href={`${tile.type || 'movie'}/${tile.id}`} className={classes.join(' ')}>
             <AppPicture img={tile.poster} alt={tile.title + ' poster'} />
 
             {(tile.type !== 'person') && <AppFavorite checked={false} title={tile.title} />}

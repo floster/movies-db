@@ -12,8 +12,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="movie" element={<Movie />} />
-          <Route path="collection" element={<Collection />} />
+          <Route path="movie/:id" element={<Movie />} />
+          <Route path="collection/:id" element={<Collection />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes >
