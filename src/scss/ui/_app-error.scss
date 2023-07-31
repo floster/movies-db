@@ -1,0 +1,10 @@
+.app-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: var(--gap-md) auto;
+    padding: var(--gap-md);
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
+    background-color: var(--color-grey-100);
+}

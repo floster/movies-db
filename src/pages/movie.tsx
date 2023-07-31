@@ -10,6 +10,7 @@ import { useFetch } from '../hooks/useFetch';
 import { Person } from '../js/types';
 import AppSpinner from '../components/AppSpinner';
 import { manipulateArray } from '../js/utils';
+import AppError from '../components/AppError';
 
 export default function Movie() {
   const params = useParams();
@@ -40,7 +41,7 @@ export default function Movie() {
     <section className="movie-header">
       <MediaHero id={movieId} type='movie' />
       {dataError
-        ? <p className="error-message">🔴 Error occured while fetching movie #{movieId} credits</p>
+        ? <AppError error={`Error occured while fetching movie #${movieId} credits`} />
         : isDataLoading
           ? <AppSpinner visible={true} />
           : <>

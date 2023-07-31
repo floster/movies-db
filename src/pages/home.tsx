@@ -7,7 +7,6 @@ import AppCarousel from '../components/AppCarousel';
 export default function Home() {
     return (
         <>
-
             <div className="l-content m-main_page container">
                 <MainPageSidebar />
                 <main className="l-main_page_content">

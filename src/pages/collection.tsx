@@ -9,6 +9,7 @@ import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb';
 import { useFetch } from '../hooks/useFetch';
 import { manipulateArray } from '../js/utils';
+import AppError from '../components/AppError';
 
 export default function Collection() {
   const params = useParams();
@@ -35,7 +36,7 @@ export default function Collection() {
       <MediaHero id={collectionId} type='collection' />
       <div className="l-content container">
         {dataError
-          ? <p className="error-message">🔴 Error occured while fetching collection #{collectionId} parts</p>
+          ? <AppError error={`Error occured while fetching collection #${collectionId} parts`} />
           : isDataLoading
             ? <AppSpinner visible={true} />
             : <>

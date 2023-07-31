@@ -9,6 +9,7 @@ import { Collection, Movie, Genre } from "../js/types";
 import { useEffect, useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 import tmdb from "../js/tmdb";
+import AppError from "./AppError";
 
 interface Props {
     id?: number;
@@ -74,7 +75,7 @@ export default function MediaHero({ type, id }: Props) {
 
     return (
         dataError
-            ? <p className="error-message">🔴 Error occured while fetching data for #{data.id} {type === 'movie' ? 'movie' : 'collection'}</p>
+            ? <AppError error={`Error occured while fetching data for #${id} ${type === 'movie' ? 'movie' : 'collection'}`} />
             : type === 'random'
                 ? <a href={`collection/${data.id}`} className="media-hero m-random" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
                     <AppSpinner visible={isDataLoading as boolean} />
