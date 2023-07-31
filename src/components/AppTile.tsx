@@ -1,10 +1,10 @@
-import { ListTypes, Part } from "../js/types";
+import { ListTypes, Part, Person } from "../js/types";
 import AppFavorite from "./AppFavorite";
 import AppPicture from "./AppPicture";
 import AppProgress from "./AppProgress";
 
 interface Props {
-    tile: Part;
+    tile: Part | Person;
     isCarouselItem?: boolean;
     isRow?: boolean;
     listType?: ListTypes;
@@ -16,20 +16,22 @@ export default function AppTile({ tile, isCarouselItem, isRow = false, listType 
     if (isCarouselItem) classes.push('app-carousel__item');
     if (isRow) classes.push('m-row');
 
+    const title = (tile as Part).title || (tile as Person).name;
+
     return (
         <a href={`${tile.type || 'movie'}/${tile.id}`} className={classes.join(' ')}>
-            <AppPicture img={tile.poster} alt={tile.title + ' poster'} />
+            <AppPicture img={tile.poster} alt={title + ' poster'} />
 
-            {(tile.type !== 'person') && <AppFavorite checked={false} title={tile.title} />}
+            {(tile.type !== 'person') && <AppFavorite checked={false} title={title} />}
             <div className="app-tile__content">
-                {(tile.type !== 'person' && !isRow) && <AppProgress value={tile.votes.average} />}
+                {(tile.type !== 'person' && !isRow) && <AppProgress value={(tile as Part).votes.average} />}
                 {(tile.type === 'person')
-                    ? <p className="app-tile__label">{tile.department}</p>
-                    : <p className="app-tile__label">{tile.released?.date}</p>
+                    ? <p className="app-tile__label">{(tile as Person).character}</p>
+                    : <p className="app-tile__label">{(tile as Part).released?.date}</p>
                 }
-                <h3 className="app-tile__title">{tile.title}</h3>
+                <h3 className="app-tile__title">{title}</h3>
             </div>
-            {(listType && listType !== 'upcoming') && <span className="app-tile__rating">{tile.votes.average} / {tile.votes.count}</span>}
+            {(listType && listType !== 'upcoming') && <span className="app-tile__rating">{(tile as Part).votes.average} / {(tile as Part).votes.count}</span>}
         </a>
     )
 }

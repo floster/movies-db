@@ -1,13 +1,13 @@
 .part-of {
     position: relative;
-    display: inline-flex;
+    display: flex;
     flex-wrap: wrap;
-    align-self: start;
-    border: 1px solid var(--color-grey-500);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: var(--gap-sm);
-    margin-top: var(--gap-sm);
+    // align-self: start;
+    // border: 1px solid var(--color-grey-500);
+    // border-radius: var(--radius);
+    // box-shadow: var(--shadow);
+    // padding: var(--gap-sm);
+    // margin-top: var(--gap-sm);
 
     .icon-labeled__label {
         color: var(--color-grey-200);
@@ -16,7 +16,7 @@
         a {
             font-weight: bold;
             color: var(--color-secondary);
-            white-space: initial;
+            // white-space: initial;
         }
     }
 }

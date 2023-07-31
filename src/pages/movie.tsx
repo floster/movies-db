@@ -1,43 +1,74 @@
-import { useState } from 'react';
-import AppHeader from '../components/AppHeader';
 import AppSection from '../components/AppSection';
 import AppSectionHeader from '../components/AppSectionHeader';
+import { useEffect, useState } from 'react';
 import MediaHero from '../components/MediaHero';
 import MovieCrew from '../components/MovieCrew';
 import AppTile from '../components/AppTile';
-import SearchForm from '../components/SearchForm';
-import AppDialog from '../components/AppDialog';
+import { useParams } from 'react-router-dom';
+import tmdb from '../js/tmdb';
+import { useFetch } from '../hooks/useFetch';
+import { Person } from '../js/types';
+import AppSpinner from '../components/AppSpinner';
 
 export default function Movie() {
-  const [isSearchFormOpen, setIsSearchFormOpen] = useState(false);
+  const params = useParams();
+  const movieId = +params.id!;
 
-  const openSearchDialog = () => setIsSearchFormOpen(true);
-  const closeSearchDialog = () => setIsSearchFormOpen(false);
+  const [cast, setCast] = useState([] as Person[]);
+  const [crew, setCrew] = useState([] as Person[]);
+
+  function manipulateArray<T>(array: T[], sortBy: keyof T, qty: number, direction: 'asc' | 'desc' = 'asc'): T[] {
+    const sorted = [...array].sort((a: T, b: T) => {
+      if (direction === 'asc') return a[sortBy]! < b[sortBy]! ? -1 : 1;
+      else return a[sortBy]! > b[sortBy]! ? -1 : 1;
+    })
+
+    if (qty) return sorted.slice(0, qty);
+    else return sorted;
+  }
+
+  const [getData, isDataLoading, dataError] = useFetch(async () => {
+    const data = await tmdb.getMovieCredits(movieId);
+
+    const sortedCrew = manipulateArray(data.crew, 'popularity', 6, 'desc');
+    const sortedCast = manipulateArray(data.cast, 'cast_id', 12);
+
+    setCast(sortedCast);
+    setCrew(sortedCrew);
+  })
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await (getData as () => Promise<void>)();
+    };
+    fetchData();
+  }, []);
+
 
   return (
-    <>
-      <AppHeader openSearch={openSearchDialog} />
-      <section className="movie-header">
-        <MediaHero data={heroMovie} isRandom={false} />
-        <AppSection extraClass="m-movie_crew">
-          <div className="container">
-            <MovieCrew members={movieCrew} />
-            <AppSectionHeader title="crew" />
-          </div>
-        </AppSection>
-        <div className="l-content container">
-          <AppSection>
-            <AppSectionHeader title="cast" />
-            <div className="l-tiles_grid m-people">
-              {movieCast.map((castMember) => <AppTile tile={castMember} type="actor" />)}
+    <section className="movie-header">
+      <MediaHero id={movieId} type='movie' />
+      {dataError
+        ? <p className="error-message">🔴 Error occured while fetching movie #{movieId} credits</p>
+        : isDataLoading
+          ? <AppSpinner visible={true} />
+          : <>
+            <AppSection extraClass="m-movie_crew">
+              <div className="container">
+                <MovieCrew members={crew} />
+                <AppSectionHeader title="crew" />
+              </div>
+            </AppSection>
+            <div className="l-content container">
+              <AppSection>
+                <AppSectionHeader title="cast" />
+                <div className="l-tiles_grid m-people">
+                  {cast.map((person) => <AppTile tile={person} key={person.id} />)}
+                </div>
+              </AppSection>
             </div>
-          </AppSection>
-        </div>
-      </section>
-
-      <AppDialog isOpened={isSearchFormOpen} onClose={closeSearchDialog}>
-        <SearchForm />
-      </AppDialog>
-    </>
+          </>
+      }
+    </section>
   )
 }

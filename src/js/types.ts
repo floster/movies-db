@@ -142,3 +142,44 @@ export interface Collection {
   partsCount: number;
   poster: string;
 }
+
+export interface RawMovieCredits {
+  id: number;
+  cast: RawPerson[];
+  crew: RawPerson[];
+}
+
+export interface MovieCredits {
+  cast: Person[];
+  crew: Person[];
+}
+
+export interface RawPerson {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  cast_id?: number; // only for cast
+  character?: string; // only for cast
+  credit_id: string;
+  order?: number; // only for cast
+  department?: string; // only for crew
+  job?: string; // only for crew
+}
+
+export interface Person {
+  id: number;
+  type: MediaType
+  department: string;
+  name: string;
+  popularity: number;
+  poster: string;
+  cast_id?: number; // only for cast
+  character?: string; // only for cast
+  order?: number; // only for cast
+  job?: string; // only for crew
+}

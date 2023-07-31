@@ -22,6 +22,10 @@ import {
   MediaType,
   Movie,
   RawMovie,
+  RawPerson,
+  Person,
+  MovieCredits,
+  RawMovieCredits,
 } from './types';
 
 export default class TMDB {
@@ -118,6 +122,32 @@ export default class TMDB {
     return formatedData;
   }
 
+  static #formatPersonData(person: RawPerson): Person {
+    const poster = person.profile_path
+      ? `${API_POSTER_BASE}${person.profile_path}`
+      : POSTER_NO_IMAGE;
+
+    const formatedData: Person = {
+      id: person.id,
+      type: 'person',
+      department: person.known_for_department,
+      name: person.name,
+      popularity: person.popularity,
+      poster: poster,
+    }
+
+    if (person.cast_id) formatedData.cast_id = person.cast_id;
+    if (person.character) formatedData.character = person.character;
+    if (person.order) formatedData.order = person.order;
+    if (person.job) formatedData.job = person.job;
+
+    return formatedData;
+  }
+
+  static #formatMovieCreditsData(credits: RawPerson[]): Person[] {
+    return credits.map(person => this.#formatPersonData(person));
+  }
+
   // get page with 20 of 'top_rated', 'upcoming' or 'now_playing' movies
   static async getMoviesList(
     page: number,
@@ -150,7 +180,7 @@ export default class TMDB {
     }
   }
 
-  static async getCollection(id = FAST_COLLECTION_ID) {
+  static async getCollection(id = FAST_COLLECTION_ID): Promise<Collection> {
     const url = `/collection/${id}`;
     const data: RawCollection = await this.#getJSON(url);
 
@@ -167,7 +197,7 @@ export default class TMDB {
     return collection;
   }
 
-  static async getRandomCollection() {
+  static async getRandomCollection(): Promise<Collection> {
     const randomCollectionId = COLLECTIONS[Math.floor(Math.random() * COLLECTIONS.length)];
     return await this.getCollection(randomCollectionId);
   }
@@ -181,13 +211,25 @@ export default class TMDB {
     return movies;
   }
 
-  static async getMovie(id: number) {
+  static async getMovie(id: number): Promise<Movie> {
     const url = `/movie/${id}`;
     const data: RawMovie = await this.#getJSON(url);
 
     const movie = this.#formatMovieData(data);
 
     return movie;
+  }
+
+  static async getMovieCredits(id: number): Promise<MovieCredits> {
+    const url = `/movie/${id}/credits`;
+    const data: RawMovieCredits = await this.#getJSON(url);
+
+    console.log(data);
+
+    const cast = this.#formatMovieCreditsData(data.cast);
+    const crew = this.#formatMovieCreditsData(data.crew);
+
+    return { cast, crew };
   }
 }
 
