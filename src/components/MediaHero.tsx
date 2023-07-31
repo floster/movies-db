@@ -24,7 +24,7 @@ export default function MediaHero({ type, id }: Props) {
             data = await tmdb.getRandomCollection();
             setData(data);
         } else if (type === 'collection') {
-            data = await tmdb.getCollection();
+            data = await tmdb.getCollection(id!);
             setData(data);
         } else if (type === 'movie') {
             data = await tmdb.getMovie(id!);

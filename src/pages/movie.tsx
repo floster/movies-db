@@ -9,6 +9,7 @@ import tmdb from '../js/tmdb';
 import { useFetch } from '../hooks/useFetch';
 import { Person } from '../js/types';
 import AppSpinner from '../components/AppSpinner';
+import { manipulateArray } from '../js/utils';
 
 export default function Movie() {
   const params = useParams();
@@ -16,16 +17,6 @@ export default function Movie() {
 
   const [cast, setCast] = useState([] as Person[]);
   const [crew, setCrew] = useState([] as Person[]);
-
-  function manipulateArray<T>(array: T[], sortBy: keyof T, qty: number, direction: 'asc' | 'desc' = 'asc'): T[] {
-    const sorted = [...array].sort((a: T, b: T) => {
-      if (direction === 'asc') return a[sortBy]! < b[sortBy]! ? -1 : 1;
-      else return a[sortBy]! > b[sortBy]! ? -1 : 1;
-    })
-
-    if (qty) return sorted.slice(0, qty);
-    else return sorted;
-  }
 
   const [getData, isDataLoading, dataError] = useFetch(async () => {
     const data = await tmdb.getMovieCredits(movieId);

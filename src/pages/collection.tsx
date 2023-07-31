@@ -1,37 +1,52 @@
-import { useState } from 'react';
-import AppHeader from '../components/AppHeader';
+import { useEffect, useState } from 'react';
 import AppSection from '../components/AppSection';
 import AppSectionHeader from '../components/AppSectionHeader';
 import MediaHero from '../components/MediaHero';
 import AppTile from '../components/AppTile';
-import SearchForm from '../components/SearchForm';
-import AppDialog from '../components/AppDialog';
+import { useParams } from 'react-router-dom';
+import { Part } from '../js/types';
+import AppSpinner from '../components/AppSpinner';
+import tmdb from '../js/tmdb';
+import { useFetch } from '../hooks/useFetch';
+import { manipulateArray } from '../js/utils';
 
 export default function Collection() {
-  const [isSearchFormOpen, setIsSearchFormOpen] = useState(false);
+  const params = useParams();
+  const collectionId = +params.id!;
 
-  const openSearchDialog = () => setIsSearchFormOpen(true);
-  const closeSearchDialog = () => setIsSearchFormOpen(false);
+  const [parts, setParts] = useState([] as Part[]);
+
+  const [getData, isDataLoading, dataError] = useFetch(async () => {
+    const data = await tmdb.getCollection(collectionId);
+
+    const sortedParts = manipulateArray(data.parts, 'year', 0, 'asc');
+    setParts(sortedParts);
+  })
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await (getData as () => Promise<void>)();
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
-      <AppHeader openSearch={openSearchDialog} />
-
-      <section className="movie-header">
-        <MediaHero data={heroCollection} isRandom={false} />
-      </section>
+      <MediaHero id={collectionId} type='collection' />
       <div className="l-content container">
-        <AppSection extraClass='m-movies_list'>
-          <AppSectionHeader title={`${movies.length} parts`} hasSelect={true} />
-          <div className="l-tiles_grid m-movies">
-            {movies.map((movie) => <AppTile tile={movie} type="movie" />)}
-          </div>
-        </AppSection>
+        {dataError
+          ? <p className="error-message">🔴 Error occured while fetching collection #{collectionId} parts</p>
+          : isDataLoading
+            ? <AppSpinner visible={true} />
+            : <>
+              <AppSection extraClass='m-movies_list'>
+                <AppSectionHeader title={`${parts.length} parts`} hasSelect={true} />
+                <div className="l-tiles_grid m-movies">
+                  {parts.map((part) => <AppTile tile={part} key={part.id} />)}
+                </div>
+              </AppSection>
+            </>}
       </div>
-
-      <AppDialog isOpened={isSearchFormOpen} onClose={closeSearchDialog}>
-        <SearchForm />
-      </AppDialog>
     </>
   )
 }

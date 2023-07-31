@@ -7,7 +7,6 @@ import {
   API_BACKDROP_BASE,
   MOVIE_LIST_TYPES,
   POSTER_NO_IMAGE,
-  FAST_COLLECTION_ID,
   COLLECTIONS
 } from './config';
 
@@ -76,16 +75,19 @@ export default class TMDB {
       overview: part.overview,
       popularity: part.popularity,
       poster: poster,
-      released: { date: date.full, year: date.year },
       title: part.title! || part.name!,
-      votes: { average: part.vote_average?.toFixed(1), count: part.vote_count },
+      votes: { average: +part.vote_average?.toFixed(1), count: part.vote_count },
     }
 
     if (part.media_type !== 'person') {
-      formatedData.released = { date: date.full, year: date.year }
+      formatedData.released = date.full;
+      formatedData.year = date.year;
     } else {
       formatedData.department = part.known_for_department;
     }
+
+    console.log(formatedData);
+
 
     return formatedData;
   }
@@ -180,7 +182,7 @@ export default class TMDB {
     }
   }
 
-  static async getCollection(id = FAST_COLLECTION_ID): Promise<Collection> {
+  static async getCollection(id: number): Promise<Collection> {
     const url = `/collection/${id}`;
     const data: RawCollection = await this.#getJSON(url);
 

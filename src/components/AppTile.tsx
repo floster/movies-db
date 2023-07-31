@@ -19,7 +19,7 @@ export default function AppTile({ tile, isCarouselItem, isRow = false, listType 
     const title = (tile as Part).title || (tile as Person).name;
 
     return (
-        <a href={`${tile.type || 'movie'}/${tile.id}`} className={classes.join(' ')}>
+        <a href={`/${tile.type || 'movie'}/${tile.id}`} className={classes.join(' ')}>
             <AppPicture img={tile.poster} alt={title + ' poster'} />
 
             {(tile.type !== 'person') && <AppFavorite checked={false} title={title} />}
@@ -27,7 +27,7 @@ export default function AppTile({ tile, isCarouselItem, isRow = false, listType 
                 {(tile.type !== 'person' && !isRow) && <AppProgress value={(tile as Part).votes.average} />}
                 {(tile.type === 'person')
                     ? <p className="app-tile__label">{(tile as Person).character}</p>
-                    : <p className="app-tile__label">{(tile as Part).released?.date}</p>
+                    : <p className="app-tile__label">{(tile as Part).released}</p>
                 }
                 <h3 className="app-tile__title">{title}</h3>
             </div>

@@ -12,7 +12,7 @@ export default function PartOf({ data }: Props) {
                 <div className="part-of">
                     <span className="icon-labeled">
                         <SvgIcon icon="stack" />
-                        <span className="icon-labeled__label">part of <a href={`collection/${data.id}`}>{data.name}</a></span>
+                        <span className="icon-labeled__label">part of <a href={`/collection/${data.id}`}>{data.name}</a></span>
                     </span>
                 </div>
             )}
