@@ -10,14 +10,24 @@ export interface BelongsToCollection {
   backdrop_path: string;
 }
 
-// <AppSelect> component should recieve an array with following items:
-export interface SelectOptions {
+// <AppSelect> for MovieList should recieve an array with following items:
+export interface MovieListOptions {
   title: string;
   value: ListTypes;
 }
 
+export interface SortOptions {
+  title: string;
+  value: SortOptionsValues;
+}
+
+export type SortOptionsValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
+
 export type AppTileType = 'movie' | 'collection' | 'actor';
 export type MediaType = 'movie' | 'tv' | 'person';
+
+// possible Movie List types to get from TMDB
+export type ListTypes = 'top_rated' | 'upcoming' | 'now_playing';
 
 export type AvalableLocales = 'en' | 'uk' | 'de';
 export type Locale = { [key in AvalableLocales]: string };
@@ -59,9 +69,6 @@ export interface Part {
   title: string;
   votes: { average: number, count: number };
 }
-
-// possible Movie List types to get from TMDB
-export type ListTypes = 'top_rated' | 'upcoming' | 'now_playing';
 
 // comes with 'top_rated', 'upcoming' and 'now_playing' requests
 export interface RawListData {

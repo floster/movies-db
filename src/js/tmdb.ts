@@ -86,9 +86,6 @@ export default class TMDB {
       formatedData.department = part.known_for_department;
     }
 
-    console.log(formatedData);
-
-
     return formatedData;
   }
 

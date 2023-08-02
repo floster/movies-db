@@ -1,4 +1,4 @@
-import { SelectOptions, AvalableLocales, Locale } from './types';
+import { MovieListOptions, AvalableLocales, Locale, SortOptions } from './types';
 
 export const API_BASE = 'https://api.themoviedb.org/3';
 export const API_KEY = 'e53afc585bcc1648f859c0ff148012ea';
@@ -9,10 +9,17 @@ export const API_BACKDROP_BASE =
 export const POSTER_NO_IMAGE =
   'https://via.placeholder.com/300x450/dfe8ec/d95959/?text=No+Image';
 
-export const OPTIONS_MOVIE_LIST: SelectOptions[] = [
+export const OPTIONS_MOVIE_LIST: MovieListOptions[] = [
   { title: 'Now Playing', value: 'now_playing' },
   { title: 'Top Rated', value: 'top_rated' },
   { title: 'Upcoming', value: 'upcoming' },
+];
+
+export const SORT_OPTIONS: SortOptions[] = [
+  { title: 'Year 0-9', value: 'year_asc' },
+  { title: 'Year 9-0', value: 'year_desc' },
+  { title: 'Title A-W', value: 'title_asc' },
+  { title: 'Title W-A', value: 'title_desc' },
 ];
 
 export const LOCALES: Locale = {
