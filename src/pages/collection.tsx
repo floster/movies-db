@@ -9,7 +9,7 @@ import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb';
 import { useFetch } from '../hooks/useFetch';
 import AppError from '../components/AppError';
-import { partsSort as collectionPartsSort } from '../js/utils';
+import { partsSort as collectionPartsSort, splitSortOptionValue } from '../js/utils';
 
 export default function Collection() {
   const params = useParams();
@@ -19,14 +19,10 @@ export default function Collection() {
   const [sortedParts, setSortedParts] = useState([] as Part[]);
   const [currentSort, setCurrentSort] = useState('year_asc' as SortOptionsValues);
 
-  const onSortChange = (option: SortOptionsValues) => {
-    setCurrentSort(option);
-  }
+  const onSortChange = (option: SortOptionsValues) => setCurrentSort(option);
 
   useEffect(() => {
-    const sortBy = currentSort.split('_')[0] as keyof Part;
-    const sortOrder = currentSort.split('_')[1] as 'asc' | 'desc';
-
+    const { sortBy, sortOrder } = splitSortOptionValue(currentSort);
     setSortedParts(collectionPartsSort(parts, sortBy, sortOrder));
   }, [parts, currentSort]);
 
@@ -37,6 +33,7 @@ export default function Collection() {
 
   useEffect(() => {
     (getPartsData as () => Promise<void>)();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -34,6 +34,7 @@ export default function Movie() {
       await (getData as () => Promise<void>)();
     };
     fetchData();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
