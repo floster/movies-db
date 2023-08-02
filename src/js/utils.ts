@@ -1,9 +1,14 @@
-export function manipulateArray<T>(array: T[], sortBy: keyof T, qty: number, direction: 'asc' | 'desc' = 'asc'): T[] {
-    const sorted = [...array].sort((a: T, b: T) => {
-        if (direction === 'asc') return a[sortBy]! < b[sortBy]! ? -1 : 1;
-        else return a[sortBy]! > b[sortBy]! ? -1 : 1;
-    })
+import { Person } from "./types";
 
-    if (qty) return sorted.slice(0, qty);
-    else return sorted;
+export function partsSort<T>(parts: T[], sortBy: keyof T, sortOrder: 'asc' | 'desc' = 'asc'): T[] {
+    const sorted = [...parts].sort((a, b) => {
+        if (sortOrder === 'asc') return a[sortBy] < b[sortBy] ? -1 : 1;
+        else return a[sortBy] > b[sortBy] ? -1 : 1;
+    });
+
+    return sorted
+}
+
+export function cutArray(arr: Person[], size: number) {
+    return [...arr].splice(0, size);
 }
