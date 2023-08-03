@@ -1,5 +1,5 @@
 interface Props {
-    value: string;
+    value: number;
 }
 
 export default function AppProgress({ value }: Props) {
@@ -10,7 +10,7 @@ export default function AppProgress({ value }: Props) {
         label = 'nr';
         wholeValue = 0;
     } else {
-        label = value;
+        label = value + '';
         wholeValue = +value * 10;
     }
 

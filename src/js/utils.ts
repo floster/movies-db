@@ -1,6 +1,6 @@
-import { Person, Part, SortOptionsValues } from "./types";
+import { Person, Part, SortOptionValues } from "./types";
 
-export function splitSortOptionValue(option: SortOptionsValues, splitBy: string = '_') {
+export function splitSortOptionValue(option: SortOptionValues, splitBy: string = '_') {
     const sortBy = option.split(splitBy)[0] as keyof Part;
     const sortOrder = option.split(splitBy)[1] as 'asc' | 'desc';
 

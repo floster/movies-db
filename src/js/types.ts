@@ -1,135 +1,71 @@
-export interface Genre {
-  id: number;
-  name: string;
-}
-
-export interface BelongsToCollection {
-  id: number;
-  name: string;
-  poster_path: string;
-  backdrop_path: string;
-}
-
-// <AppSelect> for MovieList should recieve an array with following items:
-export interface MovieListOptions {
-  title: string;
-  value: ListTypes;
-}
-
-export interface SortOptions {
-  title: string;
-  value: SortOptionsValues;
-}
-
-export type SortOptionsValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
-
-export type AppTileType = 'movie' | 'collection' | 'actor';
-export type MediaType = 'movie' | 'tv' | 'person';
-
 // possible Movie List types to get from TMDB
 export type ListTypes = 'top_rated' | 'upcoming' | 'now_playing';
 
-export type AvalableLocales = 'en' | 'uk' | 'de';
-export type Locale = { [key in AvalableLocales]: string };
+export type SortOptionValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
 
-// comes with 'collection' and 'list' requests
-export interface RawPart {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  media_type: MediaType;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path?: string;  // only for movies and tv
-  profile_path?: string; // only for people
-  release_date?: string;        // only for movies
-  first_air_date?: string;      // only for tv
-  known_for_department: string; // only for people
-  title?: string;
-  name?: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
+export type AppTileType = 'movie' | 'collection' | 'actor';
 
-export interface Part {
-  adult: boolean;
-  backdrop: string;
-  id: number;
-  type: MediaType;
-  overview: string;
-  popularity: number;
-  poster: string;
-  released?: string,
-  year?: number;
-  department?: string;
-  title: string;
-  votes: { average: number, count: number };
-}
+// comes from TMDB
+export type MediaType = 'movie' | 'tv' | 'person';
 
-// comes with 'top_rated', 'upcoming' and 'now_playing' requests
-export interface RawListData {
-  dates?: { maximum: Date, minimum: Date };
-  page: number;
-  results: RawPart[];
-  total_pages: number;
-  total_results: number;
-}
+//////////////////////////////
+///// TMDB API Responses /////
+//////////////////////////////
 
-// formated RawListData
-export interface ListData {
-  movies: Part[],
-  current_page: number,
-  total_pages: number
-}
-
-export interface RawMovie {
+// General
+export interface RawPartMovie {
   adult: boolean,
   backdrop_path: string,
-  belongs_to_collection: BelongsToCollection | null,
-  budget: number,
-  genres: Genre[],
-  homepage: string,
   id: number,
-  imdb_id: string,
   original_language: string,
   original_title: string,
   overview: string,
   popularity: number,
   poster_path: string,
-  production_companies: [],
-  production_countries: [],
-  release_date: Date,
-  revenue: number,
-  runtime: number,
-  spoken_languages: [],
-  status: string,
-  tagline: string,
   title: string,
-  video: false,
+  video: boolean,
   vote_average: number,
   vote_count: number
 }
 
-export interface Movie {
+export interface PartMovie {
   adult: boolean;
   backdrop: string;
-  belongs_to_collection: BelongsToCollection | null,
-  budget: number,
   genres: Genre[];
   id: number;
   overview: string;
   popularity: number,
   poster: string;
   released: { date: string, year: number },
-  revenue: number,
-  status: string,
-  tagline: string;
   title: string;
-  votes: { average: string, count: number };
+  votes: { average: number, count: number };
+}
+
+export interface Genre {
+  id: number;
+  name: string;
+}
+
+export interface BelongsToCollectionData {
+  id: number;
+  name: string;
+  poster_path: string;
+  backdrop_path: string;
+}
+
+// comes with 'top_rated', 'upcoming' and 'now_playing' requests
+export interface RawListData {
+  dates?: { maximum: Date, minimum: Date };
+  page: number;
+  results: RawPart[] | RawPerson[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface ListData {
+  movies: Part[],
+  current_page: number,
+  total_pages: number
 }
 
 export interface RawCollection {
@@ -149,6 +85,42 @@ export interface Collection {
   parts: Part[];
   partsCount: number;
   poster: string;
+}
+
+// comes with 'collection' and 'list' requests
+// can be a Movie or a TV Show
+export interface RawPart extends RawPartMovie {
+  genre_ids: number[];
+  media_type: MediaType;
+  name?: string;          // only for tv
+  release_date?: Date;    // only for movies
+  first_air_date?: Date;  // only for tv
+}
+
+export interface Part extends PartMovie {
+  type: MediaType;
+}
+
+export interface RawMovie extends RawPartMovie {
+  belongs_to_collection: BelongsToCollectionData | null,
+  budget: number,
+  genres: Genre[],
+  homepage: string,
+  imdb_id: string,
+  production_companies: [],
+  production_countries: [],
+  release_date: Date,
+  revenue: number,
+  status: string,
+  tagline: string,
+}
+
+export interface Movie extends PartMovie {
+  belongs_to_collection: BelongsToCollectionData | null,
+  budget: number,
+  revenue: number,
+  status: string,
+  tagline: string;
 }
 
 export interface RawMovieCredits {

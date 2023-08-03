@@ -1,16 +1,16 @@
 import {
   LOCALES,
-  CURRENT_LOCALE,
+  DEFAULT_LOCALE,
   API_BASE,
   API_KEY,
   API_POSTER_BASE,
   API_BACKDROP_BASE,
-  MOVIE_LIST_TYPES,
   POSTER_NO_IMAGE,
   COLLECTIONS
 } from './config';
 
 import {
+  Genre,
   RawCollection,
   Collection,
   RawPart,
@@ -28,12 +28,14 @@ import {
 } from './types';
 
 export default class TMDB {
+  static allGenres: Genre[] = [];
+
   static async #getJSON<T>(url: string, params: string = ''): Promise<T> {
     const fetchUrl = `${API_BASE}${url}`;
     const fetchParams = new URLSearchParams(params);
     fetchParams.append('api_key', API_KEY);
-    fetchParams.append('language', CURRENT_LOCALE);
-    fetchParams.append('region', LOCALES[CURRENT_LOCALE]);
+    fetchParams.append('language', DEFAULT_LOCALE);
+    fetchParams.append('region', LOCALES[DEFAULT_LOCALE]);
 
     const response: Response = await fetch(fetchUrl + '?' + fetchParams.toString());
 
@@ -49,18 +51,16 @@ export default class TMDB {
    * @returns An object with the 'MMM DD, YYYY' date and the year itself.
    */
   static #formatDate(date: Date) {
-    const localeString = `${CURRENT_LOCALE}-${LOCALES[CURRENT_LOCALE]}`; // 'en-US'
+    const localeString = `${DEFAULT_LOCALE}-${LOCALES[DEFAULT_LOCALE]}`; // 'en-US'
     const full = date.toLocaleDateString(localeString, { month: 'short', day: 'numeric', year: 'numeric' });
     const year = date.getFullYear();
     return { full, year };
   }
 
   static #formatPartData(part: RawPart): Part {
-    // if part is a movie or tv show then poster is under 'poster_path' property
-    // if part is a person then poster is under 'profile_path' property
     const poster = part.poster_path
       ? `${API_POSTER_BASE}${part.poster_path}`
-      : part.profile_path ? `${API_POSTER_BASE}${part.profile_path}` : POSTER_NO_IMAGE;
+      : POSTER_NO_IMAGE;
 
     // if part is a tv show, then it has 'first_air_date' property
     // if part is a movie, then it has 'release_date' property
@@ -70,20 +70,15 @@ export default class TMDB {
     const formatedData: Part = {
       adult: part.adult,
       backdrop: `${API_BACKDROP_BASE}${part.backdrop_path}`,
+      genres: this.#convertMovieGenres(part.genre_ids),
       id: part.id,
       type: part.media_type,
       overview: part.overview,
       popularity: part.popularity,
       poster: poster,
+      released: { date: date.full, year: date.year },
       title: part.title! || part.name!,
       votes: { average: +part.vote_average?.toFixed(1), count: part.vote_count },
-    }
-
-    if (part.media_type !== 'person') {
-      formatedData.released = date.full;
-      formatedData.year = date.year;
-    } else {
-      formatedData.department = part.known_for_department;
     }
 
     return formatedData;
@@ -115,7 +110,7 @@ export default class TMDB {
       status: movie.status,
       tagline: movie.tagline,
       title: movie.title,
-      votes: { average: movie.vote_average?.toFixed(1), count: movie.vote_count },
+      votes: { average: +movie.vote_average?.toFixed(1), count: movie.vote_count },
     }
 
     return formatedData;
@@ -147,36 +142,52 @@ export default class TMDB {
     return credits.map(person => this.#formatPersonData(person));
   }
 
+  static async #getAllGenres<T extends Genre>() {
+    if (Object.keys(this.allGenres).length > 0) return;
+
+    const params = `language=${DEFAULT_LOCALE}`;
+    const response = await this.#getJSON('/genre/movie/list', params) as { genres: T[] };
+    this.allGenres = response.genres;
+  }
+
+  static #convertMovieGenres(genres: number[]): Genre[] {
+    this.#getAllGenres();
+    const convertedGenres: Genre[] = [];
+
+    genres.forEach(id => {
+      const filtered = this.allGenres.filter(genre => genre.id === id);
+      if (filtered.length) convertedGenres.push(filtered[0]);
+    });
+
+    return convertedGenres;
+  }
+
   // get page with 20 of 'top_rated', 'upcoming' or 'now_playing' movies
   static async getMoviesList(
     page: number,
     listType: ListTypes
   ): Promise<ListData> {
-    if (MOVIE_LIST_TYPES.includes(listType)) {
-      let url = '';
-      let params = '';
-      if (listType === 'upcoming') {
-        const oneWeekLater = new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000);
-        const oneWeekLaterStr = oneWeekLater.toISOString().split('T')[0];
-        // get movies that will be released starts from tomorrow
-        url = `/discover/movie`;
-        params = `sort_by=primary_release_date.asc&primary_release_date.gte=${oneWeekLaterStr}`;
-      } else {
-        url = `/movie/${listType}`;
-        params = `page=${page}`;
-      }
-
-      const data: RawListData = await this.#getJSON(url, params);
-      const movies: Part[] = this.#formatPartsData(data.results);
-
-      return {
-        movies,
-        current_page: data.page,
-        total_pages: data.total_pages,
-      };
+    let url = '';
+    let params = '';
+    if (listType === 'upcoming') {
+      const oneWeekLater = new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000);
+      const oneWeekLaterStr = oneWeekLater.toISOString().split('T')[0];
+      // get movies that will be released starts from tomorrow
+      url = `/discover/movie`;
+      params = `sort_by=primary_release_date.asc&primary_release_date.gte=${oneWeekLaterStr}`;
     } else {
-      throw new Error(`🔴 Wrong Movie List type: ${listType}`);
+      url = `/movie/${listType}`;
+      params = `page=${page}`;
     }
+
+    const data: RawListData = await this.#getJSON(url, params);
+    const movies = this.#formatPartsData(data.results as RawPart[]);
+
+    return {
+      movies,
+      current_page: data.page,
+      total_pages: data.total_pages,
+    };
   }
 
   static async getCollection(id: number): Promise<Collection> {
@@ -205,9 +216,15 @@ export default class TMDB {
     const url = `/trending/${type}/${period}`;
     const data: RawListData = await this.#getJSON(url);
 
-    const movies: Part[] = this.#formatPartsData(data.results);
+    let trending: Part[] | Person[] = [];
 
-    return movies;
+    if (type === 'person') {
+      trending = this.#formatMovieCreditsData(data.results as RawPerson[]) as Person[];
+    } else {
+      trending = this.#formatPartsData(data.results as RawPart[]) as Part[];
+    }
+
+    return trending;
   }
 
   static async getMovie(id: number): Promise<Movie> {

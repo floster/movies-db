@@ -26,8 +26,8 @@ export default function AppTile({ tile, isCarouselItem, isRow = false, listType 
             <div className="app-tile__content">
                 {(tile.type !== 'person' && !isRow) && <AppProgress value={(tile as Part).votes.average} />}
                 {(tile.type === 'person')
-                    ? <p className="app-tile__label">{(tile as Person).character}</p>
-                    : <p className="app-tile__label">{(tile as Part).released}</p>
+                    ? <p className="app-tile__label">{(tile as Person).character || (tile as Person).department}</p>
+                    : <p className="app-tile__label">{(tile as Part).released.date}</p>
                 }
                 <h3 className="app-tile__title">{title}</h3>
             </div>
