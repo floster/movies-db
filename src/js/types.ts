@@ -6,7 +6,7 @@ export type SortOptionValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_d
 export type AppTileType = 'movie' | 'collection' | 'actor';
 
 // comes from TMDB
-export type MediaType = 'movie' | 'tv' | 'person';
+export type MediaType = 'movie' | 'tv' | 'person' | 'collection';
 
 //////////////////////////////
 ///// TMDB API Responses /////
@@ -38,6 +38,7 @@ export interface PartMovie {
   poster: string;
   released: { date: string, year: number },
   title: string;
+  type: MediaType;
   votes: { average: number, count: number };
 }
 
@@ -81,6 +82,7 @@ export interface Collection {
   backdrop: string;
   id: number;
   title: string;
+  type: MediaType;
   overview: string;
   parts: Part[];
   partsCount: number;
@@ -97,9 +99,7 @@ export interface RawPart extends RawPartMovie {
   first_air_date?: Date;  // only for tv
 }
 
-export interface Part extends PartMovie {
-  type: MediaType;
-}
+export interface Part extends PartMovie { }
 
 export interface RawMovie extends RawPartMovie {
   belongs_to_collection: BelongsToCollectionData | null,
@@ -163,3 +163,5 @@ export interface Person {
   order?: number; // only for cast
   job?: string; // only for crew
 }
+
+export type TileData = Part | Movie | Collection | Person;

@@ -12,7 +12,7 @@ export default function AppHeader({ openSearch }: Props) {
                     <SvgIcon icon="logo_light" extraClass="app-header__logo-svg" logo={true} />
                 </a>
                 <nav className="app-header__nav">
-                    <a className="app-button m-open-favorites has-items m-icon m-primary" href="/search-results.html"
+                    <a className="app-button m-open-favorites has-items m-icon m-primary" href="/favorites"
                         aria-label="go to favorites" data-favorites-count='12'>
                         <SvgIcon icon="fire" />
                     </a>

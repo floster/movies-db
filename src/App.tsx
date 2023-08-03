@@ -4,6 +4,7 @@ import Movie from './pages/movie'
 import Collection from './pages/collection'
 import Layout from './components/Layout'
 import NoMatch from './pages/404'
+import Favorites from './pages/favorites'
 
 export default function App() {
 
@@ -14,6 +15,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="movie/:id" element={<Movie />} />
           <Route path="collection/:id" element={<Collection />} />
+          <Route path="favorites/" element={<Favorites />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes >

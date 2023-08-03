@@ -110,6 +110,7 @@ export default class TMDB {
       status: movie.status,
       tagline: movie.tagline,
       title: movie.title,
+      type: 'movie', // 'movie' | 'tv
       votes: { average: +movie.vote_average?.toFixed(1), count: movie.vote_count },
     }
 
@@ -202,6 +203,7 @@ export default class TMDB {
       parts: this.#formatPartsData(data.parts),
       partsCount: data.parts.length,
       poster: `${API_POSTER_BASE}${data.poster_path}`,
+      type: 'collection',
     }
 
     return collection;
