@@ -1,6 +1,7 @@
 .app-picture {
     display: flex;
     align-self: start;
+    background-color: var(--color-white);
 
     &__img {
         @include poster;
