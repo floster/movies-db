@@ -5,7 +5,9 @@ export default function Favorites() {
   return (
     <>
       <div className="l-content container">
-        <FavoritesSection />
+        <FavoritesSection type='collection' />
+        <FavoritesSection type='movie' />
+        <FavoritesSection type='person' />
       </div>
     </>
   )

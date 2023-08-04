@@ -139,7 +139,7 @@ export default class TMDB {
     return formatedData;
   }
 
-  static #formatMovieCreditsData(credits: RawPerson[]): Person[] {
+  static #formatPersonsData(credits: RawPerson[]): Person[] {
     return credits.map(person => this.#formatPersonData(person));
   }
 
@@ -221,7 +221,7 @@ export default class TMDB {
     let trending: Part[] | Person[] = [];
 
     if (type === 'person') {
-      trending = this.#formatMovieCreditsData(data.results as RawPerson[]) as Person[];
+      trending = this.#formatPersonsData(data.results as RawPerson[]) as Person[];
     } else {
       trending = this.#formatPartsData(data.results as RawPart[]) as Part[];
     }
@@ -242,12 +242,19 @@ export default class TMDB {
     const url = `/movie/${id}/credits`;
     const data: RawMovieCredits = await this.#getJSON(url);
 
-    console.log(data);
-
-    const cast = this.#formatMovieCreditsData(data.cast);
-    const crew = this.#formatMovieCreditsData(data.crew);
+    const cast = this.#formatPersonsData(data.cast);
+    const crew = this.#formatPersonsData(data.crew);
 
     return { cast, crew };
+  }
+
+  static async getPerson(id: number): Promise<Person> {
+    const url = `/person/${id}`;
+    const data: RawPerson = await this.#getJSON(url);
+
+    const person = this.#formatPersonData(data);
+
+    return person;
   }
 }
 
