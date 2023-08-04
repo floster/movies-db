@@ -48,7 +48,8 @@ export const FAVORITES = {
   movie: MOVIES,
   tv: TV_SHOWS,
   person: PERSONS,
-  collection: COLLECTIONS
+  collection: COLLECTIONS,
+  season: [],
 }
 
 export const FAST_COLLECTION_ID = 9485;

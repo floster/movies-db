@@ -3,12 +3,14 @@ export type ListTypes = 'top_rated' | 'upcoming' | 'now_playing';
 
 export type SortOptionValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
 
+export type MediaHeroType = 'random' | 'collection' | 'tv' | 'movie';
+export type MediaHeroData = Part | Movie | Collection | TvShow;
 export type AppTileType = 'movie' | 'collection' | 'actor';
 
 // comes from TMDB
-export type MediaType = 'movie' | 'tv' | 'person' | 'collection';
-
+export type MediaType = 'movie' | 'tv' | 'person' | 'collection' | 'season';
 export type TvShowStatuses = 'Returning Series' | 'Planned' | 'In Production' | 'Ended' | 'Canceled' | 'Pilot';
+
 
 //////////////////////////////
 ///// TMDB API Responses /////
@@ -45,7 +47,7 @@ export interface PartMovieTV {
   overview: string;
   popularity: number,
   poster: string;
-  released: { date: string, year: number },
+  released: { date: string, year: string },
   title: string;
   type: MediaType;
   votes: { average: number, count: number };
@@ -147,7 +149,7 @@ export interface RawTvShow extends RawPartMovieTV {
 
 export interface TvShow extends PartMovieTV {
   episodes_qty: number,
-  finished: { date: string, year: number },
+  finished: { date: string, year: string },
   in_production: boolean,
   seasons_qty: number,
   seasons: TvShowSeason[],
@@ -172,8 +174,9 @@ export interface TvShowSeason {
   name: string,
   overview: string,
   poster: string,
-  released: { date: string, year: number },
+  released: { date: string, year: string },
   season_number: number,
+  type: MediaType,
   votes: { average: number, count: number };
 }
 
@@ -207,4 +210,4 @@ export interface Person {
   job?: string; // only for crew
 }
 
-export type TileData = Part | Movie | Collection | Person | TvShow;
+export type TileData = Part | Movie | Collection | Person | TvShow | TvShowSeason;

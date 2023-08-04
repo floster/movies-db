@@ -55,9 +55,11 @@ export default class TMDB {
    * @returns An object with the 'MMM DD, YYYY' date and the year itself.
    */
   static #formatDate(date: Date) {
+    if (!date) return { full: '-', year: '' };
+
     const localeString = `${DEFAULT_LOCALE}-${LOCALES[DEFAULT_LOCALE]}`; // 'en-US'
     const full = date.toLocaleDateString(localeString, { month: 'short', day: 'numeric', year: 'numeric' });
-    const year = date.getFullYear();
+    const year = date.getFullYear() + '';
     return { full, year };
   }
 
@@ -99,7 +101,7 @@ export default class TMDB {
   static #formatTvShowData(tv: RawTvShow): TvShow {
     const poster = this.#getPosterUrl(tv.poster_path);
 
-    const date = this.#formatDate(new Date(tv.release_date));
+    const date = this.#formatDate(new Date(tv.first_air_date));
     const finishedDate = this.#formatDate(new Date(tv.last_air_date));
 
     const formatedData: TvShow = {
@@ -139,6 +141,7 @@ export default class TMDB {
       poster: poster,
       released: { date: date.full, year: date.year },
       season_number: season.season_number,
+      type: 'season',
       votes: { average: +season.vote_average?.toFixed(1), count: 0 },
     }
 
@@ -318,7 +321,10 @@ export default class TMDB {
     const url = `/tv/${id}`;
     const data: RawTvShow = await this.#getJSON(url);
 
+
     const tv = this.#formatTvShowData(data);
+    console.log('data', data);
+    console.log('tv', tv);
 
     return tv;
   }

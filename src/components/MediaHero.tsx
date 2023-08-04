@@ -5,40 +5,59 @@ import AppFavorite from "./AppFavorite";
 import AppProgress from "./AppProgress";
 import MoviePartOf from "./MoviePartOf";
 
-import { Collection, Movie, Genre } from "../js/types";
-import { useEffect, useState } from "react";
-import { useFetch } from "../hooks/useFetch";
+import { Collection, Movie, Part, Genre, MediaHeroType, TileData, MediaHeroData, TvShow } from "../js/types";
+import { useCallback, useEffect, useState } from "react";
 import tmdb from "../js/tmdb";
 import AppError from "./AppError";
 
 interface Props {
     id?: number;
-    type: 'random' | 'collection' | 'movie';
+    type: MediaHeroType;
 }
 
 export default function MediaHero({ type, id }: Props) {
-    const [data, setData] = useState({} as Collection | Movie);
+    const [data, setData] = useState({} as MediaHeroData);
+    const [isDataLoading, setIsDataLoading] = useState(false);
+    const [isDataError, setIsDataError] = useState(false);
 
-    const [getData, isDataLoading, dataError] = useFetch(async () => {
-        let data: Collection | Movie;
-        if (type === 'random') {
-            data = await tmdb.getRandomCollection();
-            setData(data);
-        } else if (type === 'collection') {
-            data = await tmdb.getCollection(id!);
-            setData(data);
-        } else if (type === 'movie') {
-            data = await tmdb.getMovie(id!);
-            setData(data);
+    const getData = useCallback(async (): Promise<void> => {
+        try {
+            setIsDataLoading(true);
+            let data = {} as TileData;
+            switch (type) {
+                case 'random':
+                    data = await tmdb.getRandomCollection();
+                    setData(data);
+                    break;
+                case 'collection':
+                    data = await tmdb.getCollection(id!);
+                    setData(data);
+                    break;
+                case 'movie':
+                    data = await tmdb.getMovie(id!);
+                    setData(data);
+                    break;
+                case 'tv':
+                    data = await tmdb.getTvShow(id!);
+                    setData(data);
+                    break;
+                default:
+                    setIsDataError(true);
+            }
+        } catch (error) {
+            setIsDataError(true);
+            console.error(error);
+        } finally {
+            setIsDataLoading(false);
         }
-    })
+    }, [id, type]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            await (getData as () => Promise<void>)();
-        };
+        async function fetchData() {
+            await getData();
+        }
         fetchData();
-    }, []);
+    }, [getData]);
 
     const renderTags = () => {
         const tags = (data as Movie).genres?.map((genre: Genre) => <li key={genre.id}>{genre.name}</li>);
@@ -46,36 +65,48 @@ export default function MediaHero({ type, id }: Props) {
     }
 
     const backdrop = `url(${data.backdrop})`;
+    const hasGenres = (data as Movie).genres;
+    const hasTagline = (data as Movie).tagline;
+    const hasRating = (data as Movie).votes;
+    const hasParts = (data as Collection).partsCount;
+    const hasSeasons = (data as TvShow).seasons_qty;
+    const hasBelongsTo = (data as Movie).belongs_to_collection;
+    const hasDate = type !== 'tv' && (data as Movie | Part).released;
+    const isTv = type === 'tv' && (data as TvShow).released && (data as TvShow).finished;
 
     const heroInner = (
         <div className={`media-hero__inner ${type !== 'random' && 'container'}`}>
             <AppPicture img={data.poster} alt={data.title} />
             <div className="media-hero__content">
+                {hasDate && <p className="media-hero__date">{(data as Movie | Part | TvShow).released.date}</p>}
+                {isTv && <p className="media-hero__date">{(data as TvShow).released.year} - {(data as TvShow).finished.year}</p>}
                 <h2 className="media-hero__title">{data.title}</h2>
 
-                {(data as Movie).genres && renderTags()}
-
-                {(data as Movie).tagline && <h3 className="media-hero__subtitle">{(data as Movie).tagline}</h3>}
+                {hasGenres && renderTags()}
+                {hasTagline && <h3 className="media-hero__subtitle">{(data as Movie).tagline}</h3>}
 
                 <p className="media-hero__description">{data.overview}</p>
             </div>
             <footer className="media-hero__footer">
-                {(data as Movie).votes && <AppProgress value={(data as Movie).votes?.average} />}
-                {(data as Collection).partsCount &&
+                {hasRating && <AppProgress value={(data as Movie).votes?.average} />}
+                {(hasParts || hasSeasons) &&
                     <span className={`icon-labeled`}>
                         <SvgIcon icon="stack" />
-                        <span className="icon-labeled__label">{(data as Collection).partsCount} parts</span>
+                        <span className="icon-labeled__label">
+                            {hasParts && (data as Collection).partsCount + ' parts'}
+                            {hasSeasons && (data as TvShow).seasons_qty + ' seasons'}
+                        </span>
                     </span>
                 }
-                {(data as Movie).belongs_to_collection && <MoviePartOf data={(data as Movie).belongs_to_collection} />}
+                {hasBelongsTo && <MoviePartOf data={(data as Movie).belongs_to_collection} />}
                 <AppFavorite checked={true} title={data.title} />
             </footer>
         </div>
     )
 
     return (
-        dataError
-            ? <AppError error={`Error occured while fetching data for #${id} ${type === 'movie' ? 'movie' : 'collection'}`} />
+        isDataError
+            ? <AppError error={`Error occured while fetching hero data for the ${type} #${id}`} />
             : type === 'random'
                 ? <a href={`collection/${data.id}`} className="media-hero m-random" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
                     <AppSpinner visible={isDataLoading as boolean} />
