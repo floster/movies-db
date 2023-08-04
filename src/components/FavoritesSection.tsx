@@ -11,7 +11,7 @@ import { FAVORITES } from '../js/config';
 // TODO: make this component universal to get any of
 // [x] 1. collections
 // [x] 2. movies
-// [ ] 3. tv shows
+// [x] 3. tv shows
 // [x] 4. people
 
 interface Props {
@@ -38,6 +38,9 @@ export default function FavoritesSection({ type }: Props) {
             break;
           case 'person':
             data = await tmdb.getPerson(favoriteId);
+            break;
+          case 'tv':
+            data = await tmdb.getTvShow(favoriteId);
             break;
           default:
             setIsFavoriteError(true);

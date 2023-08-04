@@ -8,6 +8,7 @@ export default function Favorites() {
         <FavoritesSection type='collection' />
         <FavoritesSection type='movie' />
         <FavoritesSection type='person' />
+        <FavoritesSection type='tv' />
       </div>
     </>
   )

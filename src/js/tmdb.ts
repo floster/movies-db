@@ -25,6 +25,10 @@ import {
   Person,
   MovieCredits,
   RawMovieCredits,
+  TvShow,
+  RawTvShow,
+  RawTvShowSeason,
+  TvShowSeason,
 } from './types';
 
 export default class TMDB {
@@ -57,10 +61,14 @@ export default class TMDB {
     return { full, year };
   }
 
-  static #formatPartData(part: RawPart): Part {
-    const poster = part.poster_path
-      ? `${API_POSTER_BASE}${part.poster_path}`
+  static #getPosterUrl(posterPath: string | null) {
+    return posterPath
+      ? `${API_POSTER_BASE}${posterPath}`
       : POSTER_NO_IMAGE;
+  }
+
+  static #formatPartData(part: RawPart): Part {
+    const poster = this.#getPosterUrl(part.poster_path);
 
     // if part is a tv show, then it has 'first_air_date' property
     // if part is a movie, then it has 'release_date' property
@@ -88,10 +96,61 @@ export default class TMDB {
     return movies.map(movie => this.#formatPartData(movie));
   }
 
+  static #formatTvShowData(tv: RawTvShow): TvShow {
+    const poster = this.#getPosterUrl(tv.poster_path);
+
+    const date = this.#formatDate(new Date(tv.release_date));
+    const finishedDate = this.#formatDate(new Date(tv.last_air_date));
+
+    const formatedData: TvShow = {
+      adult: tv.adult,
+      backdrop: `${API_BACKDROP_BASE}${tv.backdrop_path}`,
+      episodes_qty: tv.number_of_episodes,
+      finished: { date: finishedDate.full, year: finishedDate.year },
+      genres: tv.genres,
+      id: tv.id,
+      in_production: tv.in_production,
+      overview: tv.overview,
+      popularity: tv.popularity,
+      poster: poster,
+      released: { date: date.full, year: date.year },
+      seasons_qty: tv.number_of_seasons,
+      seasons: this.#formatTvShowSeasonsData(tv.seasons),
+      status: tv.status,
+      tagline: tv.tagline,
+      title: tv.name,
+      type: 'tv',
+      votes: { average: +tv.vote_average?.toFixed(1), count: tv.vote_count },
+    }
+
+    return formatedData;
+  }
+
+  static #formatTvShowSeasonData(season: RawTvShowSeason): TvShowSeason {
+    const poster = this.#getPosterUrl(season.poster_path);
+
+    const date = this.#formatDate(new Date(season.air_date));
+
+    const formatedData: TvShowSeason = {
+      episodes_qty: season.episode_count,
+      id: season.id,
+      name: season.name,
+      overview: season.overview,
+      poster: poster,
+      released: { date: date.full, year: date.year },
+      season_number: season.season_number,
+      votes: { average: +season.vote_average?.toFixed(1), count: 0 },
+    }
+
+    return formatedData;
+  }
+
+  static #formatTvShowSeasonsData(seasons: RawTvShowSeason[]): TvShowSeason[] {
+    return seasons.map(season => this.#formatTvShowSeasonData(season));
+  }
+
   static #formatMovieData(movie: RawMovie): Movie {
-    const poster = movie.poster_path
-      ? `${API_POSTER_BASE}${movie.poster_path}`
-      : POSTER_NO_IMAGE;
+    const poster = this.#getPosterUrl(movie.poster_path);
 
     const date = this.#formatDate(new Date(movie.release_date));
 
@@ -118,9 +177,7 @@ export default class TMDB {
   }
 
   static #formatPersonData(person: RawPerson): Person {
-    const poster = person.profile_path
-      ? `${API_POSTER_BASE}${person.profile_path}`
-      : POSTER_NO_IMAGE;
+    const poster = this.#getPosterUrl(person.profile_path);
 
     const formatedData: Person = {
       id: person.id,
@@ -255,6 +312,15 @@ export default class TMDB {
     const person = this.#formatPersonData(data);
 
     return person;
+  }
+
+  static async getTvShow(id: number): Promise<TvShow> {
+    const url = `/tv/${id}`;
+    const data: RawTvShow = await this.#getJSON(url);
+
+    const tv = this.#formatTvShowData(data);
+
+    return tv;
   }
 }
 

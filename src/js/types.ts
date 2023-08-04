@@ -8,27 +8,36 @@ export type AppTileType = 'movie' | 'collection' | 'actor';
 // comes from TMDB
 export type MediaType = 'movie' | 'tv' | 'person' | 'collection';
 
+export type TvShowStatuses = 'Returning Series' | 'Planned' | 'In Production' | 'Ended' | 'Canceled' | 'Pilot';
+
 //////////////////////////////
 ///// TMDB API Responses /////
 //////////////////////////////
 
 // General
-export interface RawPartMovie {
+export interface RawPartMovieTV {
   adult: boolean,
   backdrop_path: string,
+  first_air_date: Date,   // for TV
+  genres: Genre[],        // for Movie, TV
+  genre_ids: number[];    // for Part
   id: number,
   original_language: string,
-  original_title: string,
+  original_title: string, // for Part, Movie
+  title: string,          // for Part, Movie
+  original_name: string,  // for TV
+  name: string,           // for TV
   overview: string,
   popularity: number,
   poster_path: string,
-  title: string,
-  video: boolean,
+  release_date: Date,     // for Part, Movie
+  tagline: string,        // for Movie, TV
+  video: boolean,         // for Part, Movie
   vote_average: number,
   vote_count: number
 }
 
-export interface PartMovie {
+export interface PartMovieTV {
   adult: boolean;
   backdrop: string;
   genres: Genre[];
@@ -91,31 +100,23 @@ export interface Collection {
 
 // comes with 'collection' and 'list' requests
 // can be a Movie or a TV Show
-export interface RawPart extends RawPartMovie {
-  genre_ids: number[];
+export interface RawPart extends RawPartMovieTV {
   media_type: MediaType;
-  name?: string;          // only for tv
-  release_date?: Date;    // only for movies
-  first_air_date?: Date;  // only for tv
 }
 
-export interface Part extends PartMovie { }
+export interface Part extends PartMovieTV { }
 
-export interface RawMovie extends RawPartMovie {
+export interface RawMovie extends RawPartMovieTV {
   belongs_to_collection: BelongsToCollectionData | null,
   budget: number,
-  genres: Genre[],
   homepage: string,
   imdb_id: string,
-  production_companies: [],
-  production_countries: [],
-  release_date: Date,
   revenue: number,
   status: string,
-  tagline: string,
+  title: string,
 }
 
-export interface Movie extends PartMovie {
+export interface Movie extends PartMovieTV {
   belongs_to_collection: BelongsToCollectionData | null,
   budget: number,
   revenue: number,
@@ -132,6 +133,48 @@ export interface RawMovieCredits {
 export interface MovieCredits {
   cast: Person[];
   crew: Person[];
+}
+
+export interface RawTvShow extends RawPartMovieTV {
+  in_production: boolean,
+  last_air_date: Date,
+  number_of_episodes: number,
+  number_of_seasons: number,
+  seasons: RawTvShowSeason[],
+  status: TvShowStatuses,
+  type: MediaType,
+}
+
+export interface TvShow extends PartMovieTV {
+  episodes_qty: number,
+  finished: { date: string, year: number },
+  in_production: boolean,
+  seasons_qty: number,
+  seasons: TvShowSeason[],
+  status: TvShowStatuses,
+  tagline: string;
+}
+
+export interface RawTvShowSeason {
+  air_date: Date,
+  episode_count: number,
+  id: number,
+  name: string,
+  overview: string,
+  poster_path: string,
+  season_number: number,
+  vote_average: number
+}
+
+export interface TvShowSeason {
+  episodes_qty: number,
+  id: number,
+  name: string,
+  overview: string,
+  poster: string,
+  released: { date: string, year: number },
+  season_number: number,
+  votes: { average: number, count: number };
 }
 
 export interface RawPerson {
@@ -164,4 +207,4 @@ export interface Person {
   job?: string; // only for crew
 }
 
-export type TileData = Part | Movie | Collection | Person;
+export type TileData = Part | Movie | Collection | Person | TvShow;

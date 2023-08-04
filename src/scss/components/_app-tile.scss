@@ -29,7 +29,8 @@
         }
     }
 
-    &.m-collection {
+    &.m-collection,
+    &.m-tvshow {
 
         &::before,
         &::after {
