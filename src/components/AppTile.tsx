@@ -1,4 +1,4 @@
-import { Collection, ListTypes, Part, Person, TileData, TvShow } from "../js/types";
+import { Cast, Collection, ListTypes, Part, Person, TileData, TvShow } from "../js/types";
 import AppFavorite from "./AppFavorite";
 import AppPicture from "./AppPicture";
 import AppProgress from "./AppProgress";
@@ -36,7 +36,7 @@ export default function AppTile({ tile, isCarouselItem, isRow = false, listType 
             <div className="app-tile__content">
                 {hasRatingIcon && <AppProgress value={(tile as Part).votes.average} />}
                 <p className="app-tile__label">
-                    {isPerson && (tile as Person).character || (tile as Person).department}
+                    {isPerson && (tile as Cast).character || (tile as Person).department}
                     {isMovie && (tile as Part).released.date}
                     {isTv && (tile as Part).released.date}
                     {isTvShow && (tile as TvShow).seasons_qty + ' seasons'}

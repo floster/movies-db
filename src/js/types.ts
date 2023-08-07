@@ -4,42 +4,18 @@ export type ListTypes = 'top_rated' | 'upcoming' | 'now_playing';
 export type SortOptionValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
 
 export type MediaHeroType = 'random' | 'collection' | 'tv' | 'movie';
+export type TrendingType = 'movie' | 'tv' | 'person';
 export type MediaHeroData = Part | Movie | Collection | TvShow;
 export type AppTileType = 'movie' | 'collection' | 'actor';
 
 // comes from TMDB
-export type MediaType = 'movie' | 'tv' | 'person' | 'collection' | 'season';
-export type TvShowStatuses = 'Returning Series' | 'Planned' | 'In Production' | 'Ended' | 'Canceled' | 'Pilot';
-
+export type TmdbMediaType = 'movie' | 'tv' | 'person' | 'collection' | 'season';
+export type TmdbTvShowStatuses = 'Returning Series' | 'Planned' | 'In Production' | 'Ended' | 'Canceled' | 'Pilot';
 
 //////////////////////////////
 ///// TMDB API Responses /////
 //////////////////////////////
-
-// General
-export interface RawPartMovieTV {
-  adult: boolean,
-  backdrop_path: string,
-  first_air_date: Date,   // for TV
-  genres: Genre[],        // for Movie, TV
-  genre_ids: number[];    // for Part
-  id: number,
-  original_language: string,
-  original_title: string, // for Part, Movie
-  title: string,          // for Part, Movie
-  original_name: string,  // for TV
-  name: string,           // for TV
-  overview: string,
-  popularity: number,
-  poster_path: string,
-  release_date: Date,     // for Part, Movie
-  tagline: string,        // for Movie, TV
-  video: boolean,         // for Part, Movie
-  vote_average: number,
-  vote_count: number
-}
-
-export interface PartMovieTV {
+export interface _BasicPart {
   adult: boolean;
   backdrop: string;
   genres: Genre[];
@@ -49,29 +25,21 @@ export interface PartMovieTV {
   poster: string;
   released: { date: string, year: string },
   title: string;
-  type: MediaType;
+  type: TmdbMediaType;
   votes: { average: number, count: number };
 }
 
+// General
 export interface Genre {
   id: number;
   name: string;
 }
 
-export interface BelongsToCollectionData {
+export interface Belonging {
   id: number;
   name: string;
   poster_path: string;
   backdrop_path: string;
-}
-
-// comes with 'top_rated', 'upcoming' and 'now_playing' requests
-export interface RawListData {
-  dates?: { maximum: Date, minimum: Date };
-  page: number;
-  results: RawPart[] | RawPerson[];
-  total_pages: number;
-  total_results: number;
 }
 
 export interface ListData {
@@ -80,56 +48,25 @@ export interface ListData {
   total_pages: number
 }
 
-export interface RawCollection {
-  backdrop_path: string;
-  id: number;
-  name: string;
-  overview: string;
-  parts: RawPart[];
-  poster_path: string;
-}
-
 export interface Collection {
   backdrop: string;
   id: number;
   title: string;
-  type: MediaType;
+  type: TmdbMediaType;
   overview: string;
   parts: Part[];
   partsCount: number;
   poster: string;
 }
 
-// comes with 'collection' and 'list' requests
-// can be a Movie or a TV Show
-export interface RawPart extends RawPartMovieTV {
-  media_type: MediaType;
-}
+export interface Part extends _BasicPart { }
 
-export interface Part extends PartMovieTV { }
-
-export interface RawMovie extends RawPartMovieTV {
-  belongs_to_collection: BelongsToCollectionData | null,
-  budget: number,
-  homepage: string,
-  imdb_id: string,
-  revenue: number,
-  status: string,
-  title: string,
-}
-
-export interface Movie extends PartMovieTV {
-  belongs_to_collection: BelongsToCollectionData | null,
+export interface Movie extends _BasicPart {
+  belongs_to_collection: Belonging | null,
   budget: number,
   revenue: number,
   status: string,
   tagline: string;
-}
-
-export interface RawMovieCredits {
-  id: number;
-  cast: RawPerson[];
-  crew: RawPerson[];
 }
 
 export interface MovieCredits {
@@ -137,35 +74,17 @@ export interface MovieCredits {
   crew: Person[];
 }
 
-export interface RawTvShow extends RawPartMovieTV {
-  in_production: boolean,
-  last_air_date: Date,
-  number_of_episodes: number,
-  number_of_seasons: number,
-  seasons: RawTvShowSeason[],
-  status: TvShowStatuses,
-  type: MediaType,
-}
-
-export interface TvShow extends PartMovieTV {
+export interface TvShow extends _BasicPart {
   episodes_qty: number,
   finished: { date: string, year: string },
   in_production: boolean,
   seasons_qty: number,
   seasons: TvShowSeason[],
-  status: TvShowStatuses,
+  status: TmdbTvShowStatuses,
   tagline: string;
 }
 
-export interface RawTvShowSeason {
-  air_date: Date,
-  episode_count: number,
-  id: number,
-  name: string,
-  overview: string,
-  poster_path: string,
-  season_number: number,
-  vote_average: number
+export interface TrendingTvShow extends _BasicPart {
 }
 
 export interface TvShowSeason {
@@ -176,38 +95,26 @@ export interface TvShowSeason {
   poster: string,
   released: { date: string, year: string },
   season_number: number,
-  type: MediaType,
+  type: TmdbMediaType,
   votes: { average: number, count: number };
-}
-
-export interface RawPerson {
-  adult: boolean;
-  gender: number;
-  id: number;
-  known_for_department: string;
-  name: string;
-  original_name: string;
-  popularity: number;
-  profile_path: string;
-  cast_id?: number; // only for cast
-  character?: string; // only for cast
-  credit_id: string;
-  order?: number; // only for cast
-  department?: string; // only for crew
-  job?: string; // only for crew
 }
 
 export interface Person {
   id: number;
-  type: MediaType
+  type: TmdbMediaType
   department: string;
   name: string;
   popularity: number;
   poster: string;
-  cast_id?: number; // only for cast
-  character?: string; // only for cast
-  order?: number; // only for cast
-  job?: string; // only for crew
 }
 
-export type TileData = Part | Movie | Collection | Person | TvShow | TvShowSeason;
+export interface Cast extends Person {
+  cast_id: number;
+  character: string;
+  order: number;
+}
+export interface Crew extends Person {
+  job: string;
+}
+
+export type TileData = Part | Movie | Collection | Person | Cast | TvShow | TvShowSeason;

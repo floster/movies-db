@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import AppSection from '../components/AppSection';
 import AppSectionHeader from '../components/AppSectionHeader';
 import AppTile from '../components/AppTile';
-import { MediaType, TileData } from '../js/types';
+import { TmdbMediaType, TileData } from '../js/types';
 import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb';
 import AppError from '../components/AppError';
@@ -15,7 +15,7 @@ import { FAVORITES } from '../js/config';
 // [x] 4. people
 
 interface Props {
-  type: MediaType;
+  type: TmdbMediaType;
 }
 
 export default function FavoritesSection({ type }: Props) {
@@ -37,7 +37,7 @@ export default function FavoritesSection({ type }: Props) {
             data = await tmdb.getMovie(favoriteId);
             break;
           case 'person':
-            data = await tmdb.getPerson(favoriteId);
+            data = await tmdb.getPeople(favoriteId);
             break;
           case 'tv':
             data = await tmdb.getTvShow(favoriteId);

@@ -1,31 +1,40 @@
 import AppTile from "./AppTile";
-import { MediaType, Part } from "../js/types";
+import { Part, TrendingType, TrendingTvShow, Person } from "../js/types";
 import TMDB from "../js/tmdb";
-import { useEffect, useState } from "react";
-import { useFetch } from "../hooks/useFetch";
+import { useCallback, useEffect, useState } from "react";
 import AppSpinner from "./AppSpinner";
 
 interface Props {
-    itemsType: MediaType;
+    itemsType: TrendingType;
 }
 
 export default function AppCarousel({ itemsType }: Props) {
-    const [items, setItems] = useState([] as Part[]);
+    const [items, setItems] = useState([] as Part[] | Person[] | TrendingTvShow[]);
+    const [isDataLoading, setIsDataLoading] = useState(false);
+    const [isDataError, setIsDataError] = useState(false);
 
-    const [getData, isDataLoading, dataError] = useFetch(async () => {
-        const data = await TMDB.getTrending(itemsType);
-        setItems(data);
-    })
+    const getData = useCallback(async (): Promise<void> => {
+        try {
+            setIsDataLoading(true);
+            const data = await TMDB.getTrending(itemsType);
+            setItems(data);
+        } catch (error) {
+            setIsDataError(true);
+            console.error(error);
+        } finally {
+            setIsDataLoading(false);
+        }
+    }, [itemsType])
 
     useEffect(() => {
-        const fetchData = async () => {
-            await (getData as () => Promise<void>)();
-        };
+        async function fetchData() {
+            await getData();
+        }
         fetchData();
-    }, []);
+    }, [getData]);
 
     return (
-        dataError
+        isDataError
             ? <p className="error-message">🔴 Error occured while fetching carousel tiles</p>
             : <div className="app-carousel has-scroll">
                 {isDataLoading

@@ -11,25 +11,36 @@ import {
 
 import {
   Genre,
-  RawCollection,
   Collection,
-  RawPart,
   Part,
-  RawListData,
   ListTypes,
   ListData,
-  MediaType,
   Movie,
-  RawMovie,
-  RawPerson,
   Person,
   MovieCredits,
-  RawMovieCredits,
   TvShow,
+  TvShowSeason,
+  TrendingType,
+  TrendingTvShow,
+  Crew,
+  Cast,
+} from './types';
+
+import {
+  RawCollection,
+  RawCollectionPart,
+  RawMovie,
+  RawMovieCredits,
+  RawPeople,
   RawTvShow,
   RawTvShowSeason,
-  TvShowSeason,
-} from './types';
+  RawMoviesList,
+  RawTrendingPeople,
+  RawTrendingList,
+  RawCast,
+  RawCrew,
+  RawTrendingTvShow,
+} from './raw-tmdb.types';
 
 export default class TMDB {
   static allGenres: Genre[] = [];
@@ -69,13 +80,10 @@ export default class TMDB {
       : POSTER_NO_IMAGE;
   }
 
-  static #formatPartData(part: RawPart): Part {
+  static #formatPartData(part: RawCollectionPart): Part {
     const poster = this.#getPosterUrl(part.poster_path);
 
-    // if part is a tv show, then it has 'first_air_date' property
-    // if part is a movie, then it has 'release_date' property
-    const dateProp = part.release_date ? part['release_date'] : part['first_air_date'];
-    const date = this.#formatDate(new Date(dateProp!));
+    const date = this.#formatDate(new Date(part.release_date));
 
     const formatedData: Part = {
       adult: part.adult,
@@ -87,14 +95,14 @@ export default class TMDB {
       popularity: part.popularity,
       poster: poster,
       released: { date: date.full, year: date.year },
-      title: part.title! || part.name!,
+      title: part.title,
       votes: { average: +part.vote_average?.toFixed(1), count: part.vote_count },
     }
 
     return formatedData;
   }
 
-  static #formatPartsData(movies: RawPart[]): Part[] {
+  static #formatPartsData(movies: RawCollectionPart[]): Part[] {
     return movies.map(movie => this.#formatPartData(movie));
   }
 
@@ -126,6 +134,32 @@ export default class TMDB {
     }
 
     return formatedData;
+  }
+
+  static #formatBasicTvShowData(tv: RawTrendingTvShow): TrendingTvShow {
+    const poster = this.#getPosterUrl(tv.poster_path);
+
+    const date = this.#formatDate(new Date(tv.first_air_date));
+
+    const formatedData: TrendingTvShow = {
+      adult: tv.adult,
+      backdrop: `${API_BACKDROP_BASE}${tv.backdrop_path}`,
+      genres: this.#convertMovieGenres(tv.genre_ids),
+      id: tv.id,
+      overview: tv.overview,
+      popularity: tv.popularity,
+      poster: poster,
+      released: { date: date.full, year: date.year },
+      title: tv.name,
+      type: 'tv',
+      votes: { average: +tv.vote_average?.toFixed(1), count: tv.vote_count },
+    }
+
+    return formatedData;
+  }
+
+  static #formatBasicTvShowsData(shows: RawTrendingTvShow[]): TrendingTvShow[] {
+    return shows.map(show => this.#formatBasicTvShowData(show));
   }
 
   static #formatTvShowSeasonData(season: RawTvShowSeason): TvShowSeason {
@@ -179,7 +213,7 @@ export default class TMDB {
     return formatedData;
   }
 
-  static #formatPersonData(person: RawPerson): Person {
+  static #formatPersonData(person: RawPeople | RawCast | RawCrew | RawTrendingPeople): Person | Cast | Crew {
     const poster = this.#getPosterUrl(person.profile_path);
 
     const formatedData: Person = {
@@ -191,15 +225,16 @@ export default class TMDB {
       poster: poster,
     }
 
-    if (person.cast_id) formatedData.cast_id = person.cast_id;
-    if (person.character) formatedData.character = person.character;
-    if (person.order) formatedData.order = person.order;
-    if (person.job) formatedData.job = person.job;
+    // specific tests for cast and crew data
+    if ((person as RawCast).cast_id) (formatedData as Cast).cast_id = (person as RawCast).cast_id;
+    if ((person as RawCast).character) (formatedData as Cast).character = (person as RawCast).character;
+    if ((person as RawCast).order) (formatedData as Cast).order = (person as RawCast).order;
+    if ((person as RawCrew).job) (formatedData as Crew).job = (person as RawCrew).job;
 
     return formatedData;
   }
 
-  static #formatPersonsData(credits: RawPerson[]): Person[] {
+  static #formatPersonsData(credits: RawCast[] | RawCrew[] | RawTrendingPeople[]): Person[] {
     return credits.map(person => this.#formatPersonData(person));
   }
 
@@ -241,8 +276,8 @@ export default class TMDB {
       params = `page=${page}`;
     }
 
-    const data: RawListData = await this.#getJSON(url, params);
-    const movies = this.#formatPartsData(data.results as RawPart[]);
+    const data: RawMoviesList = await this.#getJSON(url, params);
+    const movies = this.#formatPartsData(data.results as RawCollectionPart[]);
 
     return {
       movies,
@@ -274,16 +309,25 @@ export default class TMDB {
     return await this.getCollection(randomCollectionId);
   }
 
-  static async getTrending(type: MediaType, period: 'day' | 'week' = 'week') {
+  static async getTrending(type: TrendingType, period: 'day' | 'week' = 'week') {
     const url = `/trending/${type}/${period}`;
-    const data: RawListData = await this.#getJSON(url);
+    const data: RawTrendingList = await this.#getJSON(url);
 
-    let trending: Part[] | Person[] = [];
+    let trending: Part[] | Person[] | TrendingTvShow[] = [];
 
-    if (type === 'person') {
-      trending = this.#formatPersonsData(data.results as RawPerson[]) as Person[];
-    } else {
-      trending = this.#formatPartsData(data.results as RawPart[]) as Part[];
+    switch (type) {
+      case 'movie':
+        trending = this.#formatPartsData(data.results as RawCollectionPart[]) as Part[];
+        break;
+      case 'tv':
+        trending = this.#formatBasicTvShowsData(data.results as RawTrendingTvShow[]) as TrendingTvShow[];
+        break;
+      case 'person':
+        trending = this.#formatPersonsData(data.results as RawTrendingPeople[]) as Person[];
+        break;
+      default:
+        console.error('Wrong trending type');
+        trending = [];
     }
 
     return trending;
@@ -308,9 +352,9 @@ export default class TMDB {
     return { cast, crew };
   }
 
-  static async getPerson(id: number): Promise<Person> {
+  static async getPeople(id: number): Promise<Person> {
     const url = `/person/${id}`;
-    const data: RawPerson = await this.#getJSON(url);
+    const data: RawPeople = await this.#getJSON(url);
 
     const person = this.#formatPersonData(data);
 

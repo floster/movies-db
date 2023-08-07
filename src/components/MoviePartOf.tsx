@@ -1,8 +1,8 @@
-import { BelongsToCollectionData } from "../js/types";
+import { Belonging } from "../js/types";
 import SvgIcon from "./SvgIcon";
 
 interface Props {
-    data: BelongsToCollectionData | null;
+    data: Belonging | null;
 }
 
 export default function PartOf({ data }: Props) {
