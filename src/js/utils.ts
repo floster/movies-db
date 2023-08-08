@@ -1,4 +1,4 @@
-import { Person, Part, SortOptionValues } from "./types";
+import { Part, SortOptionValues } from "./types";
 
 export function splitSortOptionValue(option: SortOptionValues, splitBy: string = '_') {
     const sortBy = option.split(splitBy)[0] as keyof Part;
@@ -16,6 +16,6 @@ export function partsSort<T>(parts: T[], sortBy: keyof T, sortOrder: 'asc' | 'de
     return sorted
 }
 
-export function cutArray(arr: Person[], size: number) {
+export function cutArray(arr: [], size: number) {
     return [...arr].splice(0, size);
 }

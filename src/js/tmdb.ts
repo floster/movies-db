@@ -234,7 +234,7 @@ export default class TMDB {
     return formatedData;
   }
 
-  static #formatPersonsData(credits: RawCast[] | RawCrew[] | RawTrendingPeople[]): Person[] {
+  static #formatPersonsData(credits: RawCast[] | RawCrew[] | RawTrendingPeople[]): Person[] | Cast[] | Crew[] {
     return credits.map(person => this.#formatPersonData(person));
   }
 
@@ -346,8 +346,8 @@ export default class TMDB {
     const url = `/movie/${id}/credits`;
     const data: RawMovieCredits = await this.#getJSON(url);
 
-    const cast = this.#formatPersonsData(data.cast);
-    const crew = this.#formatPersonsData(data.crew);
+    const cast = this.#formatPersonsData(data.cast) as Cast[];
+    const crew = this.#formatPersonsData(data.crew) as Crew[];
 
     return { cast, crew };
   }

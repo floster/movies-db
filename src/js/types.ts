@@ -15,7 +15,7 @@ export type TmdbTvShowStatuses = 'Returning Series' | 'Planned' | 'In Production
 //////////////////////////////
 ///// TMDB API Responses /////
 //////////////////////////////
-export interface _BasicPart {
+interface _BasicPart {
   adult: boolean;
   backdrop: string;
   genres: Genre[];
@@ -70,8 +70,8 @@ export interface Movie extends _BasicPart {
 }
 
 export interface MovieCredits {
-  cast: Person[];
-  crew: Person[];
+  cast: Cast[];
+  crew: Crew[];
 }
 
 export interface TvShow extends _BasicPart {

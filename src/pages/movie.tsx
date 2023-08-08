@@ -1,47 +1,58 @@
 import AppSection from '../components/AppSection';
 import AppSectionHeader from '../components/AppSectionHeader';
-import { useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import MediaHero from '../components/MediaHero';
 import MovieCrew from '../components/MovieCrew';
 import AppTile from '../components/AppTile';
 import { useParams } from 'react-router-dom';
 import tmdb from '../js/tmdb';
-import { useFetch } from '../hooks/useFetch';
-import { Person } from '../js/types';
+import { Cast, Crew } from '../js/types';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
 import { cutArray, partsSort } from '../js/utils';
 
-export default function Movie() {
-  const params = useParams();
+type MovieParams = {
+  id: string;
+}
+
+const Movie: FC = () => {
+  const params = useParams<MovieParams>();
   const movieId = +params.id!;
 
-  const [cast, setCast] = useState([] as Person[]);
-  const [crew, setCrew] = useState([] as Person[]);
+  const [cast, setCast] = useState([] as Cast[]);
+  const [crew, setCrew] = useState([] as Crew[]);
+  const [isDataLoading, setIsDataLoading] = useState(false);
+  const [isDataError, setIsDataError] = useState(false);
 
-  const [getData, isDataLoading, dataError] = useFetch(async () => {
-    const data = await tmdb.getMovieCredits(movieId);
+  const getData = useCallback(async () => {
+    try {
+      const data = await tmdb.getMovieCredits(movieId);
 
-    const sortedCrew = cutArray(partsSort(data.crew, 'popularity', 'desc'), 6);
-    const sortedCast = cutArray(partsSort(data.cast, 'cast_id', 'asc'), 14);
+      const sortedCrew = cutArray(partsSort(data.crew, 'popularity', 'desc') as [], 6);
+      const sortedCast = cutArray(partsSort(data.cast, 'cast_id', 'asc') as [], 14);
 
-    setCast(sortedCast);
-    setCrew(sortedCrew);
-  })
+      setCast(sortedCast);
+      setCrew(sortedCrew);
+    } catch (error) {
+      setIsDataError(true);
+      console.error(error);
+    } finally {
+      setIsDataLoading(false);
+    }
+  }, [movieId]);
 
   useEffect(() => {
     const fetchData = async () => {
       await (getData as () => Promise<void>)();
     };
     fetchData();
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getData]);
 
 
   return (
     <section className="movie-header">
       <MediaHero id={movieId} type='movie' />
-      {dataError
+      {isDataError
         ? <AppError error={`Error occured while fetching movie #${movieId} credits`} />
         : isDataLoading
           ? <AppSpinner visible={true} />
@@ -65,3 +76,5 @@ export default function Movie() {
     </section>
   )
 }
+
+export default Movie;

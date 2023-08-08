@@ -6,16 +6,16 @@ import AppProgress from "./AppProgress";
 import MoviePartOf from "./MoviePartOf";
 
 import { Collection, Movie, Part, Genre, MediaHeroType, TileData, MediaHeroData, TvShow } from "../js/types";
-import { useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import tmdb from "../js/tmdb";
 import AppError from "./AppError";
 
-interface Props {
+interface MediaHeroProps {
     id?: number;
     type: MediaHeroType;
 }
 
-export default function MediaHero({ type, id }: Props) {
+const MediaHero: FC<MediaHeroProps> = ({ type, id }) => {
     const [data, setData] = useState({} as MediaHeroData);
     const [isDataLoading, setIsDataLoading] = useState(false);
     const [isDataError, setIsDataError] = useState(false);
@@ -117,3 +117,5 @@ export default function MediaHero({ type, id }: Props) {
                 </div>
     )
 }
+
+export default MediaHero;
