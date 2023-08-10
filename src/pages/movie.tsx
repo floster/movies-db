@@ -9,7 +9,7 @@ import tmdb from '../js/tmdb';
 import { Cast, Crew } from '../js/types';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
-import { cutArray, partsSort } from '../js/utils';
+import { cutArray, getIdFromLink, partsSort } from '../js/utils';
 
 type MovieParams = {
   id: string;
@@ -17,7 +17,7 @@ type MovieParams = {
 
 const Movie: FC = () => {
   const params = useParams<MovieParams>();
-  const movieId = +params.id!;
+  const movieId = getIdFromLink(params.id!);
 
   const [cast, setCast] = useState([] as Cast[]);
   const [crew, setCrew] = useState([] as Crew[]);

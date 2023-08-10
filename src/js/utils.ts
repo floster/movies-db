@@ -19,3 +19,5 @@ export function partsSort<T>(parts: T[], sortBy: keyof T, sortOrder: 'asc' | 'de
 export function cutArray(arr: [], size: number) {
     return [...arr].splice(0, size);
 }
+
+export const getIdFromLink = (link: string): number => parseInt(link.split('-')[0])

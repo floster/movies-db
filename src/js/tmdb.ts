@@ -74,6 +74,21 @@ export default class TMDB {
     return { full, year };
   }
 
+  static #kebabText(link: string) {
+    return link.toLowerCase()
+      .replace(/:/g, '') // remove colons
+      .replace(/,/g, '') // remove commas
+      .replace(/[^a-z0-9\s-]/g, '') // remove non-alphanumeric characters except spaces and hyphens
+      .replace(/\s+/g, '-') // replace spaces with hyphens
+      .replace(/-+/g, '-') // remove consecutive hyphens
+      .replace(/^-+|-+$/g, ''); // remove leading and trailing hyphens
+  }
+
+  static #createLink(type: string, id: number, title: string) {
+    const _type = type ? type : 'movie';
+    return `/${_type}/${id}-${this.#kebabText(title)}`;
+  }
+
   static #getPosterUrl(posterPath: string | null) {
     return posterPath
       ? `${API_POSTER_BASE}${posterPath}`
@@ -90,6 +105,7 @@ export default class TMDB {
       backdrop: `${API_BACKDROP_BASE}${part.backdrop_path}`,
       genres: this.#convertMovieGenres(part.genre_ids),
       id: part.id,
+      link: this.#createLink(part.media_type, part.id, part.title),
       type: part.media_type,
       overview: part.overview,
       popularity: part.popularity,
@@ -120,6 +136,7 @@ export default class TMDB {
       genres: tv.genres,
       id: tv.id,
       in_production: tv.in_production,
+      link: this.#createLink('tv', tv.id, tv.name),
       overview: tv.overview,
       popularity: tv.popularity,
       poster: poster,
@@ -146,6 +163,7 @@ export default class TMDB {
       backdrop: `${API_BACKDROP_BASE}${tv.backdrop_path}`,
       genres: this.#convertMovieGenres(tv.genre_ids),
       id: tv.id,
+      link: this.#createLink('tv', tv.id, tv.name),
       overview: tv.overview,
       popularity: tv.popularity,
       poster: poster,
@@ -170,6 +188,7 @@ export default class TMDB {
     const formatedData: TvShowSeason = {
       episodes_qty: season.episode_count,
       id: season.id,
+      link: this.#createLink('season', season.season_number, season.name),
       name: season.name,
       overview: season.overview,
       poster: poster,
@@ -197,6 +216,7 @@ export default class TMDB {
       belongs_to_collection: movie.belongs_to_collection || null,
       budget: movie.budget,
       genres: movie.genres,
+      link: this.#createLink('movie', movie.id, movie.title),
       id: movie.id,
       overview: movie.overview,
       popularity: movie.popularity,
@@ -218,6 +238,7 @@ export default class TMDB {
 
     const formatedData: Person = {
       id: person.id,
+      link: this.#createLink('person', person.id, person.name),
       type: 'person',
       department: person.known_for_department,
       name: person.name,
@@ -293,6 +314,7 @@ export default class TMDB {
     const collection: Collection = {
       backdrop: `${API_BACKDROP_BASE}${data.backdrop_path}`,
       id: data.id,
+      link: this.#createLink('collection', data.id, data.name),
       title: data.name,
       overview: data.overview,
       parts: this.#formatPartsData(data.parts),
@@ -364,13 +386,7 @@ export default class TMDB {
   static async getTvShow(id: number): Promise<TvShow> {
     const url = `/tv/${id}`;
     const data: RawTvShow = await this.#getJSON(url);
-
-
     const tv = this.#formatTvShowData(data);
-    console.log('data', data);
-    console.log('tv', tv);
-
     return tv;
   }
 }
-

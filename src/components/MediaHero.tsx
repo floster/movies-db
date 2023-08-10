@@ -108,7 +108,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id }) => {
         isDataError
             ? <AppError error={`Error occured while fetching hero data for the ${type} #${id}`} />
             : type === 'random'
-                ? <a href={`collection/${data.id}`} className="media-hero m-random" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
+                ? <a href={data.link} className="media-hero m-random" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
                     <AppSpinner visible={isDataLoading as boolean} />
                     {heroInner}
                 </a>

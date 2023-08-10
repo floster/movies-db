@@ -9,11 +9,15 @@ import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb';
 import { useFetch } from '../hooks/useFetch';
 import AppError from '../components/AppError';
-import { partsSort as collectionPartsSort, splitSortOptionValue } from '../js/utils';
+import { partsSort as collectionPartsSort, getIdFromLink, splitSortOptionValue } from '../js/utils';
+
+type CollectionParams = {
+  id: string;
+}
 
 export default function Collection() {
-  const params = useParams();
-  const collectionId = +params.id!;
+  const params = useParams<CollectionParams>();
+  const collectionId = getIdFromLink(params.id!);
 
   const [parts, setParts] = useState([] as Part[]);
   const [sortedParts, setSortedParts] = useState([] as Part[]);

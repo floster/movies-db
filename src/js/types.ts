@@ -20,6 +20,7 @@ interface _BasicPart {
   backdrop: string;
   genres: Genre[];
   id: number;
+  link: string
   overview: string;
   popularity: number,
   poster: string;
@@ -51,6 +52,7 @@ export interface ListData {
 export interface Collection {
   backdrop: string;
   id: number;
+  link: string,
   title: string;
   type: TmdbMediaType;
   overview: string;
@@ -90,6 +92,7 @@ export interface TrendingTvShow extends _BasicPart {
 export interface TvShowSeason {
   episodes_qty: number,
   id: number,
+  link: string,
   name: string,
   overview: string,
   poster: string,
@@ -101,6 +104,7 @@ export interface TvShowSeason {
 
 export interface Person {
   id: number;
+  link: string,
   type: TmdbMediaType
   department: string;
   name: string;

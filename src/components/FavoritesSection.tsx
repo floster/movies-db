@@ -8,12 +8,6 @@ import tmdb from '../js/tmdb';
 import AppError from '../components/AppError';
 import { FAVORITES } from '../js/config';
 
-// TODO: make this component universal to get any of
-// [x] 1. collections
-// [x] 2. movies
-// [x] 3. tv shows
-// [x] 4. people
-
 interface Props {
   type: TmdbMediaType;
 }
