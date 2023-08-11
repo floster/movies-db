@@ -9,7 +9,7 @@ import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb-api';
 import { useFetch } from '../hooks/useFetch';
 import AppError from '../components/AppError';
-import { partsSort as collectionPartsSort, getIdFromLink, splitSortOptionValue } from '../js/utils';
+import { partsSort as collectionPartsSort, getIdFromLink, splitSortOptionValue } from '../js/helpers';
 
 type CollectionParams = {
   id: string;

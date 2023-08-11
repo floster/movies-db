@@ -9,7 +9,7 @@ import tmdb from '../js/tmdb-api';
 import { IMovieCast, IMovieCrew } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
-import { cutArray, getIdFromLink, partsSort } from '../js/utils';
+import { cutArray, getIdFromLink, partsSort } from '../js/helpers';
 
 type MovieParams = {
   id: string;

@@ -9,7 +9,7 @@ import { useFetch } from '../hooks/useFetch';
 import { ITvShowSeason } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
-import { getIdFromLink } from '../js/utils';
+import { getIdFromLink } from '../js/helpers';
 
 type TvParams = {
   id: string;

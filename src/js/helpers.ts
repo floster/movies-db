@@ -1,6 +1,6 @@
 import { API_BACKDROP_BASE, API_BASE, API_KEY, API_POSTER_BASE, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
 import { RawBasePerson, RawCast, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawTrendingTvShow, RawTvShow, RawTvShowSeason } from "../types/raw-tmdb.types";
-import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IPart, IPerson, ITrendingTvShow, ITvShow, ITvShowSeason } from "../types/tmdb.types";
+import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IPart, IPerson, ITrendingTvShow, ITvShow, ITvShowSeason, USortOptionValues } from "../types/tmdb.types";
 
 
 /**
@@ -26,7 +26,50 @@ export async function getJSON<T>(url: string, params: string = ''): Promise<T> {
     return data;
 }
 
-// general formatters
+/**
+ * Splits a sort option value into its component parts and returns them as an object.
+ * @param {USortOptionValues} option - The sort option value to split.
+ * @param {string} [splitBy='_'] - The character to split the sort option value by.
+ * @returns {{ sortBy: keyof IPart, sortOrder: 'asc' | 'desc' }} - for ex. { sortBy: 'title', sortOrder: 'desc' }
+ */
+export function splitSortOptionValue(option: USortOptionValues, splitBy: string = '_') {
+    const sortBy = option.split(splitBy)[0] as keyof IPart;
+    const sortOrder = option.split(splitBy)[1] as 'asc' | 'desc';
+
+    return { sortBy, sortOrder }
+}
+
+export function partsSort<T>(parts: T[], sortBy: keyof T, sortOrder: 'asc' | 'desc' = 'asc'): T[] {
+    const sorted = [...parts].sort((a, b) => {
+        if (sortOrder === 'asc') return a[sortBy] < b[sortBy] ? -1 : 1;
+        else return a[sortBy] > b[sortBy] ? -1 : 1;
+    });
+
+    return sorted
+}
+
+/**
+ * Cut an array to a specified size.
+ * @template T - The type of elements in the input array.
+ * @param {T[]} arr - The input array to cut.
+ * @param {number} size - The number of elements to include in the output array.
+ * @returns {T[]} - A new array containing the first `size` elements of the input array.
+ */
+export function cutArray(arr: [], size: number) {
+    return [...arr].splice(0, size);
+}
+
+/**
+ * Extracts the ID from a link string and returns it as a number.
+ * Used to extract ID from URL created by 'createLink' function.
+ * @param {string} link - The link string to extract the ID from.
+ * @returns {number} - The ID extracted from the link string as a number.
+ */
+export const getIdFromLink = (link: string): number => parseInt(link.split('-')[0])
+
+////////////////////////////////////////
+////////// general formatters //////////
+////////////////////////////////////////
 /**
  * Formats a date object 
  * @param date - The date object to be formatted.
@@ -51,6 +94,13 @@ export const kebabText = (link: string) => {
         .replace(/^-+|-+$/g, ''); // remove leading and trailing hyphens
 }
 
+/**
+ * Creates a link string from the provided type, ID, and title.
+ * @param {string} type - The type of the link (e.g. 'movie', 'tv', etc.).
+ * @param {number} id - The ID of the item to link to.
+ * @param {string} title - The title of the item to link to.
+ * @returns {string} - A link string that looks like '/movie/12345-the-movie-title'.
+ */
 export const createLink = (type: string, id: number, title: string) => {
     const _type = type ? type : 'movie';
     return `/${_type}/${id}-${kebabText(title)}`;
@@ -62,7 +112,10 @@ export const getPosterUrl = (posterPath: string | null) => {
         : POSTER_NO_IMAGE;
 }
 
-// TMDB API formatters
+/////////////////////////////////////////
+////////// TMDB API formatters //////////
+/////////////////////////////////////////
+
 export function formatPartData(part: RawCollectionPart): IPart {
     const poster = getPosterUrl(part.poster_path);
 
