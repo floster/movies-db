@@ -18,6 +18,7 @@ import {
   ITrendingTvShow,
   IMovieCrew,
   IMovieCast,
+  IPerson,
 } from '../types/tmdb.types';
 
 import {
@@ -33,7 +34,8 @@ import {
   RawBasePerson,
 } from '../types/raw-tmdb.types';
 
-import { createLink, formatBasicTvShowsData, formatMovieData, formatPartsData, formatPerson, formatPersonsData, formatTvShowData, getJSON } from './helpers';
+import { createLink, getJSON } from './helpers';
+import { formatBasicTvShowsData, formatMovieData, formatPartsData, formatPerson, formatPersonsData, formatTvShowData } from './formaters';
 
 export default class TMDB {
   static allGenres: IGenre[] = [];
@@ -152,7 +154,7 @@ export default class TMDB {
     return { cast, crew };
   }
 
-  static async getPerson(id: number): Promise<IBasePerson> {
+  static async getPerson(id: number): Promise<IPerson> {
     const url = `/person/${id}`;
     const data: RawPerson = await getJSON(url);
 
