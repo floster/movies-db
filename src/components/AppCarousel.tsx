@@ -1,6 +1,6 @@
 import AppTile from "./AppTile";
-import { IPart, UTrendingType, ITrendingTvShow, IBasePerson } from "../js/types";
-import TMDB from "../js/tmdb";
+import { IPart, UTrendingType, ITrendingTvShow, IBasePerson } from "../types/tmdb.types";
+import TMDB from "../js/tmdb-api";
 import { useCallback, useEffect, useState } from "react";
 import AppSpinner from "./AppSpinner";
 

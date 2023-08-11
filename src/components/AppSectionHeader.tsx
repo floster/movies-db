@@ -1,4 +1,4 @@
-import { USortOptionValues } from '../js/types';
+import { USortOptionValues } from '../types/tmdb.types';
 import AppSelect from './AppSelect'
 
 interface Props {

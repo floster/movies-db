@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import AppSection from '../components/AppSection';
 import AppSectionHeader from '../components/AppSectionHeader';
 import AppTile from '../components/AppTile';
-import { UTmdbMediaType, UTileData } from '../js/types';
+import { UTmdbMediaType, UTileData } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
-import tmdb from '../js/tmdb';
+import tmdb from '../js/tmdb-api';
 import AppError from '../components/AppError';
 import { FAVORITES } from '../js/config';
 

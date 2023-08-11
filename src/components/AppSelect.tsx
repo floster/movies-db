@@ -1,5 +1,5 @@
 import { SORT_OPTIONS } from "../js/config"
-import { USortOptionValues } from "../js/types";
+import { USortOptionValues } from "../types/tmdb.types";
 
 interface Props {
     currentSortOption: USortOptionValues;

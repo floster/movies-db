@@ -1,4 +1,4 @@
-import { IBelonging, IGenre, UTmdbMediaType, UTmdbTvShowStatuses } from "./types";
+import { IBelonging, IGenre, UTmdbMediaType, UTmdbTvShowStatuses } from "./tmdb.types";
 
 ////////////////////////////////////
 ////////// Main Responses //////////

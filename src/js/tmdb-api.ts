@@ -22,7 +22,7 @@ import {
   ITrendingTvShow,
   IMovieCrew,
   IMovieCast,
-} from './types';
+} from '../types/tmdb.types';
 
 import {
   RawCollection,
@@ -35,8 +35,8 @@ import {
   RawTrendingList,
   RawTrendingTvShow,
   RawBasePerson,
-} from './raw-tmdb.types';
-import { createLink, formatBasicTvShowsData, formatMovieData, formatPartsData, formatPerson, formatPersonsData, formatTvShowData } from './formatData';
+} from '../types/raw-tmdb.types';
+import { createLink, formatBasicTvShowsData, formatMovieData, formatPartsData, formatPerson, formatPersonsData, formatTvShowData } from './format-data';
 
 export default class TMDB {
   static allGenres: IGenre[] = [];

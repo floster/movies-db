@@ -1,4 +1,4 @@
-import { IBelonging } from "../js/types";
+import { IBelonging } from "../types/tmdb.types";
 import SvgIcon from "./SvgIcon";
 
 interface Props {

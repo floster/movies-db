@@ -1,4 +1,4 @@
-import { IPart, USortOptionValues } from "./types";
+import { IPart, USortOptionValues } from "../types/tmdb.types";
 
 export function splitSortOptionValue(option: USortOptionValues, splitBy: string = '_') {
     const sortBy = option.split(splitBy)[0] as keyof IPart;

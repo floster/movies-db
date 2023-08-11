@@ -1,4 +1,4 @@
-import { IMovieCast, ICollection, UListTypes, IPart, IBasePerson, UTileData, ITvShow, ITvShowSeason } from "../js/types";
+import { IMovieCast, ICollection, UListTypes, IPart, IBasePerson, UTileData, ITvShow, ITvShowSeason } from "../types/tmdb.types";
 import AppFavorite from "./AppFavorite";
 import AppPicture from "./AppPicture";
 import AppProgress from "./AppProgress";

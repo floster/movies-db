@@ -1,4 +1,4 @@
-import tmdb from "../js/tmdb";
+import tmdb from "../js/tmdb-api";
 import MediaHero from "./MediaHero";
 
 export default function RandomMedia() {

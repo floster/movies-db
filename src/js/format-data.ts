@@ -1,6 +1,6 @@
 import { API_BACKDROP_BASE, API_POSTER_BASE, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
-import { RawBasePerson, RawCast, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawTrendingTvShow, RawTvShow, RawTvShowSeason } from "./raw-tmdb.types";
-import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IPart, IPerson, ITrendingTvShow, ITvShow, ITvShowSeason } from "./types";
+import { RawBasePerson, RawCast, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawTrendingTvShow, RawTvShow, RawTvShowSeason } from "../types/raw-tmdb.types";
+import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IPart, IPerson, ITrendingTvShow, ITvShow, ITvShowSeason } from "../types/tmdb.types";
 
 // general formatters
 /**

@@ -1,9 +1,9 @@
 import AppSelectCustom from './AppSelectCustom'
 import MoviesList from './MoviesList'
 import { useCallback, useEffect, useState } from 'react'
-import tmdb from '../js/tmdb'
+import tmdb from '../js/tmdb-api'
 import { OPTIONS_MOVIE_LIST } from '../js/config'
-import { UListTypes, IPart } from '../js/types'
+import { UListTypes, IPart } from '../types/tmdb.types'
 
 export default function MainPageSidebar() {
     const [currentListType, setCurrentListType] = useState<UListTypes>(OPTIONS_MOVIE_LIST[0].value); // ['popular', 'top_rated', 'upcoming', 'now_playing']

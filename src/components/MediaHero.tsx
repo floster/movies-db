@@ -5,9 +5,9 @@ import AppFavorite from "./AppFavorite";
 import AppProgress from "./AppProgress";
 import MoviePartOf from "./MoviePartOf";
 
-import { IPart, ICollection, IMovie, ITvShow, IGenre, UMediaHeroType, UMediaHeroData } from "../js/types";
+import { IPart, ICollection, IMovie, ITvShow, IGenre, UMediaHeroType, UMediaHeroData } from "../types/tmdb.types";
 import { FC, useCallback, useEffect, useState } from "react";
-import tmdb from "../js/tmdb";
+import tmdb from "../js/tmdb-api";
 import AppError from "./AppError";
 
 interface MediaHeroProps {

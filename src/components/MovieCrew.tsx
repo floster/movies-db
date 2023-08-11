@@ -1,4 +1,4 @@
-import { IMovieCrew } from "../js/types";
+import { IMovieCrew } from "../types/tmdb.types";
 
 interface Props {
     members: IMovieCrew[];

@@ -1,6 +1,6 @@
 import SvgIcon from "./SvgIcon"
 import { OPTIONS_MOVIE_LIST } from '../js/config'
-import { UListTypes } from '../js/types'
+import { UListTypes } from '../types/tmdb.types'
 
 interface Props {
     currentListType: UListTypes,

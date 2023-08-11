@@ -1,4 +1,4 @@
-import { IPart, UListTypes } from '../js/types'
+import { IPart, UListTypes } from '../types/tmdb.types'
 import AppTile from "./AppTile";
 
 interface Props {
