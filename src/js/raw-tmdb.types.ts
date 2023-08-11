@@ -1,4 +1,4 @@
-import { Belonging, Genre, TmdbMediaType, TmdbTvShowStatuses } from "./types";
+import { IBelonging, IGenre, UTmdbMediaType, UTmdbTvShowStatuses } from "./types";
 
 ////////////////////////////////////
 ////////// Main Responses //////////
@@ -14,13 +14,13 @@ export interface RawPart extends _RawMoviePart {
 }
 
 export interface RawCollectionPart extends RawPart {
-    media_type: TmdbMediaType;
+    media_type: UTmdbMediaType;
 }
 
 export interface RawMovie extends _RawMoviePart {
-    belongs_to_collection: Belonging;
+    belongs_to_collection: IBelonging;
     budget: number;
-    genres: Genre[];
+    genres: IGenre[];
     homepage: string;
     imdb_id: string;
     production_companies: RawCompany[];
@@ -39,14 +39,14 @@ export interface RawMovieCredits {
 }
 
 export interface RawTrendingTvShow extends _RawBasicTvShow {
-    media_type: TmdbMediaType;
+    media_type: UTmdbMediaType;
     genre_ids: number[];
 }
 
 export interface RawTvShow extends _RawBasicTvShow {
     created_by: RawTvShowCreator[];
     episode_run_time: [];
-    genres: Genre[];
+    genres: IGenre[];
     homepage: string;
     in_production: boolean;
     languages: string[];
@@ -60,7 +60,7 @@ export interface RawTvShow extends _RawBasicTvShow {
     production_countries: RawCountrie[];
     seasons: RawTvShowSeason[];
     spoken_languages: RawLanguage[];
-    status: TmdbTvShowStatuses;
+    status: UTmdbTvShowStatuses;
     tagline: string;
     type: string;
 }
@@ -68,6 +68,12 @@ export interface RawTvShow extends _RawBasicTvShow {
 export interface RawTvShowSeason extends _RawTvShowPart {
     episode_count: number;
     poster_path: string;
+}
+
+export interface RawTrendingPeople extends _RawPerson {
+    original_name: string,
+    media_type: UTmdbMediaType,
+    known_for: RawPart[]
 }
 
 export interface RawPeople extends _RawPerson {
@@ -78,12 +84,6 @@ export interface RawPeople extends _RawPerson {
     homepage: string | null,
     imdb_id: string,
     place_of_birth: string,
-}
-
-export interface RawTrendingPeople extends _RawPerson {
-    original_name: string,
-    media_type: TmdbMediaType,
-    known_for: RawPart[]
 }
 
 export interface RawCast extends _RawCredit {
