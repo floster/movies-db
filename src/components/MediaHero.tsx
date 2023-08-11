@@ -5,40 +5,37 @@ import AppFavorite from "./AppFavorite";
 import AppProgress from "./AppProgress";
 import MoviePartOf from "./MoviePartOf";
 
-import { Collection, Movie, Part, Genre, MediaHeroType, TileData, MediaHeroData, TvShow } from "../js/types";
+import { IPart, ICollection, IMovie, ITvShow, IGenre, UMediaHeroType, UMediaHeroData } from "../js/types";
 import { FC, useCallback, useEffect, useState } from "react";
 import tmdb from "../js/tmdb";
 import AppError from "./AppError";
 
 interface MediaHeroProps {
-    id?: number;
-    type: MediaHeroType;
+    id: number;
+    type: UMediaHeroType;
+    withLink?: boolean;
 }
 
-const MediaHero: FC<MediaHeroProps> = ({ type, id }) => {
-    const [data, setData] = useState({} as MediaHeroData);
+const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
+    const [data, setData] = useState({} as UMediaHeroData);
     const [isDataLoading, setIsDataLoading] = useState(false);
     const [isDataError, setIsDataError] = useState(false);
 
     const getData = useCallback(async (): Promise<void> => {
         try {
             setIsDataLoading(true);
-            let data = {} as TileData;
+            let data = {} as UMediaHeroData;
             switch (type) {
-                case 'random':
-                    data = await tmdb.getRandomCollection();
-                    setData(data);
-                    break;
                 case 'collection':
-                    data = await tmdb.getCollection(id!);
+                    data = await tmdb.getCollection(id);
                     setData(data);
                     break;
                 case 'movie':
-                    data = await tmdb.getMovie(id!);
+                    data = await tmdb.getMovie(id);
                     setData(data);
                     break;
                 case 'tv':
-                    data = await tmdb.getTvShow(id!);
+                    data = await tmdb.getTvShow(id);
                     setData(data);
                     break;
                 default:
@@ -60,45 +57,47 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id }) => {
     }, [getData]);
 
     const renderTags = () => {
-        const tags = (data as Movie).genres?.map((genre: Genre) => <li key={genre.id}>{genre.name}</li>);
+        const tags = (data as IMovie).genres?.map((genre: IGenre) => <li key={genre.id}>{genre.name}</li>);
         return <ul className="media-hero__tags">{tags}</ul>
     }
 
+    const isTv = type === 'tv' && (data as ITvShow).released && (data as ITvShow).finished;
     const backdrop = `url(${data.backdrop})`;
-    const hasGenres = (data as Movie).genres;
-    const hasTagline = (data as Movie).tagline;
-    const hasRating = (data as Movie).votes;
-    const hasParts = (data as Collection).partsCount;
-    const hasSeasons = (data as TvShow).seasons_qty;
-    const hasBelongsTo = (data as Movie).belongs_to_collection;
-    const hasDate = type !== 'tv' && (data as Movie | Part).released;
-    const isTv = type === 'tv' && (data as TvShow).released && (data as TvShow).finished;
+    const hasGenres = (data as IPart).genres;
+    const hasTagline = (data as IMovie | ITvShow).tagline;
+    const hasRating = (data as IMovie).votes;
+    const hasParts = (data as ICollection).partsCount;
+    const hasSeasons = (data as ITvShow).seasons_qty;
+    const hasBelongsTo = (data as IMovie).belongs_to_collection;
+    const hasDate = type !== 'tv' && (data as IMovie).released;
 
     const heroInner = (
-        <div className={`media-hero__inner ${type !== 'random' && 'container'}`}>
+        <div className={'media-hero__inner container'}>
             <AppPicture img={data.poster} alt={data.title} />
             <div className="media-hero__content">
-                {hasDate && <p className="media-hero__date">{(data as Movie | Part | TvShow).released.date}</p>}
-                {isTv && <p className="media-hero__date">{(data as TvShow).released.year} - {(data as TvShow).finished.year}</p>}
-                <h2 className="media-hero__title">{data.title}</h2>
+                {hasDate && <p className="media-hero__date">{(data as IMovie | ITvShow).released.date}</p>}
+                {isTv && <p className="media-hero__date">{(data as ITvShow).released.year} - {(data as ITvShow).finished.year}</p>}
+
+                {withLink && <a href={`/${type}/${id}`} className="media-hero__link">{data.title}</a>}
+                {!withLink && <h2 className="media-hero__title">{data.title}</h2>}
 
                 {hasGenres && renderTags()}
-                {hasTagline && <h3 className="media-hero__subtitle">{(data as Movie).tagline}</h3>}
+                {hasTagline && <h3 className="media-hero__subtitle">{(data as IMovie).tagline}</h3>}
 
                 <p className="media-hero__description">{data.overview}</p>
             </div>
             <footer className="media-hero__footer">
-                {hasRating && <AppProgress value={(data as Movie).votes?.average} />}
+                {hasRating && <AppProgress value={(data as IMovie).votes?.average} />}
                 {(hasParts || hasSeasons) &&
                     <span className={`icon-labeled`}>
                         <SvgIcon icon="stack" />
                         <span className="icon-labeled__label">
-                            {hasParts && (data as Collection).partsCount + ' parts'}
-                            {hasSeasons && (data as TvShow).seasons_qty + ' seasons'}
+                            {hasParts && (data as ICollection).partsCount + ' parts'}
+                            {hasSeasons && (data as ITvShow).seasons_qty + ' seasons'}
                         </span>
                     </span>
                 }
-                {hasBelongsTo && <MoviePartOf data={(data as Movie).belongs_to_collection} />}
+                {hasBelongsTo && <MoviePartOf data={(data as IMovie).belongs_to_collection} />}
                 <AppFavorite checked={true} title={data.title} />
             </footer>
         </div>
@@ -106,12 +105,8 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id }) => {
 
     return (
         isDataError
-            ? <AppError error={`Error occured while fetching hero data for the ${type} #${id}`} />
-            : type === 'random'
-                ? <a href={data.link} className="media-hero m-random" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
-                    <AppSpinner visible={isDataLoading as boolean} />
-                    {heroInner}
-                </a>
+            ? <AppError error={`MediaHero: Error occured while fetching hero data for the ${type} #${id}`} />
+            : isDataLoading ? <AppSpinner visible={true} />
                 : <div className="media-hero" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
                     {heroInner}
                 </div>
