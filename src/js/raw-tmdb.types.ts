@@ -70,13 +70,28 @@ export interface RawTvShowSeason extends _RawTvShowPart {
     poster_path: string;
 }
 
-export interface RawTrendingPeople extends _RawPerson {
-    original_name: string,
-    media_type: UTmdbMediaType,
-    known_for: RawPart[]
+////////////////////////////////////
+/////////// Raw Personas ///////////
+////////////////////////////////////
+
+interface _RawPerson {
+    adult: boolean,
+    gender: number,
+    id: number,
+    known_for_department: string,
+    name: string,
+    popularity: number,
+    profile_path: string,
 }
 
-export interface RawPeople extends _RawPerson {
+interface _RawCredit extends _RawPerson {
+    original_name: string,
+    credit_id: string,
+}
+
+export interface RawBasePerson extends _RawPerson { }
+
+export interface RawPerson extends _RawPerson {
     also_known_as: string[],
     biography: string,
     birthday: Date,
@@ -108,7 +123,7 @@ export interface RawMoviesList extends RawList {
 }
 
 export interface RawTrendingList extends RawList {
-    results: RawPart[] | RawTrendingPeople[] | RawTrendingTvShow[],
+    results: RawPart[] | RawBasePerson[] | RawTrendingTvShow[],
 }
 
 export interface RawPeriodList extends RawList {
@@ -142,21 +157,6 @@ interface _RawBasicInfo {
     title: string;
     release_date: Date;
     video: boolean;
-}
-
-interface _RawPerson {
-    adult: boolean,
-    gender: number,
-    id: number,
-    known_for_department: string,
-    name: string,
-    popularity: number,
-    profile_path: string,
-}
-
-interface _RawCredit extends _RawPerson {
-    original_name: string,
-    credit_id: string,
 }
 
 export interface _RawBasicTvShow extends _RawBasic {

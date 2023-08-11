@@ -32,15 +32,15 @@ import {
   RawCollectionPart,
   RawMovie,
   RawMovieCredits,
-  RawPeople,
+  RawPerson,
   RawTvShow,
   RawTvShowSeason,
   RawMoviesList,
-  RawTrendingPeople,
   RawTrendingList,
   RawCast,
   RawCrew,
   RawTrendingTvShow,
+  RawBasePerson,
 } from './raw-tmdb.types';
 
 export default class TMDB {
@@ -234,7 +234,7 @@ export default class TMDB {
     return formatedData;
   }
 
-  static #formatPersonData(person: RawPeople | RawCast | RawCrew | RawTrendingPeople): IBasePerson | IMovieCast | IMovieCrew {
+  static #formatBasePersonData(person: RawBasePerson): IBasePerson {
     const poster = this.#getPosterUrl(person.profile_path);
 
     const formatedData: IBasePerson = {
@@ -247,25 +247,59 @@ export default class TMDB {
       poster: poster,
     }
 
-    // specific tests for cast and crew data
-    const isPerson = (formatedData as IPerson).biography;
-    const isCastMember = (formatedData as IMovieCast).character;
-    const isCrewMember = (formatedData as IMovieCrew).job;
-
-    if (isCastMember) (formatedData as IMovieCast).cast_id = (person as RawCast).cast_id;
-    if (isCastMember) (formatedData as IMovieCast).character = (person as RawCast).character;
-    if (isCastMember) (formatedData as IMovieCast).order = (person as RawCast).order;
-    if (isCrewMember) (formatedData as IMovieCrew).job = (person as RawCrew).job;
-    if (isPerson) (formatedData as IPerson).birthday = (person as RawPeople).birthday;
-    if (isPerson) (formatedData as IPerson).deathday = (person as RawPeople).deathday ? (person as RawPeople).deathday : null;
-    if (isPerson) (formatedData as IPerson).biography = (person as RawPeople).biography;
-    if (isPerson) (formatedData as IPerson).biography = (person as RawPeople).biography;
-
     return formatedData;
   }
 
-  static #formatPersonsData(credits: RawCast[] | RawCrew[] | RawTrendingPeople[]): IBasePerson[] | IMovieCast[] | IMovieCrew[] {
-    return credits.map(person => this.#formatPersonData(person));
+  static #formatPerson(member: RawPerson): IPerson {
+    const basicData = this.#formatBasePersonData(member);
+
+    return {
+      ...basicData,
+      birthday: member.birthday,
+      deathday: member.deathday ? member.deathday : null,
+      biography: member.biography,
+      place_of_birth: member.place_of_birth,
+    }
+  }
+
+  static #formatCastMember(member: RawCast): IMovieCast {
+    const basicData = this.#formatBasePersonData(member);
+
+    return {
+      ...basicData,
+      cast_id: member.cast_id,
+      character: member.character,
+      order: member.order,
+    }
+  }
+
+  static #formatCrewMember(member: RawCrew): IMovieCrew {
+    const basicData = this.#formatBasePersonData(member);
+
+    return {
+      ...basicData,
+      job: member.job,
+    }
+  }
+
+  static #formatPersonsData(credits: RawCast[] | RawCrew[] | RawBasePerson[], type: 'crew' | 'cast' | 'base'): IBasePerson[] | IMovieCast[] | IMovieCrew[] {
+    let data: IBasePerson[] | IMovieCast[] | IMovieCrew[] = [];
+
+    switch (type) {
+      case 'base':
+        data = credits.map(credit => this.#formatBasePersonData(credit as RawBasePerson));
+        break;
+      case 'cast':
+        data = credits.map(credit => this.#formatCastMember(credit as RawCast));
+        break;
+      case 'crew':
+        data = credits.map(credit => this.#formatCrewMember(credit as RawCrew));
+        break;
+      default:
+        break;
+    }
+
+    return data;
   }
 
   static async #getAllGenres<T extends IGenre>() {
@@ -353,7 +387,7 @@ export default class TMDB {
         trending = this.#formatBasicTvShowsData(data.results as RawTrendingTvShow[]) as ITrendingTvShow[];
         break;
       case 'person':
-        trending = this.#formatPersonsData(data.results as RawTrendingPeople[]) as IBasePerson[];
+        trending = this.#formatPersonsData(data.results as RawBasePerson[], 'base') as IBasePerson[];
         break;
       default:
         console.error('Wrong trending type');
@@ -376,17 +410,17 @@ export default class TMDB {
     const url = `/movie/${id}/credits`;
     const data: RawMovieCredits = await this.#getJSON(url);
 
-    const cast = this.#formatPersonsData(data.cast) as IMovieCast[];
-    const crew = this.#formatPersonsData(data.crew) as IMovieCrew[];
+    const cast = this.#formatPersonsData(data.cast, 'cast') as IMovieCast[];
+    const crew = this.#formatPersonsData(data.crew, 'crew') as IMovieCrew[];
 
     return { cast, crew };
   }
 
   static async getPerson(id: number): Promise<IBasePerson> {
     const url = `/person/${id}`;
-    const data: RawPeople = await this.#getJSON(url);
+    const data: RawPerson = await this.#getJSON(url);
 
-    const person = this.#formatPersonData(data);
+    const person = this.#formatPerson(data);
 
     return person;
   }
