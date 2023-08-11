@@ -1,0 +1,23 @@
+.random-media {
+    @include poster;
+
+    overflow: hidden;
+
+    .media-hero__inner {
+        width: 100%;
+        padding: var(--gap-sm);
+
+        @include media(lg) {
+            padding: var(--gap-sm);
+        }
+    }
+
+    .media-hero__title,
+    .media-hero__link {
+        font-size: var(--font-size-5);
+
+        @include media(xl) {
+            font-size: var(--font-size-3);
+        }
+    }
+}

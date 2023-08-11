@@ -9,19 +9,6 @@
         background-image: var(--gradient-dark), var(--backdrop-image);
     }
 
-    &.m-random {
-        @include poster;
-
-        &:focus-within,
-        &:hover {
-            cursor: pointer;
-
-            .media-hero__title {
-                @include link-hover;
-            }
-        }
-    }
-
     &__inner {
         display: grid;
         grid-template-rows: min-content min-content min-content;
@@ -51,16 +38,6 @@
         }
     }
 
-    &.m-random &__inner {
-        padding-left: var(--gap-sm);
-        padding-right: var(--gap-sm);
-
-        @include media(lg) {
-            padding-left: var(--gap-sm);
-            padding-right: var(--gap-sm);
-        }
-    }
-
     &__placeholder {
         position: relative;
         display: flex;
@@ -78,20 +55,22 @@
         gap: var(--gap-sm);
     }
 
-    &__title {
+    &__title,
+    &__link {
         color: var(--color-grey-100);
         font-size: var(--font-size-4);
+        font-weight: bold;
 
         @include media(xl) {
             font-size: var(--font-size-3);
         }
     }
 
-    &.m-random &__title {
-        font-size: var(--font-size-5);
+    &__link {
+        @include link;
 
-        @include media(xl) {
-            font-size: var(--font-size-3);
+        &:hover {
+            @include link-hover;
         }
     }
 

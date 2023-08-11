@@ -9,6 +9,13 @@
     }
 }
 
+@mixin link {
+    cursor: pointer;
+    text-decoration: var(--color-secondary-dimmed) solid underline;
+    text-decoration-thickness: 2px;
+    text-decoration-skip-ink: auto;
+}
+
 @mixin link-hover {
     cursor: pointer;
     text-decoration: var(--color-secondary) solid underline;
