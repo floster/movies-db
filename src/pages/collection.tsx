@@ -4,7 +4,7 @@ import AppSectionHeader from '../components/AppSectionHeader';
 import MediaHero from '../components/MediaHero';
 import AppTile from '../components/AppTile';
 import { useParams } from 'react-router-dom';
-import { Part, SortOptionValues } from '../js/types';
+import { IPart, USortOptionValues } from '../js/types';
 import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb';
 import { useFetch } from '../hooks/useFetch';
@@ -19,11 +19,11 @@ export default function Collection() {
   const params = useParams<CollectionParams>();
   const collectionId = getIdFromLink(params.id!);
 
-  const [parts, setParts] = useState([] as Part[]);
-  const [sortedParts, setSortedParts] = useState([] as Part[]);
-  const [currentSort, setCurrentSort] = useState('year_asc' as SortOptionValues);
+  const [parts, setParts] = useState([] as IPart[]);
+  const [sortedParts, setSortedParts] = useState([] as IPart[]);
+  const [currentSort, setCurrentSort] = useState('year_asc' as USortOptionValues);
 
-  const onSortChange = (option: SortOptionValues) => setCurrentSort(option);
+  const onSortChange = (option: USortOptionValues) => setCurrentSort(option);
 
   useEffect(() => {
     const { sortBy, sortOrder } = splitSortOptionValue(currentSort);

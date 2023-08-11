@@ -1,15 +1,15 @@
 import AppTile from "./AppTile";
-import { Part, TrendingType, TrendingTvShow, Person } from "../js/types";
+import { IPart, UTrendingType, ITrendingTvShow, IBasePerson } from "../js/types";
 import TMDB from "../js/tmdb";
 import { useCallback, useEffect, useState } from "react";
 import AppSpinner from "./AppSpinner";
 
 interface Props {
-    itemsType: TrendingType;
+    itemsType: UTrendingType;
 }
 
 export default function AppCarousel({ itemsType }: Props) {
-    const [items, setItems] = useState([] as Part[] | Person[] | TrendingTvShow[]);
+    const [items, setItems] = useState([] as IPart[] | IBasePerson[] | ITrendingTvShow[]);
     const [isDataLoading, setIsDataLoading] = useState(false);
     const [isDataError, setIsDataError] = useState(false);
 

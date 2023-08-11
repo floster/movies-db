@@ -1,7 +1,7 @@
-import { Part, SortOptionValues } from "./types";
+import { IPart, USortOptionValues } from "./types";
 
-export function splitSortOptionValue(option: SortOptionValues, splitBy: string = '_') {
-    const sortBy = option.split(splitBy)[0] as keyof Part;
+export function splitSortOptionValue(option: USortOptionValues, splitBy: string = '_') {
+    const sortBy = option.split(splitBy)[0] as keyof IPart;
     const sortOrder = option.split(splitBy)[1] as 'asc' | 'desc';
 
     return { sortBy, sortOrder }

@@ -2,19 +2,19 @@ import { useEffect, useState } from 'react';
 import AppSection from '../components/AppSection';
 import AppSectionHeader from '../components/AppSectionHeader';
 import AppTile from '../components/AppTile';
-import { TmdbMediaType, TileData } from '../js/types';
+import { UTmdbMediaType, UTileData } from '../js/types';
 import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb';
 import AppError from '../components/AppError';
 import { FAVORITES } from '../js/config';
 
 interface Props {
-  type: TmdbMediaType;
+  type: UTmdbMediaType;
 }
 
 export default function FavoritesSection({ type }: Props) {
   const favoritesIds = FAVORITES[type];
-  const [favorites, setFavorites] = useState([] as TileData[]);
+  const [favorites, setFavorites] = useState([] as UTileData[]);
   const [isFavoriteLoading, setIsFavoriteLoading] = useState(false);
   const [isFavoriteError, setIsFavoriteError] = useState(false);
 
@@ -22,7 +22,7 @@ export default function FavoritesSection({ type }: Props) {
     favoritesIds.forEach(async (favoriteId) => {
       try {
         setIsFavoriteLoading(true);
-        let data: TileData;
+        let data: UTileData;
         switch (type) {
           case 'collection':
             data = await tmdb.getCollection(favoriteId);
@@ -31,7 +31,7 @@ export default function FavoritesSection({ type }: Props) {
             data = await tmdb.getMovie(favoriteId);
             break;
           case 'person':
-            data = await tmdb.getPeople(favoriteId);
+            data = await tmdb.getPerson(favoriteId);
             break;
           case 'tv':
             data = await tmdb.getTvShow(favoriteId);

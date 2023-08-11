@@ -6,15 +6,20 @@ import AppTile from '../components/AppTile';
 import { useParams } from 'react-router-dom';
 import tmdb from '../js/tmdb';
 import { useFetch } from '../hooks/useFetch';
-import { TvShowSeason } from '../js/types';
+import { ITvShowSeason } from '../js/types';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
+import { getIdFromLink } from '../js/utils';
+
+type TvParams = {
+  id: string;
+}
 
 export default function Tv() {
-  const params = useParams();
-  const tvId = +params.id!;
+  const params = useParams<TvParams>();
+  const tvId = getIdFromLink(params.id!);
 
-  const [seasons, setSeasons] = useState([] as TvShowSeason[]);
+  const [seasons, setSeasons] = useState([] as ITvShowSeason[]);
 
   const [getData, isDataLoading, dataError] = useFetch(async () => {
     const data = await tmdb.getTvShow(tvId);

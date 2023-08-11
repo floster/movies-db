@@ -1,11 +1,11 @@
-import { Person } from "../js/types";
+import { IMovieCrew } from "../js/types";
 
 interface Props {
-    members: Person[];
+    members: IMovieCrew[];
 }
 
 export default function MovieCrew({ members }: Props) {
-    const memberItem = (member: Person) => {
+    const memberItem = (member: IMovieCrew) => {
         return (
             <li className="crew-item" key={`${member.job}_${member.id}`}>
                 <span className="crew-item__label">{member.job}</span>

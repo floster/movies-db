@@ -1,9 +1,9 @@
-import { Part, ListTypes } from '../js/types'
+import { IPart, UListTypes } from '../js/types'
 import AppTile from "./AppTile";
 
 interface Props {
-    movies: Part[] | [];
-    listType: ListTypes;
+    movies: IPart[] | [];
+    listType: UListTypes;
 }
 
 export default function MoviesList({ movies, listType }: Props) {

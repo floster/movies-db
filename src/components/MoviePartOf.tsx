@@ -1,8 +1,8 @@
-import { Belonging } from "../js/types";
+import { IBelonging } from "../js/types";
 import SvgIcon from "./SvgIcon";
 
 interface Props {
-    data: Belonging | null;
+    data: IBelonging | null;
 }
 
 export default function PartOf({ data }: Props) {

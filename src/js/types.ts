@@ -1,16 +1,16 @@
 // possible Movie List types to get from TMDB
-export type ListTypes = 'top_rated' | 'upcoming' | 'now_playing';
+export type UListTypes = 'top_rated' | 'upcoming' | 'now_playing';
 
-export type SortOptionValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
+export type USortOptionValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
 
-export type MediaHeroType = 'random' | 'collection' | 'tv' | 'movie';
-export type TrendingType = 'movie' | 'tv' | 'person';
-export type MediaHeroData = Part | Movie | Collection | TvShow;
-export type AppTileType = 'movie' | 'collection' | 'actor';
+export type UMediaHeroType = 'collection' | 'tv' | 'movie' | 'person';
+export type UMediaHeroData = IMovie | ICollection | ITvShow;
+export type UTrendingType = 'movie' | 'tv' | 'person';
+export type UAppTileType = 'movie' | 'collection' | 'actor';
 
 // comes from TMDB
-export type TmdbMediaType = 'movie' | 'tv' | 'person' | 'collection' | 'season';
-export type TmdbTvShowStatuses = 'Returning Series' | 'Planned' | 'In Production' | 'Ended' | 'Canceled' | 'Pilot';
+export type UTmdbMediaType = 'movie' | 'tv' | 'person' | 'collection' | 'season';
+export type UTmdbTvShowStatuses = 'Returning Series' | 'Planned' | 'In Production' | 'Ended' | 'Canceled' | 'Pilot';
 
 //////////////////////////////
 ///// TMDB API Responses /////
@@ -18,7 +18,7 @@ export type TmdbTvShowStatuses = 'Returning Series' | 'Planned' | 'In Production
 interface _BasicPart {
   adult: boolean;
   backdrop: string;
-  genres: Genre[];
+  genres: IGenre[];
   id: number;
   link: string
   overview: string;
@@ -26,70 +26,71 @@ interface _BasicPart {
   poster: string;
   released: { date: string, year: string },
   title: string;
-  type: TmdbMediaType;
+  type: UTmdbMediaType;
   votes: { average: number, count: number };
 }
 
 // General
-export interface Genre {
+export interface IGenre {
   id: number;
   name: string;
 }
 
-export interface Belonging {
+export interface IBelonging {
   id: number;
   name: string;
   poster_path: string;
   backdrop_path: string;
 }
 
-export interface ListData {
-  movies: Part[],
+export interface IListData {
+  movies: IPart[],
   current_page: number,
   total_pages: number
 }
 
-export interface Collection {
+export interface ICollection {
   backdrop: string;
   id: number;
   link: string,
   title: string;
-  type: TmdbMediaType;
+  type: UTmdbMediaType;
   overview: string;
-  parts: Part[];
+  parts: IPart[];
   partsCount: number;
   poster: string;
 }
 
-export interface Part extends _BasicPart { }
+// IMovie & ITvShow & ITrendingTvShow
+export interface IPart extends _BasicPart { }
 
-export interface Movie extends _BasicPart {
-  belongs_to_collection: Belonging | null,
+export interface IMovie extends _BasicPart {
+  belongs_to_collection: IBelonging | null,
   budget: number,
   revenue: number,
   status: string,
   tagline: string;
 }
 
-export interface MovieCredits {
-  cast: Cast[];
-  crew: Crew[];
+export interface IMovieCredits {
+  cast: IMovieCast[];
+  crew: IMovieCrew[];
 }
 
-export interface TvShow extends _BasicPart {
+export interface ITvShow extends _BasicPart {
   episodes_qty: number,
   finished: { date: string, year: string },
   in_production: boolean,
   seasons_qty: number,
-  seasons: TvShowSeason[],
-  status: TmdbTvShowStatuses,
+  seasons: ITvShowSeason[],
+  status: UTmdbTvShowStatuses,
   tagline: string;
 }
 
-export interface TrendingTvShow extends _BasicPart {
+export interface ITrendingTvShow extends _BasicPart {
 }
 
-export interface TvShowSeason {
+export interface ITvShowSeason {
   episodes_qty: number,
   id: number,
   link: string,
@@ -98,27 +99,39 @@ export interface TvShowSeason {
   poster: string,
   released: { date: string, year: string },
   season_number: number,
-  type: TmdbMediaType,
+  type: UTmdbMediaType,
   votes: { average: number, count: number };
 }
 
-export interface Person {
+export interface IBasePerson {
   id: number;
   link: string,
-  type: TmdbMediaType
+  type: UTmdbMediaType
   department: string;
   name: string;
   popularity: number;
   poster: string;
 }
 
-export interface Cast extends Person {
+export interface IPerson extends IBasePerson {
+  birthday: Date;
+  deathday: Date | null;
+  biography: string;
+  place_of_birth: string;
+}
+
+export interface IPersonCredits {
+  cast: IMovieCast[];
+  crew: IMovieCrew[];
+}
+
+export interface IMovieCast extends IBasePerson {
   cast_id: number;
   character: string;
   order: number;
 }
-export interface Crew extends Person {
+export interface IMovieCrew extends IBasePerson {
   job: string;
 }
 
-export type TileData = Part | Movie | Collection | Person | Cast | TvShow | TvShowSeason;
+export type UTileData = IPart | IMovie | ICollection | IBasePerson | IMovieCast | ITvShow | ITvShowSeason;

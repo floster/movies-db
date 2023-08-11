@@ -1,8 +1,8 @@
 import AppSection from '../components/AppSection';
 import MainPageSidebar from '../components/MainPageSidebar';
 import AppSectionHeader from '../components/AppSectionHeader';
-import MediaHero from '../components/MediaHero';
 import AppCarousel from '../components/AppCarousel';
+import RandomMedia from '../components/RandomMedia';
 
 export default function Home() {
     return (
@@ -12,7 +12,7 @@ export default function Home() {
                 <main className="l-main_page_content">
                     <AppSection extraClass="m-random_media">
                         <AppSectionHeader title="random collection" />
-                        <MediaHero type='random' />
+                        <RandomMedia />
                     </AppSection>
 
                     <AppSection>

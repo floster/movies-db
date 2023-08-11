@@ -6,7 +6,7 @@ import MovieCrew from '../components/MovieCrew';
 import AppTile from '../components/AppTile';
 import { useParams } from 'react-router-dom';
 import tmdb from '../js/tmdb';
-import { Cast, Crew } from '../js/types';
+import { IMovieCast, IMovieCrew } from '../js/types';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
 import { cutArray, getIdFromLink, partsSort } from '../js/utils';
@@ -19,8 +19,8 @@ const Movie: FC = () => {
   const params = useParams<MovieParams>();
   const movieId = getIdFromLink(params.id!);
 
-  const [cast, setCast] = useState([] as Cast[]);
-  const [crew, setCrew] = useState([] as Crew[]);
+  const [cast, setCast] = useState([] as IMovieCast[]);
+  const [crew, setCrew] = useState([] as IMovieCrew[]);
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
 

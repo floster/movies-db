@@ -1,11 +1,11 @@
-import { SortOptionValues } from '../js/types';
+import { USortOptionValues } from '../js/types';
 import AppSelect from './AppSelect'
 
 interface Props {
     title: string;
     hasSelect?: boolean;
-    currentSortOption?: SortOptionValues;
-    onSortChange?: (option: SortOptionValues) => void;
+    currentSortOption?: USortOptionValues;
+    onSortChange?: (option: USortOptionValues) => void;
     alignStart?: boolean;
 }
 
