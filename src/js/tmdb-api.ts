@@ -36,31 +36,17 @@ import {
   RawTrendingTvShow,
   RawBasePerson,
 } from '../types/raw-tmdb.types';
-import { createLink, formatBasicTvShowsData, formatMovieData, formatPartsData, formatPerson, formatPersonsData, formatTvShowData } from './format-data';
+
+import { createLink, formatBasicTvShowsData, formatMovieData, formatPartsData, formatPerson, formatPersonsData, formatTvShowData, getJSON } from './helpers';
 
 export default class TMDB {
   static allGenres: IGenre[] = [];
-
-  static async #getJSON<T>(url: string, params: string = ''): Promise<T> {
-    const fetchUrl = `${API_BASE}${url}`;
-    const fetchParams = new URLSearchParams(params);
-    fetchParams.append('api_key', API_KEY);
-    fetchParams.append('language', DEFAULT_LOCALE);
-    fetchParams.append('region', LOCALES[DEFAULT_LOCALE]);
-
-    const response: Response = await fetch(fetchUrl + '?' + fetchParams.toString());
-
-    if (!response.ok) throw new Error(`getJSON: Error fetching data for URL: ${url}`);
-
-    const data: T = await response.json();
-    return data;
-  }
 
   // static async #getAllGenres<T extends IGenre>() {
   //   if (Object.keys(this.allGenres).length > 0) return;
 
   //   const params = `language=${DEFAULT_LOCALE}`;
-  //   const response = await this.#getJSON('/genre/movie/list', params) as { genres: T[] };
+  //   const response = await getJSON('/genre/movie/list', params) as { genres: T[] };
   //   this.allGenres = response.genres;
   // }
 
@@ -94,7 +80,7 @@ export default class TMDB {
       params = `page=${page}`;
     }
 
-    const data: RawMoviesList = await this.#getJSON(url, params);
+    const data: RawMoviesList = await getJSON(url, params);
     const movies = formatPartsData(data.results as RawCollectionPart[]);
 
     return {
@@ -106,7 +92,7 @@ export default class TMDB {
 
   static async getCollection(id: number): Promise<ICollection> {
     const url = `/collection/${id}`;
-    const data: RawCollection = await this.#getJSON(url);
+    const data: RawCollection = await getJSON(url);
 
     const collection: ICollection = {
       backdrop: `${API_BACKDROP_BASE}${data.backdrop_path}`,
@@ -129,7 +115,7 @@ export default class TMDB {
 
   static async getTrending(type: UTrendingType, period: 'day' | 'week' = 'week') {
     const url = `/trending/${type}/${period}`;
-    const data: RawTrendingList = await this.#getJSON(url);
+    const data: RawTrendingList = await getJSON(url);
 
     let trending: IPart[] | IBasePerson[] | ITrendingTvShow[] = [];
 
@@ -153,7 +139,7 @@ export default class TMDB {
 
   static async getMovie(id: number): Promise<IMovie> {
     const url = `/movie/${id}`;
-    const data: RawMovie = await this.#getJSON(url);
+    const data: RawMovie = await getJSON(url);
 
     const movie = formatMovieData(data);
 
@@ -162,7 +148,7 @@ export default class TMDB {
 
   static async getMovieCredits(id: number): Promise<IMovieCredits> {
     const url = `/movie/${id}/credits`;
-    const data: RawMovieCredits = await this.#getJSON(url);
+    const data: RawMovieCredits = await getJSON(url);
 
     const cast = formatPersonsData(data.cast, 'cast') as IMovieCast[];
     const crew = formatPersonsData(data.crew, 'crew') as IMovieCrew[];
@@ -172,7 +158,7 @@ export default class TMDB {
 
   static async getPerson(id: number): Promise<IBasePerson> {
     const url = `/person/${id}`;
-    const data: RawPerson = await this.#getJSON(url);
+    const data: RawPerson = await getJSON(url);
 
     const person = formatPerson(data);
 
@@ -181,7 +167,7 @@ export default class TMDB {
 
   static async getPersonCredits(id: number) {
     const url = `/person/${id}/combined_credits`;
-    const data = await this.#getJSON(url);
+    const data = await getJSON(url);
 
     // const person = this.#formatPersonData(data);
 
@@ -190,7 +176,7 @@ export default class TMDB {
 
   static async getTvShow(id: number): Promise<ITvShow> {
     const url = `/tv/${id}`;
-    const data: RawTvShow = await this.#getJSON(url);
+    const data: RawTvShow = await getJSON(url);
     const tv = formatTvShowData(data);
     return tv;
   }

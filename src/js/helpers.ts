@@ -1,6 +1,30 @@
-import { API_BACKDROP_BASE, API_POSTER_BASE, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
+import { API_BACKDROP_BASE, API_BASE, API_KEY, API_POSTER_BASE, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
 import { RawBasePerson, RawCast, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawTrendingTvShow, RawTvShow, RawTvShowSeason } from "../types/raw-tmdb.types";
 import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IPart, IPerson, ITrendingTvShow, ITvShow, ITvShowSeason } from "../types/tmdb.types";
+
+
+/**
+ * Fetches JSON data from the specified URL with the provided parameters.
+ * @template T - The type of data to fetch and return.
+ * @param {string} url - The URL to fetch data from.
+ * @param {string} [params=''] - The query parameters to include in the URL.
+ * @returns {Promise<T>} - A Promise that resolves with the fetched data.
+ * @throws {Error} - If an error occurs while fetching data.
+ */
+export async function getJSON<T>(url: string, params: string = ''): Promise<T> {
+    const fetchUrl = `${API_BASE}${url}`;
+    const fetchParams = new URLSearchParams(params);
+    fetchParams.append('api_key', API_KEY);
+    fetchParams.append('language', DEFAULT_LOCALE);
+    fetchParams.append('region', LOCALES[DEFAULT_LOCALE]);
+
+    const response: Response = await fetch(fetchUrl + '?' + fetchParams.toString());
+
+    if (!response.ok) throw new Error(`getJSON: Error fetching data for URL: ${url}`);
+
+    const data: T = await response.json();
+    return data;
+}
 
 // general formatters
 /**
