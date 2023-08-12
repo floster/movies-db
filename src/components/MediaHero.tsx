@@ -5,7 +5,7 @@ import AppFavorite from "./AppFavorite";
 import AppProgress from "./AppProgress";
 import MoviePartOf from "./MoviePartOf";
 
-import { IPart, ICollection, IMovie, ITvShow, IGenre, UMediaHeroType, UMediaHeroData } from "../types/tmdb.types";
+import { IBaseMovie, ICollection, IMovie, ITvShow, IGenre, UMediaHeroType, UMediaHeroData, IPerson } from "../types/tmdb.types";
 import { FC, useCallback, useEffect, useState } from "react";
 import tmdb from "../js/tmdb-api";
 import AppError from "./AppError";
@@ -38,6 +38,10 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
                     data = await tmdb.getTvShow(id);
                     setData(data);
                     break;
+                case 'person':
+                    data = await tmdb.getPerson(id);
+                    setData(data);
+                    break;
                 default:
                     setIsDataError(true);
             }
@@ -62,8 +66,9 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
     }
 
     const isTv = type === 'tv' && (data as ITvShow).released && (data as ITvShow).finished;
+    const isPerson = type === 'person';
     const backdrop = `url(${data.backdrop})`;
-    const hasGenres = (data as IPart).genres;
+    const hasGenres = (data as IBaseMovie).genres;
     const hasTagline = (data as IMovie | ITvShow).tagline;
     const hasRating = (data as IMovie).votes;
     const hasParts = (data as ICollection).partsCount;
@@ -71,18 +76,24 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
     const hasBelongsTo = (data as IMovie).belongs_to_collection;
     const hasDate = type !== 'tv' && (data as IMovie).released;
 
+    const personDates = `${(data as IPerson).birthday?.date}${(data as IPerson).deathday?.date !== '-' ? ' - ' + (data as IPerson).deathday?.date : ''}`;
+
     const heroInner = (
         <div className={'media-hero__inner container'}>
             <AppPicture img={data.poster} alt={data.title} />
             <div className="media-hero__content">
-                {hasDate && <p className="media-hero__date">{(data as IMovie | ITvShow).released.date}</p>}
-                {isTv && <p className="media-hero__date">{(data as ITvShow).released.year} - {(data as ITvShow).finished.year}</p>}
+                {hasDate && <p className="media-hero__date">{(data as IMovie | ITvShow).released}</p>}
+                {isPerson && <p className="media-hero__date">{personDates}</p>}
+                {isTv && <p className="media-hero__date">{(data as ITvShow).year} - {(data as ITvShow).finished.year}</p>}
 
                 {withLink && <a href={`/${type}/${id}`} className="media-hero__link">{data.title}</a>}
                 {!withLink && <h2 className="media-hero__title">{data.title}</h2>}
 
                 {hasGenres && renderTags()}
                 {hasTagline && <h3 className="media-hero__subtitle">{(data as IMovie).tagline}</h3>}
+                {isPerson && <h3 className="media-hero__subtitle">{(data as IPerson).place_of_birth}</h3>}
+
+                {isPerson && <p className="media-hero__tags">{(data as IPerson).department}</p>}
 
                 <p className="media-hero__description">{data.overview}</p>
             </div>

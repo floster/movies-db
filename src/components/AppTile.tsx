@@ -1,7 +1,9 @@
-import { IMovieCast, ICollection, UListTypes, IPart, IBasePerson, UTileData, ITvShow, ITvShowSeason } from "../types/tmdb.types";
+import { IMovieCast, ICollection, UListTypes, IBaseMovie, IBasePerson, UTileData, ITvShow, ITvShowSeason, IMovieCrew } from "../types/tmdb.types";
 import AppFavorite from "./AppFavorite";
 import AppPicture from "./AppPicture";
 import AppProgress from "./AppProgress";
+
+
 
 interface Props {
     tile: UTileData;
@@ -28,26 +30,24 @@ export default function AppTile({ tile, isCarouselItem, isRow = false, listType 
     if (isCarouselItem) classes.push('app-carousel__item');
     if (isRow) classes.push('m-row');
 
-    const title = (tile as IPart).title || (tile as IBasePerson).name;
-
     return (
         <a href={tile.link} className={classes.join(' ')}>
-            <AppPicture img={tile.poster} alt={title + ' poster'} />
+            <AppPicture img={tile.poster} alt={tile.title + ' poster'} />
 
-            {hasFavoriteBtn && <AppFavorite checked={false} title={title} />}
+            {hasFavoriteBtn && <AppFavorite checked={false} title={tile.title} />}
             <div className="app-tile__content">
-                {hasRatingIcon && <AppProgress value={(tile as IPart).votes.average} />}
+                {hasRatingIcon && <AppProgress value={(tile as IBaseMovie).votes.average} />}
                 <p className="app-tile__label">
                     {isPerson && (tile as IMovieCast).character || (tile as IBasePerson).department}
-                    {isMovie && (tile as IPart).released.date}
-                    {isTv && (tile as IPart).released.date}
+                    {isMovie && ((tile as IMovieCrew).job || (tile as IMovieCast).character || (tile as IBaseMovie).released)}
+                    {isTv && ((tile as IMovieCast).character || (tile as IMovieCrew).job || (tile as IBaseMovie).released)}
                     {isTvShow && (tile as ITvShow).seasons_qty + ' seasons'}
                     {isTvShowSeason && (tile as ITvShowSeason).episodes_qty + ' episodes'}
                     {isCollection && (tile as ICollection).partsCount + ' parts'}
                 </p>
-                <h3 className="app-tile__title">{title}</h3>
+                <h3 className="app-tile__title">{tile.title}</h3>
             </div>
-            {hasRatingText && <span className="app-tile__rating">{(tile as IPart).votes.average} / {(tile as IPart).votes.count}</span>}
+            {hasRatingText && <span className="app-tile__rating">{(tile as IBaseMovie).votes.average} / {(tile as IBaseMovie).votes.count}</span>}
         </a>
     )
 }
