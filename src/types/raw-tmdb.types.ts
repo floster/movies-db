@@ -4,20 +4,20 @@ import { IBelonging, IGenre, UTmdbMediaType, UTmdbTvShowStatuses } from "./tmdb.
 ////////// Main Responses //////////
 ////////////////////////////////////
 
-export interface RawCollection extends _RawBasicMedia {
+export interface RawCollection extends _RawBaseMedia {
     name: string;
     parts: RawCollectionPart[]
 }
 
-export interface RawPart extends _RawMoviePart {
+export interface RawBaseMovie extends _RawBaseMovie {
     genre_ids: number[];
 }
 
-export interface RawCollectionPart extends RawPart {
+export interface RawCollectionPart extends RawBaseMovie {
     media_type: UTmdbMediaType;
 }
 
-export interface RawMovie extends _RawMoviePart {
+export interface RawMovie extends _RawBaseMovie {
     belongs_to_collection: IBelonging;
     budget: number;
     genres: IGenre[];
@@ -38,34 +38,45 @@ export interface RawMovieCredits {
     crew: RawCrew[];
 }
 
-export interface RawTrendingTvShow extends _RawBasicTvShow {
+export interface _RawBaseTv extends _RawBase {
+    name: string;
+    original_language: string;
+    original_name: string;
+    first_air_date: Date;
+    origin_country: string[]
+}
+
+export interface RawTrendingTv extends _RawBaseTv {
     media_type: UTmdbMediaType;
     genre_ids: number[];
 }
 
-export interface RawTvShow extends _RawBasicTvShow {
-    created_by: RawTvShowCreator[];
+export interface RawBaseTv extends _RawBaseTv {
+}
+
+export interface RawTv extends _RawBaseTv {
+    created_by: RawTvCreator[];
     episode_run_time: [];
     genres: IGenre[];
     homepage: string;
     in_production: boolean;
     languages: string[];
     last_air_date: Date;
-    last_episode_to_air: RawTvShowEpisode;
+    last_episode_to_air: RawTvEpisode;
     next_episode_to_air: string | null;
     networks: RawCompany[];
     number_of_episodes: number;
     number_of_seasons: number;
     production_companies: RawCompany[];
     production_countries: RawCountrie[];
-    seasons: RawTvShowSeason[];
+    seasons: RawTvSeason[];
     spoken_languages: RawLanguage[];
     status: UTmdbTvShowStatuses;
     tagline: string;
     type: string;
 }
 
-export interface RawTvShowSeason extends _RawTvShowPart {
+export interface RawTvSeason extends _RawTvPart {
     episode_count: number;
     poster_path: string;
 }
@@ -101,6 +112,39 @@ export interface RawPerson extends _RawPerson {
     place_of_birth: string,
 }
 
+// Person Credits - Crew & Cast
+type _RawPersonCrewOnlyFields = {
+    media_type: UTmdbMediaType;
+    department: string;
+    job: string;
+}
+
+type _RawPersonCastOnlyFields = {
+    media_type: UTmdbMediaType;
+    character: string;
+}
+
+export interface RawPersonCrewMovie extends RawCollectionPart, _RawPersonCrewOnlyFields {
+}
+
+export interface RawPersonCrewTv extends _RawBaseTv, _RawPersonCrewOnlyFields {
+}
+
+export interface RawPersonCastMovie extends RawCollectionPart, _RawPersonCastOnlyFields {
+}
+
+export interface RawPersonCastTv extends _RawBaseTv, _RawPersonCastOnlyFields {
+}
+
+export type RawPersonCrew = RawPersonCrewMovie | RawPersonCrewTv;
+export type RawPersonCast = RawPersonCastMovie | RawPersonCastTv;
+
+export interface RawPersonCredits {
+    id: number;
+    cast: RawPersonCast[];
+    crew: RawPersonCrew[];
+}
+
 export interface RawCast extends _RawCredit {
     cast_id: number,
     character: string,
@@ -119,11 +163,11 @@ export interface RawList {
 }
 
 export interface RawMoviesList extends RawList {
-    results: RawPart[]
+    results: RawBaseMovie[]
 }
 
 export interface RawTrendingList extends RawList {
-    results: RawPart[] | RawBasePerson[] | RawTrendingTvShow[],
+    results: RawBaseMovie[] | RawBasePerson[] | RawTrendingTv[],
 }
 
 export interface RawPeriodList extends RawList {
@@ -137,21 +181,21 @@ export interface RawPeriodList extends RawList {
 ///// General Types for Responses /////
 ///////////////////////////////////////
 
-interface _RawBasicMedia {
+interface _RawBaseMedia {
     id: number;
     overview: string;
     poster_path: string;
     backdrop_path: string;
 }
 
-interface _RawBasic extends _RawBasicMedia {
+interface _RawBase extends _RawBaseMedia {
     adult: boolean;
     popularity: number;
     vote_average: number;
     vote_count: number
 }
 
-interface _RawBasicInfo {
+interface _RawBaseInfo {
     original_language: string;
     original_title: string;
     title: string;
@@ -159,18 +203,10 @@ interface _RawBasicInfo {
     video: boolean;
 }
 
-export interface _RawBasicTvShow extends _RawBasic {
-    name: string;
-    original_language: string;
-    original_name: string;
-    first_air_date: Date;
-    origin_country: string[]
-}
-
-type _RawMoviePart = _RawBasic & _RawBasicInfo;
+type _RawBaseMovie = _RawBase & _RawBaseInfo;
 
 // for both tv season and tv episode
-interface _RawTvShowPart {
+interface _RawTvPart {
     id: number;
     overview: string;
     air_date: Date;
@@ -201,7 +237,7 @@ interface RawCompany {
     origin_country: string
 }
 
-interface RawTvShowCreator {
+interface RawTvCreator {
     id: number;
     credit_id: string;
     name: string;
@@ -209,7 +245,7 @@ interface RawTvShowCreator {
     profile_path: string
 }
 
-interface RawTvShowEpisode extends _RawTvShowPart {
+interface RawTvEpisode extends _RawTvPart {
     id: number;
     overview: string;
     name: string;

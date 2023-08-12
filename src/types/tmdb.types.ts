@@ -4,7 +4,7 @@ export type UListTypes = 'top_rated' | 'upcoming' | 'now_playing';
 export type USortOptionValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
 
 export type UMediaHeroType = 'collection' | 'tv' | 'movie' | 'person';
-export type UMediaHeroData = IMovie | ICollection | ITvShow;
+export type UMediaHeroData = IMovie | ICollection | ITvShow | IPerson;
 export type UTrendingType = 'movie' | 'tv' | 'person';
 export type UAppTileType = 'movie' | 'collection' | 'actor';
 
@@ -15,7 +15,7 @@ export type UTmdbTvShowStatuses = 'Returning Series' | 'Planned' | 'In Productio
 //////////////////////////////
 ///// TMDB API Responses /////
 //////////////////////////////
-interface _BasicPart {
+interface _BasePart {
   adult: boolean;
   backdrop: string;
   genres: IGenre[];
@@ -24,7 +24,8 @@ interface _BasicPart {
   overview: string;
   popularity: number,
   poster: string;
-  released: { date: string, year: string },
+  released: string,
+  year: string,
   title: string;
   type: UTmdbMediaType;
   votes: { average: number, count: number };
@@ -44,7 +45,7 @@ export interface IBelonging {
 }
 
 export interface IListData {
-  movies: IPart[],
+  movies: IBaseMovie[],
   current_page: number,
   total_pages: number
 }
@@ -56,15 +57,15 @@ export interface ICollection {
   title: string;
   type: UTmdbMediaType;
   overview: string;
-  parts: IPart[];
+  parts: IBaseMovie[];
   partsCount: number;
   poster: string;
 }
 
 // IMovie & ITvShow & ITrendingTvShow
-export interface IPart extends _BasicPart { }
+export interface IBaseMovie extends _BasePart { }
 
-export interface IMovie extends _BasicPart {
+export interface IMovie extends _BasePart {
   belongs_to_collection: IBelonging | null,
   budget: number,
   revenue: number,
@@ -77,7 +78,7 @@ export interface IMovieCredits {
   crew: IMovieCrew[];
 }
 
-export interface ITvShow extends _BasicPart {
+export interface ITvShow extends _BasePart {
   episodes_qty: number,
   finished: { date: string, year: string },
   in_production: boolean,
@@ -87,17 +88,18 @@ export interface ITvShow extends _BasicPart {
   tagline: string;
 }
 
-export interface ITrendingTvShow extends _BasicPart {
+export interface IBaseTv extends _BasePart {
 }
 
 export interface ITvShowSeason {
   episodes_qty: number,
   id: number,
   link: string,
-  name: string,
+  title: string,
   overview: string,
   poster: string,
-  released: { date: string, year: string },
+  released: string,
+  year: string
   season_number: number,
   type: UTmdbMediaType,
   votes: { average: number, count: number };
@@ -108,21 +110,34 @@ export interface IBasePerson {
   link: string,
   type: UTmdbMediaType
   department: string;
-  name: string;
+  title: string;
   popularity: number;
   poster: string;
 }
 
 export interface IPerson extends IBasePerson {
-  birthday: Date;
-  deathday: Date | null;
-  biography: string;
+  backdrop: string;
+  birthday: { date: string, year: string },
+  deathday: { date: string, year: string },
+  overview: string;
   place_of_birth: string;
 }
 
+
+export interface IPersonCrew extends _BasePart {
+  media_type: UTmdbMediaType;
+  department: string;
+  job: string;
+}
+
+export interface IPersonCast extends _BasePart {
+  media_type: UTmdbMediaType;
+  character: string;
+}
+
 export interface IPersonCredits {
-  cast: IMovieCast[];
-  crew: IMovieCrew[];
+  cast: IPersonCrew[];
+  crew: IPersonCast[];
 }
 
 export interface IMovieCast extends IBasePerson {
@@ -134,4 +149,4 @@ export interface IMovieCrew extends IBasePerson {
   job: string;
 }
 
-export type UTileData = IPart | IMovie | ICollection | IBasePerson | IMovieCast | ITvShow | ITvShowSeason;
+export type UTileData = IBaseMovie | IMovie | ICollection | IBasePerson | IMovieCast | ITvShow | ITvShowSeason | IPersonCrew | IPersonCast;

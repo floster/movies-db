@@ -2,27 +2,28 @@
 ////////// TMDB API formatters //////////
 /////////////////////////////////////////
 
-import { RawBasePerson, RawCast, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawTrendingTvShow, RawTvShow, RawTvShowSeason } from "../types/raw-tmdb.types";
-import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IPart, IPerson, ITrendingTvShow, ITvShow, ITvShowSeason } from "../types/tmdb.types";
+import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawTrendingTv, RawTv, RawTvSeason } from "../types/raw-tmdb.types";
+import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITvShow, ITvShowSeason, IPersonCrew, IPersonCast } from "../types/tmdb.types";
 import { API_BACKDROP_BASE } from "./config";
 import { createLink, formatDate, getPosterUrl } from "./helpers";
 
-export function formatPartData(part: RawCollectionPart): IPart {
+export function formatBaseMovie(part: RawBaseMovie): IBaseMovie {
     const poster = getPosterUrl(part.poster_path);
 
     const date = formatDate(new Date(part.release_date));
 
-    const formatedData: IPart = {
+    const formatedData: IBaseMovie = {
         adult: part.adult,
         backdrop: `${API_BACKDROP_BASE}${part.backdrop_path}`,
         genres: [], // convertMovieGenres(part.genre_ids),
         id: part.id,
-        link: createLink(part.media_type, part.id, part.title),
-        type: part.media_type,
+        link: createLink('movie', part.id, part.title),
+        type: 'movie',
         overview: part.overview,
         popularity: part.popularity,
         poster: poster,
-        released: { date: date.full, year: date.year },
+        released: date.full,
+        year: date.year,
         title: part.title,
         votes: { average: +part.vote_average?.toFixed(1), count: part.vote_count },
     }
@@ -30,11 +31,11 @@ export function formatPartData(part: RawCollectionPart): IPart {
     return formatedData;
 }
 
-export function formatPartsData(movies: RawCollectionPart[]): IPart[] {
-    return movies.map(movie => formatPartData(movie));
+export function formatBaseMovies(movies: RawCollectionPart[]): IBaseMovie[] {
+    return movies.map(movie => formatBaseMovie(movie));
 }
 
-export function formatTvShowData(tv: RawTvShow): ITvShow {
+export function formatTv(tv: RawTv): ITvShow {
     const poster = getPosterUrl(tv.poster_path);
 
     const date = formatDate(new Date(tv.first_air_date));
@@ -52,9 +53,10 @@ export function formatTvShowData(tv: RawTvShow): ITvShow {
         overview: tv.overview,
         popularity: tv.popularity,
         poster: poster,
-        released: { date: date.full, year: date.year },
+        released: date.full,
+        year: date.year,
         seasons_qty: tv.number_of_seasons,
-        seasons: formatTvShowSeasonsData(tv.seasons),
+        seasons: formatTvSeasons(tv.seasons),
         status: tv.status,
         tagline: tv.tagline,
         title: tv.name,
@@ -65,12 +67,12 @@ export function formatTvShowData(tv: RawTvShow): ITvShow {
     return formatedData;
 }
 
-export function formatBasicTvShowData(tv: RawTrendingTvShow): ITrendingTvShow {
+export function formatBaseTv(tv: RawBaseTv): IBaseTv {
     const poster = getPosterUrl(tv.poster_path);
 
     const date = formatDate(new Date(tv.first_air_date));
 
-    const formatedData: ITrendingTvShow = {
+    const formatedData: IBaseTv = {
         adult: tv.adult,
         backdrop: `${API_BACKDROP_BASE}${tv.backdrop_path}`,
         genres: [], //convertMovieGenres(tv.genre_ids),
@@ -79,7 +81,8 @@ export function formatBasicTvShowData(tv: RawTrendingTvShow): ITrendingTvShow {
         overview: tv.overview,
         popularity: tv.popularity,
         poster: poster,
-        released: { date: date.full, year: date.year },
+        released: date.full,
+        year: date.year,
         title: tv.name,
         type: 'tv',
         votes: { average: +tv.vote_average?.toFixed(1), count: tv.vote_count },
@@ -88,11 +91,11 @@ export function formatBasicTvShowData(tv: RawTrendingTvShow): ITrendingTvShow {
     return formatedData;
 }
 
-export function formatBasicTvShowsData(shows: RawTrendingTvShow[]): ITrendingTvShow[] {
-    return shows.map(show => formatBasicTvShowData(show));
+export function formatBaseTvs(shows: RawTrendingTv[]): IBaseTv[] {
+    return shows.map(show => formatBaseTv(show));
 }
 
-export function formatTvShowSeasonData(season: RawTvShowSeason): ITvShowSeason {
+export function formatTvSeason(season: RawTvSeason): ITvShowSeason {
     const poster = getPosterUrl(season.poster_path);
 
     const date = formatDate(new Date(season.air_date));
@@ -101,10 +104,11 @@ export function formatTvShowSeasonData(season: RawTvShowSeason): ITvShowSeason {
         episodes_qty: season.episode_count,
         id: season.id,
         link: createLink('season', season.season_number, season.name),
-        name: season.name,
+        title: season.name,
         overview: season.overview,
         poster: poster,
-        released: { date: date.full, year: date.year },
+        released: date.full,
+        year: date.year,
         season_number: season.season_number,
         type: 'season',
         votes: { average: +season.vote_average?.toFixed(1), count: 0 },
@@ -113,11 +117,11 @@ export function formatTvShowSeasonData(season: RawTvShowSeason): ITvShowSeason {
     return formatedData;
 }
 
-export function formatTvShowSeasonsData(seasons: RawTvShowSeason[]): ITvShowSeason[] {
-    return seasons.map(season => formatTvShowSeasonData(season));
+export function formatTvSeasons(seasons: RawTvSeason[]): ITvShowSeason[] {
+    return seasons.map(season => formatTvSeason(season));
 }
 
-export function formatMovieData(movie: RawMovie): IMovie {
+export function formatMovie(movie: RawMovie): IMovie {
     const poster = getPosterUrl(movie.poster_path);
 
     const date = formatDate(new Date(movie.release_date));
@@ -133,7 +137,8 @@ export function formatMovieData(movie: RawMovie): IMovie {
         overview: movie.overview,
         popularity: movie.popularity,
         poster: poster,
-        released: { date: date.full, year: date.year },
+        released: date.full,
+        year: date.year,
         revenue: movie.revenue,
         status: movie.status,
         tagline: movie.tagline,
@@ -145,7 +150,7 @@ export function formatMovieData(movie: RawMovie): IMovie {
     return formatedData;
 }
 
-export function formatBasePersonData(person: RawBasePerson): IBasePerson {
+export function formatBasePerson(person: RawBasePerson): IBasePerson {
     const poster = getPosterUrl(person.profile_path);
 
     const formatedData: IBasePerson = {
@@ -153,7 +158,7 @@ export function formatBasePersonData(person: RawBasePerson): IBasePerson {
         link: createLink('person', person.id, person.name),
         type: 'person',
         department: person.known_for_department,
-        name: person.name,
+        title: person.name,
         popularity: person.popularity,
         poster: poster,
     }
@@ -162,19 +167,58 @@ export function formatBasePersonData(person: RawBasePerson): IBasePerson {
 }
 
 export function formatPerson(member: RawPerson): IPerson {
-    const basicData = formatBasePersonData(member);
+    const basicData = formatBasePerson(member);
+
+    const birthday = formatDate(new Date(member.birthday));
+    const deathday = formatDate(member.deathday ? new Date(member.deathday) : null);
 
     return {
         ...basicData,
-        birthday: member.birthday,
-        deathday: member.deathday ? member.deathday : null,
-        biography: member.biography,
+        backdrop: '',
+        birthday: { date: birthday.full, year: birthday.year },
+        deathday: { date: deathday.full, year: deathday.year },
+        overview: member.biography,
         place_of_birth: member.place_of_birth,
     }
 }
 
+export function formatPersonCrew(credits: RawPersonCrew[]): IPersonCrew[] {
+    return credits.map((credit: RawPersonCrew) => {
+        let baseData: IBaseMovie | IBaseTv;
+        if (credit.media_type === 'movie') {
+            baseData = formatBaseMovie(credit as RawPersonCrewMovie);
+        } else {
+            baseData = formatBaseTv(credit as RawPersonCrewTv);
+        }
+
+        return {
+            ...baseData,
+            media_type: credit.media_type,
+            department: credit.department,
+            job: credit.job
+        }
+    })
+}
+
+export function formatPersonCast(credits: RawPersonCast[]): IPersonCast[] {
+    return credits.map((credit: RawPersonCast) => {
+        let baseData: IBaseMovie | IBaseTv;
+        if (credit.media_type === 'movie') {
+            baseData = formatBaseMovie(credit as RawPersonCastMovie);
+        } else {
+            baseData = formatBaseTv(credit as RawPersonCastTv);
+        }
+
+        return {
+            ...baseData,
+            media_type: credit.media_type,
+            character: credit.character,
+        }
+    })
+}
+
 export function formatCastMember(member: RawCast): IMovieCast {
-    const basicData = formatBasePersonData(member);
+    const basicData = formatBasePerson(member);
 
     return {
         ...basicData,
@@ -185,7 +229,7 @@ export function formatCastMember(member: RawCast): IMovieCast {
 }
 
 export function formatCrewMember(member: RawCrew): IMovieCrew {
-    const basicData = formatBasePersonData(member);
+    const basicData = formatBasePerson(member);
 
     return {
         ...basicData,
@@ -193,12 +237,12 @@ export function formatCrewMember(member: RawCrew): IMovieCrew {
     }
 }
 
-export function formatPersonsData(credits: RawCast[] | RawCrew[] | RawBasePerson[], type: 'crew' | 'cast' | 'base'): IBasePerson[] | IMovieCast[] | IMovieCrew[] {
+export function formatPersons(credits: RawCast[] | RawCrew[] | RawBasePerson[], type: 'crew' | 'cast' | 'base'): IBasePerson[] | IMovieCast[] | IMovieCrew[] {
     let data: IBasePerson[] | IMovieCast[] | IMovieCrew[] = [];
 
     switch (type) {
         case 'base':
-            data = credits.map(credit => formatBasePersonData(credit as RawBasePerson));
+            data = credits.map(credit => formatBasePerson(credit as RawBasePerson));
             break;
         case 'cast':
             data = credits.map(credit => formatCastMember(credit as RawCast));

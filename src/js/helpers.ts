@@ -1,5 +1,5 @@
 import { API_BASE, API_KEY, API_POSTER_BASE, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
-import { IPart, USortOptionValues } from "../types/tmdb.types";
+import { IBaseMovie, USortOptionValues } from "../types/tmdb.types";
 
 
 /**
@@ -29,10 +29,10 @@ export async function getJSON<T>(url: string, params: string = ''): Promise<T> {
  * Splits a sort option value into its component parts and returns them as an object.
  * @param {USortOptionValues} option - The sort option value to split.
  * @param {string} [splitBy='_'] - The character to split the sort option value by.
- * @returns {{ sortBy: keyof IPart, sortOrder: 'asc' | 'desc' }} - for ex. { sortBy: 'title', sortOrder: 'desc' }
+ * @returns {{ sortBy: keyof IBaseMovie, sortOrder: 'asc' | 'desc' }} - for ex. { sortBy: 'title', sortOrder: 'desc' }
  */
 export function splitSortOptionValue(option: USortOptionValues, splitBy: string = '_') {
-    const sortBy = option.split(splitBy)[0] as keyof IPart;
+    const sortBy = option.split(splitBy)[0] as keyof IBaseMovie;
     const sortOrder = option.split(splitBy)[1] as 'asc' | 'desc';
 
     return { sortBy, sortOrder }
@@ -74,7 +74,7 @@ export const getIdFromLink = (link: string): number => parseInt(link.split('-')[
  * @param date - The date object to be formatted.
  * @returns An object with the 'MMM DD, YYYY' date and the year itself.
  */
-export const formatDate = (date: Date) => {
+export const formatDate = (date: Date | null) => {
     if (!date) return { full: '-', year: '' };
 
     const localeString = `${DEFAULT_LOCALE}-${LOCALES[DEFAULT_LOCALE]}`; // 'en-US'

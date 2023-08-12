@@ -3,11 +3,11 @@ import MoviesList from './MoviesList'
 import { useCallback, useEffect, useState } from 'react'
 import tmdb from '../js/tmdb-api'
 import { OPTIONS_MOVIE_LIST } from '../js/config'
-import { UListTypes, IPart } from '../types/tmdb.types'
+import { UListTypes, IBaseMovie } from '../types/tmdb.types'
 
 export default function MainPageSidebar() {
     const [currentListType, setCurrentListType] = useState<UListTypes>(OPTIONS_MOVIE_LIST[0].value); // ['popular', 'top_rated', 'upcoming', 'now_playing']
-    const [movies, setMovies] = useState<IPart[]>([]);
+    const [movies, setMovies] = useState<IBaseMovie[]>([]);
 
     const getList = useCallback(async () => {
         const listData = await tmdb.getMoviesList(1, currentListType);

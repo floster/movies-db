@@ -1,8 +1,8 @@
-import { IPart, UListTypes } from '../types/tmdb.types'
+import { IBaseMovie, UListTypes } from '../types/tmdb.types'
 import AppTile from "./AppTile";
 
 interface Props {
-    movies: IPart[] | [];
+    movies: IBaseMovie[] | [];
     listType: UListTypes;
 }
 

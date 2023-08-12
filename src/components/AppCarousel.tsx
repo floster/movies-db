@@ -1,5 +1,5 @@
 import AppTile from "./AppTile";
-import { IPart, UTrendingType, ITrendingTvShow, IBasePerson } from "../types/tmdb.types";
+import { IBaseMovie, UTrendingType, IBaseTv, IBasePerson } from "../types/tmdb.types";
 import TMDB from "../js/tmdb-api";
 import { useCallback, useEffect, useState } from "react";
 import AppSpinner from "./AppSpinner";
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function AppCarousel({ itemsType }: Props) {
-    const [items, setItems] = useState([] as IPart[] | IBasePerson[] | ITrendingTvShow[]);
+    const [items, setItems] = useState([] as IBaseMovie[] | IBasePerson[] | IBaseTv[]);
     const [isDataLoading, setIsDataLoading] = useState(false);
     const [isDataError, setIsDataError] = useState(false);
 

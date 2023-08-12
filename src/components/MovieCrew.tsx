@@ -9,7 +9,7 @@ export default function MovieCrew({ members }: Props) {
         return (
             <li className="crew-item" key={`${member.job}_${member.id}`}>
                 <span className="crew-item__label">{member.job}</span>
-                <span className="crew-item__value">{member.name}</span>
+                <span className="crew-item__value">{member.title}</span>
             </li>
         )
     }

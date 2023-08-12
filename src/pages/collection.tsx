@@ -4,7 +4,7 @@ import AppSectionHeader from '../components/AppSectionHeader';
 import MediaHero from '../components/MediaHero';
 import AppTile from '../components/AppTile';
 import { useParams } from 'react-router-dom';
-import { IPart, USortOptionValues } from '../types/tmdb.types';
+import { IBaseMovie, USortOptionValues } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb-api';
 import { useFetch } from '../hooks/useFetch';
@@ -19,8 +19,8 @@ export default function Collection() {
   const params = useParams<CollectionParams>();
   const collectionId = getIdFromLink(params.id!);
 
-  const [parts, setParts] = useState([] as IPart[]);
-  const [sortedParts, setSortedParts] = useState([] as IPart[]);
+  const [parts, setParts] = useState([] as IBaseMovie[]);
+  const [sortedParts, setSortedParts] = useState([] as IBaseMovie[]);
   const [currentSort, setCurrentSort] = useState('year_asc' as USortOptionValues);
 
   const onSortChange = (option: USortOptionValues) => setCurrentSort(option);

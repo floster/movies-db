@@ -7,7 +7,7 @@ import {
 import {
   IGenre,
   ICollection,
-  IPart,
+  IBaseMovie,
   UListTypes,
   IListData,
   IMovie,
@@ -15,7 +15,7 @@ import {
   IMovieCredits,
   ITvShow,
   UTrendingType,
-  ITrendingTvShow,
+  IBaseTv,
   IMovieCrew,
   IMovieCast,
   IPerson,
@@ -27,19 +27,21 @@ import {
   RawMovie,
   RawMovieCredits,
   RawPerson,
-  RawTvShow,
+  RawTv,
   RawMoviesList,
   RawTrendingList,
-  RawTrendingTvShow,
+  RawTrendingTv,
   RawBasePerson,
+  RawPersonCredits,
 } from '../types/raw-tmdb.types';
 
 import { createLink, getJSON } from './helpers';
-import { formatBasicTvShowsData, formatMovieData, formatPartsData, formatPerson, formatPersonsData, formatTvShowData } from './formaters';
+import { formatBaseTvs, formatMovie, formatBaseMovies, formatPerson, formatPersons, formatTv, formatPersonCrew, formatPersonCast } from './formaters';
 
 export default class TMDB {
   static allGenres: IGenre[] = [];
 
+  // TODO: make below working
   // static async #getAllGenres<T extends IGenre>() {
   //   if (Object.keys(this.allGenres).length > 0) return;
 
@@ -79,7 +81,7 @@ export default class TMDB {
     }
 
     const data: RawMoviesList = await getJSON(url, params);
-    const movies = formatPartsData(data.results as RawCollectionPart[]);
+    const movies = formatBaseMovies(data.results as RawCollectionPart[]);
 
     return {
       movies,
@@ -98,7 +100,7 @@ export default class TMDB {
       link: createLink('collection', data.id, data.name),
       title: data.name,
       overview: data.overview,
-      parts: formatPartsData(data.parts),
+      parts: formatBaseMovies(data.parts),
       partsCount: data.parts.length,
       poster: `${API_POSTER_BASE}${data.poster_path}`,
       type: 'collection',
@@ -115,17 +117,17 @@ export default class TMDB {
     const url = `/trending/${type}/${period}`;
     const data: RawTrendingList = await getJSON(url);
 
-    let trending: IPart[] | IBasePerson[] | ITrendingTvShow[] = [];
+    let trending: IBaseMovie[] | IBasePerson[] | IBaseTv[] = [];
 
     switch (type) {
       case 'movie':
-        trending = formatPartsData(data.results as RawCollectionPart[]) as IPart[];
+        trending = formatBaseMovies(data.results as RawCollectionPart[]) as IBaseMovie[];
         break;
       case 'tv':
-        trending = formatBasicTvShowsData(data.results as RawTrendingTvShow[]) as ITrendingTvShow[];
+        trending = formatBaseTvs(data.results as RawTrendingTv[]) as IBaseTv[];
         break;
       case 'person':
-        trending = formatPersonsData(data.results as RawBasePerson[], 'base') as IBasePerson[];
+        trending = formatPersons(data.results as RawBasePerson[], 'base') as IBasePerson[];
         break;
       default:
         console.error('Wrong trending type');
@@ -139,7 +141,7 @@ export default class TMDB {
     const url = `/movie/${id}`;
     const data: RawMovie = await getJSON(url);
 
-    const movie = formatMovieData(data);
+    const movie = formatMovie(data);
 
     return movie;
   }
@@ -148,8 +150,8 @@ export default class TMDB {
     const url = `/movie/${id}/credits`;
     const data: RawMovieCredits = await getJSON(url);
 
-    const cast = formatPersonsData(data.cast, 'cast') as IMovieCast[];
-    const crew = formatPersonsData(data.crew, 'crew') as IMovieCrew[];
+    const cast = formatPersons(data.cast, 'cast') as IMovieCast[];
+    const crew = formatPersons(data.crew, 'crew') as IMovieCrew[];
 
     return { cast, crew };
   }
@@ -165,17 +167,18 @@ export default class TMDB {
 
   static async getPersonCredits(id: number) {
     const url = `/person/${id}/combined_credits`;
-    const data = await getJSON(url);
+    const data: RawPersonCredits = await getJSON(url);
 
-    // const person = this.#formatPersonData(data);
+    const cast = formatPersonCast(data.cast);
+    const crew = formatPersonCrew(data.crew);
 
-    return data;
+    return { cast, crew };
   }
 
   static async getTvShow(id: number): Promise<ITvShow> {
     const url = `/tv/${id}`;
-    const data: RawTvShow = await getJSON(url);
-    const tv = formatTvShowData(data);
+    const data: RawTv = await getJSON(url);
+    const tv = formatTv(data);
     return tv;
   }
 }
