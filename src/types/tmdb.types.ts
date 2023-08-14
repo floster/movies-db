@@ -3,10 +3,21 @@ export type UListTypes = 'top_rated' | 'upcoming' | 'now_playing';
 
 export type USortOptionValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
 
-export type UMediaHeroType = 'collection' | 'tv' | 'movie' | 'person';
+export type UMediaTypes = 'collection' | 'tv' | 'movie' | 'person';
 export type UMediaHeroData = IMovie | ICollection | ITvShow | IPerson;
 export type UTrendingType = 'movie' | 'tv' | 'person';
 export type UAppTileType = 'movie' | 'collection' | 'actor';
+
+export interface ITileData {
+  id: number;
+  type: UMediaTypes;
+  link: string;
+  poster: string;
+  title: string;
+  label: string | number | [string | number, string];
+  rating: { average: number, count: number } | null;
+  favorite: boolean;
+}
 
 // comes from TMDB
 export type UTmdbMediaType = 'movie' | 'tv' | 'person' | 'collection' | 'season';
@@ -15,21 +26,6 @@ export type UTmdbTvShowStatuses = 'Returning Series' | 'Planned' | 'In Productio
 //////////////////////////////
 ///// TMDB API Responses /////
 //////////////////////////////
-interface _BasePart {
-  adult: boolean;
-  backdrop: string;
-  genres: IGenre[];
-  id: number;
-  link: string
-  overview: string;
-  popularity: number,
-  poster: string;
-  released: string,
-  year: string,
-  title: string;
-  type: UTmdbMediaType;
-  votes: { average: number, count: number };
-}
 
 // General
 export interface IGenre {
@@ -62,7 +58,22 @@ export interface ICollection {
   poster: string;
 }
 
-// IMovie & ITvShow & ITrendingTvShow
+interface _BasePart {
+  adult: boolean;
+  backdrop: string;
+  genres: IGenre[];
+  id: number;
+  link: string
+  overview: string;
+  popularity: number,
+  poster: string;
+  released: string,
+  year: string,
+  title: string;
+  type: UTmdbMediaType;
+  votes: { average: number, count: number };
+}
+
 export interface IBaseMovie extends _BasePart { }
 
 export interface IMovie extends _BasePart {
@@ -149,4 +160,4 @@ export interface IMovieCrew extends IBasePerson {
   job: string;
 }
 
-export type UTileData = IBaseMovie | IMovie | ICollection | IBasePerson | IMovieCast | ITvShow | ITvShowSeason | IPersonCrew | IPersonCast;
+export type UTileData = IBaseMovie | ICollection | IBasePerson | IMovieCast | ITvShow | ITvShowSeason | IPersonCrew | IPersonCast;

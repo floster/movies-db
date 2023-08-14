@@ -6,10 +6,10 @@ import AppTile from '../components/AppTile';
 import { useParams } from 'react-router-dom';
 import tmdb from '../js/tmdb-api';
 import { useFetch } from '../hooks/useFetch';
-import { ITvShowSeason } from '../types/tmdb.types';
+import { ITileData } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
-import { getIdFromLink } from '../js/helpers';
+import { formatTilesData, getIdFromLink } from '../js/helpers';
 
 type TvParams = {
   id: string;
@@ -19,11 +19,11 @@ export default function Tv() {
   const params = useParams<TvParams>();
   const tvId = getIdFromLink(params.id!);
 
-  const [seasons, setSeasons] = useState([] as ITvShowSeason[]);
+  const [seasons, setSeasons] = useState([] as ITileData[]);
 
   const [getData, isDataLoading, dataError] = useFetch(async () => {
     const data = await tmdb.getTvShow(tvId);
-    setSeasons(data.seasons);
+    setSeasons(formatTilesData(data.seasons, 'tv', ['episodes_qty', 'episodes'], true, true));
   })
 
   useEffect(() => {

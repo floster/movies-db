@@ -5,14 +5,14 @@ import AppFavorite from "./AppFavorite";
 import AppProgress from "./AppProgress";
 import MoviePartOf from "./MoviePartOf";
 
-import { IBaseMovie, ICollection, IMovie, ITvShow, IGenre, UMediaHeroType, UMediaHeroData, IPerson } from "../types/tmdb.types";
+import { IBaseMovie, ICollection, IMovie, ITvShow, IGenre, UMediaTypes, UMediaHeroData, IPerson } from "../types/tmdb.types";
 import { FC, useCallback, useEffect, useState } from "react";
 import tmdb from "../js/tmdb-api";
 import AppError from "./AppError";
 
 interface MediaHeroProps {
     id: number;
-    type: UMediaHeroType;
+    type: UMediaTypes;
     withLink?: boolean;
 }
 

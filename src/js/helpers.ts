@@ -1,5 +1,5 @@
 import { API_BASE, API_KEY, API_POSTER_BASE, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
-import { IBaseMovie, USortOptionValues } from "../types/tmdb.types";
+import { ITileData, UMediaTypes, USortOptionValues, UTileData } from "../types/tmdb.types";
 
 
 /**
@@ -25,26 +25,35 @@ export async function getJSON<T>(url: string, params: string = ''): Promise<T> {
     return data;
 }
 
-/**
- * Splits a sort option value into its component parts and returns them as an object.
- * @param {USortOptionValues} option - The sort option value to split.
- * @param {string} [splitBy='_'] - The character to split the sort option value by.
- * @returns {{ sortBy: keyof IBaseMovie, sortOrder: 'asc' | 'desc' }} - for ex. { sortBy: 'title', sortOrder: 'desc' }
- */
-export function splitSortOptionValue(option: USortOptionValues, splitBy: string = '_') {
-    const sortBy = option.split(splitBy)[0] as keyof IBaseMovie;
-    const sortOrder = option.split(splitBy)[1] as 'asc' | 'desc';
+export function formatTilesData<T extends UTileData>(data: T[], type: UMediaTypes, label: keyof T | [keyof T, string], rating: boolean, favorite: boolean): ITileData[] {
+    return data.map((item) => {
+        const votes = rating && ('votes' in item)
+            ? { average: item.votes.average, count: item.votes.count }
+            : null;
 
-    return { sortBy, sortOrder }
+        const labelText = (typeof label === 'object') ? `${item[label[0]]} ${label[1]}` : item[label];
+
+        return {
+            id: item.id,
+            type,
+            link: item.link,
+            poster: item.poster,
+            title: item.title,
+            label: labelText,
+            rating: votes,
+            favorite: favorite,
+        }
+    })
 }
 
-export function partsSort<T>(parts: T[], sortBy: keyof T, sortOrder: 'asc' | 'desc' = 'asc'): T[] {
-    const sorted = [...parts].sort((a, b) => {
+export function tilesSort<T>(tiles: T[], option: USortOptionValues): T[] {
+    const sortBy = option.split('_')[0] as keyof T;
+    const sortOrder = option.split('_')[1] as 'asc' | 'desc';
+
+    return [...tiles].sort((a, b) => {
         if (sortOrder === 'asc') return a[sortBy] < b[sortBy] ? -1 : 1;
         else return a[sortBy] > b[sortBy] ? -1 : 1;
     });
-
-    return sorted
 }
 
 /**

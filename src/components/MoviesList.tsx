@@ -1,15 +1,14 @@
-import { IBaseMovie, UListTypes } from '../types/tmdb.types'
+import { ITileData } from '../types/tmdb.types'
 import AppTile from "./AppTile";
 
 interface Props {
-    movies: IBaseMovie[] | [];
-    listType: UListTypes;
+    movies: ITileData[] | [];
 }
 
-export default function MoviesList({ movies, listType }: Props) {
+export default function MoviesList({ movies }: Props) {
     return (
         <div className="movies-list l-movies_list" role="list">
-            {movies.map((movie) => <AppTile tile={movie} key={movie.id} isRow={true} listType={listType} />)}
+            {movies.map((movie) => <AppTile tile={movie} key={movie.id} isRow={true} />)}
         </div>
     )
 }

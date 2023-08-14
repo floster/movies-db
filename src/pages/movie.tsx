@@ -6,10 +6,10 @@ import MovieCrew from '../components/MovieCrew';
 import AppTile from '../components/AppTile';
 import { useParams } from 'react-router-dom';
 import tmdb from '../js/tmdb-api';
-import { IMovieCast, IMovieCrew } from '../types/tmdb.types';
+import { IMovieCast, IMovieCrew, ITileData } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
-import { cutArray, getIdFromLink, partsSort } from '../js/helpers';
+import { formatTilesData, getIdFromLink } from '../js/helpers';
 
 type MovieParams = {
   id: string;
@@ -19,20 +19,21 @@ const Movie: FC = () => {
   const params = useParams<MovieParams>();
   const movieId = getIdFromLink(params.id!);
 
-  const [cast, setCast] = useState([] as IMovieCast[]);
   const [crew, setCrew] = useState([] as IMovieCrew[]);
+  const [cast, setCast] = useState([] as IMovieCast[]);
+  const [tiles, setTiles] = useState([] as ITileData[]);
+
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
+
+  useEffect(() => setTiles(formatTilesData(cast, 'person', 'character', false, false)), [cast]);
 
   const getData = useCallback(async () => {
     try {
       const data = await tmdb.getMovieCredits(movieId);
 
-      const sortedCrew = cutArray(partsSort(data.crew, 'popularity', 'desc') as [], 6);
-      const sortedCast = cutArray(partsSort(data.cast, 'cast_id', 'asc') as [], 14);
-
-      setCast(sortedCast);
-      setCrew(sortedCrew);
+      setCast(data.cast);
+      setCrew(data.crew);
     } catch (error) {
       setIsDataError(true);
       console.error(error);
@@ -67,7 +68,7 @@ const Movie: FC = () => {
               <AppSection>
                 <AppSectionHeader title="cast" />
                 <div className="l-tiles_grid m-people">
-                  {cast.map((person) => <AppTile tile={person} key={person.id} />)}
+                  {tiles.map((tile) => <AppTile tile={tile} key={tile.id} />)}
                 </div>
               </AppSection>
             </div>

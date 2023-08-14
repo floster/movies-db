@@ -1,15 +1,16 @@
 import AppTile from "./AppTile";
-import { IBaseMovie, UTrendingType, IBaseTv, IBasePerson } from "../types/tmdb.types";
+import { IBaseMovie, UTrendingType, IBaseTv, IBasePerson, ITileData } from "../types/tmdb.types";
 import TMDB from "../js/tmdb-api";
 import { useCallback, useEffect, useState } from "react";
 import AppSpinner from "./AppSpinner";
+import { formatTilesData } from "../js/helpers";
 
 interface Props {
     itemsType: UTrendingType;
 }
 
 export default function AppCarousel({ itemsType }: Props) {
-    const [items, setItems] = useState([] as IBaseMovie[] | IBasePerson[] | IBaseTv[]);
+    const [items, setItems] = useState([] as ITileData[]);
     const [isDataLoading, setIsDataLoading] = useState(false);
     const [isDataError, setIsDataError] = useState(false);
 
@@ -17,7 +18,38 @@ export default function AppCarousel({ itemsType }: Props) {
         try {
             setIsDataLoading(true);
             const data = await TMDB.getTrending(itemsType);
-            setItems(data);
+            let formatedData = [] as ITileData[];
+
+            switch (itemsType) {
+                case 'movie':
+                    formatedData = formatTilesData<IBaseMovie>(
+                        (data as IBaseMovie[]),
+                        'movie',
+                        'released',
+                        true,
+                        true
+                    )
+                    break;
+                case 'person':
+                    formatedData = formatTilesData<IBasePerson>(
+                        (data as IBasePerson[]),
+                        'person',
+                        'department',
+                        true,
+                        true
+                    )
+                    break;
+                case 'tv':
+                    formatedData = formatTilesData<IBaseTv>(
+                        (data as IBaseTv[]),
+                        'person',
+                        'released',
+                        true,
+                        false
+                    )
+                    break;
+            }
+            setItems(formatedData);
         } catch (error) {
             setIsDataError(true);
             console.error(error);

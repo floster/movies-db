@@ -7,8 +7,8 @@ import { useParams } from 'react-router-dom';
 import tmdb from '../js/tmdb-api';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
-import { cutArray, getIdFromLink, partsSort } from '../js/helpers';
-import { IPersonCast, IPersonCrew } from '../types/tmdb.types';
+import { formatTilesData, getIdFromLink } from '../js/helpers';
+import { ITileData } from '../types/tmdb.types';
 
 type PersonParams = {
   id: string;
@@ -18,8 +18,8 @@ const Person: FC = () => {
   const params = useParams<PersonParams>();
   const personId = getIdFromLink(params.id!);
 
-  const [cast, setCast] = useState([]);
-  const [crew, setCrew] = useState([]);
+  const [cast, setCast] = useState([] as ITileData[]);
+  const [crew, setCrew] = useState([] as ITileData[]);
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
 
@@ -27,11 +27,8 @@ const Person: FC = () => {
     try {
       const data = await tmdb.getPersonCredits(personId);
 
-      const sortedCrew = cutArray(partsSort(data.crew, 'year', 'asc') as [], 12);
-      const sortedCast = cutArray(partsSort(data.cast, 'year', 'asc') as [], 12);
-
-      setCrew(sortedCrew);
-      setCast(sortedCast);
+      setCrew(formatTilesData(data.crew, 'person', 'job', true, false));
+      setCast(formatTilesData(data.cast, 'person', 'character', true, false));
     } catch (error) {
       setIsDataError(true);
       console.error(error);
@@ -60,7 +57,7 @@ const Person: FC = () => {
               <AppSection>
                 <AppSectionHeader title="cast" />
                 <div className="l-tiles_grid m-movies">
-                  {(cast as IPersonCast[]).map((media) => <AppTile tile={media} key={media.id} />)}
+                  {cast.map((media) => <AppTile tile={media} key={media.id} />)}
                 </div>
               </AppSection>
             </div>
@@ -68,7 +65,7 @@ const Person: FC = () => {
               <AppSection>
                 <AppSectionHeader title="crew" />
                 <div className="l-tiles_grid m-movies">
-                  {(crew as IPersonCrew[]).map((media) => <AppTile tile={media} key={media.id} />)}
+                  {crew.map((media) => <AppTile tile={media} key={media.id} />)}
                 </div>
               </AppSection>
             </div>
