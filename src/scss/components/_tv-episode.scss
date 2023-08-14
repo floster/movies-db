@@ -1,7 +1,6 @@
 .tv-episode {
     position: relative;
     display: flex;
-    align-items: center;
     gap: var(--gap-sm);
 
     &__count {
@@ -18,7 +17,6 @@
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-        gap: var(--gap-xs);
     }
 
     &__release {
@@ -37,7 +35,8 @@
         font-size: var(--font-size);
         font-style: italic;
         color: var(--color-grey-500);
-        max-width: 80%;
+        margin-top: var(--gap-sm);
+        max-width: 95%;
 
         &:empty {
             display: none;
@@ -48,11 +47,12 @@
         position: relative;
         flex-shrink: 0;
         width: 25%;
-        max-width: 100px;
+        min-width: 100px;
         transition: transform .35s;
 
         @include media(md) {
             width: 10%;
+            min-width: 120px;
         }
     }
 }

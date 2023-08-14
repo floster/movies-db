@@ -78,14 +78,18 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
 
     const personDates = `${(data as IPerson).birthday?.date}${(data as IPerson).deathday?.date !== '-' ? ' - ' + (data as IPerson).deathday?.date : ''}`;
 
-    const heroInner = (
-        <div className={'media-hero__inner container'}>
-            <AppPicture img={data.poster} alt={data.title} />
-            <div className="media-hero__content">
-                {hasDate && <p className="media-hero__date">{(data as IMovie | ITv).released}</p>}
-                {isPerson && <p className="media-hero__date">{personDates}</p>}
-                {isTv && <p className="media-hero__date">{(data as ITv).year} - {(data as ITv).finished.year}</p>}
+    const date = hasDate ? (data as IMovie | ITv).released
+        : isPerson ? personDates
+            : isTv ? `${(data as ITv).year} - ${(data as ITv).finished.year}`
+                : null;
 
+    const heroInner = (
+        <div className='media-hero__inner container'>
+            <div className="media-hero__picture">
+                <AppPicture img={data.poster} alt={data.title} />
+                {hasRating && <AppProgress value={(data as IMovie).votes?.average} />}
+            </div>
+            <div className="media-hero__content">
                 {withLink && <a href={`/${type}/${id}`} className="media-hero__link">{data.title}</a>}
                 {!withLink && <h2 className="media-hero__title">{data.title}</h2>}
 
@@ -98,9 +102,17 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
                 <p className="media-hero__description">{data.overview}</p>
             </div>
             <footer className="media-hero__footer">
-                {hasRating && <AppProgress value={(data as IMovie).votes?.average} />}
+                <AppFavorite checked={true} title={data.title} />
+
+                {date && <span className='icon-labeled m-text_light m-text_normal'>
+                    <SvgIcon icon="calendar" />
+                    <span className="icon-labeled__label">
+                        {date}
+                    </span>
+                </span>}
+
                 {(hasParts || hasSeasons) &&
-                    <span className={`icon-labeled`}>
+                    <span className='icon-labeled m-text_light m-text_normal'>
                         <SvgIcon icon="stack" />
                         <span className="icon-labeled__label">
                             {hasParts && (data as ICollection).partsCount + ' parts'}
@@ -109,7 +121,6 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
                     </span>
                 }
                 {hasBelongsTo && <MoviePartOf data={(data as IMovie).belongs_to_collection} />}
-                <AppFavorite checked={true} title={data.title} />
             </footer>
         </div>
     )

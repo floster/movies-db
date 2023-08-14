@@ -1,12 +1,16 @@
 .icon-labeled {
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
+    align-items: flex-end;
     gap: var(--gap-xs);
     color: var(--color-secondary);
 
     &.m-text_light &__label {
         color: var(--color-grey-100);
+    }
+
+    &.m-text_normal &__label {
+        font-weight: normal;
     }
 
     &__label {

@@ -102,9 +102,5 @@
   }
 
   // tile text - title and description
-  --tile-text-font-size: var(--font-size-sm);
-
-  @include media(lg) {
-    --tile-text-font-size: var(--font-size);
-  }
+  --tile-text-font-size: var(--font-size);
 }

@@ -17,6 +17,8 @@
     }
 
     &__logo-svg {
+        height: var(--control-height-sm);
+
         @include media(md) {
             height: var(--control-height-md);
         }
