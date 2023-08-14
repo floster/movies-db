@@ -2,8 +2,8 @@
 ////////// TMDB API formatters //////////
 /////////////////////////////////////////
 
-import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawTrendingTv, RawTv, RawTvSeason } from "../types/raw-tmdb.types";
-import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITvShow, ITvShowSeason, IPersonCrew, IPersonCast } from "../types/tmdb.types";
+import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawTrendingTv, RawTv, RawTvEpisode, RawTvSeason } from "../types/raw-tmdb.types";
+import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode } from "../types/tmdb.types";
 import { API_BACKDROP_BASE } from "./config";
 import { createLink, formatDate, getPosterUrl } from "./helpers";
 
@@ -35,13 +35,13 @@ export function formatBaseMovies(movies: RawCollectionPart[]): IBaseMovie[] {
     return movies.map(movie => formatBaseMovie(movie));
 }
 
-export function formatTv(tv: RawTv): ITvShow {
+export function formatTv(tv: RawTv): ITv {
     const poster = getPosterUrl(tv.poster_path);
 
     const date = formatDate(new Date(tv.first_air_date));
     const finishedDate = formatDate(new Date(tv.last_air_date));
 
-    const formatedData: ITvShow = {
+    const formatedData: ITv = {
         adult: tv.adult,
         backdrop: `${API_BACKDROP_BASE}${tv.backdrop_path}`,
         episodes_qty: tv.number_of_episodes,
@@ -95,15 +95,17 @@ export function formatBaseTvs(shows: RawTrendingTv[]): IBaseTv[] {
     return shows.map(show => formatBaseTv(show));
 }
 
-export function formatTvSeason(season: RawTvSeason): ITvShowSeason {
+export function formatTvSeason(season: RawTvSeason): ITvSeason {
     const poster = getPosterUrl(season.poster_path);
-
     const date = formatDate(new Date(season.air_date));
+    const episodesQty = season.episodes?.length || season.episode_count || 0;
 
-    const formatedData: ITvShowSeason = {
-        episodes_qty: season.episode_count,
+    const episodes = season.episodes?.length ? formatTvEpisodes(season.episodes) : [];
+
+    const formatedData: ITvSeason = {
+        episodes_qty: episodesQty,
+        episodes,
         id: season.id,
-        link: createLink('season', season.season_number, season.name),
         title: season.name,
         overview: season.overview,
         poster: poster,
@@ -117,8 +119,32 @@ export function formatTvSeason(season: RawTvSeason): ITvShowSeason {
     return formatedData;
 }
 
-export function formatTvSeasons(seasons: RawTvSeason[]): ITvShowSeason[] {
+export function formatTvSeasons(seasons: RawTvSeason[]): ITvSeason[] {
     return seasons.map(season => formatTvSeason(season));
+}
+
+export function formatTvEpisode(episode: RawTvEpisode): ITvEpisode {
+    const date = formatDate(new Date(episode.air_date));
+
+    return {
+        id: episode.id,
+        title: episode.name,
+        overview: episode.overview,
+        poster: getPosterUrl(episode.still_path),
+        released: date.full,
+        year: date.year,
+        season_number: episode.season_number,
+        type: 'episode',
+        votes: { average: +episode.vote_average?.toFixed(1), count: episode.vote_count },
+        episode_number: episode.episode_number,
+        episode_type: episode.episode_type,
+        runtime: episode.runtime,
+        show_id: episode.show_id
+    }
+}
+
+export function formatTvEpisodes(episodes: RawTvEpisode[]): ITvEpisode[] {
+    return episodes.map(episode => formatTvEpisode(episode));
 }
 
 export function formatMovie(movie: RawMovie): IMovie {

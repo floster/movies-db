@@ -13,12 +13,13 @@ import {
   IMovie,
   IBasePerson,
   IMovieCredits,
-  ITvShow,
+  ITv,
   UTrendingType,
   IBaseTv,
   IMovieCrew,
   IMovieCast,
   IPerson,
+  ITvSeason,
 } from '../types/tmdb.types';
 
 import {
@@ -33,10 +34,11 @@ import {
   RawTrendingTv,
   RawBasePerson,
   RawPersonCredits,
+  RawTvSeason,
 } from '../types/raw-tmdb.types';
 
 import { createLink, getJSON } from './helpers';
-import { formatBaseTvs, formatMovie, formatBaseMovies, formatPerson, formatPersons, formatTv, formatPersonCrew, formatPersonCast } from './formaters';
+import { formatBaseTvs, formatMovie, formatBaseMovies, formatPerson, formatPersons, formatTv, formatPersonCrew, formatPersonCast, formatTvSeason } from './formaters';
 
 export default class TMDB {
   static allGenres: IGenre[] = [];
@@ -175,10 +177,27 @@ export default class TMDB {
     return { cast, crew };
   }
 
-  static async getTvShow(id: number): Promise<ITvShow> {
+  static async getTvShow(id: number): Promise<ITv> {
     const url = `/tv/${id}`;
     const data: RawTv = await getJSON(url);
     const tv = formatTv(data);
     return tv;
+  }
+
+  static async getTvShowSeason(id: number, season: number): Promise<ITvSeason> {
+    const url = `/tv/${id}/season/${season}`;
+    const data: RawTvSeason = await getJSON(url);
+    const tv = formatTvSeason(data);
+    return tv;
+  }
+
+  static async getTvShowSeasons(tvId: number, seasonsQty: number): Promise<ITvSeason[]> {
+    const seasons = [];
+    for (let n = 1; n <= seasonsQty; n++) {
+      const season = await this.getTvShowSeason(tvId, n);
+      seasons.push(season);
+    }
+
+    return seasons;
   }
 }

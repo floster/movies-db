@@ -60,6 +60,12 @@
     }
 }
 
+.l-seasons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xxl);
+}
+
 // content on main page
 .l-main_page_content {
     display: flex;

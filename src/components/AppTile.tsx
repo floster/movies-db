@@ -16,8 +16,10 @@ const AppTile: FC<AppTileProps> = ({ tile, isCarouselItem = false, isRow = false
     if (isCarouselItem) classes.push('app-carousel__item');
     if (isRow) classes.push('m-row');
 
-    return (
-        <a href={tile.link} className={classes.join(' ')}>
+    const isLink = !!tile.link;
+
+    const tileInner = (
+        <>
             <AppPicture img={tile.poster} alt={tile.title + ' poster'} />
 
             {tile.favorite && <AppFavorite checked={false} title={tile.title} />}
@@ -29,7 +31,18 @@ const AppTile: FC<AppTileProps> = ({ tile, isCarouselItem = false, isRow = false
                 <h3 className="app-tile__title">{tile.title}</h3>
             </div>
             {(tile.rating && isRow) && <span className="app-tile__rating">{tile.rating.average} / {tile.rating.count}</span>}
-        </a>
+        </>
+    )
+
+    return (
+        isLink ?
+            <a href={tile.link!} className={classes.join(' ')}>
+                {tileInner}
+            </a>
+            :
+            <div className={classes.join(' ')}>
+                {tileInner}
+            </div>
     )
 }
 

@@ -5,7 +5,7 @@ import AppFavorite from "./AppFavorite";
 import AppProgress from "./AppProgress";
 import MoviePartOf from "./MoviePartOf";
 
-import { IBaseMovie, ICollection, IMovie, ITvShow, IGenre, UMediaTypes, UMediaHeroData, IPerson } from "../types/tmdb.types";
+import { IBaseMovie, ICollection, IMovie, ITv, IGenre, UMediaTypes, UMediaHeroData, IPerson } from "../types/tmdb.types";
 import { FC, useCallback, useEffect, useState } from "react";
 import tmdb from "../js/tmdb-api";
 import AppError from "./AppError";
@@ -65,14 +65,14 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
         return <ul className="media-hero__tags">{tags}</ul>
     }
 
-    const isTv = type === 'tv' && (data as ITvShow).released && (data as ITvShow).finished;
+    const isTv = type === 'tv' && (data as ITv).released && (data as ITv).finished;
     const isPerson = type === 'person';
     const backdrop = `url(${data.backdrop})`;
     const hasGenres = (data as IBaseMovie).genres;
-    const hasTagline = (data as IMovie | ITvShow).tagline;
+    const hasTagline = (data as IMovie | ITv).tagline;
     const hasRating = (data as IMovie).votes;
     const hasParts = (data as ICollection).partsCount;
-    const hasSeasons = (data as ITvShow).seasons_qty;
+    const hasSeasons = (data as ITv).seasons_qty;
     const hasBelongsTo = (data as IMovie).belongs_to_collection;
     const hasDate = type !== 'tv' && (data as IMovie).released;
 
@@ -82,9 +82,9 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
         <div className={'media-hero__inner container'}>
             <AppPicture img={data.poster} alt={data.title} />
             <div className="media-hero__content">
-                {hasDate && <p className="media-hero__date">{(data as IMovie | ITvShow).released}</p>}
+                {hasDate && <p className="media-hero__date">{(data as IMovie | ITv).released}</p>}
                 {isPerson && <p className="media-hero__date">{personDates}</p>}
-                {isTv && <p className="media-hero__date">{(data as ITvShow).year} - {(data as ITvShow).finished.year}</p>}
+                {isTv && <p className="media-hero__date">{(data as ITv).year} - {(data as ITv).finished.year}</p>}
 
                 {withLink && <a href={`/${type}/${id}`} className="media-hero__link">{data.title}</a>}
                 {!withLink && <h2 className="media-hero__title">{data.title}</h2>}
@@ -104,7 +104,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
                         <SvgIcon icon="stack" />
                         <span className="icon-labeled__label">
                             {hasParts && (data as ICollection).partsCount + ' parts'}
-                            {hasSeasons && (data as ITvShow).seasons_qty + ' seasons'}
+                            {hasSeasons && (data as ITv).seasons_qty + ' seasons'}
                         </span>
                     </span>
                 }

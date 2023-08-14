@@ -77,8 +77,20 @@ export interface RawTv extends _RawBaseTv {
 }
 
 export interface RawTvSeason extends _RawTvPart {
-    episode_count: number;
+    episode_count?: number;
+    episodes?: RawTvEpisode[];
     poster_path: string;
+}
+
+export interface RawTvEpisode extends _RawTvPart {
+    vote_count: number;
+    episode_number: number;
+    episode_type: string;
+    runtime: number;
+    show_id: number;
+    still_path: string;
+    crew: RawCrew[];
+    cast: RawCast[]
 }
 
 ////////////////////////////////////
@@ -243,20 +255,4 @@ interface RawTvCreator {
     name: string;
     gender: number;
     profile_path: string
-}
-
-interface RawTvEpisode extends _RawTvPart {
-    id: number;
-    overview: string;
-    name: string;
-    vote_average: number;
-    vote_count: number;
-    air_date: Date;
-    episode_number: number;
-    episode_type: string;
-    production_code: string;
-    runtime: number;
-    season_number: number;
-    show_id: number;
-    still_path: string
 }

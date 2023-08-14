@@ -31,12 +31,14 @@ export function formatTilesData<T extends UTileData>(data: T[], type: UMediaType
             ? { average: item.votes.average, count: item.votes.count }
             : null;
 
+        const link = ('link' in item) ? item.link : null
+
         const labelText = (typeof label === 'object') ? `${item[label[0]]} ${label[1]}` : item[label];
 
         return {
             id: item.id,
             type,
-            link: item.link,
+            link: link,
             poster: item.poster,
             title: item.title,
             label: labelText,

@@ -1,0 +1,98 @@
+.tv-season {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-sm);
+
+    @include media(md) {
+        flex-direction: row;
+        gap: var(--gap-lg);
+    }
+
+    &__picture {
+        position: relative;
+        flex-shrink: 0;
+        width: 100%;
+        margin: 0;
+
+        @include media(md) {
+            width: 20%;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-xl);
+        flex-grow: 1;
+
+        @include media(md) {
+            gap: var(--gap-md);
+        }
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-xs);
+
+        @include media(md) {
+            gap: 0;
+        }
+    }
+
+    &__title {
+        font-size: var(--font-size-4);
+
+        @include media(md) {
+            font-size: var(--font-size-3);
+        }
+    }
+
+    &__overview {
+        margin-top: var(--gap-sm);
+        font-size: var(--font-size);
+        font-style: italic;
+        color: var(--color-grey-700);
+        width: 85%;
+
+        @include media(md) {
+            font-size: var(--font-size-5);
+        }
+
+        &:empty {
+            display: none;
+        }
+    }
+
+    &__release {
+        font-size: var(--font-size);
+        color: var(--color-grey-400);
+    }
+
+    &__count {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        font-size: var(--font-size-2);
+        font-weight: bold;
+        color: var(--color-secondary-dimmed);
+    }
+
+    &__episodes {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-lg);
+
+        @include media(md) {
+            gap: var(--gap-sm);
+        }
+    }
+
+    .app-progress {
+        position: absolute;
+        bottom: var(--gap-xs);
+        right: var(--gap-xs);
+    }
+}

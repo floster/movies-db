@@ -4,14 +4,14 @@ export type UListTypes = 'top_rated' | 'upcoming' | 'now_playing';
 export type USortOptionValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
 
 export type UMediaTypes = 'collection' | 'tv' | 'movie' | 'person';
-export type UMediaHeroData = IMovie | ICollection | ITvShow | IPerson;
+export type UMediaHeroData = IMovie | ICollection | ITv | IPerson;
 export type UTrendingType = 'movie' | 'tv' | 'person';
 export type UAppTileType = 'movie' | 'collection' | 'actor';
 
 export interface ITileData {
   id: number;
   type: UMediaTypes;
-  link: string;
+  link: string | null;
   poster: string;
   title: string;
   label: string | number | [string | number, string];
@@ -20,7 +20,7 @@ export interface ITileData {
 }
 
 // comes from TMDB
-export type UTmdbMediaType = 'movie' | 'tv' | 'person' | 'collection' | 'season';
+export type UTmdbMediaType = 'movie' | 'tv' | 'person' | 'collection' | 'season' | 'episode';
 export type UTmdbTvShowStatuses = 'Returning Series' | 'Planned' | 'In Production' | 'Ended' | 'Canceled' | 'Pilot';
 
 //////////////////////////////
@@ -89,12 +89,12 @@ export interface IMovieCredits {
   crew: IMovieCrew[];
 }
 
-export interface ITvShow extends _BasePart {
+export interface ITv extends _BasePart {
   episodes_qty: number,
   finished: { date: string, year: string },
   in_production: boolean,
   seasons_qty: number,
-  seasons: ITvShowSeason[],
+  seasons: ITvSeason[],
   status: UTmdbTvShowStatuses,
   tagline: string;
 }
@@ -102,18 +102,28 @@ export interface ITvShow extends _BasePart {
 export interface IBaseTv extends _BasePart {
 }
 
-export interface ITvShowSeason {
-  episodes_qty: number,
+type _TvPart = {
   id: number,
-  link: string,
   title: string,
   overview: string,
   poster: string,
   released: string,
-  year: string
+  year: string,
   season_number: number,
   type: UTmdbMediaType,
   votes: { average: number, count: number };
+}
+
+export interface ITvSeason extends _TvPart {
+  episodes_qty: number,
+  episodes: ITvEpisode[] | null,
+}
+
+export interface ITvEpisode extends _TvPart {
+  episode_number: number;
+  episode_type: string;
+  runtime: number;
+  show_id: number;
 }
 
 export interface IBasePerson {
@@ -160,4 +170,4 @@ export interface IMovieCrew extends IBasePerson {
   job: string;
 }
 
-export type UTileData = IBaseMovie | ICollection | IBasePerson | IMovieCast | ITvShow | ITvShowSeason | IPersonCrew | IPersonCast;
+export type UTileData = IBaseMovie | ICollection | IBasePerson | IMovieCast | ITv | ITvSeason | IPersonCrew | IPersonCast;

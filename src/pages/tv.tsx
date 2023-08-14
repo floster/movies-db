@@ -1,12 +1,11 @@
 import AppSection from '../components/AppSection';
 import AppSectionHeader from '../components/AppSectionHeader';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import MediaHero from '../components/MediaHero';
-import AppTile from '../components/AppTile';
+import TvSeason from '../components/TvSeason';
 import { useParams } from 'react-router-dom';
 import tmdb from '../js/tmdb-api';
-import { useFetch } from '../hooks/useFetch';
-import { ITileData } from '../types/tmdb.types';
+import { ITileData, ITvSeason } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
 import { formatTilesData, getIdFromLink } from '../js/helpers';
@@ -19,35 +18,48 @@ export default function Tv() {
   const params = useParams<TvParams>();
   const tvId = getIdFromLink(params.id!);
 
-  const [seasons, setSeasons] = useState([] as ITileData[]);
+  const [baseSeasons, setBaseSeasons] = useState([] as ITileData[]);
+  const [seasons, setSeasons] = useState([] as ITvSeason[]);
+  const [isDataError, setIsDataError] = useState(false);
+  const [isDataLoading, setIsDataLoading] = useState(false);
 
-  const [getData, isDataLoading, dataError] = useFetch(async () => {
-    const data = await tmdb.getTvShow(tvId);
-    setSeasons(formatTilesData(data.seasons, 'tv', ['episodes_qty', 'episodes'], true, true));
-  })
+  const getData = useCallback(async () => {
+    try {
+      const data = await tmdb.getTvShow(tvId);
+
+      const seasons = await tmdb.getTvShowSeasons(tvId, data.seasons_qty);
+      setSeasons(seasons);
+
+      setBaseSeasons(formatTilesData(data.seasons, 'tv', ['episodes_qty', 'episodes'], true, true));
+    } catch (error) {
+      setIsDataError(true);
+      console.error(error);
+    } finally {
+      setIsDataLoading(false);
+    }
+  }, [tvId]);
 
   useEffect(() => {
     const fetchData = async () => {
       await (getData as () => Promise<void>)();
     };
     fetchData();
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getData]);
 
 
   return (
     <section className="movie-header">
       <MediaHero id={tvId} type='tv' />
-      {dataError
+      {isDataError
         ? <AppError error={`Error occured while fetching tv show #${tvId}`} />
         : isDataLoading
           ? <AppSpinner visible={true} />
           : <>
             <div className="l-content container">
               <AppSection>
-                <AppSectionHeader title={`${seasons.length} seasons`} alignStart={true} />
-                <div className="l-tiles_grid m-movies">
-                  {seasons.map((season) => <AppTile tile={season} key={season.id} />)}
+                <AppSectionHeader title={`${baseSeasons.length} seasons`} alignStart={true} />
+                <div className="l-seasons">
+                  {seasons.map((season) => <TvSeason season={season} key={season.id} />)}
                 </div>
               </AppSection>
             </div>
