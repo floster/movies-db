@@ -7,6 +7,10 @@
         width: 100%;
         padding: var(--gap-sm);
 
+        @include media(md) {
+            grid-template-columns: 1fr 2fr;
+        }
+
         @include media(lg) {
             padding: var(--gap-sm);
         }

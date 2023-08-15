@@ -84,6 +84,7 @@
         flex-shrink: 0;
         align-items: center;
         gap: var(--gap-sm);
+        padding-right: var(--control-height-lg);
         width: 100%;
 
         &:active,
@@ -101,7 +102,9 @@
         }
 
         .app-picture {
-            width: 3.73rem;
+            width: 20%;
+            max-width: 110px;
+            min-width: 4rem;
         }
 
         .app-picture__img {
