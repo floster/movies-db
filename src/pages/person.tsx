@@ -7,9 +7,9 @@ import { useParams } from 'react-router-dom';
 import tmdb from '../js/tmdb-api';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
-import { getIdFromLink } from '../js/helpers';
+import { filterNoImage, filterUncredits, getIdFromLink, tilesSort } from '../js/helpers';
 import { formatTilesData } from '../js/formaters';
-import { ITileData } from '../types/tmdb.types';
+import { ITileData, USortOptionValues } from '../types/tmdb.types';
 
 type PersonParams = {
   id: string;
@@ -19,17 +19,32 @@ const Person: FC = () => {
   const params = useParams<PersonParams>();
   const personId = getIdFromLink(params.id!);
 
-  const [cast, setCast] = useState([] as ITileData[]);
-  // const [crew, setCrew] = useState([] as ITileData[]);
+  const [castMovie, setCastMovie] = useState([] as ITileData[]);
+  const [castTv, setCastTv] = useState([] as ITileData[]);
+  const [currentSortMovie, setCurrentSortMovie] = useState('year_desc' as USortOptionValues);
+  const [currentSortTv, setCurrentSortTv] = useState('year_desc' as USortOptionValues);
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
+
+  const onMoviesSortChange = (option: USortOptionValues) => setCurrentSortMovie(option);
+  const onTvsSortChange = (option: USortOptionValues) => setCurrentSortTv(option);
+
+  useEffect(() => setCastMovie(tilesSort(castMovie, currentSortMovie)), [currentSortMovie]);
+  useEffect(() => setCastTv(tilesSort(castTv, currentSortTv)), [currentSortTv]);
 
   const getData = useCallback(async () => {
     try {
       const data = await tmdb.getPersonCredits(personId);
 
-      // setCrew(formatTilesData(data.crew, 'person', 'job', true, false));
-      setCast(formatTilesData(data.cast, 'person', 'character', true, false));
+      const formattedCast = formatTilesData(data.cast, 'person', 'character', true, false);
+      const avoidNoImages = filterNoImage(formattedCast);
+      const avoidUncredits = filterUncredits(avoidNoImages);
+
+      const movie = avoidUncredits.filter((media) => media.type === 'movie');
+      const tv = avoidUncredits.filter((media) => media.type === 'tv');
+
+      setCastMovie(tilesSort(movie, currentSortMovie));
+      setCastTv(tilesSort(tv, currentSortMovie));
     } catch (error) {
       setIsDataError(true);
       console.error(error);
@@ -56,9 +71,16 @@ const Person: FC = () => {
           : <>
             <div className="l-content container">
               <AppSection>
-                <AppSectionHeader title="cast" />
+                <AppSectionHeader title="movies" hasSelect={true} currentSortOption={currentSortMovie} onSortChange={onMoviesSortChange} />
                 <div className="l-tiles_grid m-movies">
-                  {cast.map((media) => <AppTile tile={media} key={media.id} />)}
+                  {castMovie.map((media) => <AppTile tile={media} key={media.id} extraLabel='year' />)}
+                </div>
+              </AppSection>
+
+              <AppSection>
+                <AppSectionHeader title="tv shows" hasSelect={true} currentSortOption={currentSortTv} onSortChange={onTvsSortChange} />
+                <div className="l-tiles_grid m-movies">
+                  {castTv.map((media) => <AppTile tile={media} key={media.id} extraLabel='year' />)}
                 </div>
               </AppSection>
             </div>

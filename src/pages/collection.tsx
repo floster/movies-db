@@ -44,10 +44,6 @@ export default function Collection() {
     }
   }, [collectionId, currentSort]);
 
-
-
-  // useEffect(() => setTiles(tilesSort(tiles, currentSort)), [tiles, currentSort])
-
   useEffect(() => {
     const fetchData = async () => {
       await (getPartsData as () => Promise<void>)();

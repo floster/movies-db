@@ -3,7 +3,7 @@ export type UListTypes = 'top_rated' | 'upcoming' | 'now_playing';
 
 export type USortOptionValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
 
-export type UMediaTypes = 'collection' | 'tv' | 'movie' | 'person';
+export type UMediaTypes = 'collection' | 'tv' | 'movie' | 'person' | 'season' | 'episode';
 export type UMediaHeroData = IMovie | ICollection | ITv | IPerson;
 export type UTrendingType = 'movie' | 'tv' | 'person';
 export type UAppTileType = 'movie' | 'collection' | 'actor';
