@@ -17,11 +17,13 @@
         flex-grow: 1;
         display: flex;
         flex-direction: column;
+        padding-top: var(--gap-sm);
     }
 
     &__release {
         font-size: var(--font-size-sm);
         color: var(--color-grey-400);
+        margin-bottom: var(--gap-xs);
     }
 
     &__title {
@@ -34,7 +36,7 @@
     &__overview {
         font-size: var(--font-size);
         font-style: italic;
-        color: var(--color-grey-500);
+        color: var(--color-grey-700);
         margin-top: var(--gap-sm);
         max-width: 95%;
 

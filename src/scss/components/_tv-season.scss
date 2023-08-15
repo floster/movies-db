@@ -16,6 +16,8 @@
         margin: 0;
 
         @include media(md) {
+            position: sticky;
+            top: 0;
             width: 20%;
         }
     }
@@ -23,18 +25,15 @@
     &__content {
         display: flex;
         flex-direction: column;
-        gap: var(--gap-xl);
+        gap: var(--gap-xxl);
         flex-grow: 1;
-
-        @include media(md) {
-            gap: var(--gap-md);
-        }
     }
 
     &__header {
         display: flex;
         flex-direction: column;
         gap: var(--gap-xs);
+        padding-top: var(--gap-sm);
 
         @include media(md) {
             gap: 0;
