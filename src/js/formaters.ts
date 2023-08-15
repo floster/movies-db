@@ -16,11 +16,13 @@ export function formatTilesData<T extends UTileData>(data: T[], type: UMediaType
         const link = ('link' in item) ? item.link : null;
         const year = (item as IBaseMovie).year || null;
 
+        const dataType = (item as IPersonCast).media_type || item.type || type;
+
         const labelText = (typeof label === 'object') ? `${item[label[0]]} ${label[1]}` : `${item[label]}`;
 
         return {
             id: item.id,
-            type,
+            type: dataType,
             link: link,
             poster: item.poster!,
             title: item.title,

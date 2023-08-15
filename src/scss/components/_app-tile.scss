@@ -152,6 +152,18 @@
         }
     }
 
+    &__extraLabel {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: rgba(32, 137, 223, .7);
+        color: var(--color-white);
+        font-size: var(--font-size-sm);
+        line-height: 2;
+        border-radius: var(--radius-sm) var(--radius) var(--radius-sm) var(--radius-sm);
+        padding: 0 var(--gap-xs);
+    }
+
     .app-favorite {
         position: absolute;
         top: 0;

@@ -7,9 +7,10 @@ import AppProgress from "./AppProgress";
 interface AppTileProps {
     tile: ITileData;
     isRow?: boolean;
+    extraLabel?: 'year' | 'type';
 }
 
-const AppTile: FC<AppTileProps> = ({ tile, isRow = false }) => {
+const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
     const classes = ['app-tile'];
     if (tile.type) classes.push(`m-${tile.type}`);
     if (isRow) classes.push('m-row');
@@ -19,6 +20,8 @@ const AppTile: FC<AppTileProps> = ({ tile, isRow = false }) => {
     const tileInner = (
         <>
             <AppPicture img={tile.poster} alt={tile.title + ' poster'} />
+
+            {(extraLabel) && <span className="app-tile__extraLabel">{tile[extraLabel]}</span>}
 
             {tile.favorite && <AppFavorite checked={false} title={tile.title} />}
             <div className="app-tile__content">
