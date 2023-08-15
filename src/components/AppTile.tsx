@@ -6,14 +6,12 @@ import AppProgress from "./AppProgress";
 
 interface AppTileProps {
     tile: ITileData;
-    isCarouselItem?: boolean;
     isRow?: boolean;
 }
 
-const AppTile: FC<AppTileProps> = ({ tile, isCarouselItem = false, isRow = false }) => {
+const AppTile: FC<AppTileProps> = ({ tile, isRow = false }) => {
     const classes = ['app-tile'];
     if (tile.type) classes.push(`m-${tile.type}`);
-    if (isCarouselItem) classes.push('app-carousel__item');
     if (isRow) classes.push('m-row');
 
     const isLink = !!tile.link;

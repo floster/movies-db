@@ -20,7 +20,7 @@ const Person: FC = () => {
   const personId = getIdFromLink(params.id!);
 
   const [cast, setCast] = useState([] as ITileData[]);
-  const [crew, setCrew] = useState([] as ITileData[]);
+  // const [crew, setCrew] = useState([] as ITileData[]);
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
 
@@ -28,7 +28,7 @@ const Person: FC = () => {
     try {
       const data = await tmdb.getPersonCredits(personId);
 
-      setCrew(formatTilesData(data.crew, 'person', 'job', true, false));
+      // setCrew(formatTilesData(data.crew, 'person', 'job', true, false));
       setCast(formatTilesData(data.cast, 'person', 'character', true, false));
     } catch (error) {
       setIsDataError(true);
@@ -59,14 +59,6 @@ const Person: FC = () => {
                 <AppSectionHeader title="cast" />
                 <div className="l-tiles_grid m-movies">
                   {cast.map((media) => <AppTile tile={media} key={media.id} />)}
-                </div>
-              </AppSection>
-            </div>
-            <div className="l-content container">
-              <AppSection>
-                <AppSectionHeader title="crew" />
-                <div className="l-tiles_grid m-movies">
-                  {crew.map((media) => <AppTile tile={media} key={media.id} />)}
                 </div>
               </AppSection>
             </div>

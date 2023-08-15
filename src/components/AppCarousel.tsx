@@ -72,7 +72,7 @@ export default function AppCarousel({ itemsType }: Props) {
                 {isDataLoading
                     ? <AppSpinner visible={true} />
                     : <div className="app-carousel__track">
-                        {items.map((item) => <AppTile tile={item} isCarouselItem={true} key={item.id} />)}
+                        {items.map((item) => <AppTile tile={item} key={item.id} />)}
                     </div>
                 }
             </div>
