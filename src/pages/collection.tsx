@@ -8,7 +8,8 @@ import { ITileData, USortOptionValues } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb-api';
 import AppError from '../components/AppError';
-import { formatTilesData, getIdFromLink, tilesSort } from '../js/helpers';
+import { getIdFromLink, tilesSort } from '../js/helpers';
+import { formatTilesData } from '../js/formaters';
 
 type CollectionParams = {
   id: string;

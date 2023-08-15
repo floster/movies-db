@@ -1,6 +1,5 @@
 import { API_BASE, API_KEY, API_POSTER_BASE, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
-import { IBaseMovie, ITileData, UMediaTypes, USortOptionValues, UTileData } from "../types/tmdb.types";
-
+import { ITileData, USortOptionValues } from "../types/tmdb.types";
 
 /**
  * Fetches JSON data from the specified URL with the provided parameters.
@@ -25,30 +24,8 @@ export async function getJSON<T>(url: string, params: string = ''): Promise<T> {
     return data;
 }
 
-export function formatTilesData<T extends UTileData>(data: T[], type: UMediaTypes, label: keyof T | [keyof T, string], rating: boolean, favorite: boolean): ITileData[] {
-    return data.map((item) => {
-        const votes = rating && ('votes' in item)
-            ? { average: item.votes.average, count: item.votes.count }
-            : null;
-
-        const link = ('link' in item) ? item.link : null;
-        const year = (item as IBaseMovie).year || null;
-
-        const labelText = (typeof label === 'object') ? `${item[label[0]]} ${label[1]}` : item[label];
-
-        return {
-            id: item.id,
-            type,
-            link: link,
-            poster: item.poster,
-            title: item.title,
-            label: labelText,
-            rating: votes,
-            favorite: favorite,
-            year
-        }
-    })
-}
+export const filterNoImage = (tiles: ITileData[]): ITileData[] => tiles.filter(tile => tile.poster.includes('via.placeholder.com') === false);
+export const filterUncredits = (tiles: ITileData[]): ITileData[] => tiles.filter(tile => tile.label.includes('uncredited') === false);
 
 export function tilesSort<T>(tiles: T[], option: USortOptionValues): T[] {
     const sortBy = option.split('_')[0] as keyof T;
@@ -67,7 +44,7 @@ export function tilesSort<T>(tiles: T[], option: USortOptionValues): T[] {
  * @param {number} size - The number of elements to include in the output array.
  * @returns {T[]} - A new array containing the first `size` elements of the input array.
  */
-export function cutArray(arr: [], size: number) {
+export function cutArray<T>(arr: T[], size: number): T[] {
     return [...arr].splice(0, size);
 }
 
@@ -118,7 +95,7 @@ export const createLink = (type: string, id: number, title: string) => {
     return `/${_type}/${id}-${kebabText(title)}`;
 }
 
-export const getPosterUrl = (posterPath: string | null) => {
+export const getPosterUrl = (posterPath: string): string => {
     return posterPath
         ? `${API_POSTER_BASE}${posterPath}`
         : POSTER_NO_IMAGE;

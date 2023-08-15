@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import tmdb from '../js/tmdb-api'
 import { OPTIONS_MOVIE_LIST } from '../js/config'
 import { UListTypes, ITileData } from '../types/tmdb.types'
-import { formatTilesData } from '../js/helpers'
+import { formatTilesData } from '../js/formaters'
 
 export default function MainPageSidebar() {
     const [currentListType, setCurrentListType] = useState<UListTypes>(OPTIONS_MOVIE_LIST[0].value); // ['popular', 'top_rated', 'upcoming', 'now_playing']

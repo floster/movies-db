@@ -3,9 +3,34 @@
 /////////////////////////////////////////
 
 import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawTrendingTv, RawTv, RawTvEpisode, RawTvSeason } from "../types/raw-tmdb.types";
-import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode } from "../types/tmdb.types";
+import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData } from "../types/tmdb.types";
 import { API_BACKDROP_BASE } from "./config";
 import { createLink, formatDate, getPosterUrl } from "./helpers";
+
+export function formatTilesData<T extends UTileData>(data: T[], type: UMediaTypes, label: keyof T | [keyof T, string], rating: boolean, favorite: boolean): ITileData[] {
+    return data.map((item) => {
+        const votes = rating && ('votes' in item)
+            ? { average: item.votes.average, count: item.votes.count }
+            : null;
+
+        const link = ('link' in item) ? item.link : null;
+        const year = (item as IBaseMovie).year || null;
+
+        const labelText = (typeof label === 'object') ? `${item[label[0]]} ${label[1]}` : `${item[label]}`;
+
+        return {
+            id: item.id,
+            type,
+            link: link,
+            poster: item.poster!,
+            title: item.title,
+            label: labelText,
+            rating: votes,
+            favorite: favorite,
+            year
+        }
+    })
+}
 
 export function formatBaseMovie(part: RawBaseMovie): IBaseMovie {
     const poster = getPosterUrl(part.poster_path);

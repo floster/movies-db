@@ -14,7 +14,7 @@ export interface ITileData {
   link: string | null;
   poster: string;
   title: string;
-  label: string | number | [string | number, string];
+  label: string;
   rating: { average: number, count: number } | null;
   favorite: boolean;
   year: string | null

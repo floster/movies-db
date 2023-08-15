@@ -7,7 +7,8 @@ import { useParams } from 'react-router-dom';
 import tmdb from '../js/tmdb-api';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
-import { formatTilesData, getIdFromLink } from '../js/helpers';
+import { getIdFromLink } from '../js/helpers';
+import { formatTilesData } from '../js/formaters';
 import { ITileData } from '../types/tmdb.types';
 
 type PersonParams = {

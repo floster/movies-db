@@ -152,6 +152,9 @@ export default class TMDB {
     const url = `/movie/${id}/credits`;
     const data: RawMovieCredits = await getJSON(url);
 
+    console.log(data.cast);
+
+
     const cast = formatPersons(data.cast, 'cast') as IMovieCast[];
     const crew = formatPersons(data.crew, 'crew') as IMovieCrew[];
 

@@ -8,7 +8,8 @@ import tmdb from '../js/tmdb-api';
 import { ITileData, ITvSeason } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
-import { formatTilesData, getIdFromLink } from '../js/helpers';
+import { getIdFromLink } from '../js/helpers';
+import { formatTilesData } from '../js/formaters';
 
 type TvParams = {
   id: string;

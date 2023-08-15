@@ -6,10 +6,11 @@ import MovieCrew from '../components/MovieCrew';
 import AppTile from '../components/AppTile';
 import { useParams } from 'react-router-dom';
 import tmdb from '../js/tmdb-api';
-import { IMovieCast, IMovieCrew, ITileData } from '../types/tmdb.types';
+import { IMovieCrew, ITileData } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
-import { formatTilesData, getIdFromLink } from '../js/helpers';
+import { cutArray, filterNoImage, filterUncredits, getIdFromLink } from '../js/helpers';
+import { formatTilesData } from '../js/formaters';
 
 type MovieParams = {
   id: string;
@@ -19,21 +20,31 @@ const Movie: FC = () => {
   const params = useParams<MovieParams>();
   const movieId = getIdFromLink(params.id!);
 
-  const [crew, setCrew] = useState([] as IMovieCrew[]);
-  const [cast, setCast] = useState([] as IMovieCast[]);
-  const [tiles, setTiles] = useState([] as ITileData[]);
+  const [, setCrew] = useState([] as IMovieCrew[]);
+  const [crewToShow, setCrewToShow] = useState([] as IMovieCrew[]);
+  const [cast, setCast] = useState([] as ITileData[]);
+  const [castToShow, setCastToShow] = useState([] as ITileData[]);
+  const [isAllCastShowed, setIsAllCastShowed] = useState(false);
 
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
 
-  useEffect(() => setTiles(formatTilesData(cast, 'person', 'character', false, false)), [cast]);
+  const showAllCast = () => {
+    setCastToShow(cast);
+    setIsAllCastShowed(true);
+  };
 
   const getData = useCallback(async () => {
     try {
       const data = await tmdb.getMovieCredits(movieId);
 
-      setCast(data.cast);
       setCrew(data.crew);
+      setCrewToShow(cutArray(data.crew, 6));
+      const formattedCast = formatTilesData(data.cast, 'person', 'character', false, false);
+      const avoidNoImages = filterNoImage(formattedCast);
+      const avoidUncredits = filterUncredits(avoidNoImages);
+      setCast(avoidUncredits);
+      setCastToShow(cutArray(avoidUncredits, 9))
     } catch (error) {
       setIsDataError(true);
       console.error(error);
@@ -60,7 +71,7 @@ const Movie: FC = () => {
           : <>
             <AppSection extraClass="m-movie_crew">
               <div className="container">
-                <MovieCrew members={crew} />
+                <MovieCrew members={crewToShow} />
                 <AppSectionHeader title="crew" />
               </div>
             </AppSection>
@@ -68,7 +79,8 @@ const Movie: FC = () => {
               <AppSection>
                 <AppSectionHeader title="cast" />
                 <div className="l-tiles_grid m-people">
-                  {tiles.map((tile) => <AppTile tile={tile} key={tile.id} />)}
+                  {castToShow.map((tile) => <AppTile tile={tile} key={tile.id} />)}
+                  {!isAllCastShowed && <button className='app-button' onClick={showAllCast}>show all</button>}
                 </div>
               </AppSection>
             </div>
