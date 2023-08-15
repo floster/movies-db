@@ -8,7 +8,7 @@ import { ITileData, USortOptionValues } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb-api';
 import AppError from '../components/AppError';
-import { formatTilesData, getIdFromLink } from '../js/helpers';
+import { formatTilesData, getIdFromLink, tilesSort } from '../js/helpers';
 
 type CollectionParams = {
   id: string;
@@ -19,30 +19,41 @@ export default function Collection() {
   const collectionId = getIdFromLink(params.id!);
 
   const [tiles, setTiles] = useState([] as ITileData[]);
+  const [sortedTiles, setSortedTiles] = useState([] as ITileData[]);
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
-  const [currentSort, setCurrentSort] = useState('year_asc' as USortOptionValues);
+  const [currentSort, setCurrentSort] = useState('year_desc' as USortOptionValues);
 
   const onSortChange = (option: USortOptionValues) => setCurrentSort(option);
+
+  const sortChanged = useCallback(() => setSortedTiles(tilesSort(tiles, currentSort)), [tiles, currentSort]);
 
   const getPartsData = useCallback(async () => {
     try {
       const data = await tmdb.getCollection(collectionId);
-      setTiles(formatTilesData(data.parts, 'movie', 'year', true, true))
+      const formattedTiles = formatTilesData(data.parts, 'movie', 'year', true, true);
+      setTiles(formattedTiles);
+      const sortedTiles = tilesSort(formattedTiles, currentSort);
+      setSortedTiles(sortedTiles);
     } catch (error) {
       setIsDataError(true);
       console.error(error);
     } finally {
       setIsDataLoading(false);
     }
-  }, [collectionId]);
+  }, [collectionId, currentSort]);
+
+
+
+  // useEffect(() => setTiles(tilesSort(tiles, currentSort)), [tiles, currentSort])
 
   useEffect(() => {
     const fetchData = async () => {
       await (getPartsData as () => Promise<void>)();
     };
     fetchData();
-  }, [getPartsData]);
+    sortChanged();
+  }, [getPartsData, sortChanged]);
 
   return (
     <>
@@ -56,7 +67,7 @@ export default function Collection() {
               <AppSection extraClass='m-movies_list'>
                 <AppSectionHeader title={`${tiles.length} parts`} hasSelect={true} currentSortOption={currentSort} onSortChange={onSortChange} />
                 <div className="l-tiles_grid m-movies">
-                  {tiles.map((tile) => <AppTile tile={tile} key={tile.id} />)}
+                  {sortedTiles.map((tile) => <AppTile tile={tile} key={tile.id} />)}
                 </div>
               </AppSection>
             </>}

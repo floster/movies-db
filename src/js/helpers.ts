@@ -1,5 +1,5 @@
 import { API_BASE, API_KEY, API_POSTER_BASE, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
-import { ITileData, UMediaTypes, USortOptionValues, UTileData } from "../types/tmdb.types";
+import { IBaseMovie, ITileData, UMediaTypes, USortOptionValues, UTileData } from "../types/tmdb.types";
 
 
 /**
@@ -31,7 +31,8 @@ export function formatTilesData<T extends UTileData>(data: T[], type: UMediaType
             ? { average: item.votes.average, count: item.votes.count }
             : null;
 
-        const link = ('link' in item) ? item.link : null
+        const link = ('link' in item) ? item.link : null;
+        const year = (item as IBaseMovie).year || null;
 
         const labelText = (typeof label === 'object') ? `${item[label[0]]} ${label[1]}` : item[label];
 
@@ -44,6 +45,7 @@ export function formatTilesData<T extends UTileData>(data: T[], type: UMediaType
             label: labelText,
             rating: votes,
             favorite: favorite,
+            year
         }
     })
 }

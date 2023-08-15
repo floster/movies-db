@@ -17,6 +17,7 @@ export interface ITileData {
   label: string | number | [string | number, string];
   rating: { average: number, count: number } | null;
   favorite: boolean;
+  year: string | null
 }
 
 // comes from TMDB
