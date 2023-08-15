@@ -29,8 +29,12 @@ const Person: FC = () => {
   const onMoviesSortChange = (option: USortOptionValues) => setCurrentSortMovie(option);
   const onTvsSortChange = (option: USortOptionValues) => setCurrentSortTv(option);
 
-  useEffect(() => setCastMovie(tilesSort(castMovie, currentSortMovie)), [currentSortMovie]);
-  useEffect(() => setCastTv(tilesSort(castTv, currentSortTv)), [currentSortTv]);
+  useEffect(() => {
+    setCastMovie(tilesSort(castMovie, currentSortMovie))
+  }, [currentSortMovie]);
+  useEffect(() => {
+    setCastTv(tilesSort(castTv, currentSortTv))
+  }, [currentSortTv]);
 
   const getData = useCallback(async () => {
     try {
@@ -73,14 +77,14 @@ const Person: FC = () => {
               <AppSection>
                 <AppSectionHeader title="movies" hasSelect={true} currentSortOption={currentSortMovie} onSortChange={onMoviesSortChange} />
                 <div className="l-tiles_grid m-movies">
-                  {castMovie.map((media) => <AppTile tile={media} key={media.id} extraLabel='year' />)}
+                  {castMovie.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
                 </div>
               </AppSection>
 
               <AppSection>
                 <AppSectionHeader title="tv shows" hasSelect={true} currentSortOption={currentSortTv} onSortChange={onTvsSortChange} />
                 <div className="l-tiles_grid m-movies">
-                  {castTv.map((media) => <AppTile tile={media} key={media.id} extraLabel='year' />)}
+                  {castTv.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
                 </div>
               </AppSection>
             </div>
