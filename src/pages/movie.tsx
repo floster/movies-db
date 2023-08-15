@@ -69,13 +69,13 @@ const Movie: FC = () => {
         : isDataLoading
           ? <AppSpinner visible={true} />
           : <>
-            <AppSection extraClass="m-movie_crew">
+            {crewToShow.length !== 0 && <AppSection extraClass="m-movie_crew">
               <div className="container">
                 <MovieCrew members={crewToShow} />
                 <AppSectionHeader title="crew" />
               </div>
-            </AppSection>
-            <div className="l-content container">
+            </AppSection>}
+            {castToShow.length !== 0 && <div className="l-content container">
               <AppSection>
                 <AppSectionHeader title="cast" />
                 <div className="l-tiles_grid m-people">
@@ -83,7 +83,7 @@ const Movie: FC = () => {
                   {!isAllCastShowed && <button className='app-button' onClick={showAllCast}>show all</button>}
                 </div>
               </AppSection>
-            </div>
+            </div>}
           </>
       }
     </section>
