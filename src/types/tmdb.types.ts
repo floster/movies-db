@@ -21,7 +21,6 @@ export interface ITileData {
 }
 
 // comes from TMDB
-export type UTmdbMediaType = 'movie' | 'tv' | 'person' | 'collection' | 'season' | 'episode';
 export type UTmdbTvShowStatuses = 'Returning Series' | 'Planned' | 'In Production' | 'Ended' | 'Canceled' | 'Pilot';
 
 //////////////////////////////
@@ -52,7 +51,7 @@ export interface ICollection {
   id: number;
   link: string,
   title: string;
-  type: UTmdbMediaType;
+  type: UMediaTypes;
   overview: string;
   parts: IBaseMovie[];
   partsCount: number;
@@ -71,7 +70,7 @@ interface _BasePart {
   released: string,
   year: string,
   title: string;
-  type: UTmdbMediaType;
+  type: UMediaTypes;
   votes: { average: number, count: number };
 }
 
@@ -111,7 +110,7 @@ type _TvPart = {
   released: string,
   year: string,
   season_number: number,
-  type: UTmdbMediaType,
+  type: UMediaTypes,
   votes: { average: number, count: number };
 }
 
@@ -130,7 +129,7 @@ export interface ITvEpisode extends _TvPart {
 export interface IBasePerson {
   id: number;
   link: string,
-  type: UTmdbMediaType
+  type: UMediaTypes
   department: string;
   title: string;
   popularity: number;
@@ -147,13 +146,13 @@ export interface IPerson extends IBasePerson {
 
 
 export interface IPersonCrew extends _BasePart {
-  media_type: UTmdbMediaType;
+  media_type: UMediaTypes;
   department: string;
   job: string;
 }
 
 export interface IPersonCast extends _BasePart {
-  media_type: UTmdbMediaType;
+  media_type: UMediaTypes;
   character: string;
 }
 

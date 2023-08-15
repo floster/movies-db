@@ -1,4 +1,4 @@
-import { IBelonging, IGenre, UTmdbMediaType, UTmdbTvShowStatuses } from "./tmdb.types";
+import { IBelonging, IGenre, UMediaTypes, UTmdbTvShowStatuses } from "./tmdb.types";
 
 ////////////////////////////////////
 ////////// Main Responses //////////
@@ -14,7 +14,7 @@ export interface RawBaseMovie extends _RawBaseMovie {
 }
 
 export interface RawCollectionPart extends RawBaseMovie {
-    media_type: UTmdbMediaType;
+    media_type: UMediaTypes;
 }
 
 export interface RawMovie extends _RawBaseMovie {
@@ -47,7 +47,7 @@ export interface _RawBaseTv extends _RawBase {
 }
 
 export interface RawTrendingTv extends _RawBaseTv {
-    media_type: UTmdbMediaType;
+    media_type: UMediaTypes;
     genre_ids: number[];
 }
 
@@ -126,13 +126,13 @@ export interface RawPerson extends _RawPerson {
 
 // Person Credits - Crew & Cast
 type _RawPersonCrewOnlyFields = {
-    media_type: UTmdbMediaType;
+    media_type: UMediaTypes;
     department: string;
     job: string;
 }
 
 type _RawPersonCastOnlyFields = {
-    media_type: UTmdbMediaType;
+    media_type: UMediaTypes;
     character: string;
 }
 

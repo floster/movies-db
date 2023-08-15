@@ -7,31 +7,45 @@ import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBase
 import { API_BACKDROP_BASE } from "./config";
 import { createLink, formatDate, getPosterUrl } from "./helpers";
 
-export function formatTilesData<T extends UTileData>(data: T[], type: UMediaTypes, label: keyof T | [keyof T, string], rating: boolean, favorite: boolean): ITileData[] {
-    return data.map((item) => {
-        const votes = rating && ('votes' in item)
-            ? { average: item.votes.average, count: item.votes.count }
-            : null;
+export function formatTileData<T extends UTileData>(
+    tile: T,
+    type: UMediaTypes,
+    label: keyof T | [keyof T, string],
+    rating: boolean,
+    favorite: boolean
+): ITileData {
+    const votes = rating && ('votes' in tile)
+        ? { average: tile.votes.average, count: tile.votes.count }
+        : null;
 
-        const link = ('link' in item) ? item.link : null;
-        const year = (item as IBaseMovie).year || null;
+    const link = ('link' in tile) ? tile.link : null;
+    const year = (tile as IBaseMovie).year || null;
 
-        const dataType = (item as IPersonCast).media_type || item.type || type;
+    const dataType = (tile as IPersonCast).media_type || tile.type || type;
 
-        const labelText = (typeof label === 'object') ? `${item[label[0]]} ${label[1]}` : `${item[label]}`;
+    const labelText = (typeof label === 'object') ? `${tile[label[0]]} ${label[1]}` : `${tile[label]}`;
 
-        return {
-            id: item.id,
-            type: dataType,
-            link: link,
-            poster: item.poster!,
-            title: item.title,
-            label: labelText,
-            rating: votes,
-            favorite: favorite,
-            year
-        }
-    })
+    return {
+        id: tile.id,
+        type: dataType,
+        link: link,
+        poster: tile.poster!,
+        title: tile.title,
+        label: labelText,
+        rating: votes,
+        favorite: favorite,
+        year
+    }
+}
+
+export function formatTilesData<T extends UTileData>(
+    data: T[],
+    type: UMediaTypes,
+    label: keyof T | [keyof T, string],
+    rating: boolean,
+    favorite: boolean
+): ITileData[] {
+    return data.map((item) => formatTileData(item, type, label, rating, favorite));
 }
 
 export function formatBaseMovie(part: RawBaseMovie): IBaseMovie {

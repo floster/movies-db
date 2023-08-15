@@ -2,19 +2,20 @@ import { useEffect, useState } from 'react';
 import AppSection from '../components/AppSection';
 import AppSectionHeader from '../components/AppSectionHeader';
 import AppTile from '../components/AppTile';
-import { UTmdbMediaType, UTileData } from '../types/tmdb.types';
+import { ICollection, IMovie, IPerson, ITileData, ITv, UTileData } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb-api';
 import AppError from '../components/AppError';
 import { FAVORITES } from '../js/config';
+import { formatTileData } from '../js/formaters';
 
 interface Props {
-  type: UTmdbMediaType;
+  type: 'collection' | 'tv' | 'movie' | 'person' | 'season';
 }
 
 export default function FavoritesSection({ type }: Props) {
   const favoritesIds = FAVORITES[type];
-  const [favorites, setFavorites] = useState([] as UTileData[]);
+  const [favorites, setFavorites] = useState([] as ITileData[]);
   const [isFavoriteLoading, setIsFavoriteLoading] = useState(false);
   const [isFavoriteError, setIsFavoriteError] = useState(false);
 
@@ -22,19 +23,24 @@ export default function FavoritesSection({ type }: Props) {
     favoritesIds.forEach(async (favoriteId) => {
       try {
         setIsFavoriteLoading(true);
-        let data: UTileData;
+        let data = {} as ITileData;
+        let rawData = {} as UTileData;
         switch (type) {
           case 'collection':
-            data = await tmdb.getCollection(favoriteId);
+            rawData = await tmdb.getCollection(favoriteId);
+            data = formatTileData((rawData as ICollection), type, ['partsCount', 'parts'], true, true);
             break;
           case 'movie':
-            data = await tmdb.getMovie(favoriteId);
+            rawData = await tmdb.getMovie(favoriteId);
+            data = formatTileData((rawData as IMovie), type, 'year', true, true);
             break;
           case 'person':
-            data = await tmdb.getPerson(favoriteId);
+            rawData = await tmdb.getPerson(favoriteId);
+            data = formatTileData((rawData as IPerson), type, 'department', true, true);
             break;
           case 'tv':
-            data = await tmdb.getTvShow(favoriteId);
+            rawData = await tmdb.getTvShow(favoriteId);
+            data = formatTileData((rawData as ITv), type, ['seasons_qty', 'seasons'], true, true);
             break;
           default:
             setIsFavoriteError(true);

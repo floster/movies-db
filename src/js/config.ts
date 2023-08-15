@@ -44,7 +44,9 @@ export const MOVIES = [603692, 502356, 569094, 385687, 890771, 447277, 879444, 7
 export const TV_SHOWS = [71912, 615, 1399]
 export const PERSONS = [525, 500, 18897, 234352, 2963, 287, 31, 138, 976, 85]
 
-export const FAVORITES = {
+export const FAVORITES: {
+  [key in 'movie' | 'tv' | 'person' | 'collection' | 'season']: number[];
+} = {
   movie: MOVIES,
   tv: TV_SHOWS,
   person: PERSONS,
