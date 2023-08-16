@@ -7,8 +7,18 @@ import { UListTypes, ITileData, UListSortOptions } from '../types/tmdb.types'
 import { formatTilesData } from '../js/formaters'
 
 export default function MainPageSidebar() {
-    const [currentListType, setCurrentListType] = useState<UListSortOptions>(MOVIE_LIST_OPTIONS[0].value);
+    const getListType = (): UListSortOptions => {
+        const listType = localStorage.getItem('listType') || MOVIE_LIST_OPTIONS[0].value;
+        return listType as UListSortOptions;
+    }
+
+    const [currentListType, setCurrentListType] = useState<UListSortOptions>(getListType());
     const [list, setList] = useState<ITileData[]>([]);
+
+    const onListTypeChange = (value: UListSortOptions) => {
+        localStorage.setItem('listType', value);
+        setCurrentListType(value)
+    };
 
     const getList = useCallback(async () => {
         const mediaType = currentListType.split('__')[0] as 'movie' | 'tv';
@@ -24,8 +34,6 @@ export default function MainPageSidebar() {
         }
         fetchData();
     }, [getList]);
-
-    const onListTypeChange = (value: UListSortOptions) => setCurrentListType(value);
 
     return (
         <aside className="sidebar">

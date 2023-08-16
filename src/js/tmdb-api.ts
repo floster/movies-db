@@ -37,7 +37,19 @@ import {
 } from '../types/raw-tmdb.types';
 
 import { getJSON } from './helpers';
-import { formatBaseTvs, formatMovie, formatBaseMovies, formatPerson, formatPersons, formatTv, formatPersonCrew, formatPersonCast, formatTvSeason, formatCollection } from './formaters';
+
+import {
+  formatBaseTvs,
+  formatMovie,
+  formatBaseMovies,
+  formatPerson,
+  formatPersons,
+  formatTv,
+  formatPersonCrew,
+  formatPersonCast,
+  formatTvSeason,
+  formatCollection
+} from './formaters';
 
 export default class TMDB {
   static allGenres: IGenre[] = [];
@@ -64,6 +76,7 @@ export default class TMDB {
   // }
 
   // get page with 20 of 'top_rated', 'upcoming' or 'now_playing' movies
+  // along with popular and top rated tv shows
   static async getList(
     page: number,
     mediaType: 'movie' | 'tv',
@@ -83,7 +96,6 @@ export default class TMDB {
     }
 
     const data: RawMoviesList = await getJSON(url, params);
-    console.log('data', data);
     const media = mediaType === 'movie'
       ? formatBaseMovies(data.results as RawCollectionPart[])
       : formatBaseTvs(data.results as RawBaseTv[]);

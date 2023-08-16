@@ -39,7 +39,7 @@ export const LOCALES: Locale = {
   uk: 'UA',
   de: 'DE',
 };
-export const DEFAULT_LOCALE: AvalableLocales = 'uk';
+export const DEFAULT_LOCALE: AvalableLocales = 'en';
 
 export const COLLECTIONS = [9485, 645, 10, 528, 5039, 126125, 1570, 1575, 2150];
 export const MOVIES = [603692, 502356, 569094, 385687, 890771, 447277, 879444, 713704, 640146, 1073140];
