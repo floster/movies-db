@@ -1,5 +1,9 @@
+// TODO: refactor types to be more specific especially taking into account
+// the ITileData interface
+
 // possible Movie List types to get from TMDB
-export type UListTypes = 'top_rated' | 'upcoming' | 'now_playing';
+export type UListTypes = 'top_rated' | 'now_playing' | 'upcoming' | 'popular';
+export type UListSortOptions = 'movie__top_rated' | 'movie__now_playing' | 'movie__upcoming' | 'tv__top_rated' | 'tv__popular';
 
 export type USortOptionValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
 
@@ -41,7 +45,8 @@ export interface IBelonging {
 }
 
 export interface IListData {
-  movies: IBaseMovie[],
+  media: IBaseMovie[] | IBaseTv[],
+  media_type: 'movie' | 'tv',
   current_page: number,
   total_pages: number
 }

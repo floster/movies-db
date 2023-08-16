@@ -47,7 +47,6 @@ export interface _RawBaseTv extends _RawBase {
 }
 
 export interface RawTrendingTv extends _RawBaseTv {
-    media_type: UMediaTypes;
     genre_ids: number[];
 }
 
@@ -175,7 +174,7 @@ export interface RawList {
 }
 
 export interface RawMoviesList extends RawList {
-    results: RawBaseMovie[]
+    results: RawBaseMovie[] | RawBaseTv[]
 }
 
 export interface RawTrendingList extends RawList {

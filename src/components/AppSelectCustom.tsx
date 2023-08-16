@@ -1,10 +1,10 @@
 import SvgIcon from "./SvgIcon"
-import { OPTIONS_MOVIE_LIST } from '../js/config'
-import { UListTypes } from '../types/tmdb.types'
+import { MOVIE_LIST_OPTIONS } from '../js/config'
+import { UListSortOptions } from '../types/tmdb.types'
 
 interface Props {
-    currentListType: UListTypes,
-    onListTypeChange: (value: UListTypes) => void
+    currentListType: UListSortOptions,
+    onListTypeChange: (value: UListSortOptions) => void
 }
 
 export default function AppSelectCustom({ onListTypeChange, currentListType }: Props) {
@@ -13,8 +13,8 @@ export default function AppSelectCustom({ onListTypeChange, currentListType }: P
             <span className="app-select__arrow" aria-hidden="true">
                 <SvgIcon icon="chevron_down" />
             </span>
-            <select name="movies type" id="moviesTypeSelect" aria-label="current movies type" value={currentListType} onChange={e => onListTypeChange(e.target.value as UListTypes)}>
-                {OPTIONS_MOVIE_LIST.map((option) => <option value={option.value} key={option.value}>{option.title.toLowerCase()}</option>)}
+            <select name="movies type" id="moviesTypeSelect" aria-label="current movies type" value={currentListType} onChange={e => onListTypeChange(e.target.value as UListSortOptions)}>
+                {MOVIE_LIST_OPTIONS.map((option) => <option value={option.value} key={option.value}>{option.title.toLowerCase()}</option>)}
             </select>
         </div>
     )

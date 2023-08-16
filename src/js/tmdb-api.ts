@@ -35,6 +35,7 @@ import {
   RawBasePerson,
   RawPersonCredits,
   RawTvSeason,
+  RawBaseTv,
 } from '../types/raw-tmdb.types';
 
 import { createLink, getJSON } from './helpers';
@@ -65,9 +66,10 @@ export default class TMDB {
   // }
 
   // get page with 20 of 'top_rated', 'upcoming' or 'now_playing' movies
-  static async getMoviesList(
+  static async getList(
     page: number,
-    listType: UListTypes
+    mediaType: 'movie' | 'tv',
+    listType: UListTypes,
   ): Promise<IListData> {
     let url = '';
     let params = '';
@@ -78,15 +80,19 @@ export default class TMDB {
       url = `/discover/movie`;
       params = `sort_by=primary_release_date.asc&primary_release_date.gte=${oneWeekLaterStr}`;
     } else {
-      url = `/movie/${listType}`;
+      url = `/${mediaType}/${listType}`;
       params = `page=${page}`;
     }
 
     const data: RawMoviesList = await getJSON(url, params);
-    const movies = formatBaseMovies(data.results as RawCollectionPart[]);
+    console.log('data', data);
+    const media = mediaType === 'movie'
+      ? formatBaseMovies(data.results as RawCollectionPart[])
+      : formatBaseTvs(data.results as RawBaseTv[]);
 
     return {
-      movies,
+      media,
+      media_type: mediaType,
       current_page: data.page,
       total_pages: data.total_pages,
     };

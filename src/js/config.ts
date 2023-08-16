@@ -8,15 +8,17 @@ export const POSTER_NO_IMAGE =
   'https://via.placeholder.com/300x450/dfe8ec/d95959/?text=No+Image';
 
 // available list types to get from TMDB
-type ListTypes = 'top_rated' | 'upcoming' | 'now_playing';
+type ListTypes = 'movie__top_rated' | 'movie__now_playing' | 'movie__upcoming' | 'tv__top_rated' | 'tv__popular';
 interface MovieListSelectOption {
   title: string;
   value: ListTypes;
 }
-export const OPTIONS_MOVIE_LIST: MovieListSelectOption[] = [
-  { title: 'Now Playing', value: 'now_playing' },
-  { title: 'Top Rated', value: 'top_rated' },
-  { title: 'Upcoming', value: 'upcoming' },
+export const MOVIE_LIST_OPTIONS: MovieListSelectOption[] = [
+  { title: 'movies\\Now Playing', value: 'movie__now_playing' },
+  { title: 'movies\\Top Rated', value: 'movie__top_rated' },
+  { title: 'movies\\Upcoming', value: 'movie__upcoming' },
+  { title: 'tvs\\Popular', value: 'tv__popular' },
+  { title: 'tvs\\Top Rated', value: 'tv__top_rated' },
 ];
 
 interface SortOption {

@@ -2,7 +2,7 @@
 ////////// TMDB API formatters //////////
 /////////////////////////////////////////
 
-import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawTrendingTv, RawTv, RawTvEpisode, RawTvSeason } from "../types/raw-tmdb.types";
+import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawTv, RawTvEpisode, RawTvSeason } from "../types/raw-tmdb.types";
 import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData } from "../types/tmdb.types";
 import { API_BACKDROP_BASE } from "./config";
 import { createLink, formatDate, getPosterUrl } from "./helpers";
@@ -132,7 +132,7 @@ export function formatBaseTv(tv: RawBaseTv): IBaseTv {
     return formatedData;
 }
 
-export function formatBaseTvs(shows: RawTrendingTv[]): IBaseTv[] {
+export function formatBaseTvs(shows: RawBaseTv[]): IBaseTv[] {
     return shows.map(show => formatBaseTv(show));
 }
 
