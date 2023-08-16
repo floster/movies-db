@@ -51,7 +51,7 @@ export function formatTilesData<T extends UTileData>(
 export function formatBaseMovie(part: RawBaseMovie): IBaseMovie {
     const poster = getPosterUrl(part.poster_path);
 
-    const date = formatDate(new Date(part.release_date));
+    const date = formatDate(part.release_date);
 
     const formatedData: IBaseMovie = {
         adult: part.adult,
@@ -79,8 +79,8 @@ export function formatBaseMovies(movies: RawCollectionPart[]): IBaseMovie[] {
 export function formatTv(tv: RawTv): ITv {
     const poster = getPosterUrl(tv.poster_path);
 
-    const date = formatDate(new Date(tv.first_air_date));
-    const finishedDate = formatDate(new Date(tv.last_air_date));
+    const date = formatDate(tv.first_air_date);
+    const finishedDate = formatDate(tv.last_air_date);
 
     const formatedData: ITv = {
         adult: tv.adult,
@@ -111,7 +111,7 @@ export function formatTv(tv: RawTv): ITv {
 export function formatBaseTv(tv: RawBaseTv): IBaseTv {
     const poster = getPosterUrl(tv.poster_path);
 
-    const date = formatDate(new Date(tv.first_air_date));
+    const date = formatDate(tv.first_air_date);
 
     const formatedData: IBaseTv = {
         adult: tv.adult,
@@ -138,7 +138,7 @@ export function formatBaseTvs(shows: RawBaseTv[]): IBaseTv[] {
 
 export function formatTvSeason(season: RawTvSeason): ITvSeason {
     const poster = getPosterUrl(season.poster_path);
-    const date = formatDate(new Date(season.air_date));
+    const date = formatDate(season.air_date);
     const episodesQty = season.episodes?.length || season.episode_count || 0;
 
     const episodes = season.episodes?.length ? formatTvEpisodes(season.episodes) : [];
@@ -165,7 +165,7 @@ export function formatTvSeasons(seasons: RawTvSeason[]): ITvSeason[] {
 }
 
 export function formatTvEpisode(episode: RawTvEpisode): ITvEpisode {
-    const date = formatDate(new Date(episode.air_date));
+    const date = formatDate(episode.air_date);
 
     return {
         id: episode.id,
@@ -191,7 +191,7 @@ export function formatTvEpisodes(episodes: RawTvEpisode[]): ITvEpisode[] {
 export function formatMovie(movie: RawMovie): IMovie {
     const poster = getPosterUrl(movie.poster_path);
 
-    const date = formatDate(new Date(movie.release_date));
+    const date = formatDate(movie.release_date);
 
     const formatedData: IMovie = {
         adult: movie.adult,
@@ -236,8 +236,8 @@ export function formatBasePerson(person: RawBasePerson): IBasePerson {
 export function formatPerson(member: RawPerson): IPerson {
     const basicData = formatBasePerson(member);
 
-    const birthday = formatDate(new Date(member.birthday));
-    const deathday = formatDate(member.deathday ? new Date(member.deathday) : null);
+    const birthday = formatDate(member.birthday);
+    const deathday = formatDate(member.deathday ? member.deathday : null);
 
     return {
         ...basicData,

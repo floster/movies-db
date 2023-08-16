@@ -65,11 +65,14 @@ export const getIdFromLink = (link: string): number => parseInt(link.split('-')[
  * @returns An object with the 'MMM DD, YYYY' date and the year itself.
  */
 export const formatDate = (date: Date | null) => {
+    console.log('formatDate ->', date);
+
     if (!date) return { full: '-', year: '' };
 
+    const _date = new Date(date);
     const localeString = `${DEFAULT_LOCALE}-${LOCALES[DEFAULT_LOCALE]}`; // 'en-US'
-    const full = date.toLocaleDateString(localeString, { month: 'short', day: 'numeric', year: 'numeric' });
-    const year = date.getFullYear() + '';
+    const full = _date.toLocaleDateString(localeString, { month: 'short', day: 'numeric', year: 'numeric' });
+    const year = _date.getFullYear() + '';
     return { full, year };
 }
 
