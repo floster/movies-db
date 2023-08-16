@@ -2,8 +2,8 @@
 ////////// TMDB API formatters //////////
 /////////////////////////////////////////
 
-import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawTv, RawTvEpisode, RawTvSeason } from "../types/raw-tmdb.types";
-import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData } from "../types/tmdb.types";
+import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollection, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawTv, RawTvEpisode, RawTvSeason } from "../types/raw-tmdb.types";
+import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData, ICollection } from "../types/tmdb.types";
 import { API_BACKDROP_BASE } from "./config";
 import { createLink, formatDate, getPosterUrl } from "./helpers";
 
@@ -48,6 +48,22 @@ export function formatTilesData<T extends UTileData>(
     return data.map((item) => formatTileData(item, type, label, rating, favorite));
 }
 
+export function formatCollection(collection: RawCollection): ICollection {
+    const poster = getPosterUrl(collection.poster_path);
+
+    return {
+        backdrop: `${API_BACKDROP_BASE}${collection.backdrop_path}`,
+        id: collection.id,
+        link: createLink('collection', collection.id, collection.name),
+        title: collection.name,
+        overview: collection.overview,
+        parts: formatBaseMovies(collection.parts),
+        partsCount: collection.parts.length,
+        poster,
+        type: 'collection',
+    }
+}
+
 export function formatBaseMovie(part: RawBaseMovie): IBaseMovie {
     const poster = getPosterUrl(part.poster_path);
 
@@ -62,7 +78,7 @@ export function formatBaseMovie(part: RawBaseMovie): IBaseMovie {
         type: 'movie',
         overview: part.overview,
         popularity: part.popularity,
-        poster: poster,
+        poster,
         released: date.full,
         year: date.year,
         title: part.title,

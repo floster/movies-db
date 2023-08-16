@@ -1,6 +1,4 @@
 import {
-  API_POSTER_BASE,
-  API_BACKDROP_BASE,
   COLLECTIONS
 } from './config';
 
@@ -38,8 +36,8 @@ import {
   RawBaseTv,
 } from '../types/raw-tmdb.types';
 
-import { createLink, getJSON } from './helpers';
-import { formatBaseTvs, formatMovie, formatBaseMovies, formatPerson, formatPersons, formatTv, formatPersonCrew, formatPersonCast, formatTvSeason } from './formaters';
+import { getJSON } from './helpers';
+import { formatBaseTvs, formatMovie, formatBaseMovies, formatPerson, formatPersons, formatTv, formatPersonCrew, formatPersonCast, formatTvSeason, formatCollection } from './formaters';
 
 export default class TMDB {
   static allGenres: IGenre[] = [];
@@ -102,17 +100,7 @@ export default class TMDB {
     const url = `/collection/${id}`;
     const data: RawCollection = await getJSON(url);
 
-    const collection: ICollection = {
-      backdrop: `${API_BACKDROP_BASE}${data.backdrop_path}`,
-      id: data.id,
-      link: createLink('collection', data.id, data.name),
-      title: data.name,
-      overview: data.overview,
-      parts: formatBaseMovies(data.parts),
-      partsCount: data.parts.length,
-      poster: `${API_POSTER_BASE}${data.poster_path}`,
-      type: 'collection',
-    }
+    const collection = formatCollection(data);
 
     return collection;
   }
