@@ -97,7 +97,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
 
                 {hasGenres && renderTags()}
                 {hasTagline && <h3 className="media-hero__subtitle">{(data as IMovie).tagline}</h3>}
-                {isPerson && <h3 className="media-hero__subtitle">{(data as IPerson).place_of_birth}</h3>}
+                {(isPerson && (data as IPerson).place_of_birth) && <h3 className="media-hero__subtitle">{(data as IPerson).place_of_birth}</h3>}
 
                 {isPerson && <p className="media-hero__tags">{(data as IPerson).department}</p>}
 

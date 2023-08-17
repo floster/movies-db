@@ -21,11 +21,12 @@ const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
 
     const tileInner = (
         <>
-            <AppPicture img={tile.poster} alt={tile.title + ' poster'} />
+            <div className="app-tile__picture">
+                <AppPicture img={tile.poster} alt={tile.title + ' poster'} />
+                {(extraLabel) && <span className="app-tile__extraLabel">{tile[extraLabel]}</span>}
+            </div>
 
-            {(extraLabel) && <span className="app-tile__extraLabel">{tile[extraLabel]}</span>}
 
-            {isTorrentSearchable && <TorrentSearch term={tile.title} />}
             {('favorite' in tile) && <AppFavorite checked={false} title={tile.title} />}
             <div className="app-tile__content">
                 {(tile.rating && !isRow) && <AppProgress value={tile.rating.average} />}
@@ -38,15 +39,22 @@ const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
         </>
     )
 
-    return (
+    const tileWrapper = (
         isLink ?
-            <a href={tile.link!} className={classes.join(' ')}>
+            <a href={tile.link!} className="app-tile__inner">
                 {tileInner}
             </a>
             :
-            <div className={classes.join(' ')}>
+            <div className="app-tile__inner">
                 {tileInner}
             </div>
+    )
+
+    return (
+        <article className={classes.join(' ')}>
+            {tileWrapper}
+            {isTorrentSearchable && <TorrentSearch term={tile.title} />}
+        </article>
     )
 }
 
