@@ -1,5 +1,8 @@
 import {
-  COLLECTIONS
+  API_BASE,
+  API_KEY,
+  COLLECTIONS,
+  DEFAULT_LOCALE
 } from './config';
 
 import {
@@ -36,7 +39,7 @@ import {
   RawBaseTv,
 } from '../types/raw-tmdb.types';
 
-import { getJSON } from './helpers';
+import { getLocalCountryCode } from './helpers';
 
 import {
   formatBaseTvs,
@@ -54,12 +57,35 @@ import {
 export default class TMDB {
   static allGenres: IGenre[] = [];
 
+  /**
+   * Fetches JSON data from the specified URL with the provided parameters.
+   * @template T - The type of data to fetch and return.
+   * @param {string} url - The URL to fetch data from.
+   * @param {string} [params=''] - The query parameters to include in the URL.
+   * @returns {Promise<T>} - A Promise that resolves with the fetched data.
+   * @throws {Error} - If an error occurs while fetching data.
+   */
+  static async getJSON<T>(url: string, params: string = ''): Promise<T> {
+    const fetchUrl = `${API_BASE}${url}`;
+    const fetchParams = new URLSearchParams(params);
+    fetchParams.append('api_key', API_KEY);
+    fetchParams.append('language', DEFAULT_LOCALE);
+    fetchParams.append('region', getLocalCountryCode());
+
+    const response: Response = await fetch(fetchUrl + '?' + fetchParams.toString());
+
+    if (!response.ok) throw new Error(`getJSON: Error fetching data for URL: ${url}`);
+
+    const data: T = await response.json();
+    return data;
+  }
+
   // TODO: make below working
   // static async #getAllGenres<T extends IGenre>() {
   //   if (Object.keys(this.allGenres).length > 0) return;
 
   //   const params = `language=${DEFAULT_LOCALE}`;
-  //   const response = await getJSON('/genre/movie/list', params) as { genres: T[] };
+  //   const response = await this.getJSON('/genre/movie/list', params) as { genres: T[] };
   //   this.allGenres = response.genres;
   // }
 
@@ -95,7 +121,7 @@ export default class TMDB {
       params = `page=${page}`;
     }
 
-    const data: RawMoviesList = await getJSON(url, params);
+    const data: RawMoviesList = await this.getJSON(url, params);
     const media = mediaType === 'movie'
       ? formatBaseMovies(data.results as RawCollectionPart[])
       : formatBaseTvs(data.results as RawBaseTv[]);
@@ -110,7 +136,7 @@ export default class TMDB {
 
   static async getCollection(id: number): Promise<ICollection> {
     const url = `/collection/${id}`;
-    const data: RawCollection = await getJSON(url);
+    const data: RawCollection = await this.getJSON(url);
 
     const collection = formatCollection(data);
 
@@ -123,7 +149,7 @@ export default class TMDB {
 
   static async getTrending(type: UTrendingType, period: 'day' | 'week' = 'week') {
     const url = `/trending/${type}/${period}`;
-    const data: RawTrendingList = await getJSON(url);
+    const data: RawTrendingList = await this.getJSON(url);
 
     let trending: IBaseMovie[] | IBasePerson[] | IBaseTv[] = [];
 
@@ -147,7 +173,7 @@ export default class TMDB {
 
   static async getMovie(id: number): Promise<IMovie> {
     const url = `/movie/${id}`;
-    const data: RawMovie = await getJSON(url);
+    const data: RawMovie = await this.getJSON(url);
 
     const movie = formatMovie(data);
 
@@ -156,7 +182,7 @@ export default class TMDB {
 
   static async getMovieCredits(id: number): Promise<IMovieCredits> {
     const url = `/movie/${id}/credits`;
-    const data: RawMovieCredits = await getJSON(url);
+    const data: RawMovieCredits = await this.getJSON(url);
 
     const cast = formatPersons(data.cast, 'cast') as IMovieCast[];
     const crew = formatPersons(data.crew, 'crew') as IMovieCrew[];
@@ -166,7 +192,7 @@ export default class TMDB {
 
   static async getPerson(id: number): Promise<IPerson> {
     const url = `/person/${id}`;
-    const data: RawPerson = await getJSON(url);
+    const data: RawPerson = await this.getJSON(url);
 
     const person = formatPerson(data);
 
@@ -175,7 +201,7 @@ export default class TMDB {
 
   static async getPersonCredits(id: number) {
     const url = `/person/${id}/combined_credits`;
-    const data: RawPersonCredits = await getJSON(url);
+    const data: RawPersonCredits = await this.getJSON(url);
 
     const cast = formatPersonCast(data.cast);
     const crew = formatPersonCrew(data.crew);
@@ -185,14 +211,14 @@ export default class TMDB {
 
   static async getTvShow(id: number): Promise<ITv> {
     const url = `/tv/${id}`;
-    const data: RawTv = await getJSON(url);
+    const data: RawTv = await this.getJSON(url);
     const tv = formatTv(data);
     return tv;
   }
 
   static async getTvShowSeason(id: number, season: number): Promise<ITvSeason> {
     const url = `/tv/${id}/season/${season}`;
-    const data: RawTvSeason = await getJSON(url);
+    const data: RawTvSeason = await this.getJSON(url);
     const tv = formatTvSeason(data);
     return tv;
   }

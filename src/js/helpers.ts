@@ -1,28 +1,5 @@
-import { API_BASE, API_KEY, API_POSTER_BASE, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
+import { API_POSTER_BASE, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
 import { ITileData, USortOptionValues } from "../types/tmdb.types";
-
-/**
- * Fetches JSON data from the specified URL with the provided parameters.
- * @template T - The type of data to fetch and return.
- * @param {string} url - The URL to fetch data from.
- * @param {string} [params=''] - The query parameters to include in the URL.
- * @returns {Promise<T>} - A Promise that resolves with the fetched data.
- * @throws {Error} - If an error occurs while fetching data.
- */
-export async function getJSON<T>(url: string, params: string = ''): Promise<T> {
-    const fetchUrl = `${API_BASE}${url}`;
-    const fetchParams = new URLSearchParams(params);
-    fetchParams.append('api_key', API_KEY);
-    fetchParams.append('language', DEFAULT_LOCALE);
-    fetchParams.append('region', LOCALES[DEFAULT_LOCALE]);
-
-    const response: Response = await fetch(fetchUrl + '?' + fetchParams.toString());
-
-    if (!response.ok) throw new Error(`getJSON: Error fetching data for URL: ${url}`);
-
-    const data: T = await response.json();
-    return data;
-}
 
 export const filterNoImage = (tiles: ITileData[]): ITileData[] => tiles.filter(tile => tile.poster.includes('via.placeholder.com') === false);
 export const filterUncredits = (tiles: ITileData[]): ITileData[] => tiles.filter(tile => tile.label.includes('uncredited') === false);
@@ -59,6 +36,8 @@ export const getIdFromLink = (link: string): number => parseInt(link.split('-')[
 ////////////////////////////////////////
 ////////// general formatters //////////
 ////////////////////////////////////////
+export const getLocalCountryCode = () => LOCALES.filter(locale => locale.value === DEFAULT_LOCALE)[0].title;
+
 /**
  * Formats a date object 
  * @param date - The date object to be formatted.
@@ -68,7 +47,7 @@ export const formatDate = (date: Date | null) => {
     if (!date) return { full: '-', year: '' };
 
     const _date = new Date(date);
-    const localeString = `${DEFAULT_LOCALE}-${LOCALES[DEFAULT_LOCALE]}`; // 'en-US'
+    const localeString = `${DEFAULT_LOCALE}-${getLocalCountryCode()}`; // 'en-US'
     const full = _date.toLocaleDateString(localeString, { month: 'short', day: 'numeric', year: 'numeric' });
     const year = _date.getFullYear() + '';
     return { full, year };
