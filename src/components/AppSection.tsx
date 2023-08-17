@@ -7,7 +7,7 @@ interface Props {
 
 export default function AppSection({ children, extraClass }: Props) {
     return (
-        <section className={`app-section ${extraClass}`}>
+        <section className={`app-section ${extraClass || ''}`}>
             {children}
         </section>
     )
