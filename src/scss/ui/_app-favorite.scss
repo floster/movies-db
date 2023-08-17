@@ -4,7 +4,7 @@
 
     &:active,
     &:focus-within {
-        outline: 2px solid var(--color-secondary-dimmed);
+        outline: 1px dotted var(--color-grey-400);
     }
 
     input {

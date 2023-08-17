@@ -33,13 +33,14 @@ export const SORT_OPTIONS: SortOption[] = [
   { title: 'Title W-A', value: 'title_desc' },
 ];
 
-type AvalableLocales = 'en' | 'uk' | 'de';
-type Locale = { [key in AvalableLocales]: string };
-export const LOCALES: Locale = {
-  en: 'US',
-  uk: 'UA',
-  de: 'DE',
-};
+export type AvalableLocales = 'en' | 'uk' | 'de';
+type Locale = { title: string, value: AvalableLocales };
+
+export const LOCALES: Locale[] = [
+  { title: 'US', value: 'en' },
+  { title: 'UA', value: 'uk' },
+  { title: 'DE', value: 'de' },
+];
 export const DEFAULT_LOCALE: AvalableLocales = 'en';
 
 export const COLLECTIONS = [9485, 645, 10, 528, 5039, 126125, 1570, 1575, 2150];
