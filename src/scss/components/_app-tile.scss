@@ -115,6 +115,12 @@
             top: 50%;
             transform: translateY(-50%);
         }
+
+        .torrent-search {
+            top: 50%;
+            left: 4%;
+            transform: translateY(-50%) scale(1.5);
+        }
     }
 
     .app-picture {
@@ -171,6 +177,13 @@
         position: absolute;
         top: 0;
         right: 0;
+        z-index: 1;
+    }
+
+    .torrent-search {
+        position: absolute;
+        top: 0;
+        left: 0;
         z-index: 1;
     }
 

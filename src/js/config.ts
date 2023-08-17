@@ -7,6 +7,7 @@ export const API_BACKDROP_BASE =
 export const POSTER_NO_IMAGE =
   'https://via.placeholder.com/300x450/dfe8ec/d95959/?text=No+Image';
 
+export const TOLOKA_BASE = 'https://toloka.to/tracker.php';
 // available list types to get from TMDB
 type ListTypes = 'movie__top_rated' | 'movie__now_playing' | 'movie__upcoming' | 'tv__top_rated' | 'tv__popular';
 interface MovieListSelectOption {

@@ -3,6 +3,7 @@ import { ITileData } from "../types/tmdb.types";
 import AppFavorite from "./AppFavorite";
 import AppPicture from "./AppPicture";
 import AppProgress from "./AppProgress";
+import TorrentSearch from "./TorrentSearch";
 
 interface AppTileProps {
     tile: ITileData;
@@ -16,6 +17,7 @@ const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
     if (isRow) classes.push('m-row');
 
     const isLink = !!tile.link;
+    const isTorrentSearchable = isLink && tile.type === 'movie' || tile.type === 'tv';
 
     const tileInner = (
         <>
@@ -23,7 +25,8 @@ const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
 
             {(extraLabel) && <span className="app-tile__extraLabel">{tile[extraLabel]}</span>}
 
-            {tile.favorite && <AppFavorite checked={false} title={tile.title} />}
+            {isTorrentSearchable && <TorrentSearch term={tile.title} />}
+            {('favorite' in tile) && <AppFavorite checked={false} title={tile.title} />}
             <div className="app-tile__content">
                 {(tile.rating && !isRow) && <AppProgress value={tile.rating.average} />}
                 <p className="app-tile__label">

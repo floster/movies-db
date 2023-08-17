@@ -9,6 +9,7 @@ import { IBaseMovie, ICollection, IMovie, ITv, IGenre, UMediaTypes, UMediaHeroDa
 import { FC, useCallback, useEffect, useState } from "react";
 import tmdb from "../js/tmdb-api";
 import AppError from "./AppError";
+import TorrentSearch from "./TorrentSearch";
 
 interface MediaHeroProps {
     id: number;
@@ -75,6 +76,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
     const hasSeasons = (data as ITv).seasons_qty;
     const hasBelongsTo = (data as IMovie).belongs_to_collection;
     const hasDate = type !== 'tv' && (data as IMovie).released;
+    const hasTorrentSearch = type === 'tv' || type === 'movie' || type === 'season'
 
     const personDates = `${(data as IPerson).birthday?.date}${(data as IPerson).deathday?.date !== '-' ? ' - ' + (data as IPerson).deathday?.date : ''}`;
 
@@ -120,6 +122,9 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
                         </span>
                     </span>
                 }
+
+                {hasTorrentSearch && <TorrentSearch term={data.title} />}
+
                 {hasBelongsTo && <MoviePartOf data={(data as IMovie).belongs_to_collection} />}
             </footer>
         </div>

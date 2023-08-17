@@ -84,6 +84,17 @@ export const kebabText = (link: string) => {
         .replace(/^-+|-+$/g, ''); // remove leading and trailing hyphens
 }
 
+export const formatSearchTerm = (text: string) => {
+    if (!text) return '';
+    return text.toLowerCase()
+        .replace(/:/g, '') // remove colons
+        .replace(/,/g, '') // remove commas
+        .replace(/[^a-z0-9\s-]/g, '') // remove non-alphanumeric characters except spaces and hyphens
+        .replace(/\s+/g, '\+') // replace spaces with plus
+        .replace(/-+/g, '\+') // remove consecutive plus
+        .replace(/^-+|-+$/g, ''); // remove leading and trailing hyphens
+}
+
 /**
  * Creates a link string from the provided type, ID, and title.
  * @param {string} type - The type of the link (e.g. 'movie', 'tv', etc.).
