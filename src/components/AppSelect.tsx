@@ -1,17 +1,21 @@
-import { SORT_OPTIONS } from "../js/config"
-import { USortOptionValues } from "../types/tmdb.types";
-
-interface Props {
-    currentSortOption: USortOptionValues;
-    onSortChange: (option: USortOptionValues) => void;
+interface option {
+    title: string;
+    value: string;
 }
 
-export default function AppSelect({ currentSortOption, onSortChange }: Props) {
+interface Props {
+    options: option[];
+    currentOption: string;
+    optionChanged: (option: string) => void;
+    label?: string
+}
+
+export default function AppSelect({ options, currentOption, optionChanged, label }: Props) {
     return (
         <div className="app-select">
-            <label htmlFor="sortParts" className="app-select__label">Sort by:</label>
-            <select name="sortParts" id="sortParts" value={currentSortOption} onChange={e => onSortChange(e.target.value as USortOptionValues)}>
-                {SORT_OPTIONS.map((option) => (
+            {label && <label className="app-select__label">{label}</label>}
+            <select value={currentOption} onChange={e => optionChanged(e.target.value)}>
+                {options.map((option) => (
                     <option
                         value={option.value}
                         key={option.value}
