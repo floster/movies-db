@@ -4,7 +4,7 @@ import { useSearchDialog } from "../contexts/SearchDialogContext";
 
 
 export default function AppHeader() {
-    const { toggle } = useSearchDialog();
+    const { show } = useSearchDialog();
 
     return (
         <header className="app-header">
@@ -16,7 +16,7 @@ export default function AppHeader() {
                     <div className="app-header__locale">
                         <ChangeLocale />
                     </div>
-                    <button className="app-button m-icon m-secondary open-search" aria-label="open search dialog" onClick={toggle}>
+                    <button className="app-button m-icon m-secondary open-search" aria-label="open search dialog" onClick={show}>
                         <SvgIcon icon="search" />
                     </button>
                     <a className="app-button m-open-favorites has-items m-icon m-primary" href="/favorites"

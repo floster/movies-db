@@ -8,12 +8,12 @@ interface Props {
 export default function AppDialog({ children }: Props) {
     const ref = useRef<HTMLDialogElement>(null);
 
-    const { visible, toggle } = useSearchDialog();
+    const { visible, hide } = useSearchDialog();
 
     const dialogOnClick = (e: React.MouseEvent<HTMLDialogElement>) => {
         const target = e.target as HTMLElement;
         if (target.nodeName === 'DIALOG') {
-            toggle();
+            hide();
         }
     }
 
