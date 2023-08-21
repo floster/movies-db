@@ -7,6 +7,7 @@ import Layout from './components/Layout'
 import NoMatch from './pages/404'
 import Favorites from './pages/favorites'
 import Tv from './pages/tv'
+import Search from './pages/search';
 
 export default function App() {
 
@@ -20,6 +21,8 @@ export default function App() {
           <Route path="tv/:id" element={<Tv />} />
           <Route path="collection/:id" element={<Collection />} />
           <Route path="favorites/" element={<Favorites />} />
+          <Route path="favorites/" element={<Favorites />} />
+          <Route path="search/" element={<Search />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes >
