@@ -1,25 +1,20 @@
 import { Outlet } from "react-router-dom";
 import AppHeader from "./AppHeader";
 import '../app.scss'
-import AppDialog from "./AppDialog";
+import AppSearchDialog from "./AppSearchDialog";
 import SearchForm from "./SearchForm";
-import { useState } from "react";
+import { SearchDialogProvider } from "../contexts/SearchDialogContext";
 
 export default function Layout() {
-    const [isSearchFormOpen, setIsSearchFormOpen] = useState(false);
-
-    const openSearchDialog = () => setIsSearchFormOpen(true);
-    const closeSearchDialog = () => setIsSearchFormOpen(false);
-
     return (
-        <>
-            <AppHeader openSearch={openSearchDialog} />
+        <SearchDialogProvider>
+            <AppHeader />
 
             <Outlet />
 
-            <AppDialog isOpened={isSearchFormOpen} onClose={closeSearchDialog}>
+            <AppSearchDialog>
                 <SearchForm />
-            </AppDialog>
-        </>
+            </AppSearchDialog>
+        </SearchDialogProvider>
     )
 }

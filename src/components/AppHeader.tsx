@@ -1,16 +1,10 @@
-import { useState } from "react";
 import SvgIcon from "./SvgIcon";
-import AppSelect from "./AppSelect";
-import { LOCALES } from "../js/config";
-
-interface Props {
-    openSearch: () => void;
-}
-
-export default function AppHeader({ openSearch }: Props) {
-    const [locale, setLocale] = useState('en');
+import ChangeLocale from "./ChangeLocale";
+import { useSearchDialog } from "../contexts/SearchDialogContext";
 
 
+export default function AppHeader() {
+    const { toggle } = useSearchDialog();
 
     return (
         <header className="app-header">
@@ -20,9 +14,9 @@ export default function AppHeader({ openSearch }: Props) {
                 </a>
                 <nav className="app-header__nav">
                     <div className="app-header__locale">
-                        <AppSelect options={LOCALES} currentOption={locale} optionChanged={(locale) => setLocale(locale)} />
+                        <ChangeLocale />
                     </div>
-                    <button className="app-button m-icon m-secondary open-search" aria-label="open search dialog" onClick={openSearch}>
+                    <button className="app-button m-icon m-secondary open-search" aria-label="open search dialog" onClick={toggle}>
                         <SvgIcon icon="search" />
                     </button>
                     <a className="app-button m-open-favorites has-items m-icon m-primary" href="/favorites"
