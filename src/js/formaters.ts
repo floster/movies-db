@@ -31,7 +31,7 @@ export function formatTileData<T extends UTileData>(
         link: link,
         poster: tile.poster!,
         title: tile.title,
-        label: labelText,
+        label: labelText || '---',
         rating: votes,
         favorite: favorite,
         year

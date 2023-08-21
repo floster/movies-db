@@ -4,6 +4,7 @@
     max-width: 100%;
     transition: box-shadow 0.2s ease-out;
     background-color: var(--color-white);
+    overflow: hidden;
     z-index: 1;
 
     &:not(.m-actor) {
@@ -125,6 +126,8 @@
     &__inner {
         display: flex;
         flex-direction: column;
+        height: 100%;
+        background-color: var(--color-white);
     }
 
     &__picture {
@@ -178,12 +181,12 @@
     &__extraLabel {
         position: absolute;
         bottom: 0;
-        right: 0;
+        left: 0;
         background-color: rgba(32, 137, 223, .7);
         color: var(--color-white);
         font-size: var(--font-size-sm);
         line-height: 2;
-        border-radius: var(--radius-sm) var(--radius) var(--radius-sm) var(--radius-sm);
+        border-radius: 0 var(--radius-sm) 0 var(--radius);
         padding: 0 var(--gap-xs);
     }
 

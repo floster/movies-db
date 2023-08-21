@@ -21,16 +21,18 @@ export default function Collection() {
 
   const [tiles, setTiles] = useState([] as ITileData[]);
   const [sortedTiles, setSortedTiles] = useState([] as ITileData[]);
-  const [isDataLoading, setIsDataLoading] = useState(false);
-  const [isDataError, setIsDataError] = useState(false);
   const [currentSort, setCurrentSort] = useState('year_desc' as USortOptionValues);
 
-  const onSortChange = (option: USortOptionValues) => setCurrentSort(option);
+  const [isDataLoading, setIsDataLoading] = useState(false);
+  const [isDataError, setIsDataError] = useState(false);
+
+  const onSortChange = (option: string) => setCurrentSort(option as USortOptionValues);
 
   const sortChanged = useCallback(() => setSortedTiles(tilesSort(tiles, currentSort)), [tiles, currentSort]);
 
   const getPartsData = useCallback(async () => {
     try {
+      setIsDataLoading(true);
       const data = await tmdb.getCollection(collectionId);
       const formattedTiles = formatTilesData(data.parts, 'movie', 'year', true, true);
       setTiles(formattedTiles);
@@ -50,7 +52,7 @@ export default function Collection() {
     };
     fetchData();
     sortChanged();
-  }, [getPartsData, sortChanged]);
+  }, [getPartsData]);
 
   return (
     <>
@@ -58,16 +60,17 @@ export default function Collection() {
       <div className="l-content container">
         {isDataError
           ? <AppError error={`Error occured while fetching collection #${collectionId} parts`} />
-          : isDataLoading
-            ? <AppSpinner visible={true} />
-            : <>
-              <AppSection extraClass='m-movies_list'>
-                <AppSectionHeader title={`${tiles.length} parts`} hasSelect={true} currentSortOption={currentSort} onSortChange={onSortChange} />
-                <div className="l-tiles_grid m-movies">
-                  {sortedTiles.map((tile) => <AppTile tile={tile} key={tile.id} />)}
-                </div>
-              </AppSection>
-            </>}
+          : <>
+            <AppSection extraClass='m-movies_list'>
+              <AppSectionHeader title={`${tiles.length} parts`} hasSelect={true} currentSortOption={currentSort} onSortChange={onSortChange} />
+              <div className="l-tiles_grid m-movies">
+                {isDataLoading
+                  ? <AppSpinner visible={true} />
+                  : sortedTiles.map((tile) => <AppTile tile={tile} key={tile.id} />)
+                }
+              </div>
+            </AppSection>
+          </>}
       </div>
     </>
   )

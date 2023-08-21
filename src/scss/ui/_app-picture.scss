@@ -1,6 +1,7 @@
 .app-picture {
     display: flex;
     align-self: start;
+    aspect-ratio: 2/3;
 
     &__img {
         @include poster;
@@ -8,6 +9,7 @@
         width: 100%;
         height: auto;
         overflow: hidden;
+        object-fit: cover;
         transition: transform 0.2s ease-out;
     }
 }

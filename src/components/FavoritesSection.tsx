@@ -63,16 +63,17 @@ export default function FavoritesSection({ type }: Props) {
     <>
       {isFavoriteError
         ? <AppError error={`Error occured while fetching data for a favorite ${type}`} />
-        : isFavoriteLoading
-          ? <AppSpinner visible={true} />
-          : <>
-            <AppSection extraClass='m-movies_list'>
-              <AppSectionHeader title={`${favoritesIds.length} ${type}s`} alignStart={true} />
-              <div className="l-tiles_grid m-movies">
-                {favorites.map((favorite) => <AppTile tile={favorite} key={favorite.id} />)}
-              </div>
-            </AppSection>
-          </>}
+        : <>
+          <AppSection extraClass='m-movies_list'>
+            <AppSectionHeader title={`${favoritesIds.length} ${type}s`} alignStart={true} />
+            <div className="l-tiles_grid m-movies">
+              {isFavoriteLoading
+                ? <AppSpinner visible={true} />
+                : favorites.map((favorite) => <AppTile tile={favorite} key={favorite.id} />)
+              }
+            </div>
+          </AppSection>
+        </>}
     </>
   )
 }

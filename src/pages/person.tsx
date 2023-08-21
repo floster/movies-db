@@ -26,8 +26,8 @@ const Person: FC = () => {
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
 
-  const onMoviesSortChange = (option: USortOptionValues) => setCurrentSortMovie(option);
-  const onTvsSortChange = (option: USortOptionValues) => setCurrentSortTv(option);
+  const onMoviesSortChange = (option: string) => setCurrentSortMovie(option as USortOptionValues);
+  const onTvsSortChange = (option: string) => setCurrentSortTv(option as USortOptionValues);
 
   useEffect(() => {
     setCastMovie(tilesSort(castMovie, currentSortMovie))
@@ -38,6 +38,7 @@ const Person: FC = () => {
 
   const getData = useCallback(async () => {
     try {
+      setIsDataLoading(true);
       const data = await tmdb.getPersonCredits(personId);
 
       const formattedCast = formatTilesData(data.cast, 'person', 'character', true, false);
@@ -70,25 +71,27 @@ const Person: FC = () => {
       <MediaHero id={personId} type='person' />
       {isDataError
         ? <AppError error={`Error occured while fetching movie #${personId} credits`} />
-        : isDataLoading
-          ? <AppSpinner visible={true} />
-          : <>
-            <div className="l-content container">
-              <AppSection>
-                <AppSectionHeader title="movies" hasSelect={true} currentSortOption={currentSortMovie} onSortChange={onMoviesSortChange} />
-                <div className="l-tiles_grid m-movies">
-                  {castMovie.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
-                </div>
-              </AppSection>
+        : <>
+          <div className="l-content container">
+            <AppSection>
+              <AppSectionHeader title="movies" hasSelect={true} currentSortOption={currentSortMovie} onSortChange={onMoviesSortChange} />
+              <div className="l-tiles_grid m-movies">
+                {isDataLoading
+                  ? <AppSpinner visible={true} />
+                  : castMovie.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
+              </div>
+            </AppSection>
 
-              <AppSection>
-                <AppSectionHeader title="tv shows" hasSelect={true} currentSortOption={currentSortTv} onSortChange={onTvsSortChange} />
-                <div className="l-tiles_grid m-movies">
-                  {castTv.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
-                </div>
-              </AppSection>
-            </div>
-          </>
+            <AppSection>
+              <AppSectionHeader title="tv shows" hasSelect={true} currentSortOption={currentSortTv} onSortChange={onTvsSortChange} />
+              <div className="l-tiles_grid m-movies">
+                {isDataLoading
+                  ? <AppSpinner visible={true} />
+                  : castTv.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
+              </div>
+            </AppSection>
+          </div>
+        </>
       }
     </section>
   )

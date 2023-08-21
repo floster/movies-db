@@ -5,6 +5,8 @@ import tmdb from '../js/tmdb-api'
 import { MOVIE_LIST_OPTIONS } from '../js/config'
 import { UListTypes, ITileData, UListSortOptions } from '../types/tmdb.types'
 import { formatTilesData } from '../js/formaters'
+import AppError from './AppError'
+import AppSpinner from './AppSpinner'
 
 export default function MainPageSidebar() {
     const getListType = (): UListSortOptions => {
@@ -14,6 +16,8 @@ export default function MainPageSidebar() {
 
     const [currentListType, setCurrentListType] = useState<UListSortOptions>(getListType());
     const [list, setList] = useState<ITileData[]>([]);
+    const [isDataLoading, setIsDataLoading] = useState(false);
+    const [isDataError, setIsDataError] = useState(false);
 
     const onListTypeChange = (value: UListSortOptions) => {
         localStorage.setItem('listType', value);
@@ -21,11 +25,18 @@ export default function MainPageSidebar() {
     };
 
     const getList = useCallback(async () => {
-        const mediaType = currentListType.split('__')[0] as 'movie' | 'tv';
-        const listType = currentListType.split('__')[1] as UListTypes;
+        try {
+            const mediaType = currentListType.split('__')[0] as 'movie' | 'tv';
+            const listType = currentListType.split('__')[1] as UListTypes;
 
-        const listData = await tmdb.getList(1, mediaType, listType);
-        setList(formatTilesData(listData.media, listData.media_type, 'released', false, true));
+            const listData = await tmdb.getList(1, mediaType, listType);
+            setList(formatTilesData(listData.media, listData.media_type, 'released', false, true));
+        } catch (error) {
+            setIsDataError(true);
+            console.error(error);
+        } finally {
+            setIsDataLoading(false);
+        }
     }, [currentListType])
 
     useEffect(() => {
@@ -36,9 +47,14 @@ export default function MainPageSidebar() {
     }, [getList]);
 
     return (
-        <aside className="sidebar">
-            <AppSelectCustom onListTypeChange={onListTypeChange} currentListType={currentListType} />
-            <MediaList media={list} />
-        </aside>
+        isDataError
+            ? <AppError error={`Error occured while fetching ${currentListType}`} />
+            : <aside className="sidebar">
+                <AppSelectCustom onListTypeChange={onListTypeChange} currentListType={currentListType} />
+                {isDataLoading
+                    ? <AppSpinner visible={true} />
+                    : <MediaList media={list} />
+                }
+            </aside>
     )
 }

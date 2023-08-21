@@ -66,25 +66,31 @@ const Movie: FC = () => {
       <MediaHero id={movieId} type='movie' />
       {isDataError
         ? <AppError error={`Error occured while fetching movie #${movieId} credits`} />
-        : isDataLoading
-          ? <AppSpinner visible={true} />
-          : <>
-            {crewToShow.length !== 0 && <AppSection extraClass="m-movie_crew">
-              <div className="container">
-                <MovieCrew members={crewToShow} />
-                <AppSectionHeader title="crew" />
+        : <>
+          {crewToShow.length !== 0 && <AppSection extraClass="m-movie_crew">
+            <div className="container">
+              {isDataLoading
+                ? <AppSpinner visible={true} />
+                : <MovieCrew members={crewToShow} />
+              }
+              <AppSectionHeader title="crew" />
+            </div>
+          </AppSection>}
+          {castToShow.length !== 0 && <div className="l-content container">
+            <AppSection>
+              <AppSectionHeader title="cast" />
+              <div className="l-tiles_grid m-people">
+                {isDataLoading
+                  ? <AppSpinner visible={true} />
+                  : <>
+                    {castToShow.map((tile) => <AppTile tile={tile} key={tile.id} />)}
+                    {!isAllCastShowed && <button className='app-button' onClick={showAllCast}>show all</button>}
+                  </>
+                }
               </div>
-            </AppSection>}
-            {castToShow.length !== 0 && <div className="l-content container">
-              <AppSection>
-                <AppSectionHeader title="cast" />
-                <div className="l-tiles_grid m-people">
-                  {castToShow.map((tile) => <AppTile tile={tile} key={tile.id} />)}
-                  {!isAllCastShowed && <button className='app-button' onClick={showAllCast}>show all</button>}
-                </div>
-              </AppSection>
-            </div>}
-          </>
+            </AppSection>
+          </div>}
+        </>
       }
     </section>
   )

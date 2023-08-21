@@ -42,6 +42,8 @@ export const LOCALES: Locale[] = [
   { title: 'DE', value: 'de' },
 ];
 export const DEFAULT_LOCALE: AvalableLocales = 'en';
+export const LAZY_LOADING = true;
+export const TORRENT_SEARCH_ENABLED = true;
 
 export const COLLECTIONS = [9485, 645, 10, 528, 5039, 126125, 1570, 1575, 2150];
 export const MOVIES = [603692, 502356, 569094, 385687, 890771, 447277, 879444, 713704, 640146, 1073140];

@@ -26,6 +26,7 @@ export default function Tv() {
 
   const getData = useCallback(async () => {
     try {
+      setIsDataLoading(true);
       const data = await tmdb.getTvShow(tvId);
 
       const seasons = await tmdb.getTvShowSeasons(tvId, data.seasons_qty);
@@ -53,18 +54,19 @@ export default function Tv() {
       <MediaHero id={tvId} type='tv' />
       {isDataError
         ? <AppError error={`Error occured while fetching tv show #${tvId}`} />
-        : isDataLoading
-          ? <AppSpinner visible={true} />
-          : <>
-            <div className="l-content container">
-              <AppSection>
-                <AppSectionHeader title={`${baseSeasons.length} seasons`} alignStart={true} />
-                <div className="l-seasons">
-                  {seasons.map((season) => <TvSeason season={season} key={season.id} />)}
-                </div>
-              </AppSection>
-            </div>
-          </>
+        : <>
+          <div className="l-content container">
+            <AppSection>
+              <AppSectionHeader title={`${baseSeasons.length} seasons`} alignStart={true} />
+              <div className="l-seasons">
+                {isDataLoading
+                  ? <AppSpinner visible={true} />
+                  : seasons.map((season) => <TvSeason season={season} key={season.id} />)
+                }
+              </div>
+            </AppSection>
+          </div>
+        </>
       }
     </section>
   )

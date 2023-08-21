@@ -4,6 +4,7 @@ import AppFavorite from "./AppFavorite";
 import AppPicture from "./AppPicture";
 import AppProgress from "./AppProgress";
 import TorrentSearch from "./TorrentSearch";
+import { TORRENT_SEARCH_ENABLED } from "../js/config";
 
 interface AppTileProps {
     tile: ITileData;
@@ -17,7 +18,7 @@ const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
     if (isRow) classes.push('m-row');
 
     const isLink = !!tile.link;
-    const isTorrentSearchable = isLink && tile.type === 'movie' || tile.type === 'tv';
+    const isTorrentSearchable = TORRENT_SEARCH_ENABLED && isLink && tile.type === 'movie' || tile.type === 'tv';
 
     const tileInner = (
         <>
