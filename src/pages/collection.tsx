@@ -36,23 +36,22 @@ export default function Collection() {
       const data = await tmdb.getCollection(collectionId);
       const formattedTiles = formatTilesData(data.parts, 'movie', 'year', true, true);
       setTiles(formattedTiles);
-      const sortedTiles = tilesSort(formattedTiles, currentSort);
-      setSortedTiles(sortedTiles);
     } catch (error) {
       setIsDataError(true);
       console.error(error);
     } finally {
       setIsDataLoading(false);
     }
-  }, [collectionId, currentSort]);
+  }, [collectionId]);
 
   useEffect(() => {
     const fetchData = async () => {
       await (getPartsData as () => Promise<void>)();
     };
     fetchData();
-    sortChanged();
   }, [getPartsData]);
+
+  useEffect(() => sortChanged(), [sortChanged]);
 
   return (
     <>
