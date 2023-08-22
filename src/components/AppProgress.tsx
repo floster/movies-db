@@ -1,5 +1,5 @@
 interface Props {
-    value: number;
+    value: number | null;
 }
 
 export default function AppProgress({ value }: Props) {
@@ -15,7 +15,7 @@ export default function AppProgress({ value }: Props) {
     }
 
     return (
-        <div className="app-progress" style={{ "--value": wholeValue } as React.CSSProperties} role="progressbar" aria-valuenow={wholeValue}
+        <div className="app-progress" style={{ "--value": wholeValue === 0 ? null : wholeValue } as React.CSSProperties} role="progressbar" aria-valuenow={wholeValue}
             aria-valuemin={0} aria-valuemax={100} aria-label={`The Fast and the Furious Collection rating is + ${label}`}>
             {label}</div>
     )
