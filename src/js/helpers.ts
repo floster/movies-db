@@ -1,4 +1,4 @@
-import { API_POSTER_BASE, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
+import { API_POSTER_BASE, AvalableLocales, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
 import { ITileData, USortOptionValues } from "../types/tmdb.types";
 
 export const filterNoImage = (tiles: ITileData[]): ITileData[] => tiles.filter(tile => tile.poster.includes('via.placeholder.com') === false);
@@ -36,7 +36,13 @@ export const getIdFromLink = (link: string): number => parseInt(link.split('-')[
 ////////////////////////////////////////
 ////////// general formatters //////////
 ////////////////////////////////////////
-export const getLocalCountryCode = () => LOCALES.filter(locale => locale.value === DEFAULT_LOCALE)[0].title;
+export const getCurrentLocale = () => localStorage.getItem('locale') as AvalableLocales || DEFAULT_LOCALE;
+
+export const getLocalCountryCode = () => {
+    const currentLocale = getCurrentLocale();
+    const countryCode = LOCALES.filter(locale => locale.value === currentLocale)[0].title;
+    return countryCode;
+};
 
 /**
  * Formats a date object 
@@ -47,7 +53,7 @@ export const formatDate = (date: Date | null) => {
     if (!date) return { full: '-', year: '' };
 
     const _date = new Date(date);
-    const localeString = `${DEFAULT_LOCALE}-${getLocalCountryCode()}`; // 'en-US'
+    const localeString = `${getCurrentLocale()}-${getLocalCountryCode()}`; // 'en-US'
     const full = _date.toLocaleDateString(localeString, { month: 'short', day: 'numeric', year: 'numeric' });
     const year = _date.getFullYear() + '';
     return { full, year };

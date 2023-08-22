@@ -2,7 +2,6 @@ import {
   API_BASE,
   API_KEY,
   COLLECTIONS,
-  DEFAULT_LOCALE
 } from './config';
 
 import {
@@ -39,7 +38,7 @@ import {
   RawBaseTv,
 } from '../types/raw-tmdb.types';
 
-import { getLocalCountryCode } from './helpers';
+import { getCurrentLocale, getLocalCountryCode } from './helpers';
 
 import {
   formatBaseTvs,
@@ -69,7 +68,7 @@ export default class TMDB {
     const fetchUrl = `${API_BASE}${url}`;
     const fetchParams = new URLSearchParams(params);
     fetchParams.append('api_key', API_KEY);
-    fetchParams.append('language', DEFAULT_LOCALE);
+    fetchParams.append('language', getCurrentLocale());
     fetchParams.append('region', getLocalCountryCode());
 
     const response: Response = await fetch(fetchUrl + '?' + fetchParams.toString());
@@ -84,7 +83,7 @@ export default class TMDB {
   // static async #getAllGenres<T extends IGenre>() {
   //   if (Object.keys(this.allGenres).length > 0) return;
 
-  //   const params = `language=${DEFAULT_LOCALE}`;
+  //   const params = `language=${getCurrentLocale()}`;
   //   const response = await this.getJSON('/genre/movie/list', params) as { genres: T[] };
   //   this.allGenres = response.genres;
   // }
