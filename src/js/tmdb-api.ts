@@ -36,6 +36,7 @@ import {
   RawPersonCredits,
   RawTvSeason,
   RawBaseTv,
+  RawSearch,
 } from '../types/raw-tmdb.types';
 
 import { getCurrentLocale, getLocalCountryCode } from './helpers';
@@ -50,7 +51,8 @@ import {
   formatPersonCrew,
   formatPersonCast,
   formatTvSeason,
-  formatCollection
+  formatCollection,
+  formatSearchResults
 } from './formaters';
 
 export default class TMDB {
@@ -230,5 +232,14 @@ export default class TMDB {
     }
 
     return seasons;
+  }
+
+  static async search(query: string) {
+    const url = `/search/multi`;
+    const params = `query=${query}`;
+    const data: { results: RawSearch[] } = await this.getJSON(url, params);
+
+    const results = formatSearchResults(data.results);
+    return results;
   }
 }

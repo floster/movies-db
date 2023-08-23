@@ -2,8 +2,8 @@
 ////////// TMDB API formatters //////////
 /////////////////////////////////////////
 
-import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollection, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawTv, RawTvEpisode, RawTvSeason } from "../types/raw-tmdb.types";
-import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData, ICollection } from "../types/tmdb.types";
+import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollection, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawSearch, RawTv, RawTvEpisode, RawTvSeason } from "../types/raw-tmdb.types";
+import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData, ICollection, ISearchResult } from "../types/tmdb.types";
 import { API_BACKDROP_BASE } from "./config";
 import { createLink, formatDate, getPosterUrl } from "./helpers";
 
@@ -338,4 +338,20 @@ export function formatPersons(credits: RawCast[] | RawCrew[] | RawBasePerson[], 
     }
 
     return data;
+}
+
+export function formatSearchResult(result: RawSearch): ISearchResult {
+    const title = result.title || result.name;
+    const poster = result.poster_path || result.profile_path;
+    return {
+        id: result.id,
+        poster: getPosterUrl(poster!),
+        link: createLink(result.media_type, result.id, title!),
+        title: title!,
+        type: result.media_type,
+    }
+}
+
+export function formatSearchResults(results: RawSearch[]): ISearchResult[] {
+    return results.map(result => formatSearchResult(result));
 }

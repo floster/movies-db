@@ -226,6 +226,15 @@ interface _RawTvPart {
     vote_average: number
 }
 
+export type RawSearch = {
+    id: number;
+    media_type: 'movie' | 'tv' | 'person';
+    name?: string;
+    title?: string;
+    poster_path?: string;
+    profile_path?: string;
+};
+
 ///////////////////////////
 ///// Responses Parts /////
 ///////////////////////////
