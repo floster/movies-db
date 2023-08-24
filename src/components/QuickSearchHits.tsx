@@ -9,7 +9,7 @@ interface QuickSearchHitsProps {
 const SearchHitsItem = (hit: ISearchResult) => {
     return (
         <li className="quick-search-hits__item" key={hit.id}>
-            <AppPicture img={hit.poster} alt={hit.title} />
+            <AppPicture img={hit.poster} alt={hit.title} hasLoading={false} />
             <div className="quick-search-hits__content">
                 <a href={hit.link} className="quick-search-hits__link">{hit.title}</a>
                 <span className="quick-search-hits__type">{hit.type}</span>

@@ -31,6 +31,12 @@
     }
 
     &__locale {
+        display: none;
+
+        @include media(md) {
+            display: block;
+        }
+
         .app-select {
             select {
                 background-color: transparent;

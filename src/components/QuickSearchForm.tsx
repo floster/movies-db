@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useDebounce } from "@uidotdev/usehooks";
 import { QuickSearchHits } from "./QuickSearchHits";
 import SvgIcon from "./SvgIcon";
 import AppError from "./AppError";
@@ -7,19 +8,21 @@ import TMDB from "../js/tmdb-api";
 import { ISearchResult } from "../types/tmdb.types";
 
 export default function SearchForm() {
-    const [query, setQuery] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
     const [hits, setHits] = useState([] as ISearchResult[]);
     const [isDataLoading, setIsDataLoading] = useState(false);
     const [isDataError, setIsDataError] = useState(false);
+    const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+    const clearTerm = () => setSearchTerm('');
 
     const getSearchResults = useCallback(async () => {
-        if (!query) return;
+        if (!searchTerm) setHits([]);
 
-        if (query.length > 3) {
+        if (searchTerm.length > 3) {
             try {
                 setIsDataLoading(true);
-                const results = await TMDB.search(query);
-                console.log('>>>', results);
+                const results = await TMDB.search(searchTerm);
                 setHits(results);
             } catch (error) {
                 setIsDataError(true);
@@ -28,7 +31,7 @@ export default function SearchForm() {
                 setIsDataLoading(false);
             }
         }
-    }, [query]);
+    }, [debouncedSearchTerm]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,12 +45,17 @@ export default function SearchForm() {
             <form action="" className="quick-search-form">
                 <input
                     type="text"
-                    value={query}
-                    onChange={e => setQuery(e.target.value)}
+                    value={searchTerm}
+                    onChange={e => setSearchTerm(e.target.value)}
                     className="quick-search-form__input"
                     placeholder="start searching..."
                 />
-                <button className="quick-search-form__clean app-button m-close" aria-label="search" type="reset">
+                <button
+                    className="quick-search-form__clean app-button m-close"
+                    aria-label="search"
+                    type="reset"
+                    onClick={clearTerm}
+                >
                     <SvgIcon icon="close" />
                 </button>
                 <button className="quick-search-form__submit app-button m-icon m-primary" aria-label="search" type="submit">
@@ -55,7 +63,7 @@ export default function SearchForm() {
                 </button>
             </form>
             {isDataError
-                ? <AppError error={`Error occured while getting search results by #${query}`} />
+                ? <AppError error={`Error occured while getting search results by #${searchTerm}`} />
                 : isDataLoading
                     ? <AppSpinner visible={true} />
                     : <QuickSearchHits searchHits={hits} />
