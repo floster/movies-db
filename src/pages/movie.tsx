@@ -36,6 +36,7 @@ const Movie: FC = () => {
 
   const getData = useCallback(async () => {
     try {
+      setIsDataLoading(true);
       const data = await tmdb.getMovieCredits(movieId);
 
       setCrew(data.crew);
