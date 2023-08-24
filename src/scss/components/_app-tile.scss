@@ -33,6 +33,7 @@
     }
 
     &.m-row {
+        flex-shrink: 0;
 
         &:active,
         &:focus-visible {
