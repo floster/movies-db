@@ -22,7 +22,7 @@ export default function App() {
           <Route path="collection/:id" element={<Collection />} />
           <Route path="favorites/" element={<Favorites />} />
           <Route path="favorites/" element={<Favorites />} />
-          <Route path="search/" element={<Search />} />
+          <Route path="search/:term" element={<Search />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes >

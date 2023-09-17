@@ -2,7 +2,7 @@
 ////////// TMDB API formatters //////////
 /////////////////////////////////////////
 
-import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollection, RawSearchMovie, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawSearch, RawTv, RawTvEpisode, RawTvSeason, RawSearchPerson, RawSearchTv } from "../types/raw-tmdb.types";
+import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollection, RawSearchMovie, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawSearch, RawTv, RawTvEpisode, RawTvSeason, RawSearchPerson, RawSearchTv, RawSearchResult } from "../types/raw-tmdb.types";
 import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData, ICollection, IQuickSearchResult, ISearchResults } from "../types/tmdb.types";
 import { API_BACKDROP_BASE } from "./config";
 import { createLink, formatDate, getPosterUrl } from "./helpers";
@@ -340,7 +340,7 @@ export function formatPersons(credits: RawCast[] | RawCrew[] | RawBasePerson[], 
     return data;
 }
 
-export function formatQuickSearchResult(result: RawSearch): IQuickSearchResult {
+export function formatQuickSearchResult(result: RawSearchResult): IQuickSearchResult {
     let title = '';
     let poster = '';
     let date = null;
@@ -373,18 +373,23 @@ export function formatQuickSearchResult(result: RawSearch): IQuickSearchResult {
     }
 }
 
-export function formatQuickSearchResults(results: RawSearch[]): IQuickSearchResult[] {
+export function formatQuickSearchResults(results: RawSearchResult[]): IQuickSearchResult[] {
     return results.map(result => formatQuickSearchResult(result));
 }
 
-export function formatSearchResults(results: RawSearch[]): ISearchResults {
+export function formatSearchResults(results: RawSearch): ISearchResults {
     const formattedResults: ISearchResults = {
+        qty: {
+            page: results.page,
+            pages: results.total_pages,
+            results: results.total_results,
+        },
         movies: [],
         tvs: [],
         persons: [],
     }
 
-    results.forEach(result => {
+    results.results.forEach(result => {
         switch (result.media_type) {
             case 'movie':
                 const movie = formatBaseMovie(result as RawSearchMovie);

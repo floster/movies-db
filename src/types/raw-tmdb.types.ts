@@ -234,7 +234,14 @@ export interface RawSearchPerson extends _RawPerson {
     media_type: UMediaTypes;
 
 }
-export type RawSearch = RawSearchPerson | RawSearchMovie | RawSearchTv;
+
+export type RawSearchResult = RawSearchPerson | RawSearchMovie | RawSearchTv;
+export type RawSearch = {
+    results: RawSearchResult[],
+    page: number,
+    total_pages: number,
+    total_results: number
+};
 
 ///////////////////////////
 ///// Responses Parts /////

@@ -237,21 +237,58 @@ export default class TMDB {
     return seasons;
   }
 
-  static async quickSearch(query: string): Promise<IQuickSearchResult[]> {
+  static async getQuickSearch(query: string): Promise<IQuickSearchResult[]> {
     const url = `/search/multi`;
     const params = `query=${query}`;
-    const data: { results: RawSearch[] } = await this.getJSON(url, params);
+    const data: RawSearch = await this.getJSON(url, params);
 
     const results = formatQuickSearchResults(data.results);
     return results;
   }
 
-  static async search(query: string): Promise<ISearchResults> {
+  static async getSearch(query: string, page: number = 1): Promise<ISearchResults> {
     const url = `/search/multi`;
-    const params = `query=${query}`;
-    const data: { results: RawSearch[] } = await this.getJSON(url, params);
+    const params = `query=${query}&include_adult=false&page=${page}`;
+    const data: RawSearch = await this.getJSON(url, params);
 
-    const results = formatSearchResults(data.results);
+    const results = formatSearchResults(data);
+    return results;
+  }
+
+  static async getAllSearch(query: string): Promise<ISearchResults> {
+    const results: ISearchResults = {
+      qty: {
+        page: 0,
+        pages: 0,
+        results: 0,
+      },
+      movies: [],
+      tvs: [],
+      persons: [],
+    };
+
+    // get first page of search results (20 results)
+    const first = await this.getSearch(query);
+
+    // ...fill results with first page (initial) data
+    results.qty.page = first.qty.page;
+    results.qty.pages = first.qty.pages;
+    results.qty.results = first.qty.results;
+    results.movies = first.movies;
+    results.tvs = first.tvs;
+    results.persons = first.persons;
+
+    // ...than if pages > 1 get all other pages
+    if (first.qty.pages > 1) {
+      // ...for that go through all pages and get results
+      for (let n = 2; n <= first.qty.pages; n++) {
+        const next = await this.getSearch(query, n);
+        results.movies = [...results.movies, ...next.movies];
+        results.tvs = [...results.tvs, ...next.tvs];
+        results.persons = [...results.persons, ...next.persons];
+      }
+    }
+
     return results;
   }
 }

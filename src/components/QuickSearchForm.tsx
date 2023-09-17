@@ -39,7 +39,7 @@ export default function SearchForm() {
         if (searchTerm.length > 3) {
             try {
                 setIsDataLoading(true);
-                const results = await TMDB.quickSearch(searchTerm);
+                const results = await TMDB.getQuickSearch(searchTerm);
                 setHits(results);
             } catch (error) {
                 setIsDataError(true);
