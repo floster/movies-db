@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import tmdb from '../js/tmdb-api'
 import { MOVIE_LIST_OPTIONS } from '../js/config'
 import { UListTypes, ITileData, UListSortOptions } from '../types/tmdb.types'
-import { formatTilesData } from '../js/formaters'
+import { formatTilesData } from '../js/formatters'
 import AppError from './AppError'
 import AppSpinner from './AppSpinner'
 

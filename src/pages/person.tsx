@@ -8,7 +8,7 @@ import tmdb from '../js/tmdb-api';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
 import { filterNoImage, filterUncredits, getIdFromLink, tilesSort } from '../js/helpers';
-import { formatTilesData } from '../js/formaters';
+import { formatTilesData } from '../js/formatters';
 import { ITileData, USortOptionValues } from '../types/tmdb.types';
 
 type PersonParams = {

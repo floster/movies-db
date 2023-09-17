@@ -9,7 +9,7 @@ import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb-api';
 import AppError from '../components/AppError';
 import { getIdFromLink, tilesSort } from '../js/helpers';
-import { formatTilesData } from '../js/formaters';
+import { formatTilesData } from '../js/formatters';
 
 type CollectionParams = {
   id: string;

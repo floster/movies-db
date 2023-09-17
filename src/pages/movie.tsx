@@ -10,7 +10,7 @@ import { IMovieCrew, ITileData } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
 import { cutArray, filterNoImage, filterUncredits, getIdFromLink } from '../js/helpers';
-import { formatTilesData } from '../js/formaters';
+import { formatTilesData } from '../js/formatters';
 
 type MovieParams = {
   id: string;

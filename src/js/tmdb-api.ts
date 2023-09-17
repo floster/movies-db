@@ -56,7 +56,7 @@ import {
   formatCollection,
   formatSearchResults,
   formatQuickSearchResults
-} from './formaters';
+} from './formatters';
 
 export default class TMDB {
   static allGenres: IGenre[] = [];

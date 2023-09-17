@@ -3,7 +3,7 @@ import { IBaseMovie, UTrendingType, IBaseTv, IBasePerson, ITileData } from "../t
 import TMDB from "../js/tmdb-api";
 import { useCallback, useEffect, useState } from "react";
 import AppSpinner from "./AppSpinner";
-import { formatTilesData } from "../js/formaters";
+import { formatTilesData } from "../js/formatters";
 
 interface Props {
     itemsType: UTrendingType;
