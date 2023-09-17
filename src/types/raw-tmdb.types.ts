@@ -6,14 +6,14 @@ import { IBelonging, IGenre, UMediaTypes, UTmdbTvShowStatuses } from "./tmdb.typ
 
 export interface RawCollection extends _RawBaseMedia {
     name: string;
-    parts: RawCollectionPart[]
+    parts: RawSearchMovie[]
 }
 
 export interface RawBaseMovie extends _RawBaseMovie {
     genre_ids: number[];
 }
 
-export interface RawCollectionPart extends RawBaseMovie {
+export interface RawSearchMovie extends RawBaseMovie {
     media_type: UMediaTypes;
 }
 
@@ -135,13 +135,13 @@ type _RawPersonCastOnlyFields = {
     character: string;
 }
 
-export interface RawPersonCrewMovie extends RawCollectionPart, _RawPersonCrewOnlyFields {
+export interface RawPersonCrewMovie extends RawSearchMovie, _RawPersonCrewOnlyFields {
 }
 
 export interface RawPersonCrewTv extends _RawBaseTv, _RawPersonCrewOnlyFields {
 }
 
-export interface RawPersonCastMovie extends RawCollectionPart, _RawPersonCastOnlyFields {
+export interface RawPersonCastMovie extends RawSearchMovie, _RawPersonCastOnlyFields {
 }
 
 export interface RawPersonCastTv extends _RawBaseTv, _RawPersonCastOnlyFields {
@@ -226,14 +226,15 @@ interface _RawTvPart {
     vote_average: number
 }
 
-export type RawSearch = {
-    id: number;
-    media_type: 'movie' | 'tv' | 'person';
-    name?: string;
-    title?: string;
-    poster_path?: string;
-    profile_path?: string;
-};
+export interface RawSearchTv extends _RawBaseTv {
+    media_type: UMediaTypes;
+}
+
+export interface RawSearchPerson extends _RawPerson {
+    media_type: UMediaTypes;
+
+}
+export type RawSearch = RawSearchPerson | RawSearchMovie | RawSearchTv;
 
 ///////////////////////////
 ///// Responses Parts /////

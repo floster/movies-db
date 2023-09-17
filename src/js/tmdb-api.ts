@@ -20,11 +20,13 @@ import {
   IMovieCast,
   IPerson,
   ITvSeason,
+  IQuickSearchResult,
+  ISearchResults,
 } from '../types/tmdb.types';
 
 import {
   RawCollection,
-  RawCollectionPart,
+  RawSearchMovie,
   RawMovie,
   RawMovieCredits,
   RawPerson,
@@ -52,7 +54,8 @@ import {
   formatPersonCast,
   formatTvSeason,
   formatCollection,
-  formatSearchResults
+  formatSearchResults,
+  formatQuickSearchResults
 } from './formaters';
 
 export default class TMDB {
@@ -124,7 +127,7 @@ export default class TMDB {
 
     const data: RawMoviesList = await this.getJSON(url, params);
     const media = mediaType === 'movie'
-      ? formatBaseMovies(data.results as RawCollectionPart[])
+      ? formatBaseMovies(data.results as RawSearchMovie[])
       : formatBaseTvs(data.results as RawBaseTv[]);
 
     return {
@@ -156,7 +159,7 @@ export default class TMDB {
 
     switch (type) {
       case 'movie':
-        trending = formatBaseMovies(data.results as RawCollectionPart[]) as IBaseMovie[];
+        trending = formatBaseMovies(data.results as RawSearchMovie[]) as IBaseMovie[];
         break;
       case 'tv':
         trending = formatBaseTvs(data.results as RawTrendingTv[]) as IBaseTv[];
@@ -234,7 +237,16 @@ export default class TMDB {
     return seasons;
   }
 
-  static async search(query: string) {
+  static async quickSearch(query: string): Promise<IQuickSearchResult[]> {
+    const url = `/search/multi`;
+    const params = `query=${query}`;
+    const data: { results: RawSearch[] } = await this.getJSON(url, params);
+
+    const results = formatQuickSearchResults(data.results);
+    return results;
+  }
+
+  static async search(query: string): Promise<ISearchResults> {
     const url = `/search/multi`;
     const params = `query=${query}`;
     const data: { results: RawSearch[] } = await this.getJSON(url, params);

@@ -1,17 +1,18 @@
 import { FC } from "react";
-import { ISearchResult } from "../types/tmdb.types";
+import { IQuickSearchResult } from "../types/tmdb.types";
 import AppPicture from "./AppPicture";
 
 interface QuickSearchHitsProps {
-    searchHits: ISearchResult[];
+    searchHits: IQuickSearchResult[];
 }
 
-const SearchHitsItem = (hit: ISearchResult) => {
+const SearchHitsItem = (hit: IQuickSearchResult) => {
     return (
         <li className="quick-search-hits__item" key={hit.id}>
             <AppPicture img={hit.poster} alt={hit.title} hasLoading={false} />
             <div className="quick-search-hits__content">
                 <a href={hit.link} className="quick-search-hits__link">{hit.title}</a>
+                {hit.year && <span className="quick-search-hits__year">&nbsp;({hit.year})</span>}
                 <span className="quick-search-hits__type">{hit.type}</span>
             </div>
         </li>

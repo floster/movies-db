@@ -175,12 +175,19 @@ export interface IMovieCrew extends IBasePerson {
   job: string;
 }
 
-export interface ISearchResult {
+export interface ISearchResults {
+  movies: ITileData[],
+  tvs: ITileData[],
+  persons: ITileData[],
+}
+
+export interface IQuickSearchResult {
   id: number;
   link: string;
   poster: string;
   title: string;
-  type: UTrendingType;
+  type: UMediaTypes;
+  year: string;
 }
 
 export type UTileData = IBaseMovie | ICollection | IBasePerson | IMovieCast | ITv | ITvSeason | IPersonCrew | IPersonCast;

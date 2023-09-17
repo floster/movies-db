@@ -1,28 +1,45 @@
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDebounce } from "@uidotdev/usehooks";
 import { QuickSearchHits } from "./QuickSearchHits";
 import SvgIcon from "./SvgIcon";
 import AppError from "./AppError";
 import AppSpinner from "./AppSpinner";
 import TMDB from "../js/tmdb-api";
-import { ISearchResult } from "../types/tmdb.types";
+import { IQuickSearchResult } from "../types/tmdb.types";
+import { useSearchDialog } from "../contexts/SearchDialogContext";
 
 export default function SearchForm() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [hits, setHits] = useState([] as ISearchResult[]);
+    const [hits, setHits] = useState([] as IQuickSearchResult[]);
     const [isDataLoading, setIsDataLoading] = useState(false);
     const [isDataError, setIsDataError] = useState(false);
+
+    const { hide } = useSearchDialog();
+    const navigate = useNavigate();
+
+    // waiting for 500ms after user stops typing before set new value
     const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+    const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        hide()
+        const term = searchTerm.trim().split(' ').join('+');
+        navigate(`/search/${term}`);
+    }
 
     const clearTerm = () => setSearchTerm('');
 
     const getSearchResults = useCallback(async () => {
-        if (!searchTerm) setHits([]);
+        // clear hits array to clear its UI container
+        if (!searchTerm) {
+            setHits([])
+        };
 
         if (searchTerm.length > 3) {
             try {
                 setIsDataLoading(true);
-                const results = await TMDB.search(searchTerm);
+                const results = await TMDB.quickSearch(searchTerm);
                 setHits(results);
             } catch (error) {
                 setIsDataError(true);
@@ -42,7 +59,7 @@ export default function SearchForm() {
 
     return (
         <>
-            <form action="" className="quick-search-form">
+            <form action="" className="quick-search-form" onSubmit={handleSearchSubmit}>
                 <input
                     type="text"
                     value={searchTerm}

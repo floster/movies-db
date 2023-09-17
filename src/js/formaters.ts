@@ -2,8 +2,8 @@
 ////////// TMDB API formatters //////////
 /////////////////////////////////////////
 
-import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollection, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawSearch, RawTv, RawTvEpisode, RawTvSeason } from "../types/raw-tmdb.types";
-import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData, ICollection, ISearchResult } from "../types/tmdb.types";
+import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollection, RawSearchMovie, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawSearch, RawTv, RawTvEpisode, RawTvSeason, RawSearchPerson, RawSearchTv } from "../types/raw-tmdb.types";
+import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData, ICollection, IQuickSearchResult, ISearchResults } from "../types/tmdb.types";
 import { API_BACKDROP_BASE } from "./config";
 import { createLink, formatDate, getPosterUrl } from "./helpers";
 
@@ -88,7 +88,7 @@ export function formatBaseMovie(part: RawBaseMovie): IBaseMovie {
     return formatedData;
 }
 
-export function formatBaseMovies(movies: RawCollectionPart[]): IBaseMovie[] {
+export function formatBaseMovies(movies: RawSearchMovie[]): IBaseMovie[] {
     return movies.map(movie => formatBaseMovie(movie));
 }
 
@@ -340,18 +340,66 @@ export function formatPersons(credits: RawCast[] | RawCrew[] | RawBasePerson[], 
     return data;
 }
 
-export function formatSearchResult(result: RawSearch): ISearchResult {
-    const title = result.title || result.name;
-    const poster = result.poster_path || result.profile_path;
+export function formatQuickSearchResult(result: RawSearch): IQuickSearchResult {
+    let title = '';
+    let poster = '';
+    let date = null;
+
+    if (result.media_type === 'person') {
+        const person = result as RawSearchPerson;
+        title = person.name;
+        poster = person.profile_path;
+        date = formatDate(null);
+    } else if (result.media_type === 'movie') {
+        const movie = result as RawSearchMovie;
+        title = movie.title;
+        poster = movie.poster_path;
+        date = formatDate(movie.release_date);
+    } else {
+        const tv = result as RawSearchTv;
+        title = tv.name;
+        poster = tv.poster_path;
+        date = formatDate(tv.first_air_date);
+    }
+
+
     return {
         id: result.id,
-        poster: getPosterUrl(poster!),
-        link: createLink(result.media_type, result.id, title!),
-        title: title!,
+        poster: getPosterUrl(poster),
+        link: createLink(result.media_type, result.id, title),
+        title: title,
         type: result.media_type,
+        year: date.year,
     }
 }
 
-export function formatSearchResults(results: RawSearch[]): ISearchResult[] {
-    return results.map(result => formatSearchResult(result));
+export function formatQuickSearchResults(results: RawSearch[]): IQuickSearchResult[] {
+    return results.map(result => formatQuickSearchResult(result));
+}
+
+export function formatSearchResults(results: RawSearch[]): ISearchResults {
+    const formattedResults: ISearchResults = {
+        movies: [],
+        tvs: [],
+        persons: [],
+    }
+
+    results.forEach(result => {
+        switch (result.media_type) {
+            case 'movie':
+                const movie = formatBaseMovie(result as RawSearchMovie);
+                formattedResults.movies.push(formatTileData(movie, 'movie', 'released', true, false));
+                break;
+            case 'tv':
+                const tv = formatBaseTv(result as RawSearchTv);
+                formattedResults.tvs.push(formatTileData(tv, 'tv', 'released', true, false));
+                break;
+            case 'person':
+                const person = formatBasePerson(result as RawSearchPerson);
+                formattedResults.persons.push(formatTileData(person, 'person', 'department', true, false));
+                break;
+        }
+    });
+
+    return formattedResults;
 }

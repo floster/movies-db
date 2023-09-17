@@ -46,6 +46,10 @@
         }
     }
 
+    &__year {
+        color: var(--color-grey-500);
+    }
+
     &__type {
         font-size: var(--font-size);
         font-style: italic;
