@@ -1,6 +1,5 @@
 import { useState } from "react";
 import AppSpinner from "./AppSpinner";
-import { LAZY_LOADING } from "../js/config";
 
 interface Props {
     img: string;
@@ -23,7 +22,7 @@ export default function AppPicture({ img, alt, hasLoading = true }: Props) {
                     className="app-picture__img"
                     src={img}
                     alt={alt}
-                    loading={(hasLoading && LAZY_LOADING) ? 'lazy' : 'eager'}
+                    loading={(hasLoading && import.meta.env.VITE_LAZY_LOADING === 'true') ? 'lazy' : 'eager'}
                 />
             </picture>
         </>

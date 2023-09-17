@@ -4,7 +4,6 @@
 
 import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollection, RawSearchMovie, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawSearch, RawTv, RawTvEpisode, RawTvSeason, RawSearchPerson, RawSearchTv, RawSearchResult } from "../types/raw-tmdb.types";
 import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData, ICollection, IQuickSearchResult, ISearchResults } from "../types/tmdb.types";
-import { API_BACKDROP_BASE } from "./config";
 import { createLink, formatDate, getPosterUrl } from "./helpers";
 
 export function formatTileData<T extends UTileData>(
@@ -52,7 +51,7 @@ export function formatCollection(collection: RawCollection): ICollection {
     const poster = getPosterUrl(collection.poster_path);
 
     return {
-        backdrop: `${API_BACKDROP_BASE}${collection.backdrop_path}`,
+        backdrop: `${import.meta.env.VITE_API_BACKDROP_BASE}${collection.backdrop_path}`,
         id: collection.id,
         link: createLink('collection', collection.id, collection.name),
         title: collection.name,
@@ -71,7 +70,7 @@ export function formatBaseMovie(part: RawBaseMovie): IBaseMovie {
 
     const formatedData: IBaseMovie = {
         adult: part.adult,
-        backdrop: `${API_BACKDROP_BASE}${part.backdrop_path}`,
+        backdrop: `${import.meta.env.VITE_API_BACKDROP_BASE}${part.backdrop_path}`,
         genres: [], // convertMovieGenres(part.genre_ids),
         id: part.id,
         link: createLink('movie', part.id, part.title),
@@ -100,7 +99,7 @@ export function formatTv(tv: RawTv): ITv {
 
     const formatedData: ITv = {
         adult: tv.adult,
-        backdrop: `${API_BACKDROP_BASE}${tv.backdrop_path}`,
+        backdrop: `${import.meta.env.VITE_API_BACKDROP_BASE}${tv.backdrop_path}`,
         episodes_qty: tv.number_of_episodes,
         finished: { date: finishedDate.full, year: finishedDate.year },
         genres: tv.genres,
@@ -131,7 +130,7 @@ export function formatBaseTv(tv: RawBaseTv): IBaseTv {
 
     const formatedData: IBaseTv = {
         adult: tv.adult,
-        backdrop: `${API_BACKDROP_BASE}${tv.backdrop_path}`,
+        backdrop: `${import.meta.env.VITE_API_BACKDROP_BASE}${tv.backdrop_path}`,
         genres: [], //convertMovieGenres(tv.genre_ids),
         id: tv.id,
         link: createLink('tv', tv.id, tv.name),
@@ -211,7 +210,7 @@ export function formatMovie(movie: RawMovie): IMovie {
 
     const formatedData: IMovie = {
         adult: movie.adult,
-        backdrop: `${API_BACKDROP_BASE}${movie.backdrop_path}`,
+        backdrop: `${import.meta.env.VITE_API_BACKDROP_BASE}${movie.backdrop_path}`,
         belongs_to_collection: movie.belongs_to_collection || null,
         budget: movie.budget,
         genres: movie.genres,

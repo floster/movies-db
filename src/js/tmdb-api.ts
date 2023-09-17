@@ -1,7 +1,5 @@
 import {
-  API_BASE,
-  API_KEY,
-  COLLECTIONS,
+  COLLECTIONS
 } from './config';
 
 import {
@@ -70,11 +68,14 @@ export default class TMDB {
    * @throws {Error} - If an error occurs while fetching data.
    */
   static async getJSON<T>(url: string, params: string = ''): Promise<T> {
-    const fetchUrl = `${API_BASE}${url}`;
+    const fetchUrl = import.meta.env.VITE_API_BASE + url;
     const fetchParams = new URLSearchParams(params);
-    fetchParams.append('api_key', API_KEY);
+    fetchParams.append('api_key', import.meta.env.VITE_API_KEY);
     fetchParams.append('language', getCurrentLocale());
     fetchParams.append('region', getLocalCountryCode());
+
+    console.log(import.meta.env);
+
 
     const response: Response = await fetch(fetchUrl + '?' + fetchParams.toString());
 

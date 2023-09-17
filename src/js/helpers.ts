@@ -1,4 +1,4 @@
-import { API_POSTER_BASE, AvalableLocales, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
+import { AvalableLocales, LOCALES } from "./config";
 import { ITileData, USortOptionValues } from "../types/tmdb.types";
 
 export const filterNoImage = (tiles: ITileData[]): ITileData[] => tiles.filter(tile => tile.poster.includes('via.placeholder.com') === false);
@@ -36,7 +36,7 @@ export const getIdFromLink = (link: string): number => parseInt(link.split('-')[
 ////////////////////////////////////////
 ////////// general formatters //////////
 ////////////////////////////////////////
-export const getCurrentLocale = () => localStorage.getItem('locale') as AvalableLocales || DEFAULT_LOCALE;
+export const getCurrentLocale = () => localStorage.getItem('locale') as AvalableLocales || import.meta.env.VITE_DEFAULT_LOCALE;
 
 export const getLocalCountryCode = () => {
     const currentLocale = getCurrentLocale();
@@ -94,6 +94,6 @@ export const createLink = (type: string, id: number, title: string) => {
 
 export const getPosterUrl = (posterPath: string): string => {
     return posterPath
-        ? `${API_POSTER_BASE}${posterPath}`
-        : POSTER_NO_IMAGE;
+        ? `${import.meta.env.VITE_API_POSTER_BASE}${posterPath}`
+        : import.meta.env.VITE_POSTER_NO_IMAGE;
 }
