@@ -31,21 +31,21 @@ export function tilesSort<T>(tiles: T[], option: USortOptionValues): T[] {
  * Splits an array of tiles into multiple arrays of a specified size.
  *
  * @param {T[]} tiles - The array of tiles to split.
- * @param {number} pages - The size of each split array.
- * @returns {{ splitted: T[][] | null, qty: number }} An object containing the splitted array of tiles and the quantity of split arrays.
+ * @param {number} qtyToShow - The size of each split array.
+ * @returns {{ pages: T[][] | null, qty: number }} An object containing the splitted array of tiles and the quantity of split arrays.
  */
-export function splitTiles<T>(tiles: T[] = [], pages: number): { splitted: T[][] | null, qty: number } {
-    if (tiles.length === 0) return { splitted: null, qty: 0 };
-    if (tiles.length <= pages) return { splitted: [tiles], qty: 1 };
+export function splitTiles<T>(tiles: T[] = [], qtyToShow: number): { pages: T[][] | null, qty: number } {
+    if (tiles.length === 0) return { pages: null, qty: 0 };
+    if (tiles.length <= qtyToShow) return { pages: [tiles], qty: 1 };
 
     const tilesCopy = [...tiles];
-    const splitted = [] as T[][];
-    const qty = Math.ceil(tiles.length / pages);
+    const pages = [] as T[][];
+    const qty = Math.ceil(tiles.length / qtyToShow);
 
     for (let i = 0; i < qty; i++) {
-        splitted.push(tilesCopy.splice(0, pages));
+        pages.push(tilesCopy.splice(0, qtyToShow));
     }
-    return { splitted, qty }
+    return { pages, qty }
 }
 
 /**
