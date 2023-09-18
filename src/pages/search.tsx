@@ -13,6 +13,8 @@ type CollectionParams = {
   term: string;
 }
 
+// [x] TODO: make search form as a separate component
+// [ ] TODO: add search form
 // [ ] TODO: add pagination for results more than 20
 // [ ] TODO: add sorting for results (sort by rating by default)
 // [ ] TODO: make possibility to show/hide results sections

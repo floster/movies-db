@@ -74,9 +74,6 @@ export default class TMDB {
     fetchParams.append('language', getCurrentLocale());
     fetchParams.append('region', getLocalCountryCode());
 
-    console.log(import.meta.env);
-
-
     const response: Response = await fetch(fetchUrl + '?' + fetchParams.toString());
 
     if (!response.ok) throw new Error(`getJSON: Error fetching data for URL: ${url}`);

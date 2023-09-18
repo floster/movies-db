@@ -259,6 +259,7 @@ export function formatPerson(member: RawPerson): IPerson {
         backdrop: '',
         birthday: { date: birthday.full, year: birthday.year },
         deathday: { date: deathday.full, year: deathday.year },
+        // TODO: think about using chatGPT API to format biography
         overview: member.biography,
         place_of_birth: member.place_of_birth,
     }
