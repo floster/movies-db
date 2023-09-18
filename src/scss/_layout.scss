@@ -4,6 +4,10 @@
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
+
+    &:has(.quick-search-form) {
+        margin-top: var(--gap-md);
+    }
 }
 
 .l-content {

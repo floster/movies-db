@@ -26,7 +26,7 @@ export const SearchForm: FC<SearchFormProps> = ({ searchSubmit, termChange }) =>
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        setSearchTerm(formData.get('search') as string);
+        setSearchTerm('');
         searchSubmit(formData.get('search') as string);
     }
 
