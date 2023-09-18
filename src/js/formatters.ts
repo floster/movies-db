@@ -6,6 +6,24 @@ import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollection, RawSear
 import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData, ICollection, IQuickSearchResult, ISearchResults } from "../types/tmdb.types";
 import { createLink, formatDate, getPosterUrl } from "./helpers";
 
+/**
+ * Formats a search term by removing non-alphanumeric characters,
+ * replacing spaces with '+' characters, and removing leading/trailing hyphens.
+ *
+ * @param {string} text - The search term to format.
+ * @returns {string} The formatted search term.
+ */
+export const formatSearchTerm = (term: string) => {
+    if (!term) return '';
+    return term.toLowerCase()
+        .replace(/:/g, '') // remove colons
+        .replace(/,/g, '') // remove commas
+        .replace(/[^a-z0-9\s-]/g, '') // remove non-alphanumeric characters except spaces and hyphens
+        .replace(/\s+/g, '\+') // replace spaces with plus
+        .replace(/-+/g, '\+') // remove consecutive plus
+        .replace(/^-+|-+$/g, ''); // remove leading and trailing hyphens
+}
+
 export function formatTileData<T extends UTileData>(
     tile: T,
     type: UMediaTypes,

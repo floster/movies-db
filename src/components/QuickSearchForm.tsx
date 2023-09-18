@@ -7,6 +7,7 @@ import TMDB from "../js/tmdb-api";
 import { IQuickSearchResult } from "../types/tmdb.types";
 import { useSearchDialog } from "../contexts/SearchDialogContext";
 import { SearchForm } from "./SearchForm";
+import { formatSearchTerm } from "../js/formatters";
 
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env.VITE_SYMBOLS_QTY_TO_SEARCH as number;
 
@@ -23,8 +24,10 @@ export default function QuickSearchForm() {
     const handleSearchSubmit = (searchTerm: string) => {
         // hide search dialog
         hide()
-        // make search term URL-friendly and looks like "search/rambo+first+blood"
-        const term = searchTerm.trim().split(' ').join('+');
+
+        // navigate to search page with search term
+        // e.g. /search/terminator+genesis
+        const term = formatSearchTerm(searchTerm);
         navigate(`/search/${term}`);
     }
 
