@@ -1,7 +1,20 @@
 import { AvalableLocales, LOCALES } from "./config";
 import { ITileData, USortOptionValues } from "../types/tmdb.types";
 
+/**
+ * Filters an array of tile data to remove any tiles with a placeholder image.
+ * 
+ * @param {ITileData[]} tiles - The array of tile data to filter.
+ * @returns {ITileData[]} The filtered array of tile data.
+ */
 export const filterNoImage = (tiles: ITileData[]): ITileData[] => tiles.filter(tile => tile.poster.includes('via.placeholder.com') === false);
+
+/**
+ * Filters an array of tile data to remove any tiles with an 'uncredited' label.
+ *
+ * @param {ITileData[]} tiles - The array of tile data to filter.
+ * @returns {ITileData[]} The filtered array of tile data.
+ */
 export const filterUncredits = (tiles: ITileData[]): ITileData[] => tiles.filter(tile => tile.label.includes('uncredited') === false);
 
 export function tilesSort<T>(tiles: T[], option: USortOptionValues): T[] {
@@ -12,6 +25,27 @@ export function tilesSort<T>(tiles: T[], option: USortOptionValues): T[] {
         if (sortOrder === 'asc') return a[sortBy] < b[sortBy] ? -1 : 1;
         else return a[sortBy] > b[sortBy] ? -1 : 1;
     });
+}
+
+/**
+ * Splits an array of tiles into multiple arrays of a specified size.
+ *
+ * @param {T[]} tiles - The array of tiles to split.
+ * @param {number} pages - The size of each split array.
+ * @returns {{ splitted: T[][] | null, qty: number }} An object containing the splitted array of tiles and the quantity of split arrays.
+ */
+export function splitTiles<T>(tiles: T[] = [], pages: number): { splitted: T[][] | null, qty: number } {
+    if (tiles.length === 0) return { splitted: null, qty: 0 };
+    if (tiles.length <= pages) return { splitted: [tiles], qty: 1 };
+
+    const tilesCopy = [...tiles];
+    const splitted = [] as T[][];
+    const qty = Math.ceil(tiles.length / pages);
+
+    for (let i = 0; i < qty; i++) {
+        splitted.push(tilesCopy.splice(0, pages));
+    }
+    return { splitted, qty }
 }
 
 /**
