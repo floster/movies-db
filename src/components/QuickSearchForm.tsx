@@ -1,42 +1,46 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDebounce } from "@uidotdev/usehooks";
 import { QuickSearchHits } from "./QuickSearchHits";
-import SvgIcon from "./SvgIcon";
 import AppError from "./AppError";
 import AppSpinner from "./AppSpinner";
 import TMDB from "../js/tmdb-api";
 import { IQuickSearchResult } from "../types/tmdb.types";
 import { useSearchDialog } from "../contexts/SearchDialogContext";
+import { SearchForm } from "./SearchForm";
 
-export default function SearchForm() {
+const SYMBOLS_QTY_TO_SEARCH = import.meta.env.VITE_SYMBOLS_QTY_TO_SEARCH as number;
+
+export default function QuickSearchForm() {
     const [searchTerm, setSearchTerm] = useState('');
     const [hits, setHits] = useState([] as IQuickSearchResult[]);
     const [isDataLoading, setIsDataLoading] = useState(false);
     const [isDataError, setIsDataError] = useState(false);
 
+    // described in src/contexts/SearchDialogContext.tsx
     const { hide } = useSearchDialog();
     const navigate = useNavigate();
 
-    // waiting for 500ms after user stops typing before set new value
-    const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
-    const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleSearchSubmit = (searchTerm: string) => {
+        // hide search dialog
         hide()
+        // make search term URL-friendly and looks like "search/rambo+first+blood"
         const term = searchTerm.trim().split(' ').join('+');
         navigate(`/search/${term}`);
     }
 
-    const clearTerm = () => setSearchTerm('');
+    // waiting for 'termChange' event from SearchForm component
+    const searchTermChanged = (searchTerm: string) => {
+        setSearchTerm(searchTerm);
+    }
 
     const getSearchResults = useCallback(async () => {
-        // clear hits array to clear its UI container
-        if (!searchTerm) {
+        // clear hits array to clear Quick Search Hits container
+        // if search term is empty or less than 4 symbols
+        if (!searchTerm || searchTerm.length < SYMBOLS_QTY_TO_SEARCH) {
             setHits([])
         };
 
-        if (searchTerm.length > 3) {
+        if (searchTerm.length >= SYMBOLS_QTY_TO_SEARCH) {
             try {
                 setIsDataLoading(true);
                 const results = await TMDB.getQuickSearch(searchTerm);
@@ -48,7 +52,7 @@ export default function SearchForm() {
                 setIsDataLoading(false);
             }
         }
-    }, [debouncedSearchTerm]);
+    }, [searchTerm]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -59,26 +63,10 @@ export default function SearchForm() {
 
     return (
         <>
-            <form action="" className="quick-search-form" onSubmit={handleSearchSubmit}>
-                <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={e => setSearchTerm(e.target.value)}
-                    className="quick-search-form__input"
-                    placeholder="start searching..."
-                />
-                <button
-                    className="quick-search-form__clean app-button m-close"
-                    aria-label="search"
-                    type="reset"
-                    onClick={clearTerm}
-                >
-                    <SvgIcon icon="close" />
-                </button>
-                <button className="quick-search-form__submit app-button m-icon m-primary" aria-label="search" type="submit">
-                    <SvgIcon icon="search" />
-                </button>
-            </form>
+            <SearchForm
+                termChange={searchTermChanged}
+                searchSubmit={handleSearchSubmit}
+            ></SearchForm>
             {isDataError
                 ? <AppError error={`Error occured while getting search results by #${searchTerm}`} />
                 : isDataLoading

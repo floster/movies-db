@@ -2,6 +2,8 @@ import { FC } from "react";
 import { IQuickSearchResult } from "../types/tmdb.types";
 import AppPicture from "./AppPicture";
 
+const SYMBOLS_QTY_TO_SEARCH = import.meta.env.VITE_SYMBOLS_QTY_TO_SEARCH as number;
+
 interface QuickSearchHitsProps {
     searchHits: IQuickSearchResult[];
 }
@@ -23,7 +25,9 @@ export const QuickSearchHits: FC<QuickSearchHitsProps> = ({ searchHits }) => {
     return (
         <section className="quick-search-hits">
             {searchHits.length === 0
-                ? <p className="quick-search-hits__empty">No results. Try to start searching/another search phrase</p>
+                ? <p className="quick-search-hits__empty">
+                    No results. To start searching enter at least {SYMBOLS_QTY_TO_SEARCH} symbols
+                </p>
                 : <ul className="quick-search-hits__list">
                     {searchHits.map((hit) => SearchHitsItem(hit))}
                 </ul>
