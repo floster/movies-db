@@ -19,6 +19,7 @@ export default function Collection() {
   const params = useParams<CollectionParams>();
   const collectionId = getIdFromLink(params.id!);
 
+  // TODO: replace all sorting logic with useTilesSort custom hook
   const [tiles, setTiles] = useState([] as ITileData[]);
   const [sortedTiles, setSortedTiles] = useState([] as ITileData[]);
   const [currentSort, setCurrentSort] = useState('year_desc' as USortOptionValues);

@@ -9,6 +9,8 @@ import AppTile from "../components/AppTile";
 import { SearchForm } from "../components/SearchForm";
 
 import { useSearchResults } from "../hooks/useSearchResults";
+import { ITileData, USortOptionValues } from "../types/tmdb.types";
+import { tilesSort } from "../js/helpers";
 
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env.VITE_SYMBOLS_QTY_TO_SEARCH as number;
 
@@ -41,6 +43,29 @@ export default function Search() {
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
 
+  /////////////////////////////////////
+  ////////// RESULTS SORTING //////////
+  /////////////////////////////////////
+  const [currentMoviesSort, setCurrentMoviesSort] = useState('year_desc' as USortOptionValues);
+  const [currentTvsSort, setCurrentTvsSort] = useState('year_desc' as USortOptionValues);
+  const [currentPersonsSort, setCurrentPersonsSort] = useState('year_desc' as USortOptionValues);
+
+  const [sortedMovies, setSortedMovies] = useState([] as ITileData[]);
+  const [sortedTvs, setSortedTvs] = useState([] as ITileData[]);
+  const [sortedPersons, setSorPersonsies] = useState([] as ITileData[]);
+
+  const onMoviesSortChange = (option: string) => setCurrentMoviesSort(option as USortOptionValues);
+  const onTvsSortChange = (option: string) => setCurrentTvsSort(option as USortOptionValues);
+  const onPersonsSortChange = (option: string) => setCurrentPersonsSort(option as USortOptionValues);
+
+  const moviesSortChanged = useCallback(() => setSortedMovies(tilesSort(currentMovies, currentMoviesSort)), [currentMovies, currentMoviesSort]);
+  const tvsSortChanged = useCallback(() => setSortedTvs(tilesSort(currentTvs, currentTvsSort)), [currentTvs, currentTvsSort]);
+  const personsSortChanged = useCallback(() => setSorPersonsies(tilesSort(currentPersons, currentPersonsSort)), [currentPersons, currentPersonsSort]);
+
+  useEffect(() => moviesSortChanged(), [moviesSortChanged]);
+  useEffect(() => tvsSortChanged(), [tvsSortChanged]);
+  useEffect(() => personsSortChanged(), [personsSortChanged]);
+
   useEffect(() => setSearchTerm(term || ''), [term]);
   const handleSearchSubmit = (searchTerm: string) => { setSearchTerm(searchTerm || ''); }
   const searchTermIsShort = () => searchTerm.length < SYMBOLS_QTY_TO_SEARCH;
@@ -52,6 +77,9 @@ export default function Search() {
       const searchResults = await TMDB.getAllSearch(searchTerm);
 
       handleSearchResults(searchResults);
+      moviesSortChanged();
+      tvsSortChanged();
+      personsSortChanged();
     } catch (error) {
       setIsDataError(true);
       console.error(error);
@@ -76,7 +104,9 @@ export default function Search() {
       </section>
       <div className="l-content container search-results">
         {searchTermIsShort()
-          ? <p className="message m-info align-self-center"><span className="message__icon">ℹ</span> Enter at least <strong>{SYMBOLS_QTY_TO_SEARCH}</strong> symbols to start searching</p>
+          ? <p className="message m-info align-self-center">
+            <span className="message__icon">ℹ</span> Enter at least <strong>{SYMBOLS_QTY_TO_SEARCH}</strong> symbols to start searching
+          </p>
           : isDataError
             ? <AppError error={`Error occured while finding for #${term}`} />
             : isDataLoading
@@ -87,11 +117,17 @@ export default function Search() {
                   &nbsp;➡ {quantity.all} [{quantity.movies}, {quantity.tvs}, {quantity.persons}]
                 </h2>
 
-                {(currentMovies.length > 0) &&
+                {(sortedMovies.length > 0) &&
                   <AppSection extraClass='m-movies_list'>
-                    <AppSectionHeader title={`movies (${currentMovies.length})`} alignStart />
+                    <AppSectionHeader
+                      title={`movies (${currentMovies.length})`}
+                      alignStart
+                      hasSelect={true}
+                      currentSortOption={currentMoviesSort}
+                      onSortChange={onMoviesSortChange}
+                    />
                     <div className="l-tiles_grid m-movies">
-                      {currentMovies.map((movie) => <AppTile tile={movie} key={movie.id} />)}
+                      {sortedMovies.map((movie) => <AppTile tile={movie} key={movie.id} />)}
                       <button
                         className="app-button"
                         onClick={() => handleShowMore('movies')}
@@ -102,11 +138,17 @@ export default function Search() {
                     </div>
                   </AppSection>
                 }
-                {(currentTvs.length > 0) &&
+                {(sortedTvs.length > 0) &&
                   <AppSection extraClass='m-movies_list'>
-                    <AppSectionHeader title={`tvs (${currentTvs.length})`} alignStart />
+                    <AppSectionHeader
+                      title={`tvs (${currentTvs.length})`}
+                      alignStart
+                      hasSelect={true}
+                      currentSortOption={currentTvsSort}
+                      onSortChange={onTvsSortChange}
+                    />
                     <div className="l-tiles_grid m-movies">
-                      {currentTvs.map((tv) => <AppTile tile={tv} key={tv.id} />)}
+                      {sortedTvs.map((tv) => <AppTile tile={tv} key={tv.id} />)}
                       <button
                         className="app-button"
                         onClick={() => handleShowMore('tvs')}
@@ -117,11 +159,17 @@ export default function Search() {
                     </div>
                   </AppSection>
                 }
-                {(currentPersons.length > 0) &&
+                {(sortedPersons.length > 0) &&
                   <AppSection extraClass='m-movies_list'>
-                    <AppSectionHeader title={`persons (${currentPersons.length})`} alignStart />
+                    <AppSectionHeader
+                      title={`persons (${currentPersons.length})`}
+                      alignStart
+                      hasSelect={true}
+                      currentSortOption={currentPersonsSort}
+                      onSortChange={onPersonsSortChange}
+                    />
                     <div className="l-tiles_grid m-movies">
-                      {currentPersons.map((person) => <AppTile tile={person} key={person.id} />)}
+                      {sortedPersons.map((person) => <AppTile tile={person} key={person.id} />)}
                       <button
                         className="app-button"
                         onClick={() => handleShowMore('persons')}
