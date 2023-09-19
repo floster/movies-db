@@ -397,11 +397,7 @@ export function formatQuickSearchResults(results: RawSearchResult[]): IQuickSear
 
 export function formatSearchResults(results: RawSearch): ISearchResults {
     const formattedResults: ISearchResults = {
-        qty: {
-            page: results.page,
-            pages: results.total_pages,
-            results: results.total_results,
-        },
+        pages: results.total_pages,
         movies: [],
         tvs: [],
         persons: [],

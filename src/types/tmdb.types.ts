@@ -176,11 +176,7 @@ export interface IMovieCrew extends IBasePerson {
 }
 
 export interface ISearchResults {
-  qty: {
-    page: number,
-    pages: number,
-    results: number,
-  },
+  pages: number,
   movies: ITileData[],
   tvs: ITileData[],
   persons: ITileData[],

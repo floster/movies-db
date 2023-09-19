@@ -254,36 +254,22 @@ export default class TMDB {
   }
 
   static async getAllSearch(query: string): Promise<ISearchResults> {
-    const results: ISearchResults = {
-      qty: {
-        page: 0,
-        pages: 0,
-        results: 0,
-      },
-      movies: [],
-      tvs: [],
-      persons: [],
-    };
-
     // get first page of search results (20 results)
     const first = await this.getSearch(query);
 
     // ...fill results with first page (initial) data
-    results.qty.page = first.qty.page;
-    results.qty.pages = first.qty.pages;
-    results.qty.results = first.qty.results;
-    results.movies = first.movies;
-    results.tvs = first.tvs;
-    results.persons = first.persons;
+    const { pages, movies, tvs, persons } = first;
+    const results: ISearchResults = { pages, movies, tvs, persons };
 
     // ...than if pages > 1 get all other pages
-    if (first.qty.pages > 1) {
+    if (first.pages > 1) {
       // ...for that go through all pages and get results
-      for (let n = 2; n <= first.qty.pages; n++) {
+      for (let n = 2; n <= first.pages; n++) {
         const next = await this.getSearch(query, n);
-        results.movies = [...results.movies, ...next.movies];
-        results.tvs = [...results.tvs, ...next.tvs];
-        results.persons = [...results.persons, ...next.persons];
+        const { movies, tvs, persons } = next;
+        results.movies.push(...movies);
+        results.tvs.push(...tvs);
+        results.persons.push(...persons);
       }
     }
 
