@@ -28,6 +28,19 @@ export function tilesSort<T>(tiles: T[], option: USortOptionValues): T[] {
 }
 
 /**
+ * Filters an array of tile data to pull any tiles with a placeholder image to the end.
+ *
+ * @param {ITileData[]} tiles - The array of tile data to filter.
+ * @returns {ITileData[]} Array with tiles without poster in the end.
+ */
+export const pullTilesWithoutPosterToTheEnd = (tiles: ITileData[]): ITileData[] => {
+    const withPoster = tiles.filter(tile => tile.poster.includes('image.tmdb.org'));
+    const withoutPoster = tiles.filter(tile => tile.poster.includes('image.tmdb.org') === false);
+
+    return [...withPoster, ...withoutPoster];
+}
+
+/**
  * Splits an array into a two-dimensional array of smaller arrays.
  *
  * @template T

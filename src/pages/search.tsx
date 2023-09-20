@@ -18,11 +18,11 @@ const SYMBOLS_QTY_TO_SEARCH = import.meta.env.VITE_SYMBOLS_QTY_TO_SEARCH as numb
 // [x] TODO: add search form
 // [x] TODO: add pagination for results more than TILES_QTY_TO_SHOW
 // [x] TODO: add sorting for results (sort by rating by default)
-// [ ] TODO: make possibility to show/hide results sections
-// [ ] TODO: pull results without poster to the end of the list
+// [-] TODO: make possibility to show/hide results sections
+// [x] TODO: pull results without poster to the end of the list
 // [ ] TODO: set focus on input field when click by search icon on search page
 // [ ] TODO: open QuickSearch by cmd+k shortcut
-// [ ] TODO: animation for search results ('show more' clicked)
+// [ ] TODO: animation for search results ('show more' clicked | sorting changed)
 
 export default function Search() {
   const params = useParams();
