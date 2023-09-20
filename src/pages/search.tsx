@@ -9,19 +9,20 @@ import AppTile from "../components/AppTile";
 import { SearchForm } from "../components/SearchForm";
 
 import { useSearchResults } from "../hooks/useSearchResults";
-import { ITileData, USortOptionValues } from "../types/tmdb.types";
-import { tilesSort } from "../js/helpers";
+import { useTilesSort } from "../hooks/useTilesSort";
+import { useSortOption } from "../hooks/useSortOption";
 
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env.VITE_SYMBOLS_QTY_TO_SEARCH as number;
 
 // [x] TODO: make search form as a separate component
 // [x] TODO: add search form
 // [x] TODO: add pagination for results more than TILES_QTY_TO_SHOW
-// [ ] TODO: add sorting for results (sort by rating by default)
+// [x] TODO: add sorting for results (sort by rating by default)
 // [ ] TODO: make possibility to show/hide results sections
 // [ ] TODO: pull results without poster to the end of the list
 // [ ] TODO: set focus on input field when click by search icon on search page
 // [ ] TODO: open QuickSearch by cmd+k shortcut
+// [ ] TODO: animation for search results ('show more' clicked)
 
 export default function Search() {
   const params = useParams();
@@ -46,25 +47,16 @@ export default function Search() {
   /////////////////////////////////////
   ////////// RESULTS SORTING //////////
   /////////////////////////////////////
-  const [currentMoviesSort, setCurrentMoviesSort] = useState('year_desc' as USortOptionValues);
-  const [currentTvsSort, setCurrentTvsSort] = useState('year_desc' as USortOptionValues);
-  const [currentPersonsSort, setCurrentPersonsSort] = useState('year_desc' as USortOptionValues);
 
-  const [sortedMovies, setSortedMovies] = useState([] as ITileData[]);
-  const [sortedTvs, setSortedTvs] = useState([] as ITileData[]);
-  const [sortedPersons, setSorPersonsies] = useState([] as ITileData[]);
+  const moviesSortOption = useSortOption();
+  const tvsSortOption = useSortOption();
+  const personsSortOption = useSortOption();
 
-  const onMoviesSortChange = (option: string) => setCurrentMoviesSort(option as USortOptionValues);
-  const onTvsSortChange = (option: string) => setCurrentTvsSort(option as USortOptionValues);
-  const onPersonsSortChange = (option: string) => setCurrentPersonsSort(option as USortOptionValues);
+  const { sortedTiles: sortedMovies } = useTilesSort(currentMovies, moviesSortOption.currentSortOption);
+  const { sortedTiles: sortedTvs } = useTilesSort(currentTvs, tvsSortOption.currentSortOption);
+  const { sortedTiles: sortedPersons } = useTilesSort(currentPersons, personsSortOption.currentSortOption);
 
-  const moviesSortChanged = useCallback(() => setSortedMovies(tilesSort(currentMovies, currentMoviesSort)), [currentMovies, currentMoviesSort]);
-  const tvsSortChanged = useCallback(() => setSortedTvs(tilesSort(currentTvs, currentTvsSort)), [currentTvs, currentTvsSort]);
-  const personsSortChanged = useCallback(() => setSorPersonsies(tilesSort(currentPersons, currentPersonsSort)), [currentPersons, currentPersonsSort]);
-
-  useEffect(() => moviesSortChanged(), [moviesSortChanged]);
-  useEffect(() => tvsSortChanged(), [tvsSortChanged]);
-  useEffect(() => personsSortChanged(), [personsSortChanged]);
+  /////////////////////////////////////
 
   useEffect(() => setSearchTerm(term || ''), [term]);
   const handleSearchSubmit = (searchTerm: string) => { setSearchTerm(searchTerm || ''); }
@@ -77,9 +69,6 @@ export default function Search() {
       const searchResults = await TMDB.getAllSearch(searchTerm);
 
       handleSearchResults(searchResults);
-      moviesSortChanged();
-      tvsSortChanged();
-      personsSortChanged();
     } catch (error) {
       setIsDataError(true);
       console.error(error);
@@ -123,8 +112,7 @@ export default function Search() {
                       title={`movies (${currentMovies.length})`}
                       alignStart
                       hasSelect={true}
-                      currentSortOption={currentMoviesSort}
-                      onSortChange={onMoviesSortChange}
+                      {...moviesSortOption}
                     />
                     <div className="l-tiles_grid m-movies">
                       {sortedMovies.map((movie) => <AppTile tile={movie} key={movie.id} />)}
@@ -144,8 +132,7 @@ export default function Search() {
                       title={`tvs (${currentTvs.length})`}
                       alignStart
                       hasSelect={true}
-                      currentSortOption={currentTvsSort}
-                      onSortChange={onTvsSortChange}
+                      {...tvsSortOption}
                     />
                     <div className="l-tiles_grid m-movies">
                       {sortedTvs.map((tv) => <AppTile tile={tv} key={tv.id} />)}
@@ -165,8 +152,7 @@ export default function Search() {
                       title={`persons (${currentPersons.length})`}
                       alignStart
                       hasSelect={true}
-                      currentSortOption={currentPersonsSort}
-                      onSortChange={onPersonsSortChange}
+                      {...personsSortOption}
                     />
                     <div className="l-tiles_grid m-movies">
                       {sortedPersons.map((person) => <AppTile tile={person} key={person.id} />)}
