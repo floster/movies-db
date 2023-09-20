@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import SvgIcon from "./SvgIcon";
 
@@ -12,12 +12,16 @@ type SearchFormProps = {
 
 export const SearchForm: FC<SearchFormProps> = ({ searchSubmit, termChange }) => {
     const [searchTerm, setSearchTerm] = useState('');
+    const searchInputRef = useRef(null as HTMLInputElement | null)
 
     // The debounced value. After the DEBOUNCE_DELAY ms has passed without the value changing,
     // this will be updated to the latest value.
     const debouncedSearchTerm = useDebounce(searchTerm, DEBOUNCE_DELAY)
 
-    const handleReset = () => setSearchTerm('');
+    const handleReset = () => {
+        setSearchTerm('')
+        searchInputRef.current?.focus();
+    };
 
     const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
         setSearchTerm(e.currentTarget.value)
@@ -43,6 +47,7 @@ export const SearchForm: FC<SearchFormProps> = ({ searchSubmit, termChange }) =>
             <input
                 type="text"
                 name="search"
+                ref={searchInputRef}
                 value={searchTerm}
                 onChange={handleChange}
                 className="quick-search-form__input"
