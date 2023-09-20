@@ -8,8 +8,10 @@ import { ITileData, USortOptionValues } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb-api';
 import AppError from '../components/AppError';
-import { getIdFromLink, tilesSort } from '../js/helpers';
+import { getIdFromLink } from '../js/helpers';
 import { formatTilesData } from '../js/formatters';
+
+import { useTilesSort } from '../hooks/useTilesSort';
 
 type CollectionParams = {
   id: string;
@@ -19,17 +21,15 @@ export default function Collection() {
   const params = useParams<CollectionParams>();
   const collectionId = getIdFromLink(params.id!);
 
-  // TODO: replace all sorting logic with useTilesSort custom hook
   const [tiles, setTiles] = useState([] as ITileData[]);
-  const [sortedTiles, setSortedTiles] = useState([] as ITileData[]);
   const [currentSort, setCurrentSort] = useState('year_desc' as USortOptionValues);
 
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
 
-  const onSortChange = (option: string) => setCurrentSort(option as USortOptionValues);
+  const { sortedTiles } = useTilesSort(tiles, currentSort);
 
-  const sortChanged = useCallback(() => setSortedTiles(tilesSort(tiles, currentSort)), [tiles, currentSort]);
+  const onSortChange = (option: string) => setCurrentSort(option as USortOptionValues);
 
   const getPartsData = useCallback(async () => {
     try {
@@ -52,7 +52,7 @@ export default function Collection() {
     fetchData();
   }, [getPartsData]);
 
-  useEffect(() => sortChanged(), [sortChanged]);
+  // useEffect(() => sortChanged(), [sortChanged]);
 
   return (
     <>
@@ -62,7 +62,7 @@ export default function Collection() {
           ? <AppError error={`Error occured while fetching collection #${collectionId} parts`} />
           : <>
             <AppSection extraClass='m-movies_list'>
-              <AppSectionHeader title={`${tiles.length} parts`} hasSelect={true} currentSortOption={currentSort} onSortChange={onSortChange} />
+              <AppSectionHeader title={`${sortedTiles.length} parts`} hasSelect={true} currentSortOption={currentSort} onSortChange={onSortChange} />
               <div className="l-tiles_grid m-movies">
                 {isDataLoading
                   ? <AppSpinner visible={true} />
