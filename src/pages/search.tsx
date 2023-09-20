@@ -79,7 +79,7 @@ export default function Search() {
 
   return (
     <>
-      <section className="container">
+      <section className="container search-form">
         <SearchForm searchSubmit={handleSearchSubmit} />
       </section>
       <div className="l-content container search-results">
