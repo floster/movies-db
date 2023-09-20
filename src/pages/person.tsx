@@ -7,11 +7,12 @@ import { useParams } from 'react-router-dom';
 import tmdb from '../js/tmdb-api';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
-import { filterNoImage, filterUncredits, getIdFromLink, tilesSort } from '../js/helpers';
+import { filterNoImage, filterUncredits, getIdFromLink } from '../js/helpers';
 import { formatTilesData } from '../js/formatters';
 import { ITileData } from '../types/tmdb.types';
 
 import { useSortOption } from '../hooks/useSortOption';
+import { useTilesSort } from '../hooks/useTilesSort';
 
 type PersonParams = {
   id: string;
@@ -21,6 +22,7 @@ const Person: FC = () => {
   const params = useParams<PersonParams>();
   const personId = getIdFromLink(params.id!);
 
+
   const moviesSortOption = useSortOption();
   const tvsSortOption = useSortOption();
 
@@ -29,12 +31,8 @@ const Person: FC = () => {
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
 
-  useEffect(() => {
-    setCastMovie(tilesSort(castMovie, moviesSortOption.currentSortOption))
-  }, [moviesSortOption.currentSortOption]);
-  useEffect(() => {
-    setCastTv(tilesSort(castTv, tvsSortOption.currentSortOption))
-  }, [tvsSortOption.currentSortOption]);
+  const { sortedTiles: sortedMovies } = useTilesSort(castMovie, moviesSortOption.currentSortOption);
+  const { sortedTiles: sortedTvs } = useTilesSort(castTv, tvsSortOption.currentSortOption);
 
   const getData = useCallback(async () => {
     try {
@@ -48,8 +46,8 @@ const Person: FC = () => {
       const movie = avoidUncredits.filter((media) => media.type === 'movie');
       const tv = avoidUncredits.filter((media) => media.type === 'tv');
 
-      setCastMovie(tilesSort(movie, moviesSortOption.currentSortOption));
-      setCastTv(tilesSort(tv, tvsSortOption.currentSortOption));
+      setCastMovie(movie);
+      setCastTv(tv);
     } catch (error) {
       setIsDataError(true);
       console.error(error);
@@ -78,7 +76,7 @@ const Person: FC = () => {
               <div className="l-tiles_grid m-movies">
                 {isDataLoading
                   ? <AppSpinner visible={true} />
-                  : castMovie.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
+                  : sortedMovies.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
               </div>
             </AppSection>
 
@@ -87,7 +85,7 @@ const Person: FC = () => {
               <div className="l-tiles_grid m-movies">
                 {isDataLoading
                   ? <AppSpinner visible={true} />
-                  : castTv.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
+                  : sortedTvs.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
               </div>
             </AppSection>
           </div>
