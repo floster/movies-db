@@ -28,46 +28,37 @@ export default function Search() {
   const params = useParams();
   const term = params.term || '';
 
-  const {
-    quantity,
-    currentMovies,
-    currentTvs,
-    currentPersons,
-    currentMoviesPage,
-    currentTvsPage,
-    currentPersonsPage,
-    handleShowMore,
-    handleSearchResults
-  } = useSearchResults();
-
   const [searchTerm, setSearchTerm] = useState('');
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
 
-  /////////////////////////////////////
-  ////////// RESULTS SORTING //////////
-  /////////////////////////////////////
+  const {
+    movies,
+    tvs,
+    persons,
+    handleShowMore,
+    handleSearchResults
+  } = useSearchResults();
 
   const moviesSortOption = useSortOption();
   const tvsSortOption = useSortOption();
   const personsSortOption = useSortOption();
 
-  const { sortedTiles: sortedMovies } = useTilesSort(currentMovies, moviesSortOption.currentSortOption);
-  const { sortedTiles: sortedTvs } = useTilesSort(currentTvs, tvsSortOption.currentSortOption);
-  const { sortedTiles: sortedPersons } = useTilesSort(currentPersons, personsSortOption.currentSortOption);
-
-  /////////////////////////////////////
+  const { sortedTiles: sortedMovies } = useTilesSort(movies.currentTiles, moviesSortOption.currentSortOption);
+  const { sortedTiles: sortedTvs } = useTilesSort(tvs.currentTiles, tvsSortOption.currentSortOption);
+  const { sortedTiles: sortedPersons } = useTilesSort(persons.currentTiles, personsSortOption.currentSortOption);
 
   useEffect(() => setSearchTerm(term || ''), [term]);
   const handleSearchSubmit = (searchTerm: string) => { setSearchTerm(searchTerm || ''); }
   const searchTermIsShort = () => searchTerm.length < SYMBOLS_QTY_TO_SEARCH;
+
+  const calcAllTilesQty = () => movies.qty.tiles + tvs.qty.tiles + persons.qty.tiles;
 
   // looking if searchTerm were changed and load search results accordingly
   const getSearchResults = useCallback(async () => {
     try {
       setIsDataLoading(true);
       const searchResults = await TMDB.getAllSearch(searchTerm);
-
       handleSearchResults(searchResults);
     } catch (error) {
       setIsDataError(true);
@@ -103,13 +94,13 @@ export default function Search() {
               : <>
                 <h2 className="search-results__title">
                   <mark>{searchTerm.replace(/\+/g, ' ')}</mark>
-                  &nbsp;➡ {quantity.all} [{quantity.movies}, {quantity.tvs}, {quantity.persons}]
+                  &nbsp;➡ {calcAllTilesQty()} [{movies.qty.tiles}, {tvs.qty.tiles}, {persons.qty.tiles}]
                 </h2>
 
                 {(sortedMovies.length > 0) &&
                   <AppSection extraClass='m-movies_list'>
                     <AppSectionHeader
-                      title={`movies (${currentMovies.length})`}
+                      title={`movies (${movies.qty.tiles})`}
                       alignStart
                       hasSelect={true}
                       {...moviesSortOption}
@@ -119,9 +110,9 @@ export default function Search() {
                       <button
                         className="app-button"
                         onClick={() => handleShowMore('movies')}
-                        disabled={currentMoviesPage >= quantity.moviesPages}
+                        disabled={movies.currentPage >= movies.qty.pages}
                       >
-                        show more ({currentMoviesPage} / {quantity.moviesPages})
+                        show more ({movies.currentPage} / {movies.qty.pages})
                       </button>
                     </div>
                   </AppSection>
@@ -129,7 +120,7 @@ export default function Search() {
                 {(sortedTvs.length > 0) &&
                   <AppSection extraClass='m-movies_list'>
                     <AppSectionHeader
-                      title={`tvs (${currentTvs.length})`}
+                      title={`tvs (${tvs.qty.tiles})`}
                       alignStart
                       hasSelect={true}
                       {...tvsSortOption}
@@ -139,9 +130,9 @@ export default function Search() {
                       <button
                         className="app-button"
                         onClick={() => handleShowMore('tvs')}
-                        disabled={currentTvsPage >= quantity.tvsPages}
+                        disabled={tvs.currentPage >= tvs.qty.pages}
                       >
-                        show more ({currentTvsPage} / {quantity.tvsPages})
+                        show more ({tvs.currentPage} / {tvs.qty.pages})
                       </button>
                     </div>
                   </AppSection>
@@ -149,7 +140,7 @@ export default function Search() {
                 {(sortedPersons.length > 0) &&
                   <AppSection extraClass='m-movies_list'>
                     <AppSectionHeader
-                      title={`persons (${currentPersons.length})`}
+                      title={`persons (${persons.qty.tiles})`}
                       alignStart
                       hasSelect={true}
                       {...personsSortOption}
@@ -159,9 +150,9 @@ export default function Search() {
                       <button
                         className="app-button"
                         onClick={() => handleShowMore('persons')}
-                        disabled={currentPersonsPage >= quantity.personsPages}
+                        disabled={persons.currentPage >= persons.qty.pages}
                       >
-                        show more ({currentPersonsPage} / {quantity.personsPages})
+                        show more ({persons.currentPage} / {persons.qty.pages})
                       </button>
                     </div>
                   </AppSection>

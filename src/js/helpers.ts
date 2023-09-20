@@ -50,8 +50,16 @@ export const splitArray = <T>(arr: T[], tilesPerPage: number): T[][] | null => {
     return result;
 }
 
-// get the 'tilesQty' tiles from the array 'arr' starting from the index 'startFrom'
-export const getTiles = <T>(arr: T[], startFrom: number, tilesQty: number): T[] => {
+/**
+ * Returns a portion of an array starting from a specified index and containing a specified number of elements.
+ *
+ * @template T
+ * @param {T[]} arr - The input array to extract elements from.
+ * @param {number} startFrom - The index to start extracting elements from.
+ * @param {number} tilesQty - The number of elements to extract.
+ * @returns {T[]} A new array containing the extracted elements.
+ */
+export const getTilesPortion = <T>(arr: T[], startFrom: number, tilesQty: number): T[] => {
     if (startFrom < 0) return [];
     if (tilesQty < 1) return [];
     if (arr.length < tilesQty) return arr;

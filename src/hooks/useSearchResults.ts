@@ -1,72 +1,57 @@
-import { useEffect, useState } from "react";
 import { ISearchResults, ITileData } from "../types/tmdb.types";
-import { getTiles } from "../js/helpers";
+import { useTilesPagination } from './useTilesPagination'
 
-const TILES_QTY_TO_SHOW = +import.meta.env.VITE_TILES_QTY_TO_SHOW as number;
+type UseSearchResultsItem = {
+    qty: {
+        tiles: number,
+        pages: number,
+    },
+    currentPage: number,
+    currentTiles: ITileData[],
+}
+interface UseSearchResults {
+    movies: UseSearchResultsItem,
+    tvs: UseSearchResultsItem,
+    persons: UseSearchResultsItem,
+    handleShowMore: (type: string) => void,
+    handleSearchResults: (results: ISearchResults) => void,
+}
 
-export const useSearchResults = () => {
-    const [movies, setMovies] = useState([] as ITileData[]);
-    const [tvs, setTvs] = useState([] as ITileData[]);
-    const [persons, setPersons] = useState([] as ITileData[]);
+export const useSearchResults = (): UseSearchResults => {
+    const {
+        quantity: moviesQuantity,
+        currentPage: currentMoviesPage,
+        currentTiles: currentMovies,
+        handleShowMore: handleShowMoreMovies,
+        initPagination: initMoviesPagination
+    } = useTilesPagination();
 
-    const [quantity, setQuantity] = useState({ movies: 0, tvs: 0, persons: 0, all: 0, moviesPages: 0, tvsPages: 0, personsPages: 0 });
+    const {
+        quantity: tvsQuantity,
+        currentPage: currentTvsPage,
+        currentTiles: currentTvs,
+        handleShowMore: handleShowMoreTvs,
+        initPagination: initTvsPagination
+    } = useTilesPagination();
 
-    const [currentMovies, setCurrentMovies] = useState([] as ITileData[]);
-    const [currentTvs, setCurrentTvs] = useState([] as ITileData[]);
-    const [currentPersons, setCurrentPersons] = useState([] as ITileData[]);
-
-    const [currentMoviesPage, setCurrentMoviesPage] = useState(1);
-    const [currentTvsPage, setCurrentTvsPage] = useState(1);
-    const [currentPersonsPage, setCurrentPersonsPage] = useState(1);
-
-    const calcQuantity = (results: ISearchResults) => ({
-        movies: results.movies.length,
-        tvs: results.tvs.length,
-        persons: results.persons.length,
-        all: results.movies.length + results.tvs.length + results.persons.length,
-        moviesPages: Math.ceil(results.movies.length / TILES_QTY_TO_SHOW),
-        tvsPages: Math.ceil(results.tvs.length / TILES_QTY_TO_SHOW),
-        personsPages: Math.ceil(results.persons.length / TILES_QTY_TO_SHOW),
-    });
-
-    const calcTilesQtyToShow = (type: 'movies' | 'tvs' | 'persons') => {
-        switch (type) {
-            case 'movies':
-                return currentMoviesPage * TILES_QTY_TO_SHOW;
-            case 'tvs':
-                return currentTvsPage * TILES_QTY_TO_SHOW;
-            case 'persons':
-                return currentPersonsPage * TILES_QTY_TO_SHOW;
-            default:
-                return 0;
-        }
-    }
-
-    useEffect(() => {
-        setCurrentMovies(getTiles(movies, 0, calcTilesQtyToShow('movies')));
-    }, [currentMoviesPage]);
-
-    useEffect(() => {
-        setCurrentTvs(getTiles(tvs, 0, calcTilesQtyToShow('tvs')));
-    }, [currentTvsPage]);
-
-    useEffect(() => {
-        setCurrentPersons(getTiles(persons, 0, calcTilesQtyToShow('persons')));
-    }, [currentPersonsPage]);
+    const {
+        quantity: personsQuantity,
+        currentPage: currentPersonsPage,
+        currentTiles: currentPersons,
+        handleShowMore: handleShowMorePersons,
+        initPagination: initPersonsPagination
+    } = useTilesPagination();
 
     const handleShowMore = (type: string) => {
         switch (type) {
             case 'movies':
-                if (currentMoviesPage >= quantity.moviesPages) return;
-                setCurrentMoviesPage(current => current + 1);
+                handleShowMoreMovies();
                 break;
             case 'tvs':
-                if (currentTvsPage >= quantity.tvsPages) return;
-                setCurrentTvsPage(current => current + 1);
+                handleShowMoreTvs();
                 break;
             case 'persons':
-                if (currentPersonsPage >= quantity.personsPages) return;
-                setCurrentPersonsPage(current => current + 1);
+                handleShowMorePersons();
                 break;
             default:
                 break;
@@ -74,14 +59,37 @@ export const useSearchResults = () => {
     }
 
     const handleSearchResults = (results: ISearchResults) => {
-        setQuantity(calcQuantity(results))
-        setMovies(results.movies);
-        setTvs(results.tvs);
-        setPersons(results.persons);
-        setCurrentMovies(getTiles(results.movies, 0, calcTilesQtyToShow('movies')));
-        setCurrentTvs(getTiles(results.tvs, 0, calcTilesQtyToShow('tvs')));
-        setCurrentPersons(getTiles(results.persons, 0, calcTilesQtyToShow('persons')));
+        initMoviesPagination(results.movies);
+        initTvsPagination(results.tvs);
+        initPersonsPagination(results.persons);
     }
 
-    return { quantity, currentMovies, currentTvs, currentPersons, currentMoviesPage, currentTvsPage, currentPersonsPage, handleShowMore, handleSearchResults };
+    return {
+        movies: {
+            qty: {
+                tiles: moviesQuantity.tiles,
+                pages: moviesQuantity.pages,
+            },
+            currentPage: currentMoviesPage,
+            currentTiles: currentMovies,
+        },
+        tvs: {
+            qty: {
+                tiles: tvsQuantity.tiles,
+                pages: tvsQuantity.pages,
+            },
+            currentPage: currentTvsPage,
+            currentTiles: currentTvs,
+        },
+        persons: {
+            qty: {
+                tiles: personsQuantity.tiles,
+                pages: personsQuantity.pages,
+            },
+            currentPage: currentPersonsPage,
+            currentTiles: currentPersons,
+        },
+        handleSearchResults,
+        handleShowMore
+    };
 }
