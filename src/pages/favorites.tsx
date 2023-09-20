@@ -1,6 +1,9 @@
 import FavoritesSection from '../components/FavoritesSection';
+import { useDocumentTitle } from "@uidotdev/usehooks";
 
 export default function Favorites() {
+
+  useDocumentTitle('favorites - Movies DB');
 
   return (
     <>

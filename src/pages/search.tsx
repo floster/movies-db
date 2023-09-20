@@ -12,6 +12,8 @@ import { useSearchResults } from "../hooks/useSearchResults";
 import { useTilesSort } from "../hooks/useTilesSort";
 import { useSortOption } from "../hooks/useSortOption";
 
+import { useDocumentTitle } from "@uidotdev/usehooks";
+
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env.VITE_SYMBOLS_QTY_TO_SEARCH as number;
 
 // [x] TODO: make search form as a separate component
@@ -20,7 +22,7 @@ const SYMBOLS_QTY_TO_SEARCH = import.meta.env.VITE_SYMBOLS_QTY_TO_SEARCH as numb
 // [x] TODO: add sorting for results (sort by rating by default)
 // [-] TODO: make possibility to show/hide results sections
 // [x] TODO: pull results without poster to the end of the list
-// [ ] TODO: set focus on input field when click by search icon on search page
+// [x] TODO: set focus on input field when click by search icon on search page
 // [ ] TODO: open QuickSearch by cmd+k shortcut
 // [ ] TODO: animation for search results ('show more' clicked | sorting changed)
 
@@ -31,6 +33,9 @@ export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
+
+  const title = searchTerm ? `searching '${searchTerm}'` : 'search';
+  useDocumentTitle(`${title} - Movies DB`);
 
   const {
     movies,
