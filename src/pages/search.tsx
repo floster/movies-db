@@ -16,6 +16,7 @@ import { useDocumentTitle } from "@uidotdev/usehooks";
 
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env.VITE_SYMBOLS_QTY_TO_SEARCH as number;
 
+// [ ] TODO: use query params for search term instead of path param
 // [x] TODO: make search form as a separate component
 // [x] TODO: add search form
 // [x] TODO: add pagination for results more than TILES_QTY_TO_SHOW
