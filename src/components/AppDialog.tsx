@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { useSearchDialog } from "../contexts/SearchDialogContext";
 
+// FIXME: dialog not open again after close by 'esc'
+
 interface Props {
     children: React.ReactNode;
 }
