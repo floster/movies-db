@@ -16,17 +16,6 @@ import { useDocumentTitle } from "@uidotdev/usehooks";
 
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env.VITE_SYMBOLS_QTY_TO_SEARCH as number;
 
-// [x] TODO: use query params for search term instead of path param
-// [ ] TODO: open QuickSearch by cmd+k shortcut
-// [x] TODO: make search form as a separate component
-// [x] TODO: add search form
-// [x] TODO: add pagination for results more than TILES_QTY_TO_SHOW
-// [x] TODO: add sorting for results (sort by rating by default)
-// [-] TODO: make possibility to show/hide results sections
-// [x] TODO: pull results without poster to the end of the list
-// [x] TODO: set focus on input field when click by search icon on search page
-// [ ] TODO: (it will be a separate branch) animation for search results ('show more' clicked | sorting changed)
-
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isDataLoading, setIsDataLoading] = useState(false);

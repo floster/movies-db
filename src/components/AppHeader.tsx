@@ -1,10 +1,13 @@
 import SvgIcon from "./SvgIcon";
 import ChangeLocale from "./ChangeLocale";
 import { useSearchDialog } from "../contexts/SearchDialogContext";
+import useKeyboardShortcut from "../hooks/useKeyboardShortcut";
 
 
 export default function AppHeader() {
     const { show } = useSearchDialog();
+
+    useKeyboardShortcut(() => show(), { code: 'KeyK', metaKey: true });
 
     return (
         <header className="app-header">
