@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import AppError from "../components/AppError";
 import AppSection from "../components/AppSection";
 import AppSectionHeader from "../components/AppSectionHeader";
@@ -16,7 +16,8 @@ import { useDocumentTitle } from "@uidotdev/usehooks";
 
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env.VITE_SYMBOLS_QTY_TO_SEARCH as number;
 
-// [ ] TODO: use query params for search term instead of path param
+// [x] TODO: use query params for search term instead of path param
+// [ ] TODO: open QuickSearch by cmd+k shortcut
 // [x] TODO: make search form as a separate component
 // [x] TODO: add search form
 // [x] TODO: add pagination for results more than TILES_QTY_TO_SHOW
@@ -24,16 +25,14 @@ const SYMBOLS_QTY_TO_SEARCH = import.meta.env.VITE_SYMBOLS_QTY_TO_SEARCH as numb
 // [-] TODO: make possibility to show/hide results sections
 // [x] TODO: pull results without poster to the end of the list
 // [x] TODO: set focus on input field when click by search icon on search page
-// [ ] TODO: open QuickSearch by cmd+k shortcut
-// [ ] TODO: animation for search results ('show more' clicked | sorting changed)
+// [ ] TODO: (it will be a separate branch) animation for search results ('show more' clicked | sorting changed)
 
 export default function Search() {
-  const params = useParams();
-  const term = params.term || '';
-
   const [searchTerm, setSearchTerm] = useState('');
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const title = searchTerm ? `searching '${searchTerm}'` : 'search';
   useDocumentTitle(`${title} - Movies DB`);
@@ -54,8 +53,9 @@ export default function Search() {
   const { sortedTiles: sortedTvs } = useTilesSort(tvs.currentTiles, tvsSortOption.currentSortOption);
   const { sortedTiles: sortedPersons } = useTilesSort(persons.currentTiles, personsSortOption.currentSortOption);
 
-  useEffect(() => setSearchTerm(term || ''), [term]);
-  const handleSearchSubmit = (searchTerm: string) => { setSearchTerm(searchTerm || ''); }
+  useEffect(() => setSearchTerm(searchParams.get('q') || ''), [searchParams]);
+
+  const handleSearchSubmit = (searchTerm: string) => { setSearchParams({ 'q': searchTerm } || {}); }
   const searchTermIsShort = () => searchTerm.length < SYMBOLS_QTY_TO_SEARCH;
 
   const calcAllTilesQty = () => movies.qty.tiles + tvs.qty.tiles + persons.qty.tiles;
@@ -94,7 +94,7 @@ export default function Search() {
             <span className="message__icon">ℹ</span> Enter at least <strong>{SYMBOLS_QTY_TO_SEARCH}</strong> symbols to start searching
           </p>
           : isDataError
-            ? <AppError error={`Error occured while finding for #${term}`} />
+            ? <AppError error={`Error occured while finding for #${searchTerm}`} />
             : isDataLoading
               ? <AppSpinner visible={true} />
               : <>

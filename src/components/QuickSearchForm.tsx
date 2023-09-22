@@ -28,7 +28,7 @@ export default function QuickSearchForm() {
         // navigate to search page with search term
         // e.g. /search/terminator+genesis
         const term = formatSearchTerm(searchTerm);
-        navigate(`/search/${term}`);
+        navigate(`/search?q=${term}`);
     }
 
     // waiting for 'termChange' event from SearchForm component
