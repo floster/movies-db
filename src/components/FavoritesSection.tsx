@@ -7,7 +7,7 @@ import AppSpinner from '../components/AppSpinner';
 import tmdb from '../js/tmdb-api';
 import AppError from '../components/AppError';
 import { FAVORITES } from '../js/config';
-import { formatTileData } from '../js/formaters';
+import { formatTileData } from '../js/formatters';
 
 interface Props {
   type: 'collection' | 'tv' | 'movie' | 'person' | 'season';

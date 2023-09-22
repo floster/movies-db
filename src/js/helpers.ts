@@ -1,7 +1,20 @@
-import { API_POSTER_BASE, AvalableLocales, DEFAULT_LOCALE, LOCALES, POSTER_NO_IMAGE } from "./config";
+import { AvalableLocales, LOCALES } from "./config";
 import { ITileData, USortOptionValues } from "../types/tmdb.types";
 
+/**
+ * Filters an array of tile data to remove any tiles with a placeholder image.
+ * 
+ * @param {ITileData[]} tiles - The array of tile data to filter.
+ * @returns {ITileData[]} The filtered array of tile data.
+ */
 export const filterNoImage = (tiles: ITileData[]): ITileData[] => tiles.filter(tile => tile.poster.includes('via.placeholder.com') === false);
+
+/**
+ * Filters an array of tile data to remove any tiles with an 'uncredited' label.
+ *
+ * @param {ITileData[]} tiles - The array of tile data to filter.
+ * @returns {ITileData[]} The filtered array of tile data.
+ */
 export const filterUncredits = (tiles: ITileData[]): ITileData[] => tiles.filter(tile => tile.label.includes('uncredited') === false);
 
 export function tilesSort<T>(tiles: T[], option: USortOptionValues): T[] {
@@ -12,6 +25,59 @@ export function tilesSort<T>(tiles: T[], option: USortOptionValues): T[] {
         if (sortOrder === 'asc') return a[sortBy] < b[sortBy] ? -1 : 1;
         else return a[sortBy] > b[sortBy] ? -1 : 1;
     });
+}
+
+/**
+ * Filters an array of tile data to pull any tiles with a placeholder image to the end.
+ *
+ * @param {ITileData[]} tiles - The array of tile data to filter.
+ * @returns {ITileData[]} Array with tiles without poster in the end.
+ */
+export const pullTilesWithoutPosterToTheEnd = (tiles: ITileData[]): ITileData[] => {
+    const withPoster = tiles.filter(tile => tile.poster.includes('image.tmdb.org'));
+    const withoutPoster = tiles.filter(tile => tile.poster.includes('image.tmdb.org') === false);
+
+    return [...withPoster, ...withoutPoster];
+}
+
+/**
+ * Splits an array into a two-dimensional array of smaller arrays.
+ *
+ * @template T
+ * @param {T[]} arr - The array to split.
+ * @param {number} tilesPerPage - The number of pages to split the array into.
+ * @returns {T[][]} An array of smaller arrays.
+ */
+export const splitArray = <T>(arr: T[], tilesPerPage: number): T[][] | null => {
+    if (!arr.length) return null;
+    if (tilesPerPage < 1) return [arr];
+    if (arr.length < tilesPerPage) return [arr];
+
+    const arrCopy = [...arr];
+    const pages = Math.ceil(arrCopy.length / tilesPerPage);
+
+    const result = [];
+    for (let i = 0; i < pages; i++) {
+        result.push(arrCopy.splice(0, tilesPerPage));
+    }
+    return result;
+}
+
+/**
+ * Returns a portion of an array starting from a specified index and containing a specified number of elements.
+ *
+ * @template T
+ * @param {T[]} arr - The input array to extract elements from.
+ * @param {number} startFrom - The index to start extracting elements from.
+ * @param {number} tilesQty - The number of elements to extract.
+ * @returns {T[]} A new array containing the extracted elements.
+ */
+export const getTilesPortion = <T>(arr: T[], startFrom: number, tilesQty: number): T[] => {
+    if (startFrom < 0) return [];
+    if (tilesQty < 1) return [];
+    if (arr.length < tilesQty) return arr;
+
+    return arr.slice(startFrom, startFrom + tilesQty);
 }
 
 /**
@@ -36,7 +102,7 @@ export const getIdFromLink = (link: string): number => parseInt(link.split('-')[
 ////////////////////////////////////////
 ////////// general formatters //////////
 ////////////////////////////////////////
-export const getCurrentLocale = () => localStorage.getItem('locale') as AvalableLocales || DEFAULT_LOCALE;
+export const getCurrentLocale = () => localStorage.getItem('locale') as AvalableLocales || import.meta.env.VITE_DEFAULT_LOCALE;
 
 export const getLocalCountryCode = () => {
     const currentLocale = getCurrentLocale();
@@ -69,17 +135,6 @@ export const kebabText = (link: string) => {
         .replace(/^-+|-+$/g, ''); // remove leading and trailing hyphens
 }
 
-export const formatSearchTerm = (text: string) => {
-    if (!text) return '';
-    return text.toLowerCase()
-        .replace(/:/g, '') // remove colons
-        .replace(/,/g, '') // remove commas
-        .replace(/[^a-z0-9\s-]/g, '') // remove non-alphanumeric characters except spaces and hyphens
-        .replace(/\s+/g, '\+') // replace spaces with plus
-        .replace(/-+/g, '\+') // remove consecutive plus
-        .replace(/^-+|-+$/g, ''); // remove leading and trailing hyphens
-}
-
 /**
  * Creates a link string from the provided type, ID, and title.
  * @param {string} type - The type of the link (e.g. 'movie', 'tv', etc.).
@@ -94,6 +149,6 @@ export const createLink = (type: string, id: number, title: string) => {
 
 export const getPosterUrl = (posterPath: string): string => {
     return posterPath
-        ? `${API_POSTER_BASE}${posterPath}`
-        : POSTER_NO_IMAGE;
+        ? `${import.meta.env.VITE_API_POSTER_BASE}${posterPath}`
+        : import.meta.env.VITE_POSTER_NO_IMAGE;
 }

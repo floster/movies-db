@@ -1,13 +1,3 @@
-export const API_BASE = 'https://api.themoviedb.org/3';
-export const API_KEY = 'e53afc585bcc1648f859c0ff148012ea';
-export const API_POSTER_BASE =
-  'https://image.tmdb.org/t/p/w300_and_h450_bestv2';
-export const API_BACKDROP_BASE =
-  'https://image.tmdb.org/t/p/w1920_and_h800_multi_faces';
-export const POSTER_NO_IMAGE =
-  'https://via.placeholder.com/300x450/dfe8ec/d95959/?text=No+Image';
-
-export const TOLOKA_BASE = 'https://toloka.to/tracker.php';
 // available list types to get from TMDB
 type ListTypes = 'movie__top_rated' | 'movie__now_playing' | 'movie__upcoming' | 'tv__top_rated' | 'tv__popular';
 interface MovieListSelectOption {
@@ -41,10 +31,10 @@ export const LOCALES: Locale[] = [
   { title: 'UA', value: 'uk' },
   { title: 'DE', value: 'de' },
 ];
-export const DEFAULT_LOCALE: AvalableLocales = 'en';
-export const LAZY_LOADING = true;
-export const TORRENT_SEARCH_ENABLED = true;
 
+////////////////////////////////
+////////// DUMMY DATA //////////
+////////////////////////////////
 export const COLLECTIONS = [9485, 645, 10, 528, 5039, 126125, 1570, 1575, 2150];
 export const MOVIES = [603692, 502356, 569094, 385687, 890771, 447277, 879444, 713704, 640146, 1073140];
 export const TV_SHOWS = [71912, 615, 1399]

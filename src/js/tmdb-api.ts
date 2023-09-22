@@ -1,7 +1,5 @@
 import {
-  API_BASE,
-  API_KEY,
-  COLLECTIONS,
+  COLLECTIONS
 } from './config';
 
 import {
@@ -20,11 +18,13 @@ import {
   IMovieCast,
   IPerson,
   ITvSeason,
+  IQuickSearchResult,
+  ISearchResults,
 } from '../types/tmdb.types';
 
 import {
   RawCollection,
-  RawCollectionPart,
+  RawSearchMovie,
   RawMovie,
   RawMovieCredits,
   RawPerson,
@@ -36,6 +36,7 @@ import {
   RawPersonCredits,
   RawTvSeason,
   RawBaseTv,
+  RawSearch,
 } from '../types/raw-tmdb.types';
 
 import { getCurrentLocale, getLocalCountryCode } from './helpers';
@@ -50,8 +51,10 @@ import {
   formatPersonCrew,
   formatPersonCast,
   formatTvSeason,
-  formatCollection
-} from './formaters';
+  formatCollection,
+  formatSearchResults,
+  formatQuickSearchResults
+} from './formatters';
 
 export default class TMDB {
   static allGenres: IGenre[] = [];
@@ -65,9 +68,9 @@ export default class TMDB {
    * @throws {Error} - If an error occurs while fetching data.
    */
   static async getJSON<T>(url: string, params: string = ''): Promise<T> {
-    const fetchUrl = `${API_BASE}${url}`;
+    const fetchUrl = import.meta.env.VITE_API_BASE + url;
     const fetchParams = new URLSearchParams(params);
-    fetchParams.append('api_key', API_KEY);
+    fetchParams.append('api_key', import.meta.env.VITE_API_KEY);
     fetchParams.append('language', getCurrentLocale());
     fetchParams.append('region', getLocalCountryCode());
 
@@ -122,7 +125,7 @@ export default class TMDB {
 
     const data: RawMoviesList = await this.getJSON(url, params);
     const media = mediaType === 'movie'
-      ? formatBaseMovies(data.results as RawCollectionPart[])
+      ? formatBaseMovies(data.results as RawSearchMovie[])
       : formatBaseTvs(data.results as RawBaseTv[]);
 
     return {
@@ -154,7 +157,7 @@ export default class TMDB {
 
     switch (type) {
       case 'movie':
-        trending = formatBaseMovies(data.results as RawCollectionPart[]) as IBaseMovie[];
+        trending = formatBaseMovies(data.results as RawSearchMovie[]) as IBaseMovie[];
         break;
       case 'tv':
         trending = formatBaseTvs(data.results as RawTrendingTv[]) as IBaseTv[];
@@ -230,5 +233,46 @@ export default class TMDB {
     }
 
     return seasons;
+  }
+
+  static async getQuickSearch(query: string): Promise<IQuickSearchResult[]> {
+    const url = `/search/multi`;
+    const params = `query=${query}`;
+    const data: RawSearch = await this.getJSON(url, params);
+
+    const results = formatQuickSearchResults(data.results);
+    return results;
+  }
+
+  static async getSearch(query: string, page: number = 1): Promise<ISearchResults> {
+    const url = `/search/multi`;
+    const params = `query=${query}&include_adult=false&page=${page}`;
+    const data: RawSearch = await this.getJSON(url, params);
+
+    const results = formatSearchResults(data);
+    return results;
+  }
+
+  static async getAllSearch(query: string): Promise<ISearchResults> {
+    // get first page of search results (20 results)
+    const first = await this.getSearch(query);
+
+    // ...fill results with first page (initial) data
+    const { pages, movies, tvs, persons } = first;
+    const results: ISearchResults = { pages, movies, tvs, persons };
+
+    // ...than if pages > 1 get all other pages
+    if (first.pages > 1) {
+      // ...for that go through all pages and get results
+      for (let n = 2; n <= first.pages; n++) {
+        const next = await this.getSearch(query, n);
+        const { movies, tvs, persons } = next;
+        results.movies.push(...movies);
+        results.tvs.push(...tvs);
+        results.persons.push(...persons);
+      }
+    }
+
+    return results;
   }
 }

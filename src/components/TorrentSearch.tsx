@@ -1,14 +1,13 @@
 import { FC } from "react"
 import SvgIcon from "./SvgIcon"
-import { TOLOKA_BASE } from "../js/config"
-import { formatSearchTerm } from "../js/helpers"
+import { formatSearchTerm } from "../js/formatters"
 interface TorrentSearchProps {
     term: string
 }
 
 const TorrentSearch: FC<TorrentSearchProps> = ({ term }) => {
     const _term = `nm=${formatSearchTerm(term)}`;
-    const url = `${TOLOKA_BASE}?${_term}`;
+    const url = `${import.meta.env.VITE_TOLOKA_BASE}?${_term}`;
     const title = `search Toloka for ${term}`;
 
     return (

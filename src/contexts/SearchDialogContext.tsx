@@ -22,7 +22,14 @@ type Props = {
 export const SearchDialogProvider: FC<Props> = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, { visible: false });
 
-    const show = () => dispatch({ type: SHOW_SEARCH_DIALOG });
+    const show = () => {
+        const searchInput = document.querySelector('.search-form .quick-search-form__input') as HTMLInputElement;
+        if (!!searchInput) {
+            searchInput.focus();
+        } else {
+            dispatch({ type: SHOW_SEARCH_DIALOG })
+        }
+    };
     const hide = () => dispatch({ type: HIDE_SEARCH_DIALOG });
 
     return (

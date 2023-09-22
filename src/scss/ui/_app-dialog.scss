@@ -1,10 +1,13 @@
 .app-dialog {
-    width: 95vw;
+    width: 100vw;
+    max-width: 100vw;
+    margin-top: 5vh;
     border: none;
     background: transparent;
 
     @include media(md) {
         width: 70vw;
+        max-width: 70vw;
     }
 
     &::backdrop {

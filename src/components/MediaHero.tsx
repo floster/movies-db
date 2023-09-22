@@ -4,12 +4,14 @@ import AppSpinner from "./AppSpinner";
 import AppFavorite from "./AppFavorite";
 import AppProgress from "./AppProgress";
 import MoviePartOf from "./MoviePartOf";
+import AppError from "./AppError";
+import TorrentSearch from "./TorrentSearch";
 
 import { IBaseMovie, ICollection, IMovie, ITv, IGenre, UMediaTypes, UMediaHeroData, IPerson } from "../types/tmdb.types";
 import { FC, useCallback, useEffect, useState } from "react";
 import tmdb from "../js/tmdb-api";
-import AppError from "./AppError";
-import TorrentSearch from "./TorrentSearch";
+
+import { useDocumentTitle } from "@uidotdev/usehooks";
 
 interface MediaHeroProps {
     id: number;
@@ -21,6 +23,9 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
     const [data, setData] = useState({} as UMediaHeroData);
     const [isDataLoading, setIsDataLoading] = useState(false);
     const [isDataError, setIsDataError] = useState(false);
+
+    const title = isDataLoading ? 'loading...' : withLink ? 'Movies DB' : data.title ? `${data.title} - Movies DB` : `${type} - Movies DB`;
+    useDocumentTitle(title);
 
     const getData = useCallback(async (): Promise<void> => {
         try {

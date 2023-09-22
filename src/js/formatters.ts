@@ -2,10 +2,27 @@
 ////////// TMDB API formatters //////////
 /////////////////////////////////////////
 
-import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollection, RawCollectionPart, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawTv, RawTvEpisode, RawTvSeason } from "../types/raw-tmdb.types";
-import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData, ICollection } from "../types/tmdb.types";
-import { API_BACKDROP_BASE } from "./config";
+import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollection, RawSearchMovie, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawSearch, RawTv, RawTvEpisode, RawTvSeason, RawSearchPerson, RawSearchTv, RawSearchResult } from "../types/raw-tmdb.types";
+import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData, ICollection, IQuickSearchResult, ISearchResults } from "../types/tmdb.types";
 import { createLink, formatDate, getPosterUrl } from "./helpers";
+
+/**
+ * Formats a search term by removing non-alphanumeric characters,
+ * replacing spaces with '+' characters, and removing leading/trailing hyphens.
+ *
+ * @param {string} text - The search term to format.
+ * @returns {string} The formatted search term.
+ */
+export const formatSearchTerm = (term: string) => {
+    if (!term) return '';
+    return term.toLowerCase()
+        .replace(/:/g, '') // remove colons
+        .replace(/,/g, '') // remove commas
+        .replace(/[^a-z0-9\s-]/g, '') // remove non-alphanumeric characters except spaces and hyphens
+        .replace(/\s+/g, '\+') // replace spaces with plus
+        .replace(/-+/g, '\+') // remove consecutive plus
+        .replace(/^-+|-+$/g, ''); // remove leading and trailing hyphens
+}
 
 export function formatTileData<T extends UTileData>(
     tile: T,
@@ -52,7 +69,7 @@ export function formatCollection(collection: RawCollection): ICollection {
     const poster = getPosterUrl(collection.poster_path);
 
     return {
-        backdrop: `${API_BACKDROP_BASE}${collection.backdrop_path}`,
+        backdrop: `${import.meta.env.VITE_API_BACKDROP_BASE}${collection.backdrop_path}`,
         id: collection.id,
         link: createLink('collection', collection.id, collection.name),
         title: collection.name,
@@ -71,7 +88,7 @@ export function formatBaseMovie(part: RawBaseMovie): IBaseMovie {
 
     const formatedData: IBaseMovie = {
         adult: part.adult,
-        backdrop: `${API_BACKDROP_BASE}${part.backdrop_path}`,
+        backdrop: `${import.meta.env.VITE_API_BACKDROP_BASE}${part.backdrop_path}`,
         genres: [], // convertMovieGenres(part.genre_ids),
         id: part.id,
         link: createLink('movie', part.id, part.title),
@@ -88,7 +105,7 @@ export function formatBaseMovie(part: RawBaseMovie): IBaseMovie {
     return formatedData;
 }
 
-export function formatBaseMovies(movies: RawCollectionPart[]): IBaseMovie[] {
+export function formatBaseMovies(movies: RawSearchMovie[]): IBaseMovie[] {
     return movies.map(movie => formatBaseMovie(movie));
 }
 
@@ -100,7 +117,7 @@ export function formatTv(tv: RawTv): ITv {
 
     const formatedData: ITv = {
         adult: tv.adult,
-        backdrop: `${API_BACKDROP_BASE}${tv.backdrop_path}`,
+        backdrop: `${import.meta.env.VITE_API_BACKDROP_BASE}${tv.backdrop_path}`,
         episodes_qty: tv.number_of_episodes,
         finished: { date: finishedDate.full, year: finishedDate.year },
         genres: tv.genres,
@@ -131,7 +148,7 @@ export function formatBaseTv(tv: RawBaseTv): IBaseTv {
 
     const formatedData: IBaseTv = {
         adult: tv.adult,
-        backdrop: `${API_BACKDROP_BASE}${tv.backdrop_path}`,
+        backdrop: `${import.meta.env.VITE_API_BACKDROP_BASE}${tv.backdrop_path}`,
         genres: [], //convertMovieGenres(tv.genre_ids),
         id: tv.id,
         link: createLink('tv', tv.id, tv.name),
@@ -211,7 +228,7 @@ export function formatMovie(movie: RawMovie): IMovie {
 
     const formatedData: IMovie = {
         adult: movie.adult,
-        backdrop: `${API_BACKDROP_BASE}${movie.backdrop_path}`,
+        backdrop: `${import.meta.env.VITE_API_BACKDROP_BASE}${movie.backdrop_path}`,
         belongs_to_collection: movie.belongs_to_collection || null,
         budget: movie.budget,
         genres: movie.genres,
@@ -260,6 +277,7 @@ export function formatPerson(member: RawPerson): IPerson {
         backdrop: '',
         birthday: { date: birthday.full, year: birthday.year },
         deathday: { date: deathday.full, year: deathday.year },
+        // TODO: think about using chatGPT API to format biography
         overview: member.biography,
         place_of_birth: member.place_of_birth,
     }
@@ -338,4 +356,69 @@ export function formatPersons(credits: RawCast[] | RawCrew[] | RawBasePerson[], 
     }
 
     return data;
+}
+
+export function formatQuickSearchResult(result: RawSearchResult): IQuickSearchResult {
+    let title = '';
+    let poster = '';
+    let date = null;
+
+    if (result.media_type === 'person') {
+        const person = result as RawSearchPerson;
+        title = person.name;
+        poster = person.profile_path;
+        date = formatDate(null);
+    } else if (result.media_type === 'movie') {
+        const movie = result as RawSearchMovie;
+        title = movie.title;
+        poster = movie.poster_path;
+        date = formatDate(movie.release_date);
+    } else {
+        const tv = result as RawSearchTv;
+        title = tv.name;
+        poster = tv.poster_path;
+        date = formatDate(tv.first_air_date);
+    }
+
+
+    return {
+        id: result.id,
+        poster: getPosterUrl(poster),
+        link: createLink(result.media_type, result.id, title),
+        title: title,
+        type: result.media_type,
+        year: date.year,
+    }
+}
+
+export function formatQuickSearchResults(results: RawSearchResult[]): IQuickSearchResult[] {
+    return results.map(result => formatQuickSearchResult(result));
+}
+
+export function formatSearchResults(results: RawSearch): ISearchResults {
+    const formattedResults: ISearchResults = {
+        pages: results.total_pages,
+        movies: [],
+        tvs: [],
+        persons: [],
+    }
+
+    results.results.forEach(result => {
+        switch (result.media_type) {
+            case 'movie':
+                const movie = formatBaseMovie(result as RawSearchMovie);
+                formattedResults.movies.push(formatTileData(movie, 'movie', 'released', true, false));
+                break;
+            case 'tv':
+                const tv = formatBaseTv(result as RawSearchTv);
+                formattedResults.tvs.push(formatTileData(tv, 'tv', 'released', true, false));
+                break;
+            case 'person':
+                const person = formatBasePerson(result as RawSearchPerson);
+                formattedResults.persons.push(formatTileData(person, 'person', 'department', true, false));
+                break;
+        }
+    });
+
+    return formattedResults;
 }

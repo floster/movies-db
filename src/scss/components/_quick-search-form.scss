@@ -1,11 +1,11 @@
-.search-form {
+.quick-search-form {
     position: relative;
 
     &__input {
         width: 100%;
         height: var(--control-height-lg);
         padding-left: var(--gap-sm);
-        padding-right: calc(var(--control-height-sm) * 2 + var(--gap-sm) * 3);
+        padding-right: calc(var(--control-height-sm) * 2 + var(--gap-sm) * 2);
         background-color: var(--color-white);
         border: none;
         border-radius: var(--radius);
@@ -28,7 +28,8 @@
         }
 
         &:placeholder-shown {
-            &+.search-form__clean {
+
+            &+.quick-search-form__clean {
                 display: none;
             }
         }
@@ -36,10 +37,14 @@
 
     &__submit {
         position: absolute;
-        right: var(--gap-sm);
+        right: var(--gap-xs);
         top: 50%;
         z-index: 1;
         transform: translateY(-50%);
+
+        @include media(md) {
+            right: var(--gap-sm);
+        }
 
         &:hover,
         &:active,
@@ -61,10 +66,14 @@
 
     &__clean {
         position: absolute;
-        right: calc(var(--control-height-xs) + var(--gap-sm) * 2);
+        right: calc(var(--control-height-xs) + var(--gap-xs) * 3);
         top: 50%;
         z-index: 1;
         transform: translateY(-50%);
+
+        @include media(md) {
+            right: calc(var(--control-height-xs) + var(--gap-sm) * 2);
+        }
 
         @include media(lg) {
             right: calc(var(--control-height-md) + var(--gap-lg) * 2);

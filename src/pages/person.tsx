@@ -7,9 +7,12 @@ import { useParams } from 'react-router-dom';
 import tmdb from '../js/tmdb-api';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
-import { filterNoImage, filterUncredits, getIdFromLink, tilesSort } from '../js/helpers';
-import { formatTilesData } from '../js/formaters';
-import { ITileData, USortOptionValues } from '../types/tmdb.types';
+import { filterNoImage, filterUncredits, getIdFromLink } from '../js/helpers';
+import { formatTilesData } from '../js/formatters';
+import { ITileData } from '../types/tmdb.types';
+
+import { useSortOption } from '../hooks/useSortOption';
+import { useTilesSort } from '../hooks/useTilesSort';
 
 type PersonParams = {
   id: string;
@@ -19,22 +22,17 @@ const Person: FC = () => {
   const params = useParams<PersonParams>();
   const personId = getIdFromLink(params.id!);
 
+
+  const moviesSortOption = useSortOption();
+  const tvsSortOption = useSortOption();
+
   const [castMovie, setCastMovie] = useState([] as ITileData[]);
   const [castTv, setCastTv] = useState([] as ITileData[]);
-  const [currentSortMovie, setCurrentSortMovie] = useState('year_desc' as USortOptionValues);
-  const [currentSortTv, setCurrentSortTv] = useState('year_desc' as USortOptionValues);
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
 
-  const onMoviesSortChange = (option: string) => setCurrentSortMovie(option as USortOptionValues);
-  const onTvsSortChange = (option: string) => setCurrentSortTv(option as USortOptionValues);
-
-  useEffect(() => {
-    setCastMovie(tilesSort(castMovie, currentSortMovie))
-  }, [currentSortMovie]);
-  useEffect(() => {
-    setCastTv(tilesSort(castTv, currentSortTv))
-  }, [currentSortTv]);
+  const { sortedTiles: sortedMovies } = useTilesSort(castMovie, moviesSortOption.currentSortOption);
+  const { sortedTiles: sortedTvs } = useTilesSort(castTv, tvsSortOption.currentSortOption);
 
   const getData = useCallback(async () => {
     try {
@@ -48,8 +46,8 @@ const Person: FC = () => {
       const movie = avoidUncredits.filter((media) => media.type === 'movie');
       const tv = avoidUncredits.filter((media) => media.type === 'tv');
 
-      setCastMovie(tilesSort(movie, currentSortMovie));
-      setCastTv(tilesSort(tv, currentSortMovie));
+      setCastMovie(movie);
+      setCastTv(tv);
     } catch (error) {
       setIsDataError(true);
       console.error(error);
@@ -74,20 +72,20 @@ const Person: FC = () => {
         : <>
           <div className="l-content container">
             <AppSection>
-              <AppSectionHeader title="movies" hasSelect={true} currentSortOption={currentSortMovie} onSortChange={onMoviesSortChange} />
+              <AppSectionHeader title="movies" hasSelect={true} {...moviesSortOption} />
               <div className="l-tiles_grid m-movies">
                 {isDataLoading
                   ? <AppSpinner visible={true} />
-                  : castMovie.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
+                  : sortedMovies.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
               </div>
             </AppSection>
 
             <AppSection>
-              <AppSectionHeader title="tv shows" hasSelect={true} currentSortOption={currentSortTv} onSortChange={onTvsSortChange} />
+              <AppSectionHeader title="tv shows" hasSelect={true} {...tvsSortOption} />
               <div className="l-tiles_grid m-movies">
                 {isDataLoading
                   ? <AppSpinner visible={true} />
-                  : castTv.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
+                  : sortedTvs.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
               </div>
             </AppSection>
           </div>

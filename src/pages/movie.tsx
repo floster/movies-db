@@ -6,11 +6,13 @@ import MovieCrew from '../components/MovieCrew';
 import AppTile from '../components/AppTile';
 import { useParams } from 'react-router-dom';
 import tmdb from '../js/tmdb-api';
-import { IMovieCrew, ITileData } from '../types/tmdb.types';
+import { IMovieCrew } from '../types/tmdb.types';
 import AppSpinner from '../components/AppSpinner';
 import AppError from '../components/AppError';
 import { cutArray, filterNoImage, filterUncredits, getIdFromLink } from '../js/helpers';
-import { formatTilesData } from '../js/formaters';
+import { formatTilesData } from '../js/formatters';
+
+import { useTilesPagination } from './../hooks/useTilesPagination'
 
 type MovieParams = {
   id: string;
@@ -22,17 +24,17 @@ const Movie: FC = () => {
 
   const [, setCrew] = useState([] as IMovieCrew[]);
   const [crewToShow, setCrewToShow] = useState([] as IMovieCrew[]);
-  const [cast, setCast] = useState([] as ITileData[]);
-  const [castToShow, setCastToShow] = useState([] as ITileData[]);
-  const [isAllCastShowed, setIsAllCastShowed] = useState(false);
 
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
 
-  const showAllCast = () => {
-    setCastToShow(cast);
-    setIsAllCastShowed(true);
-  };
+  const {
+    quantity: castQuantity,
+    currentPage: currentCastPage,
+    currentTiles: currentCast,
+    handleShowMore: handleShowMoreCast,
+    initPagination: initCastPagination
+  } = useTilesPagination();
 
   const getData = useCallback(async () => {
     try {
@@ -44,8 +46,7 @@ const Movie: FC = () => {
       const formattedCast = formatTilesData(data.cast, 'person', 'character', false, false);
       const avoidNoImages = filterNoImage(formattedCast);
       const avoidUncredits = filterUncredits(avoidNoImages);
-      setCast(avoidUncredits);
-      setCastToShow(cutArray(avoidUncredits, 9))
+      initCastPagination(avoidUncredits);
     } catch (error) {
       setIsDataError(true);
       console.error(error);
@@ -77,20 +78,27 @@ const Movie: FC = () => {
               <AppSectionHeader title="crew" />
             </div>
           </AppSection>}
-          {castToShow.length !== 0 && <div className="l-content container">
-            <AppSection>
-              <AppSectionHeader title="cast" />
-              <div className="l-tiles_grid m-people">
-                {isDataLoading
-                  ? <AppSpinner visible={true} />
-                  : <>
-                    {castToShow.map((tile) => <AppTile tile={tile} key={tile.id} />)}
-                    {!isAllCastShowed && <button className='app-button' onClick={showAllCast}>show all</button>}
-                  </>
-                }
-              </div>
-            </AppSection>
-          </div>}
+          {currentCast.length !== 0 &&
+            <div className="l-content container">
+              <AppSection>
+                <AppSectionHeader title="cast" />
+                <div className="l-tiles_grid m-people">
+                  {isDataLoading
+                    ? <AppSpinner visible={true} />
+                    : <>
+                      {currentCast.map((tile) => <AppTile tile={tile} key={tile.id} />)}
+                      <button
+                        className="app-button"
+                        onClick={() => handleShowMoreCast()}
+                        disabled={currentCastPage >= castQuantity.pages}
+                      >
+                        show more ({currentCastPage} / {castQuantity.pages})
+                      </button>
+                    </>
+                  }
+                </div>
+              </AppSection>
+            </div>}
         </>
       }
     </section>

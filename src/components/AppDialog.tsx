@@ -28,7 +28,7 @@ export default function AppDialog({ children }: Props) {
     }, [visible]);
 
     return (
-        <dialog className="app-dialog search-dialog" ref={ref} onClick={dialogOnClick} >
+        <dialog className="app-dialog search-dialog" ref={ref} onClick={dialogOnClick} onClose={hide} >
             {children}
         </dialog>
     )
