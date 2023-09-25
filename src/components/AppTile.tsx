@@ -1,9 +1,11 @@
 import { FC } from "react";
-import { ITileData } from "../types/tmdb.types";
+import { ITileData, UTFavoritesType } from "../types/tmdb.types";
 import AppFavorite from "./AppFavorite";
 import AppPicture from "./AppPicture";
 import AppProgress from "./AppProgress";
 import TorrentSearch from "./TorrentSearch";
+
+import { useFavorites } from "../contexts/FavoritesContext";
 
 interface AppTileProps {
     tile: ITileData;
@@ -16,6 +18,9 @@ const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
     if (tile.type) classes.push(`m-${tile.type}`);
     if (isRow) classes.push('m-row');
 
+    const { isFavoritable } = useFavorites()
+
+    const hasFavoriteIcon = isFavoritable(tile.type as UTFavoritesType)
     const isLink = !!tile.link;
     const isTorrentSearchable = import.meta.env.VITE_TORRENT_SEARCH_ENABLED === 'true' && isLink && tile.type === 'movie' || tile.type === 'tv';
 
@@ -27,7 +32,7 @@ const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
             </div>
 
 
-            {('favorite' in tile) && <AppFavorite checked={false} title={tile.title} />}
+            {hasFavoriteIcon && <AppFavorite type={tile.type as UTFavoritesType} id={tile.id} title={tile.title} />}
             <div className="app-tile__content">
                 {(tile.rating && !isRow) && <AppProgress value={tile.rating.average} />}
                 <p className="app-tile__label">
