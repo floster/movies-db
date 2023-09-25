@@ -5,18 +5,21 @@ import AppDialog from "./AppDialog";
 import QuickSearchForm from "./QuickSearchForm";
 import { SearchDialogProvider } from "../contexts/SearchDialogContext";
 import { ChangeLocaleProvider } from "../contexts/ChangeLocaleContext";
+import { FavoritesProvider } from '../contexts/FavoritesContext'
 
 export default function Layout() {
     return (
         <SearchDialogProvider>
             <ChangeLocaleProvider>
-                <AppHeader />
+                <FavoritesProvider>
+                    <AppHeader />
 
-                <Outlet />
+                    <Outlet />
 
-                <AppDialog>
-                    <QuickSearchForm />
-                </AppDialog>
+                    <AppDialog>
+                        <QuickSearchForm />
+                    </AppDialog>
+                </FavoritesProvider>
             </ChangeLocaleProvider>
         </SearchDialogProvider>
     )
