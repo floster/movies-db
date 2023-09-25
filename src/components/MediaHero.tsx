@@ -123,7 +123,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
       </div>
       <div className="media-hero__content">
         {withLink && (
-          <a href={`/${type}/${id}`} className="media-hero__link">
+          <a href={data.link} className="media-hero__link">
             {data.title}
           </a>
         )}
