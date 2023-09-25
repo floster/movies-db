@@ -3,7 +3,7 @@
 /////////////////////////////////////////
 
 import { RawBaseMovie, RawBasePerson, RawBaseTv, RawCast, RawCollection, RawSearchMovie, RawCrew, RawMovie, RawPerson, RawPersonCast, RawPersonCastMovie, RawPersonCastTv, RawPersonCrew, RawPersonCrewMovie, RawPersonCrewTv, RawSearch, RawTv, RawTvEpisode, RawTvSeason, RawSearchPerson, RawSearchTv, RawSearchResult } from "../types/raw-tmdb.types";
-import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UMediaTypes, ITileData, ICollection, IQuickSearchResult, ISearchResults } from "../types/tmdb.types";
+import { IBasePerson, IMovie, IMovieCast, IMovieCrew, IBaseMovie, IPerson, IBaseTv, ITv, ITvSeason, IPersonCrew, IPersonCast, ITvEpisode, UTileData, UTMediaTypes, ITileData, ICollection, IQuickSearchResult, ISearchResults } from "../types/tmdb.types";
 import { createLink, formatDate, getPosterUrl } from "./helpers";
 
 /**
@@ -26,10 +26,9 @@ export const formatSearchTerm = (term: string) => {
 
 export function formatTileData<T extends UTileData>(
     tile: T,
-    type: UMediaTypes,
+    type: UTMediaTypes,
     label: keyof T | [keyof T, string],
     rating: boolean,
-    favorite: boolean
 ): ITileData {
     const votes = rating && ('votes' in tile)
         ? { average: tile.votes.average, count: tile.votes.count }
@@ -50,19 +49,17 @@ export function formatTileData<T extends UTileData>(
         title: tile.title,
         label: labelText || '---',
         rating: votes,
-        favorite: favorite,
         year
     }
 }
 
 export function formatTilesData<T extends UTileData>(
     data: T[],
-    type: UMediaTypes,
+    type: UTMediaTypes,
     label: keyof T | [keyof T, string],
     rating: boolean,
-    favorite: boolean
 ): ITileData[] {
-    return data.map((item) => formatTileData(item, type, label, rating, favorite));
+    return data.map((item) => formatTileData(item, type, label, rating));
 }
 
 export function formatCollection(collection: RawCollection): ICollection {
@@ -407,15 +404,15 @@ export function formatSearchResults(results: RawSearch): ISearchResults {
         switch (result.media_type) {
             case 'movie':
                 const movie = formatBaseMovie(result as RawSearchMovie);
-                formattedResults.movies.push(formatTileData(movie, 'movie', 'released', true, false));
+                formattedResults.movies.push(formatTileData(movie, 'movie', 'released', true));
                 break;
             case 'tv':
                 const tv = formatBaseTv(result as RawSearchTv);
-                formattedResults.tvs.push(formatTileData(tv, 'tv', 'released', true, false));
+                formattedResults.tvs.push(formatTileData(tv, 'tv', 'released', true));
                 break;
             case 'person':
                 const person = formatBasePerson(result as RawSearchPerson);
-                formattedResults.persons.push(formatTileData(person, 'person', 'department', true, false));
+                formattedResults.persons.push(formatTileData(person, 'person', 'department', true));
                 break;
         }
     });

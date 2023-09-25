@@ -2,30 +2,28 @@
 // the ITileData interface
 
 // possible Movie List types to get from TMDB
-export type UListTypes = 'top_rated' | 'now_playing' | 'upcoming' | 'popular';
-export type UListSortOptions = 'movie__top_rated' | 'movie__now_playing' | 'movie__upcoming' | 'tv__top_rated' | 'tv__popular';
+export type UTListTypes = 'top_rated' | 'now_playing' | 'upcoming' | 'popular';
+export type UTListSortOptions = 'movie__top_rated' | 'movie__now_playing' | 'movie__upcoming' | 'tv__top_rated' | 'tv__popular';
 
-export type USortOptionValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
+export type UTSortValues = 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
 
-export type UMediaTypes = 'collection' | 'tv' | 'movie' | 'person' | 'season' | 'episode';
-export type UMediaHeroData = IMovie | ICollection | ITv | IPerson;
-export type UTrendingType = 'movie' | 'tv' | 'person';
-export type UAppTileType = 'movie' | 'collection' | 'actor';
+// all posible types that comes from TMDB
+export type UTMediaTypes = 'collection' | 'movie' | 'tv' | 'person' | 'season' | 'episode';
+
+// below also uses in MediaHero component
+export type UTFavoritesType = 'collection' | 'movie' | 'tv' | 'person';
+export type UFavoritesData = IMovie | ICollection | ITv | IPerson;
 
 export interface ITileData {
   id: number;
-  type: UMediaTypes;
+  type: UTMediaTypes;
   link: string | null;
   poster: string;
   title: string;
   label: string;
   rating: { average: number, count: number } | null;
-  favorite: boolean;
   year: string | null
 }
-
-// comes from TMDB
-export type UTmdbTvShowStatuses = 'Returning Series' | 'Planned' | 'In Production' | 'Ended' | 'Canceled' | 'Pilot';
 
 //////////////////////////////
 ///// TMDB API Responses /////
@@ -56,7 +54,7 @@ export interface ICollection {
   id: number;
   link: string,
   title: string;
-  type: UMediaTypes;
+  type: UTMediaTypes;
   overview: string;
   parts: IBaseMovie[];
   partsCount: number;
@@ -75,7 +73,7 @@ interface _BasePart {
   released: string,
   year: string,
   title: string;
-  type: UMediaTypes;
+  type: UTMediaTypes;
   votes: { average: number, count: number };
 }
 
@@ -94,6 +92,7 @@ export interface IMovieCredits {
   crew: IMovieCrew[];
 }
 
+export type UTmdbTvShowStatuses = 'Returning Series' | 'Planned' | 'In Production' | 'Ended' | 'Canceled' | 'Pilot';
 export interface ITv extends _BasePart {
   episodes_qty: number,
   finished: { date: string, year: string },
@@ -115,7 +114,7 @@ type _TvPart = {
   released: string,
   year: string,
   season_number: number,
-  type: UMediaTypes,
+  type: UTMediaTypes,
   votes: { average: number, count: number };
 }
 
@@ -134,7 +133,7 @@ export interface ITvEpisode extends _TvPart {
 export interface IBasePerson {
   id: number;
   link: string,
-  type: UMediaTypes
+  type: UTMediaTypes
   department: string;
   title: string;
   popularity: number;
@@ -151,13 +150,13 @@ export interface IPerson extends IBasePerson {
 
 
 export interface IPersonCrew extends _BasePart {
-  media_type: UMediaTypes;
+  media_type: UTMediaTypes;
   department: string;
   job: string;
 }
 
 export interface IPersonCast extends _BasePart {
-  media_type: UMediaTypes;
+  media_type: UTMediaTypes;
   character: string;
 }
 
@@ -187,7 +186,7 @@ export interface IQuickSearchResult {
   link: string;
   poster: string;
   title: string;
-  type: UMediaTypes;
+  type: UTMediaTypes;
   year: string;
 }
 

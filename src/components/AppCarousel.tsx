@@ -1,12 +1,12 @@
 import AppTile from "./AppTile";
-import { IBaseMovie, UTrendingType, IBaseTv, IBasePerson, ITileData } from "../types/tmdb.types";
+import { IBaseMovie, UTFavoritesType, IBaseTv, IBasePerson, ITileData } from "../types/tmdb.types";
 import TMDB from "../js/tmdb-api";
 import { useCallback, useEffect, useState } from "react";
 import AppSpinner from "./AppSpinner";
 import { formatTilesData } from "../js/formatters";
 
 interface Props {
-    itemsType: UTrendingType;
+    itemsType: UTFavoritesType;
 }
 
 export default function AppCarousel({ itemsType }: Props) {

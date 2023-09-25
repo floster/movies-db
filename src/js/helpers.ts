@@ -1,5 +1,5 @@
 import { AvalableLocales, LOCALES } from "./config";
-import { ITileData, USortOptionValues } from "../types/tmdb.types";
+import { ITileData, UTSortValues } from "../types/tmdb.types";
 
 /**
  * Filters an array of tile data to remove any tiles with a placeholder image.
@@ -17,7 +17,7 @@ export const filterNoImage = (tiles: ITileData[]): ITileData[] => tiles.filter(t
  */
 export const filterUncredits = (tiles: ITileData[]): ITileData[] => tiles.filter(tile => tile.label.includes('uncredited') === false);
 
-export function tilesSort<T>(tiles: T[], option: USortOptionValues): T[] {
+export function tilesSort<T>(tiles: T[], option: UTSortValues): T[] {
     const sortBy = option.split('_')[0] as keyof T;
     const sortOrder = option.split('_')[1] as 'asc' | 'desc';
 

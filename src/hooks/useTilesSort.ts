@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react"
-import { ITileData, USortOptionValues } from "../types/tmdb.types"
+import { ITileData, UTSortValues } from "../types/tmdb.types"
 import { pullTilesWithoutPosterToTheEnd, tilesSort } from "../js/helpers"
 
-export const useTilesSort = (tiles: ITileData[], currentSort: USortOptionValues) => {
+export const useTilesSort = (tiles: ITileData[], currentSort: UTSortValues) => {
     const [sortedTiles, setSortedTiles] = useState([] as ITileData[])
 
     const handleSort = useCallback(() => {

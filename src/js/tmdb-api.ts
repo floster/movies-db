@@ -6,13 +6,13 @@ import {
   IGenre,
   ICollection,
   IBaseMovie,
-  UListTypes,
+  UTListTypes,
   IListData,
   IMovie,
   IBasePerson,
   IMovieCredits,
   ITv,
-  UTrendingType,
+  UTFavoritesType,
   IBaseTv,
   IMovieCrew,
   IMovieCast,
@@ -108,7 +108,7 @@ export default class TMDB {
   static async getList(
     page: number,
     mediaType: 'movie' | 'tv',
-    listType: UListTypes,
+    listType: UTListTypes,
   ): Promise<IListData> {
     let url = '';
     let params = '';
@@ -149,7 +149,7 @@ export default class TMDB {
     return COLLECTIONS[Math.floor(Math.random() * COLLECTIONS.length)];
   }
 
-  static async getTrending(type: UTrendingType, period: 'day' | 'week' = 'week') {
+  static async getTrending(type: UTFavoritesType, period: 'day' | 'week' = 'week') {
     const url = `/trending/${type}/${period}`;
     const data: RawTrendingList = await this.getJSON(url);
 
