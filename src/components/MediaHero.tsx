@@ -20,7 +20,7 @@ import {
 import { FC, useCallback, useEffect, useState } from "react";
 import tmdb from "../js/tmdb-api";
 
-import { useDocumentTitle } from "@uidotdev/usehooks";
+import { useDocumentTitle } from "usehooks-ts";
 
 interface MediaHeroProps {
   id: number;
