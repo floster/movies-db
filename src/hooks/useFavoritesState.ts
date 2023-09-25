@@ -1,11 +1,12 @@
-import { useState } from "react";
 import { UTFavoritesType } from "../types/tmdb.types";
 
+import { useLocalStorage } from "usehooks-ts";
+
 interface AllFavorites {
-  movie: number[];
-  tv: number[];
-  person: number[];
-  collection: number[];
+  moviesFavorites: number[];
+  tvsFavorites: number[];
+  personsFavorites: number[];
+  collectionsFavorites: number[];
 }
 
 interface FavoritesHook {
@@ -18,10 +19,22 @@ interface FavoritesHook {
 }
 
 export const useFavoritesState = (): FavoritesHook => {
-  const [movie, setMovie] = useState([565770, 762430] as number[]);
-  const [tv, setTv] = useState([] as number[]);
-  const [person, setPerson] = useState([] as number[]);
-  const [collection, setCollection] = useState([] as number[]);
+  const [moviesFavorites, setMoviesFavorites] = useLocalStorage(
+    "moviesFavorites",
+    [] as number[],
+  );
+  const [tvsFavorites, setTvsFavorites] = useLocalStorage(
+    "tvsFavorites",
+    [] as number[],
+  );
+  const [personsFavorites, setPersonsFavorites] = useLocalStorage(
+    "personsFavorites",
+    [] as number[],
+  );
+  const [collectionsFavorites, setCollectionsFavorites] = useLocalStorage(
+    "collectionsFavorites",
+    [] as number[],
+  );
 
   const _addCallback = (prev: number[], id: number) => [
     ...new Set([...prev, id]),
@@ -30,16 +43,16 @@ export const useFavoritesState = (): FavoritesHook => {
   const _addFavorite = (type: UTFavoritesType, id: number) => {
     switch (type) {
       case "movie":
-        setMovie((prev) => _addCallback(prev, id));
+        setMoviesFavorites((prev) => _addCallback(prev, id));
         break;
       case "tv":
-        setTv((prev) => _addCallback(prev, id));
+        setTvsFavorites((prev) => _addCallback(prev, id));
         break;
       case "person":
-        setPerson((prev) => _addCallback(prev, id));
+        setPersonsFavorites((prev) => _addCallback(prev, id));
         break;
       case "collection":
-        setCollection((prev) => _addCallback(prev, id));
+        setCollectionsFavorites((prev) => _addCallback(prev, id));
         break;
       default:
         break;
@@ -55,16 +68,16 @@ export const useFavoritesState = (): FavoritesHook => {
   const _removeFavorite = (type: UTFavoritesType, id: number) => {
     switch (type) {
       case "movie":
-        setMovie((prev) => _removeCallback(prev, id));
+        setMoviesFavorites((prev) => _removeCallback(prev, id));
         break;
       case "tv":
-        setTv((prev) => _removeCallback(prev, id));
+        setTvsFavorites((prev) => _removeCallback(prev, id));
         break;
       case "person":
-        setPerson((prev) => _removeCallback(prev, id));
+        setPersonsFavorites((prev) => _removeCallback(prev, id));
         break;
       case "collection":
-        setCollection((prev) => _removeCallback(prev, id));
+        setCollectionsFavorites((prev) => _removeCallback(prev, id));
         break;
       default:
         break;
@@ -75,29 +88,29 @@ export const useFavoritesState = (): FavoritesHook => {
     ["movie", "tv", "person", "collection"].includes(type);
 
   const getAllFavorites = (): AllFavorites => ({
-    movie,
-    tv,
-    person,
-    collection,
+    moviesFavorites,
+    tvsFavorites,
+    personsFavorites,
+    collectionsFavorites,
   });
   const getFavoritesByType = (type: UTFavoritesType) => {
     return type === "movie"
-      ? movie
+      ? moviesFavorites
       : type === "tv"
-      ? tv
+      ? tvsFavorites
       : type === "person"
-      ? person
-      : collection;
+      ? personsFavorites
+      : collectionsFavorites;
   };
 
   const isAlreadyFavorite = (type: UTFavoritesType, id: number) => {
     return type === "movie"
-      ? movie.includes(id)
+      ? moviesFavorites.includes(id)
       : type === "tv"
-      ? tv.includes(id)
+      ? tvsFavorites.includes(id)
       : type === "person"
-      ? person.includes(id)
-      : collection.includes(id);
+      ? personsFavorites.includes(id)
+      : collectionsFavorites.includes(id);
   };
 
   const toggleFavorite = (type: UTFavoritesType, id: number) => {
@@ -107,7 +120,10 @@ export const useFavoritesState = (): FavoritesHook => {
   };
 
   const favoritesQty = () =>
-    movie.length + tv.length + person.length + collection.length;
+    moviesFavorites.length +
+    tvsFavorites.length +
+    personsFavorites.length +
+    collectionsFavorites.length;
 
   return {
     isFavoritable,
