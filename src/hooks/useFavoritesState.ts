@@ -2,7 +2,7 @@ import { UTFavoritesType } from "../types/tmdb.types";
 
 import { useLocalStorage } from "usehooks-ts";
 
-export interface AllFavorites {
+export interface IAllFavorites {
   moviesFavorites: number[];
   tvsFavorites: number[];
   personsFavorites: number[];
@@ -12,10 +12,10 @@ export interface AllFavorites {
 interface FavoritesHook {
   isFavoritable: (type: UTFavoritesType) => boolean;
   toggleFavorite: (type: UTFavoritesType, id: number) => void;
-  getAllFavorites: () => AllFavorites;
+  getAllFavorites: () => IAllFavorites;
   getFavoritesByType: (type: UTFavoritesType) => number[];
   isAlreadyFavorite: (type: UTFavoritesType, id: number) => boolean;
-  favoritesQty: () => number;
+  getFavoritesQty: () => number;
 }
 
 export const useFavoritesState = (): FavoritesHook => {
@@ -87,7 +87,7 @@ export const useFavoritesState = (): FavoritesHook => {
   const isFavoritable = (type: UTFavoritesType) =>
     ["movie", "tv", "person", "collection"].includes(type);
 
-  const getAllFavorites = (): AllFavorites => ({
+  const getAllFavorites = (): IAllFavorites => ({
     moviesFavorites,
     tvsFavorites,
     personsFavorites,
@@ -119,7 +119,7 @@ export const useFavoritesState = (): FavoritesHook => {
       : _addFavorite(type, id);
   };
 
-  const favoritesQty = () =>
+  const getFavoritesQty = () =>
     moviesFavorites.length +
     tvsFavorites.length +
     personsFavorites.length +
@@ -131,6 +131,6 @@ export const useFavoritesState = (): FavoritesHook => {
     getAllFavorites,
     getFavoritesByType,
     isAlreadyFavorite,
-    favoritesQty,
+    getFavoritesQty,
   };
 };
