@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SvgIcon from "./SvgIcon";
 
 import { useFavorites } from "../contexts/FavoritesContext";
@@ -11,16 +11,17 @@ interface Props {
 }
 
 export default function AppFavorite({ type, id, title }: Props) {
-  const { isAlreadyFavorite, toggleFavorite, getAllFavorites } = useFavorites();
+  const { isAlreadyFavorite, toggleFavorite, favoritesQty } = useFavorites();
 
   const [checkedState, setCheckedState] = useState(() =>
     isAlreadyFavorite(type, id),
   );
 
+  useEffect(() => setCheckedState(isAlreadyFavorite(type, id)), [favoritesQty]);
+
   const handleChange = () => {
     setCheckedState((prev) => !prev);
     toggleFavorite(type, id);
-    console.log(getAllFavorites());
   };
 
   return (

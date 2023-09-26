@@ -7,7 +7,7 @@ import { useFavoritesState } from "../hooks/useFavoritesState";
 export default function AppHeader() {
   const { show } = useSearchDialog();
 
-  const { getFavoritesQty } = useFavoritesState();
+  const { favoritesQty } = useFavoritesState();
 
   useKeyboardShortcut(() => show(), { code: "KeyK", metaKey: true });
 
@@ -40,7 +40,7 @@ export default function AppHeader() {
             className="app-button m-open-favorites has-items m-icon m-primary"
             href="/favorites"
             aria-label="go to favorites"
-            data-favorites-count={getFavoritesQty()}
+            data-favorites-count={favoritesQty}
           >
             <SvgIcon icon="fire" />
           </a>

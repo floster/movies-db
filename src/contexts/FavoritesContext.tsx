@@ -9,7 +9,7 @@ interface IFavorites {
   getAllFavorites: () => IAllFavorites;
   getFavoritesByType: (type: UTFavoritesType) => number[];
   isAlreadyFavorite: (type: UTFavoritesType, id: number) => boolean;
-  getFavoritesQty: () => number;
+  favoritesQty: number;
 }
 const initialState: IFavorites = {
   isFavoritable: () => false,
@@ -17,7 +17,7 @@ const initialState: IFavorites = {
   getAllFavorites: () => ({}) as IAllFavorites,
   getFavoritesByType: () => [],
   isAlreadyFavorite: () => false,
-  getFavoritesQty: () => 0,
+  favoritesQty: 0,
 };
 
 const FavoritesContext = createContext(initialState);
@@ -33,7 +33,7 @@ export const FavoritesProvider: FC<Props> = ({ children }) => {
     getAllFavorites,
     getFavoritesByType,
     isAlreadyFavorite,
-    getFavoritesQty,
+    favoritesQty,
   } = useFavoritesState();
 
   return (
@@ -44,7 +44,7 @@ export const FavoritesProvider: FC<Props> = ({ children }) => {
         getAllFavorites,
         getFavoritesByType,
         isAlreadyFavorite,
-        getFavoritesQty,
+        favoritesQty,
       }}
     >
       {children}
