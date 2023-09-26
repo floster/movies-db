@@ -2,7 +2,7 @@ import { UTFavoritesType } from "../types/tmdb.types";
 
 import { useLocalStorage } from "usehooks-ts";
 
-interface AllFavorites {
+export interface AllFavorites {
   moviesFavorites: number[];
   tvsFavorites: number[];
   personsFavorites: number[];

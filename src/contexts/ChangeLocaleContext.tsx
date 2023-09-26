@@ -1,32 +1,42 @@
-import { FC, createContext, useContext, useState } from "react";
+import { FC, createContext, useContext } from "react";
 import { AvalableLocales } from "../js/config";
-import { getCurrentLocale } from "../js/helpers";
+import { useLocalStorage } from "usehooks-ts";
+
+const DEFAULT_LOCALE = import.meta.env.VITE_DEFAULT_LOCALE;
 
 interface ChangeLocaleState {
-    locale: AvalableLocales,
-    changeLocale: (locale: AvalableLocales) => void
+  currentLocale: AvalableLocales;
+  changeLocale: (locale: AvalableLocales) => void;
 }
 
-const ChangelocaleContext = createContext<ChangeLocaleState>({ locale: getCurrentLocale(), changeLocale: () => { } });
+const ChangelocaleContext = createContext<ChangeLocaleState>({
+  currentLocale: DEFAULT_LOCALE,
+  changeLocale: () => {},
+});
 export const useChangeLocale = () => useContext(ChangelocaleContext);
 
 type Props = {
-    children: React.ReactNode;
-}
+  children: React.ReactNode;
+};
 export const ChangeLocaleProvider: FC<Props> = ({ children }) => {
-    const defaultLocale = getCurrentLocale();
-    const [locale, setLocale] = useState(defaultLocale);
-    const change = (locale: AvalableLocales) => {
-        setLocale(locale)
-        localStorage.setItem('locale', locale);
-    };
+  const defaultLocale = DEFAULT_LOCALE;
+  const [currentLocale, setLocale] = useLocalStorage(
+    "currentLocale",
+    defaultLocale,
+  );
 
-    return (
-        <ChangelocaleContext.Provider value={{
-            locale,
-            changeLocale: change
-        }}>
-            {children}
-        </ChangelocaleContext.Provider>
-    )
-}
+  const change = (locale: AvalableLocales) => {
+    setLocale(locale);
+  };
+
+  return (
+    <ChangelocaleContext.Provider
+      value={{
+        currentLocale,
+        changeLocale: change,
+      }}
+    >
+      {children}
+    </ChangelocaleContext.Provider>
+  );
+};

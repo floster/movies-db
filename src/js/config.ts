@@ -1,54 +1,63 @@
 // available list types to get from TMDB
-type ListTypes = 'movie__top_rated' | 'movie__now_playing' | 'movie__upcoming' | 'tv__top_rated' | 'tv__popular';
+type ListTypes =
+  | "movie__top_rated"
+  | "movie__now_playing"
+  | "movie__upcoming"
+  | "tv__top_rated"
+  | "tv__popular";
 interface MovieListSelectOption {
   title: string;
   value: ListTypes;
 }
 export const MOVIE_LIST_OPTIONS: MovieListSelectOption[] = [
-  { title: 'movies\\Now Playing', value: 'movie__now_playing' },
-  { title: 'movies\\Top Rated', value: 'movie__top_rated' },
-  { title: 'movies\\Upcoming', value: 'movie__upcoming' },
-  { title: 'tvs\\Popular', value: 'tv__popular' },
-  { title: 'tvs\\Top Rated', value: 'tv__top_rated' },
+  { title: "movies\\Now Playing", value: "movie__now_playing" },
+  { title: "movies\\Top Rated", value: "movie__top_rated" },
+  { title: "movies\\Upcoming", value: "movie__upcoming" },
+  { title: "tvs\\Popular", value: "tv__popular" },
+  { title: "tvs\\Top Rated", value: "tv__top_rated" },
 ];
 
 interface SortOption {
   title: string;
-  value: 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc';
+  value: "year_asc" | "year_desc" | "title_asc" | "title_desc";
 }
 export const SORT_OPTIONS: SortOption[] = [
-  { title: 'Year 0-9', value: 'year_asc' },
-  { title: 'Year 9-0', value: 'year_desc' },
-  { title: 'Title A-W', value: 'title_asc' },
-  { title: 'Title W-A', value: 'title_desc' },
+  { title: "Year 0-9", value: "year_asc" },
+  { title: "Year 9-0", value: "year_desc" },
+  { title: "Title A-W", value: "title_asc" },
+  { title: "Title W-A", value: "title_desc" },
 ];
 
-export type AvalableLocales = 'en' | 'uk' | 'de';
-type Locale = { title: string, value: AvalableLocales };
+export type AvalableLocales = "en" | "uk" | "de";
+type Locale = { title: string; value: AvalableLocales };
 
+// TODO: refactor all about locales
 export const LOCALES: Locale[] = [
-  { title: 'US', value: 'en' },
-  { title: 'UA', value: 'uk' },
-  { title: 'DE', value: 'de' },
+  { title: "US", value: "en" },
+  { title: "UA", value: "uk" },
+  { title: "DE", value: "de" },
 ];
 
 ////////////////////////////////
 ////////// DUMMY DATA //////////
 ////////////////////////////////
 export const COLLECTIONS = [9485, 645, 10, 528, 5039, 126125, 1570, 1575, 2150];
-export const MOVIES = [603692, 502356, 569094, 385687, 890771, 447277, 879444, 713704, 640146, 1073140];
-export const TV_SHOWS = [71912, 615, 1399]
-export const PERSONS = [525, 500, 18897, 234352, 2963, 287, 31, 138, 976, 85]
+export const MOVIES = [
+  603692, 502356, 569094, 385687, 890771, 447277, 879444, 713704, 640146,
+  1073140,
+];
+export const TV_SHOWS = [71912, 615, 1399];
+export const PERSONS = [525, 500, 18897, 234352, 2963, 287, 31, 138, 976, 85];
 
 export const FAVORITES: {
-  [key in 'movie' | 'tv' | 'person' | 'collection' | 'season']: number[];
+  [key in "movie" | "tv" | "person" | "collection" | "season"]: number[];
 } = {
   movie: MOVIES,
   tv: TV_SHOWS,
   person: PERSONS,
   collection: COLLECTIONS,
   season: [],
-}
+};
 
 export const FAST_COLLECTION_ID = 9485;
 
