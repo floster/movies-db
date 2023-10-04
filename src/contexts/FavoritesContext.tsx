@@ -1,20 +1,10 @@
 import { FC, createContext, useContext } from "react";
-import { UTFavoritesType } from "../types/tmdb.types";
 
-import { IAllFavorites, useFavoritesState } from "../hooks/useFavoritesState";
+import { FavoritesHook, useFavoritesState } from "../hooks/useFavoritesState";
 
-interface IFavorites {
-  isFavoritable: (type: UTFavoritesType) => boolean;
-  toggleFavorite: (type: UTFavoritesType, id: number) => void;
-  getAllFavorites: () => IAllFavorites;
-  getFavoritesByType: (type: UTFavoritesType) => number[];
-  isAlreadyFavorite: (type: UTFavoritesType, id: number) => boolean;
-  favoritesQty: number;
-}
-const initialState: IFavorites = {
+const initialState: FavoritesHook = {
   isFavoritable: () => false,
   toggleFavorite: () => null,
-  getAllFavorites: () => ({}) as IAllFavorites,
   getFavoritesByType: () => [],
   isAlreadyFavorite: () => false,
   favoritesQty: 0,
@@ -30,7 +20,6 @@ export const FavoritesProvider: FC<Props> = ({ children }) => {
   const {
     isFavoritable,
     toggleFavorite,
-    getAllFavorites,
     getFavoritesByType,
     isAlreadyFavorite,
     favoritesQty,
@@ -41,7 +30,6 @@ export const FavoritesProvider: FC<Props> = ({ children }) => {
       value={{
         isFavoritable,
         toggleFavorite,
-        getAllFavorites,
         getFavoritesByType,
         isAlreadyFavorite,
         favoritesQty,

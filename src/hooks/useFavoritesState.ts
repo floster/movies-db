@@ -3,20 +3,17 @@ import { UTFavoritesType } from "../types/tmdb.types";
 
 import { useLocalStorage } from "usehooks-ts";
 
-export interface IAllFavorites {
+export interface FavoritesHook {
+  isFavoritable: (type: UTFavoritesType) => boolean;
+  toggleFavorite: (type: UTFavoritesType, id: number) => void;
+  getFavoritesByType: (type: UTFavoritesType) => number[];
+  isAlreadyFavorite: (type: UTFavoritesType, id: number) => boolean;
+
+  favoritesQty: number;
   moviesFavorites: number[];
   tvsFavorites: number[];
   personsFavorites: number[];
   collectionsFavorites: number[];
-}
-
-interface FavoritesHook {
-  isFavoritable: (type: UTFavoritesType) => boolean;
-  toggleFavorite: (type: UTFavoritesType, id: number) => void;
-  getAllFavorites: () => IAllFavorites;
-  getFavoritesByType: (type: UTFavoritesType) => number[];
-  isAlreadyFavorite: (type: UTFavoritesType, id: number) => boolean;
-  favoritesQty: number;
 }
 
 export const useFavoritesState = (): FavoritesHook => {
@@ -37,7 +34,16 @@ export const useFavoritesState = (): FavoritesHook => {
     [] as number[],
   );
 
-  const [favoritesQty, setFavoritesQty] = useState(0);
+  const getFavoritesQty = useMemo(
+    () =>
+      moviesFavorites.length +
+      tvsFavorites.length +
+      personsFavorites.length +
+      collectionsFavorites.length,
+    [moviesFavorites, tvsFavorites, personsFavorites, collectionsFavorites],
+  );
+
+  const [favoritesQty, setFavoritesQty] = useState(() => getFavoritesQty || 0);
 
   const _addCallback = (prev: number[], id: number) => [
     ...new Set([...prev, id]),
@@ -90,12 +96,6 @@ export const useFavoritesState = (): FavoritesHook => {
   const isFavoritable = (type: UTFavoritesType) =>
     ["movie", "tv", "person", "collection"].includes(type);
 
-  const getAllFavorites = (): IAllFavorites => ({
-    moviesFavorites,
-    tvsFavorites,
-    personsFavorites,
-    collectionsFavorites,
-  });
   const getFavoritesByType = (type: UTFavoritesType) => {
     return type === "movie"
       ? moviesFavorites
@@ -122,23 +122,18 @@ export const useFavoritesState = (): FavoritesHook => {
       : _addFavorite(type, id);
   };
 
-  const getFavoritesQty = useMemo(
-    () =>
-      moviesFavorites.length +
-      tvsFavorites.length +
-      personsFavorites.length +
-      collectionsFavorites.length,
-    [moviesFavorites, tvsFavorites, personsFavorites, collectionsFavorites],
-  );
-
-  useEffect(() => setFavoritesQty(getFavoritesQty), [getFavoritesQty]);
+  useEffect(() => setFavoritesQty(() => getFavoritesQty), [getFavoritesQty]);
 
   return {
     isFavoritable,
     toggleFavorite,
-    getAllFavorites,
     getFavoritesByType,
     isAlreadyFavorite,
+
     favoritesQty,
+    moviesFavorites,
+    tvsFavorites,
+    personsFavorites,
+    collectionsFavorites,
   };
 };
