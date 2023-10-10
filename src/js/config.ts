@@ -1,20 +1,11 @@
-// available list types to get from TMDB
-type ListTypes =
-  | "movie__top_rated"
-  | "movie__now_playing"
-  | "movie__upcoming"
-  | "tv__top_rated"
-  | "tv__popular";
-interface MovieListSelectOption {
-  title: string;
-  value: ListTypes;
-}
-export const MOVIE_LIST_OPTIONS: MovieListSelectOption[] = [
-  { title: "movies\\Now Playing", value: "movie__now_playing" },
-  { title: "movies\\Top Rated", value: "movie__top_rated" },
-  { title: "movies\\Upcoming", value: "movie__upcoming" },
-  { title: "tvs\\Popular", value: "tv__popular" },
-  { title: "tvs\\Top Rated", value: "tv__top_rated" },
+import { IAvailableListsOptions } from "../types/tmdb.models";
+
+export const AVAILABLE_LIST_OPTIONS: IAvailableListsOptions[] = [
+  "movie:now_playing",
+  "movie:top_rated",
+  "movie:upcoming",
+  "tv:popular",
+  "tv:top_rated",
 ];
 
 interface SortOption {
