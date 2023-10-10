@@ -2,16 +2,16 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const LS_FAVORITES_KEY = "rtk_favorites";
 
-interface TmdbState {
+interface FavoritesState {
   favorites: string[];
 }
 
-const initialState: TmdbState = {
+const initialState: FavoritesState = {
   favorites: JSON.parse(localStorage.getItem(LS_FAVORITES_KEY) || "[]"),
 };
 
-export const tmdbSlice = createSlice({
-  name: "tmdb",
+export const favoritesSlice = createSlice({
+  name: "favorites",
   initialState,
   reducers: {
     addFavorite: (state, action: PayloadAction<string>) => {
@@ -29,5 +29,5 @@ export const tmdbSlice = createSlice({
   },
 });
 
-export const tmdbActions = tmdbSlice.actions;
-export const tmdbReducer = tmdbSlice.reducer;
+export const favoritesActions = favoritesSlice.actions;
+export const favoritesReducer = favoritesSlice.reducer;
