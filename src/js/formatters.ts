@@ -26,12 +26,7 @@ import {
   RawSearchTv,
   RawSearchResult,
 } from "../types/raw-tmdb.types";
-import {
-  IListResultMovie,
-  IListResultTv,
-  IMediaTypes,
-  ITile,
-} from "../types/tmdb.models";
+import { IAvailableTileFields, ITile } from "../types/tmdb.models";
 import {
   IBasePerson,
   IMovie,
@@ -52,7 +47,13 @@ import {
   IQuickSearchResult,
   ISearchResults,
 } from "../types/tmdb.types";
-import { createLink, formatDate, getPosterUrl } from "./helpers";
+import {
+  createLink,
+  createLinkFromTileData,
+  formatDate,
+  getPosterUrl,
+  realizeMediaType,
+} from "./helpers";
 
 /**
  * Formats a search term by removing non-alphanumeric characters,
@@ -495,39 +496,32 @@ export function formatSearchResults(results: RawSearch): ISearchResults {
 
 ////////////////////////////////////////////////////////
 
-export function formatTile<T extends IListResultMovie & IListResultTv>(
-  tile: T,
-  type: IMediaTypes,
-  label: keyof T | [keyof T, string]
-): ITile {
-  const link = createLink(type, tile.id, tile.title ? tile.title : tile.name);
-  const { year } = formatDate(
-    tile.release_date ? new Date(tile.release_date) : null
-  );
-  const poster = getPosterUrl(tile.backdrop_path);
+export function formatTile<T extends IAvailableTileFields>(tile: T): ITile {
+  const type = realizeMediaType(tile);
 
-  const labelText =
-    typeof label === "object"
-      ? `${tile[label[0]]} ${label[1]}`
-      : `${tile[label]}`;
+  const link = createLinkFromTileData(tile);
+
+  const { year } = formatDate(
+    tile.release_date ? tile.release_date : tile.first_air_date
+  );
+  const poster = getPosterUrl(tile.poster_path);
+
+  const label = type === "movie" || type === "tv" ? year : "";
 
   return {
     id: tile.id,
-    // FIXME: assign appropriate type
-    type: type || "movie",
-    link: link,
+    type,
+    link,
     poster,
-    title: tile.title,
-    label: labelText || "---",
-    rating: tile.vote_average,
+    title: tile.title || tile.name,
+    label,
+    rating: { average: tile.vote_average, count: tile.vote_count },
     year,
   };
 }
 
-export function formatTiles<T extends IListResultMovie & IListResultTv>(
-  data: T[],
-  type: UTMediaTypes,
-  label: keyof T | [keyof T, string]
+export function formatTiles<T extends IAvailableTileFields>(
+  data: T[]
 ): ITile[] {
-  return data.map((item) => formatTile(item, type, label));
+  return data.map((item) => formatTile(item));
 }

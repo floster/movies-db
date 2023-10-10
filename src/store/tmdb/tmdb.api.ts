@@ -6,17 +6,15 @@ const API_ADULTS = false;
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   IAvailableListsTypes,
-  ITvSeriesListsTypes,
   ICollection,
   ICollectionPart,
   ICollectionSearch,
   IListResponse,
-  IListResultMovie,
-  IListResultTv,
   IMovieSearch,
   ISearchResponse,
   IAvailableListsOptions,
   ITile,
+  IAvailableTileFields,
 } from "../../types/tmdb.models";
 import { formatTiles } from "../../js/formatters";
 
@@ -96,31 +94,8 @@ export const tmdbApi = createApi({
         };
       },
       // return only 'results' from response
-      transformResponse: (
-        response: IListResponse<IListResultMovie & IListResultTv>
-      ) => formatTiles(response.results, "movie", "id"),
-    }),
-    getMovieLists: build.query<IListResultMovie[], IAvailableListsTypes>({
-      query: (type: IAvailableListsTypes) => ({
-        url: `movie/${type}`,
-        params: {
-          ...prepareParams,
-        },
-      }),
-      // return only 'results' from response
-      transformResponse: (response: IListResponse<IListResultMovie>) =>
-        response.results,
-    }),
-    getTvSeriesLists: build.query<IListResultTv[], ITvSeriesListsTypes>({
-      query: (type: ITvSeriesListsTypes) => ({
-        url: `tv/${type}`,
-        params: {
-          ...prepareParams,
-        },
-      }),
-      // return only 'results' from response
-      transformResponse: (response: IListResponse<IListResultTv>) =>
-        response.results,
+      transformResponse: (response: IListResponse<IAvailableTileFields>) =>
+        formatTiles(response.results),
     }),
   }),
 });

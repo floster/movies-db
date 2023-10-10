@@ -1,5 +1,6 @@
 import { AvalableLocales, LOCALES } from "./config";
 import { ITileData, UTSortValues } from "../types/tmdb.types";
+import { IAvailableTileFields, IMediaTypes } from "../types/tmdb.models";
 
 /**
  * Filters an array of tile data to remove any tiles with a placeholder image.
@@ -36,13 +37,13 @@ export function tilesSort<T>(tiles: T[], option: UTSortValues): T[] {
  * @returns {ITileData[]} Array with tiles without poster in the end.
  */
 export const pullTilesWithoutPosterToTheEnd = (
-  tiles: ITileData[],
+  tiles: ITileData[]
 ): ITileData[] => {
   const withPoster = tiles.filter((tile) =>
-    tile.poster.includes("image.tmdb.org"),
+    tile.poster.includes("image.tmdb.org")
   );
   const withoutPoster = tiles.filter(
-    (tile) => tile.poster.includes("image.tmdb.org") === false,
+    (tile) => tile.poster.includes("image.tmdb.org") === false
   );
 
   return [...withPoster, ...withoutPoster];
@@ -83,7 +84,7 @@ export const splitArray = <T>(arr: T[], tilesPerPage: number): T[][] | null => {
 export const getTilesPortion = <T>(
   arr: T[],
   startFrom: number,
-  tilesQty: number,
+  tilesQty: number
 ): T[] => {
   if (startFrom < 0) return [];
   if (tilesQty < 1) return [];
@@ -124,7 +125,7 @@ export const getCurrentLocale = () =>
 export const getLocalCountryCode = () => {
   const currentLocale = getCurrentLocale();
   const countryCode = LOCALES.filter(
-    (locale) => locale.value === currentLocale,
+    (locale) => locale.value === currentLocale
   )[0].title;
   return countryCode;
 };
@@ -134,8 +135,8 @@ export const getLocalCountryCode = () => {
  * @param date - The date object to be formatted.
  * @returns An object with the 'MMM DD, YYYY' date and the year itself.
  */
-export const formatDate = (date: Date | null) => {
-  if (!date) return { full: "-", year: "" };
+export const formatDate = (date: string | null) => {
+  if (!date) return { full: "", year: "" };
 
   const _date = new Date(date);
   const localeString = `${getCurrentLocale()}-${getLocalCountryCode()}`; // 'en-US'
@@ -166,9 +167,32 @@ export const kebabText = (link: string) => {
  * @param {string} title - The title of the item to link to.
  * @returns {string} - A link string that looks like '/movie/12345-the-movie-title'.
  */
-export const createLink = (type: string, id: number, title: string) => {
+export const createLink = (type: IMediaTypes, id: number, title: string) => {
   const _type = type ? type : "movie";
   return `/${_type}/${id}-${kebabText(title)}`;
+};
+
+/**
+ * Creates a link string from the provided type, ID, and title.
+ * @param {string} type - The type of the link (e.g. 'movie', 'tv', etc.).
+ * @param {number} id - The ID of the item to link to.
+ * @param {string} title - The title of the item to link to.
+ * @returns {string} - A link string that looks like '/movie/12345-the-movie-title'.
+ */
+export const createLinkFromTileData = (tile: IAvailableTileFields) => {
+  const _type = realizeMediaType(tile);
+  const _title = tile.title || tile.name;
+  return `/${_type}/${tile.id}-${kebabText(_title)}`;
+};
+
+/**
+ * Determines the media type of a given tile based on its properties.
+ *
+ * @param {IAvailableTileFields} tile - The tile to determine the media type of.
+ * @returns {IMediaTypes} The media type of the tile ("movie" or "tv").
+ */
+export const realizeMediaType = (tile: IAvailableTileFields): IMediaTypes => {
+  return "first_air_date" in tile ? "tv" : "movie";
 };
 
 export const getPosterUrl = (posterPath: string): string => {

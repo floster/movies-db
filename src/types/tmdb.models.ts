@@ -18,6 +18,8 @@ export type IAvailableTileTypes =
   | "season"
   | "episode";
 
+export type IAvailableTileFields = IListResultMovie & IListResultTv;
+
 export interface ITile {
   id: number;
   type: IAvailableTileTypes;
@@ -25,7 +27,7 @@ export interface ITile {
   poster: string;
   title: string;
   label: string;
-  rating: number | null;
+  rating: { average: number; count: number } | null;
   year: string | null;
 }
 
