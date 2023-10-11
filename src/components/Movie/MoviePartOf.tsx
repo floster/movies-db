@@ -1,9 +1,9 @@
 import { kebabText } from "../../js/helpers";
-import { IBelongs } from "../../types/tmdb.models";
+import { IRawBelongs } from "../../types/tmdb.models";
 import IconLabeled from "../UI/IconLabeled";
 
 interface Props {
-  data: IBelongs | null;
+  data: IRawBelongs | null;
 }
 
 export default function PartOf({ data }: Props) {

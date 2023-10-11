@@ -6,10 +6,10 @@ const API_ADULTS = false;
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   IAvailableListsTypes,
-  ICollectionSearch,
-  IListResponse,
-  IMovieSearch,
-  ISearchResponse,
+  IRawCollectionSearch,
+  IRawListResponse,
+  IRawMovieSearch,
+  IRawSearchResponse,
   IAvailableListsOptions,
   ITile,
   IAvailableTileFields,
@@ -17,8 +17,14 @@ import {
   IAvailableMediaHeroFields,
   IMediaHeroData,
   IAvailableTrendingsTypes,
+  IRawCollection,
+  ICollection,
 } from "../../types/tmdb.models";
-import { formatMediaHeroData, formatTiles } from "../../js/formatters";
+import {
+  formatCollectionNew,
+  formatMediaHeroData,
+  formatTiles,
+} from "../../js/formatters";
 
 // set headers for all requests, main goal is to set Authorization header
 const prepareHeaders = (headers: Headers) => {
@@ -47,7 +53,7 @@ export const tmdbApi = createApi({
 
   endpoints: (build) => ({
     // <T, Q>: T - what will be returned; Q - type of param that'll be provided by us
-    searchCollection: build.query<ICollectionSearch[], string>({
+    searchCollection: build.query<IRawCollectionSearch[], string>({
       query: (term: string) => ({
         url: `search/collection`,
         params: {
@@ -56,10 +62,10 @@ export const tmdbApi = createApi({
       }),
       // transformResponse - callback that will be called after request
       // here transformResponse is used to get only 'results' from response
-      transformResponse: (response: ISearchResponse<ICollectionSearch>) =>
+      transformResponse: (response: IRawSearchResponse<IRawCollectionSearch>) =>
         response.results,
     }),
-    searchMovie: build.query<IMovieSearch[], string>({
+    searchMovie: build.query<IRawMovieSearch[], string>({
       query: (term: string) => ({
         url: `search/movie`,
         params: {
@@ -68,7 +74,7 @@ export const tmdbApi = createApi({
       }),
       // transformResponse - callback that will be called after request
       // here transformResponse is used to get only 'results' from response
-      transformResponse: (response: ISearchResponse<IMovieSearch>) =>
+      transformResponse: (response: IRawSearchResponse<IRawMovieSearch>) =>
         response.results,
     }),
     getList: build.query<ITile[], IAvailableListsOptions>({
@@ -84,7 +90,7 @@ export const tmdbApi = createApi({
         };
       },
       // return only 'results' from response
-      transformResponse: (response: IListResponse<IAvailableTileFields>) =>
+      transformResponse: (response: IRawListResponse<IAvailableTileFields>) =>
         formatTiles(response.results),
     }),
     getMediaHero: build.query<
@@ -103,8 +109,16 @@ export const tmdbApi = createApi({
         url: `trending/${type}/week`,
         params: prepareParams,
       }),
-      transformResponse: (response: ISearchResponse<IAvailableTileFields>) =>
+      transformResponse: (response: IRawSearchResponse<IAvailableTileFields>) =>
         formatTiles(response.results),
+    }),
+    getCollection: build.query<ICollection, number>({
+      query: (id) => ({
+        url: `collection/${id}`,
+        params: prepareParams,
+      }),
+      transformResponse: (response: IRawCollection) =>
+        formatCollectionNew(response),
     }),
   }),
 });
@@ -118,4 +132,5 @@ export const {
   useGetListQuery,
   useGetMediaHeroQuery,
   useGetTrendingsQuery,
+  useGetCollectionQuery,
 } = tmdbApi;

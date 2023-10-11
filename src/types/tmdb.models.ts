@@ -18,13 +18,13 @@ export type IAvailableTileTypes =
   | "season"
   | "episode";
 
-export type IAvailableTileFields = IListResultMovie &
-  IListResultTv &
-  IMovie &
-  ITv &
-  ICollection &
-  ICollectionPart &
-  IPerson;
+export type IAvailableTileFields = IRawListResultMovie &
+  IRawListResultTv &
+  IRawMovie &
+  IRawTv &
+  IRawCollection &
+  IRawCollectionPart &
+  IRawPerson;
 
 export interface ITile {
   id: number;
@@ -42,16 +42,25 @@ export interface ITile {
 /* *********************************** */
 
 // Collection
-export interface ICollection {
+export interface IRawCollection {
   id: number;
   name: string;
   overview: string;
   poster_path: string;
   backdrop_path: string;
-  parts: ICollectionPart[];
+  parts: IRawCollectionPart[];
 }
 
-export interface ICollectionPart {
+export interface ICollection {
+  id: number;
+  title: string;
+  overview: string;
+  poster: string;
+  backdrop: string;
+  parts: ITile[];
+}
+
+export interface IRawCollectionPart {
   adult: boolean;
   backdrop_path: string;
   id: number;
@@ -70,10 +79,10 @@ export interface ICollectionPart {
 }
 
 // Movie
-export interface IMovie {
+export interface IRawMovie {
   adult: boolean;
   backdrop_path: string;
-  belongs_to_collection: IBelongs | null;
+  belongs_to_collection: IRawBelongs | null;
   budget: number;
   genres: _Genre[];
   homepage: string;
@@ -98,7 +107,7 @@ export interface IMovie {
   vote_count: number;
 }
 
-export interface IBelongs {
+export interface IRawBelongs {
   id: number;
   name: string;
   poster_path: string;
@@ -106,7 +115,7 @@ export interface IBelongs {
 }
 
 // Person
-export interface IPerson {
+export interface IRawPerson {
   adult: boolean;
   also_known_as: string[];
   biography: string;
@@ -124,7 +133,7 @@ export interface IPerson {
 }
 
 // Tv
-export interface ITv {
+export interface IRawTv {
   adult: boolean;
   backdrop_path: string;
   created_by: _CreatedBy[];
@@ -227,14 +236,14 @@ interface _SpokenLanguage {
 /* ************************************** */
 /* ********** SEARCH RESPONSES ********** */
 /* ************************************** */
-export interface ISearchResponse<T> {
+export interface IRawSearchResponse<T> {
   page: number;
   results: T[];
   total_pages: number;
   total_results: number;
 }
 
-export interface IMovieSearch {
+export interface IRawMovieSearch {
   adult: boolean;
   backdrop_path?: string;
   genre_ids: number[];
@@ -251,7 +260,7 @@ export interface IMovieSearch {
   vote_count: number;
 }
 
-export interface ICollectionSearch {
+export interface IRawCollectionSearch {
   adult: boolean;
   backdrop_path: string;
   id: number;
@@ -283,7 +292,9 @@ export type IAvailableListsOptions =
   | "tv:top_rated"
   | "tv:popular";
 
-export interface IListResponse<T extends IListResultMovie | IListResultTv> {
+export interface IRawListResponse<
+  T extends IRawListResultMovie | IRawListResultTv
+> {
   dates?: _Dates;
   page: number;
   results: T[];
@@ -296,7 +307,7 @@ interface _Dates {
   minimum: string;
 }
 
-export interface IListResultMovie {
+export interface IRawListResultMovie {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -313,7 +324,7 @@ export interface IListResultMovie {
   vote_count: number;
 }
 
-export interface IListResultTv {
+export interface IRawListResultTv {
   backdrop_path: string;
   first_air_date: string;
   genre_ids: number[];
@@ -338,7 +349,10 @@ export type IAvailableMediaHeroTypes = Exclude<
   "season" | "episode"
 >;
 
-export type IAvailableMediaHeroFields = IMovie & ITv & ICollection & IPerson;
+export type IAvailableMediaHeroFields = IRawMovie &
+  IRawTv &
+  IRawCollection &
+  IRawPerson;
 
 export interface IMediaHeroData {
   id: number;
@@ -353,7 +367,7 @@ export interface IMediaHeroData {
   tags: string | null; // department for Person
   date: string;
   partsSeasons: string | null; // collection parts for Collection | seasons_qty for Tv
-  belongs: IBelongs | null; // belongs_to_collection for Movie
+  belongs: IRawBelongs | null; // belongs_to_collection for Movie
   torrent: boolean;
 }
 
@@ -366,4 +380,4 @@ export type IAvailableTrendingsTypes = Exclude<
   "season" | "episode" | "collection"
 >;
 
-export type IAvailableTrendingsFields = IMovie & ITv & IPerson;
+export type IAvailableTrendingsFields = IRawMovie & IRawTv & IRawPerson;
