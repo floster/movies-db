@@ -135,6 +135,7 @@ export const getLocalCountryCode = () => {
  * @param date - The date object to be formatted.
  * @returns An object with the 'MMM DD, YYYY' date and the year itself.
  */
+// FIXME: find a better way to store current locale and country code
 export const formatDate = (date: string | null) => {
   if (!date) return { full: "", year: "" };
 
@@ -167,17 +168,19 @@ export const kebabText = (link: string) => {
  * @param {string} title - The title of the item to link to.
  * @returns {string} - A link string that looks like '/movie/12345-the-movie-title'.
  */
-export const createLink = (type: IMediaTypes, id: number, title: string) => {
-  const _type = type ? type : "movie";
-  return `/${_type}/${id}-${kebabText(title)}`;
+export const createLink = (
+  type: IMediaTypes,
+  id: number,
+  title: string
+): string => {
+  return `/${type}/${id}-${kebabText(title)}`;
 };
 
 /**
- * Creates a link string from the provided type, ID, and title.
- * @param {string} type - The type of the link (e.g. 'movie', 'tv', etc.).
- * @param {number} id - The ID of the item to link to.
- * @param {string} title - The title of the item to link to.
- * @returns {string} - A link string that looks like '/movie/12345-the-movie-title'.
+ * Creates a link from tile data.
+ *
+ * @param {IAvailableTileFields} tile - The tile data to create a link from.
+ * @returns {string} The created link.
  */
 export const createLinkFromTileData = (tile: IAvailableTileFields) => {
   const _type = realizeMediaType(tile);
@@ -192,7 +195,15 @@ export const createLinkFromTileData = (tile: IAvailableTileFields) => {
  * @returns {IMediaTypes} The media type of the tile ("movie" or "tv").
  */
 export const realizeMediaType = (tile: IAvailableTileFields): IMediaTypes => {
-  return "first_air_date" in tile ? "tv" : "movie";
+  return tile.media_type // 'movie' -> exists in ICollectionPart
+    ? (tile.media_type as IMediaTypes)
+    : "first_air_date" in tile // 'tv' -> exists in ITv
+    ? "tv"
+    : "parts" in tile // 'collection' -> exists in ICollection
+    ? "collection"
+    : "biography" in tile // 'person' -> exists in IPerson
+    ? "person"
+    : "movie";
 };
 
 export const getPosterUrl = (posterPath: string): string => {
@@ -200,3 +211,6 @@ export const getPosterUrl = (posterPath: string): string => {
     ? `${import.meta.env.VITE_API_POSTER_BASE}${posterPath}`
     : import.meta.env.VITE_POSTER_NO_IMAGE;
 };
+
+export const getBackdropUrl = (path: string): string =>
+  `url(${import.meta.env.VITE_API_BACKDROP_BASE}${path})`;

@@ -1,9 +1,7 @@
 interface Props {
-    error: string;
+  error: string;
 }
 
 export default function AppError({ error }: Props) {
-    return (
-        <span className="app-error">☠️⚠️{error}</span>
-    )
+  return <span className="app-error">⚠️ {error} ⚠️</span>;
 }

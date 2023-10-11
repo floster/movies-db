@@ -26,7 +26,13 @@ import {
   RawSearchTv,
   RawSearchResult,
 } from "../types/raw-tmdb.types";
-import { IAvailableTileFields, ITile } from "../types/tmdb.models";
+import {
+  IAvailableMediaHeroFields,
+  IAvailableMediaHeroTypes,
+  IAvailableTileFields,
+  IMediaHeroData,
+  ITile,
+} from "../types/tmdb.models";
 import {
   IBasePerson,
   IMovie,
@@ -51,6 +57,7 @@ import {
   createLink,
   createLinkFromTileData,
   formatDate,
+  getBackdropUrl,
   getPosterUrl,
   realizeMediaType,
 } from "./helpers";
@@ -525,3 +532,56 @@ export function formatTiles<T extends IAvailableTileFields>(
 ): ITile[] {
   return data.map((item) => formatTile(item));
 }
+
+export const formatMediaHeroData = (
+  data: IAvailableMediaHeroFields
+): IMediaHeroData => {
+  const subtitle = data.tagline || data.place_of_birth || null;
+  const rating = +data.vote_average?.toFixed(1) || null;
+  const link = createLinkFromTileData(data as IAvailableTileFields) || null;
+  const tags = data.known_for_department || null;
+
+  let date = "";
+  if (data.release_date) {
+    date = formatDate(data.release_date).full;
+  } else if (data.first_air_date && data.last_air_date) {
+    const first = formatDate(data.first_air_date).year;
+    const last =
+      data.status === "Ended" ? formatDate(data.last_air_date).year : "...";
+    date = `${first} - ${last}`;
+  } else if (data.birthday) {
+    const deathday = data.deathday ? formatDate(data.deathday).full : "...";
+    date = `${formatDate(data.birthday).full} - ${deathday}`;
+  } else {
+    date = "";
+  }
+
+  const partsSeasons = data.parts
+    ? `${data.parts.length} parts`
+    : data.seasons
+    ? `${data.seasons.length} seasons`
+    : null;
+  const belongs = data.belongs_to_collection || null;
+  const torrent = true;
+
+  const formated = {
+    id: data.id,
+    type: realizeMediaType(
+      data as IAvailableTileFields
+    ) as IAvailableMediaHeroTypes,
+    title: data.title || data.name,
+    subtitle, // tagline for Movie | place_of_birth for Person
+    description: data.overview || data.biography || "",
+    poster: getPosterUrl(data.poster_path || data.profile_path),
+    backdrop: getBackdropUrl(data.backdrop_path),
+    rating, // number | null
+    link, // string | null
+    tags, // department for Person
+    date,
+    partsSeasons, // collection parts for Collection | seasons_qty for Tv
+    belongs, // belongs_to_collection for Movie
+    torrent, //
+  };
+
+  return formated;
+};

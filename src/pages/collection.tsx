@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import AppSection from "../components/AppSection";
 import AppSectionHeader from "../components/AppSectionHeader";
-import MediaHero from "../components/MediaHero";
 import AppTile from "../components/AppTile";
 import { useParams } from "react-router-dom";
 import AppSpinner from "../components/AppSpinner";
@@ -13,6 +12,7 @@ import { formatTilesData } from "../js/formatters";
 import { useTilesSort } from "../hooks/useTilesSort";
 import { useSortOption } from "../hooks/useSortOption";
 import { useTilesPagination } from "./../hooks/useTilesPagination";
+import MediaHero from "../components/MediaHero";
 
 type CollectionParams = {
   id: string;
@@ -37,7 +37,7 @@ export default function Collection() {
 
   const { sortedTiles } = useTilesSort(
     currentTiles,
-    collectionSortOption.currentSortOption,
+    collectionSortOption.currentSortOption
   );
 
   const getPartsData = useCallback(async () => {

@@ -1,22 +1,27 @@
-import AppSection from '../components/AppSection';
-import AppSectionHeader from '../components/AppSectionHeader';
-import { FC, useCallback, useEffect, useState } from 'react';
-import MediaHero from '../components/MediaHero';
-import MovieCrew from '../components/MovieCrew';
-import AppTile from '../components/AppTile';
-import { useParams } from 'react-router-dom';
-import tmdb from '../js/tmdb-api';
-import { IMovieCrew } from '../types/tmdb.types';
-import AppSpinner from '../components/AppSpinner';
-import AppError from '../components/AppError';
-import { cutArray, filterNoImage, filterUncredits, getIdFromLink } from '../js/helpers';
-import { formatTilesData } from '../js/formatters';
+import AppSection from "../components/AppSection";
+import AppSectionHeader from "../components/AppSectionHeader";
+import { FC, useCallback, useEffect, useState } from "react";
+import MovieCrew from "../components/MovieCrew";
+import AppTile from "../components/AppTile";
+import { useParams } from "react-router-dom";
+import tmdb from "../js/tmdb-api";
+import { IMovieCrew } from "../types/tmdb.types";
+import AppSpinner from "../components/AppSpinner";
+import AppError from "../components/AppError";
+import {
+  cutArray,
+  filterNoImage,
+  filterUncredits,
+  getIdFromLink,
+} from "../js/helpers";
+import { formatTilesData } from "../js/formatters";
 
-import { useTilesPagination } from './../hooks/useTilesPagination'
+import { useTilesPagination } from "./../hooks/useTilesPagination";
+import MediaHero from "../components/MediaHero";
 
 type MovieParams = {
   id: string;
-}
+};
 
 const Movie: FC = () => {
   const params = useParams<MovieParams>();
@@ -33,7 +38,7 @@ const Movie: FC = () => {
     currentPage: currentCastPage,
     currentTiles: currentCast,
     handleShowMore: handleShowMoreCast,
-    initPagination: initCastPagination
+    initPagination: initCastPagination,
   } = useTilesPagination();
 
   const getData = useCallback(async () => {
@@ -43,7 +48,12 @@ const Movie: FC = () => {
 
       setCrew(data.crew);
       setCrewToShow(cutArray(data.crew, 6));
-      const formattedCast = formatTilesData(data.cast, 'person', 'character', false, false);
+      const formattedCast = formatTilesData(
+        data.cast,
+        "person",
+        "character",
+        false
+      );
       const avoidNoImages = filterNoImage(formattedCast);
       const avoidUncredits = filterUncredits(avoidNoImages);
       initCastPagination(avoidUncredits);
@@ -62,31 +72,39 @@ const Movie: FC = () => {
     fetchData();
   }, [getData]);
 
-
   return (
     <section className="movie-header">
-      <MediaHero id={movieId} type='movie' />
-      {isDataError
-        ? <AppError error={`Error occured while fetching movie #${movieId} credits`} />
-        : <>
-          {crewToShow.length !== 0 && <AppSection extraClass="m-movie_crew">
-            <div className="container">
-              {isDataLoading
-                ? <AppSpinner visible={true} />
-                : <MovieCrew members={crewToShow} />
-              }
-              <AppSectionHeader title="crew" />
-            </div>
-          </AppSection>}
-          {currentCast.length !== 0 &&
+      <MediaHero id={movieId} type="movie" />
+      {isDataError ? (
+        <AppError
+          error={`Error occured while fetching movie #${movieId} credits`}
+        />
+      ) : (
+        <>
+          {crewToShow.length !== 0 && (
+            <AppSection extraClass="m-movie_crew">
+              <div className="container">
+                {isDataLoading ? (
+                  <AppSpinner visible={true} />
+                ) : (
+                  <MovieCrew members={crewToShow} />
+                )}
+                <AppSectionHeader title="crew" />
+              </div>
+            </AppSection>
+          )}
+          {currentCast.length !== 0 && (
             <div className="l-content container">
               <AppSection>
                 <AppSectionHeader title="cast" />
                 <div className="l-tiles_grid m-people">
-                  {isDataLoading
-                    ? <AppSpinner visible={true} />
-                    : <>
-                      {currentCast.map((tile) => <AppTile tile={tile} key={tile.id} />)}
+                  {isDataLoading ? (
+                    <AppSpinner visible={true} />
+                  ) : (
+                    <>
+                      {currentCast.map((tile) => (
+                        <AppTile tile={tile} key={tile.id} />
+                      ))}
                       <button
                         className="app-button"
                         onClick={() => handleShowMoreCast()}
@@ -95,14 +113,15 @@ const Movie: FC = () => {
                         show more ({currentCastPage} / {castQuantity.pages})
                       </button>
                     </>
-                  }
+                  )}
                 </div>
               </AppSection>
-            </div>}
+            </div>
+          )}
         </>
-      }
+      )}
     </section>
-  )
-}
+  );
+};
 
 export default Movie;

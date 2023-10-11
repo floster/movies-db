@@ -6,8 +6,6 @@ const API_ADULTS = false;
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   IAvailableListsTypes,
-  ICollection,
-  ICollectionPart,
   ICollectionSearch,
   IListResponse,
   IMovieSearch,
@@ -15,8 +13,11 @@ import {
   IAvailableListsOptions,
   ITile,
   IAvailableTileFields,
+  IAvailableMediaHeroTypes,
+  IAvailableMediaHeroFields,
+  IMediaHeroData,
 } from "../../types/tmdb.models";
-import { formatTiles } from "../../js/formatters";
+import { formatMediaHeroData, formatTiles } from "../../js/formatters";
 
 // set headers for all requests, main goal is to set Authorization header
 const prepareHeaders = (headers: Headers) => {
@@ -57,12 +58,6 @@ export const tmdbApi = createApi({
       transformResponse: (response: ISearchResponse<ICollectionSearch>) =>
         response.results,
     }),
-    getCollection: build.query<ICollection, number>({
-      query: (collectionID: number) => ({
-        url: `collection/${collectionID}`,
-        params: prepareParams,
-      }),
-    }),
     searchMovie: build.query<IMovieSearch[], string>({
       query: (term: string) => ({
         url: `search/movie`,
@@ -74,12 +69,6 @@ export const tmdbApi = createApi({
       // here transformResponse is used to get only 'results' from response
       transformResponse: (response: ISearchResponse<IMovieSearch>) =>
         response.results,
-    }),
-    getMovie: build.query<ICollectionPart, string>({
-      query: (movieID: string) => ({
-        url: `movie/${movieID}`,
-        params: prepareParams,
-      }),
     }),
     getList: build.query<ITile[], IAvailableListsOptions>({
       query: (option: IAvailableListsOptions) => {
@@ -97,6 +86,17 @@ export const tmdbApi = createApi({
       transformResponse: (response: IListResponse<IAvailableTileFields>) =>
         formatTiles(response.results),
     }),
+    getMediaHero: build.query<
+      IMediaHeroData,
+      { type: IAvailableMediaHeroTypes; id: number }
+    >({
+      query: ({ type, id }) => ({
+        url: `${type}/${id}`,
+        params: prepareParams,
+      }),
+      transformResponse: (response: IAvailableMediaHeroFields) =>
+        formatMediaHeroData(response),
+    }),
   }),
 });
 
@@ -106,7 +106,6 @@ export const tmdbApi = createApi({
 export const {
   useSearchMovieQuery,
   useSearchCollectionQuery,
-  useLazyGetCollectionQuery,
-  useLazyGetMovieQuery,
   useGetListQuery,
+  useGetMediaHeroQuery,
 } = tmdbApi;

@@ -1,27 +1,26 @@
-import AppSection from '../components/AppSection';
-import AppSectionHeader from '../components/AppSectionHeader';
-import { FC, useCallback, useEffect, useState } from 'react';
-import MediaHero from '../components/MediaHero';
-import AppTile from '../components/AppTile';
-import { useParams } from 'react-router-dom';
-import tmdb from '../js/tmdb-api';
-import AppSpinner from '../components/AppSpinner';
-import AppError from '../components/AppError';
-import { filterNoImage, filterUncredits, getIdFromLink } from '../js/helpers';
-import { formatTilesData } from '../js/formatters';
-import { ITileData } from '../types/tmdb.types';
+import AppSection from "../components/AppSection";
+import AppSectionHeader from "../components/AppSectionHeader";
+import { FC, useCallback, useEffect, useState } from "react";
+import AppTile from "../components/AppTile";
+import { useParams } from "react-router-dom";
+import tmdb from "../js/tmdb-api";
+import AppSpinner from "../components/AppSpinner";
+import AppError from "../components/AppError";
+import { filterNoImage, filterUncredits, getIdFromLink } from "../js/helpers";
+import { formatTilesData } from "../js/formatters";
+import { ITileData } from "../types/tmdb.types";
 
-import { useSortOption } from '../hooks/useSortOption';
-import { useTilesSort } from '../hooks/useTilesSort';
+import { useSortOption } from "../hooks/useSortOption";
+import { useTilesSort } from "../hooks/useTilesSort";
+import MediaHero from "../components/MediaHero";
 
 type PersonParams = {
   id: string;
-}
+};
 
 const Person: FC = () => {
   const params = useParams<PersonParams>();
   const personId = getIdFromLink(params.id!);
-
 
   const moviesSortOption = useSortOption();
   const tvsSortOption = useSortOption();
@@ -31,20 +30,31 @@ const Person: FC = () => {
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isDataError, setIsDataError] = useState(false);
 
-  const { sortedTiles: sortedMovies } = useTilesSort(castMovie, moviesSortOption.currentSortOption);
-  const { sortedTiles: sortedTvs } = useTilesSort(castTv, tvsSortOption.currentSortOption);
+  const { sortedTiles: sortedMovies } = useTilesSort(
+    castMovie,
+    moviesSortOption.currentSortOption
+  );
+  const { sortedTiles: sortedTvs } = useTilesSort(
+    castTv,
+    tvsSortOption.currentSortOption
+  );
 
   const getData = useCallback(async () => {
     try {
       setIsDataLoading(true);
       const data = await tmdb.getPersonCredits(personId);
 
-      const formattedCast = formatTilesData(data.cast, 'person', 'character', true, false);
+      const formattedCast = formatTilesData(
+        data.cast,
+        "person",
+        "character",
+        true
+      );
       const avoidNoImages = filterNoImage(formattedCast);
       const avoidUncredits = filterUncredits(avoidNoImages);
 
-      const movie = avoidUncredits.filter((media) => media.type === 'movie');
-      const tv = avoidUncredits.filter((media) => media.type === 'tv');
+      const movie = avoidUncredits.filter((media) => media.type === "movie");
+      const tv = avoidUncredits.filter((media) => media.type === "tv");
 
       setCastMovie(movie);
       setCastTv(tv);
@@ -63,36 +73,62 @@ const Person: FC = () => {
     fetchData();
   }, [getData]);
 
-
   return (
     <section className="movie-header">
-      <MediaHero id={personId} type='person' />
-      {isDataError
-        ? <AppError error={`Error occured while fetching movie #${personId} credits`} />
-        : <>
+      <MediaHero id={personId} type="person" />
+      {isDataError ? (
+        <AppError
+          error={`Error occured while fetching movie #${personId} credits`}
+        />
+      ) : (
+        <>
           <div className="l-content container">
             <AppSection>
-              <AppSectionHeader title="movies" hasSelect={true} {...moviesSortOption} />
+              <AppSectionHeader
+                title="movies"
+                hasSelect={true}
+                {...moviesSortOption}
+              />
               <div className="l-tiles_grid m-movies">
-                {isDataLoading
-                  ? <AppSpinner visible={true} />
-                  : sortedMovies.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
+                {isDataLoading ? (
+                  <AppSpinner visible={true} />
+                ) : (
+                  sortedMovies.map((media) => (
+                    <AppTile
+                      tile={media}
+                      key={`${media.id}_${media.label}`}
+                      extraLabel="year"
+                    />
+                  ))
+                )}
               </div>
             </AppSection>
 
             <AppSection>
-              <AppSectionHeader title="tv shows" hasSelect={true} {...tvsSortOption} />
+              <AppSectionHeader
+                title="tv shows"
+                hasSelect={true}
+                {...tvsSortOption}
+              />
               <div className="l-tiles_grid m-movies">
-                {isDataLoading
-                  ? <AppSpinner visible={true} />
-                  : sortedTvs.map((media) => <AppTile tile={media} key={`${media.id}_${media.label}`} extraLabel='year' />)}
+                {isDataLoading ? (
+                  <AppSpinner visible={true} />
+                ) : (
+                  sortedTvs.map((media) => (
+                    <AppTile
+                      tile={media}
+                      key={`${media.id}_${media.label}`}
+                      extraLabel="year"
+                    />
+                  ))
+                )}
               </div>
             </AppSection>
           </div>
         </>
-      }
+      )}
     </section>
-  )
-}
+  );
+};
 
 export default Person;
