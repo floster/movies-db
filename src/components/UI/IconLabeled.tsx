@@ -1,5 +1,5 @@
 import { FC } from "react";
-import SvgIcon from "../SvgIcon";
+import SvgIcon from "./SvgIcon";
 
 interface IconLabeledProps {
   icon: string;

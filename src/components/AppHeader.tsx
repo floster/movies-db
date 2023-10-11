@@ -1,5 +1,5 @@
-import SvgIcon from "./SvgIcon";
-import ChangeLocale from "./ChangeLocale";
+import SvgIcon from "./UI/SvgIcon";
+import ChangeLocale from "./UI/ChangeLocale";
 import { useSearchDialog } from "../contexts/SearchDialogContext";
 import useKeyboardShortcut from "../hooks/useKeyboardShortcut";
 import { useFavoritesState } from "../hooks/useFavoritesState";

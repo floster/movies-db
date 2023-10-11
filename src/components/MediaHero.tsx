@@ -1,10 +1,10 @@
-import AppPicture from "./AppPicture";
-import AppSpinner from "./AppSpinner";
-import AppFavorite from "./AppFavorite";
-import AppProgress from "./AppProgress";
-import MoviePartOf from "./MoviePartOf";
-import AppError from "./AppError";
-import TorrentSearch from "./TorrentSearch";
+import AppPicture from "./UI/AppPicture";
+import AppSpinner from "./UI/AppSpinner";
+import AppFavorite from "./UI/AppFavorite";
+import AppProgress from "./UI/AppProgress";
+import MoviePartOf from "./Movie/MoviePartOf";
+import AppError from "./UI/AppError";
+import TorrentSearch from "./UI/TorrentSearch";
 
 import { FC } from "react";
 

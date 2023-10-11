@@ -11,9 +11,9 @@ import {
   UTFavoritesType,
   UTileData,
 } from "../types/tmdb.types";
-import AppSpinner from "../components/AppSpinner";
+import AppSpinner from "./UI/AppSpinner";
 import tmdb from "../js/tmdb-api";
-import AppError from "../components/AppError";
+import AppError from "./UI/AppError";
 import { formatTileData } from "../js/formatters";
 
 import { useFavoritesState } from "../hooks/useFavoritesState";
@@ -57,7 +57,7 @@ export default function FavoritesSection({ type }: { type: UTFavoritesType }) {
               rawData as ICollection,
               type,
               ["partsCount", "parts"],
-              true,
+              true
             );
             break;
           case "movie":
@@ -74,7 +74,7 @@ export default function FavoritesSection({ type }: { type: UTFavoritesType }) {
               rawData as ITv,
               type,
               ["seasons_qty", "seasons"],
-              true,
+              true
             );
             break;
           default:

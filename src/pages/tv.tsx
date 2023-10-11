@@ -1,12 +1,12 @@
 import AppSection from "../components/AppSection";
 import AppSectionHeader from "../components/AppSectionHeader";
 import { useCallback, useEffect, useState } from "react";
-import TvSeason from "../components/TvSeason";
+import TvSeason from "../components/Tv/TvSeason";
 import { useParams } from "react-router-dom";
 import tmdb from "../js/tmdb-api";
 import { ITileData, ITvSeason } from "../types/tmdb.types";
-import AppSpinner from "../components/AppSpinner";
-import AppError from "../components/AppError";
+import AppSpinner from "../components/UI/AppSpinner";
+import AppError from "../components/UI/AppError";
 import { getIdFromLink } from "../js/helpers";
 import { formatTilesData } from "../js/formatters";
 import MediaHero from "../components/MediaHero";

@@ -1,6 +1,6 @@
-import { kebabText } from "../js/helpers";
-import { IBelongs } from "../types/tmdb.models";
-import IconLabeled from "./UI/IconLabeled";
+import { kebabText } from "../../js/helpers";
+import { IBelongs } from "../../types/tmdb.models";
+import IconLabeled from "../UI/IconLabeled";
 
 interface Props {
   data: IBelongs | null;

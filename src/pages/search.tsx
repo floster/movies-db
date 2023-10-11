@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import AppError from "../components/AppError";
+import AppError from "../components/UI/AppError";
 import AppSection from "../components/AppSection";
 import AppSectionHeader from "../components/AppSectionHeader";
-import AppSpinner from "../components/AppSpinner";
+import AppSpinner from "../components/UI/AppSpinner";
 import TMDB from "../js/tmdb-api";
 import AppTile from "../components/AppTile";
 import { SearchForm } from "../components/SearchForm";
@@ -36,15 +36,15 @@ export default function Search() {
 
   const { sortedTiles: sortedMovies } = useTilesSort(
     movies.currentTiles,
-    moviesSortOption.currentSortOption,
+    moviesSortOption.currentSortOption
   );
   const { sortedTiles: sortedTvs } = useTilesSort(
     tvs.currentTiles,
-    tvsSortOption.currentSortOption,
+    tvsSortOption.currentSortOption
   );
   const { sortedTiles: sortedPersons } = useTilesSort(
     persons.currentTiles,
-    personsSortOption.currentSortOption,
+    personsSortOption.currentSortOption
   );
 
   useEffect(() => setSearchTerm(searchParams.get("q") || ""), [searchParams]);

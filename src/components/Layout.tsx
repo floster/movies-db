@@ -1,26 +1,26 @@
 import { Outlet } from "react-router-dom";
 import AppHeader from "./AppHeader";
-import '../app.scss'
+import "../app.scss";
 import AppDialog from "./AppDialog";
-import QuickSearchForm from "./QuickSearchForm";
+import QuickSearchForm from "./QuickSearch/QuickSearchForm";
 import { SearchDialogProvider } from "../contexts/SearchDialogContext";
 import { ChangeLocaleProvider } from "../contexts/ChangeLocaleContext";
-import { FavoritesProvider } from '../contexts/FavoritesContext'
+import { FavoritesProvider } from "../contexts/FavoritesContext";
 
 export default function Layout() {
-    return (
-        <SearchDialogProvider>
-            <ChangeLocaleProvider>
-                <FavoritesProvider>
-                    <AppHeader />
+  return (
+    <SearchDialogProvider>
+      <ChangeLocaleProvider>
+        <FavoritesProvider>
+          <AppHeader />
 
-                    <Outlet />
+          <Outlet />
 
-                    <AppDialog>
-                        <QuickSearchForm />
-                    </AppDialog>
-                </FavoritesProvider>
-            </ChangeLocaleProvider>
-        </SearchDialogProvider>
-    )
+          <AppDialog>
+            <QuickSearchForm />
+          </AppDialog>
+        </FavoritesProvider>
+      </ChangeLocaleProvider>
+    </SearchDialogProvider>
+  );
 }

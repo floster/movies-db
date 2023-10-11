@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import SvgIcon from "./SvgIcon";
 
-import { useFavorites } from "../contexts/FavoritesContext";
-import { UTFavoritesType } from "../types/tmdb.types";
+import { useFavorites } from "../../contexts/FavoritesContext";
+import { UTFavoritesType } from "../../types/tmdb.types";
 
 interface Props {
   type: UTFavoritesType;
@@ -14,7 +14,7 @@ export default function AppFavorite({ type, id, title }: Props) {
   const { isAlreadyFavorite, toggleFavorite, favoritesQty } = useFavorites();
 
   const [checkedState, setCheckedState] = useState(() =>
-    isAlreadyFavorite(type, id),
+    isAlreadyFavorite(type, id)
   );
 
   useEffect(() => setCheckedState(isAlreadyFavorite(type, id)), [favoritesQty]);

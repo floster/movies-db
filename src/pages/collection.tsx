@@ -3,9 +3,9 @@ import AppSection from "../components/AppSection";
 import AppSectionHeader from "../components/AppSectionHeader";
 import AppTile from "../components/AppTile";
 import { useParams } from "react-router-dom";
-import AppSpinner from "../components/AppSpinner";
+import AppSpinner from "../components/UI/AppSpinner";
 import tmdb from "../js/tmdb-api";
-import AppError from "../components/AppError";
+import AppError from "../components/UI/AppError";
 import { getIdFromLink } from "../js/helpers";
 import { formatTilesData } from "../js/formatters";
 

@@ -3,8 +3,8 @@ import { useGetListQuery } from "../../store/tmdb/tmdb.api";
 import { AVAILABLE_LIST_OPTIONS } from "../../js/config";
 import { IAvailableListsOptions } from "../../types/tmdb.models";
 
-import AppError from "../AppError";
-import AppSpinner from "../AppSpinner";
+import AppError from "../UI/AppError";
+import AppSpinner from "../UI/AppSpinner";
 import MediaListSelect from "./MediaListSelect";
 import MediaList from "./MediaList";
 

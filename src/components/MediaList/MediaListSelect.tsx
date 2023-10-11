@@ -1,4 +1,4 @@
-import SvgIcon from "../SvgIcon";
+import SvgIcon from "../UI/SvgIcon";
 import { AVAILABLE_LIST_OPTIONS } from "../../js/config";
 import { IAvailableListsOptions } from "../../types/tmdb.models";
 

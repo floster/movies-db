@@ -1,13 +1,13 @@
 import AppSection from "../components/AppSection";
 import AppSectionHeader from "../components/AppSectionHeader";
 import { FC, useCallback, useEffect, useState } from "react";
-import MovieCrew from "../components/MovieCrew";
+import MovieCrew from "../components/Movie/MovieCrew";
 import AppTile from "../components/AppTile";
 import { useParams } from "react-router-dom";
 import tmdb from "../js/tmdb-api";
 import { IMovieCrew } from "../types/tmdb.types";
-import AppSpinner from "../components/AppSpinner";
-import AppError from "../components/AppError";
+import AppSpinner from "../components/UI/AppSpinner";
+import AppError from "../components/UI/AppError";
 import {
   cutArray,
   filterNoImage,

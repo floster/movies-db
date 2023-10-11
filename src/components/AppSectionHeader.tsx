@@ -1,19 +1,34 @@
-import { SORT_OPTIONS } from '../js/config';
-import AppSelect from './AppSelect'
+import { SORT_OPTIONS } from "../js/config";
+import AppSelect from "./UI/AppSelect";
 
 interface Props {
-    title: string;
-    hasSelect?: boolean;
-    currentSortOption?: string;
-    onSortChange?: (option: string) => void;
-    alignStart?: boolean;
+  title: string;
+  hasSelect?: boolean;
+  currentSortOption?: string;
+  onSortChange?: (option: string) => void;
+  alignStart?: boolean;
 }
 
-export default function AppSectionHeader({ title, hasSelect, alignStart, currentSortOption, onSortChange }: Props) {
-    return (
-        <header className={`app-section__header ${alignStart ? 'm-align_start' : ''}`}>
-            <h2 className="app-section__title">{title}</h2>
-            {hasSelect && <AppSelect options={SORT_OPTIONS} currentOption={currentSortOption!} optionChanged={onSortChange!} label='Sort by:' />}
-        </header>
-    )
+export default function AppSectionHeader({
+  title,
+  hasSelect,
+  alignStart,
+  currentSortOption,
+  onSortChange,
+}: Props) {
+  return (
+    <header
+      className={`app-section__header ${alignStart ? "m-align_start" : ""}`}
+    >
+      <h2 className="app-section__title">{title}</h2>
+      {hasSelect && (
+        <AppSelect
+          options={SORT_OPTIONS}
+          currentOption={currentSortOption!}
+          optionChanged={onSortChange!}
+          label="Sort by:"
+        />
+      )}
+    </header>
+  );
 }

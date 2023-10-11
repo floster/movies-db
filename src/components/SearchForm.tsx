@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { useDebounce } from "usehooks-ts";
-import SvgIcon from "./SvgIcon";
+import SvgIcon from "./UI/SvgIcon";
 
 // The delay time in milliseconds. After this amount of time, the latest value is used.
 const DEBOUNCE_DELAY = 500;
