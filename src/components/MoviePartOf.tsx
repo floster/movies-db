@@ -1,6 +1,6 @@
 import { kebabText } from "../js/helpers";
 import { IBelongs } from "../types/tmdb.models";
-import SvgIcon from "./SvgIcon";
+import IconLabeled from "./UI/IconLabeled";
 
 interface Props {
   data: IBelongs | null;
@@ -9,18 +9,14 @@ interface Props {
 export default function PartOf({ data }: Props) {
   if (!data) return null;
 
+  const linkData = {
+    href: `/collection/${data.id}-${kebabText(data.name)}`,
+    text: data.name,
+  };
+
   return (
     <div className="part-of">
-      {/* TODO: make a component for this */}
-      <span className="icon-labeled">
-        <SvgIcon icon="stack" />
-        <span className="icon-labeled__label">
-          part of{" "}
-          <a href={`/collection/${data.id}-${kebabText(data.name)}`}>
-            {data.name}
-          </a>
-        </span>
-      </span>
+      <IconLabeled icon="stack" label="part of" link={linkData} />
     </div>
   );
 }

@@ -1,4 +1,3 @@
-import SvgIcon from "./SvgIcon";
 import AppPicture from "./AppPicture";
 import AppSpinner from "./AppSpinner";
 import AppFavorite from "./AppFavorite";
@@ -12,6 +11,7 @@ import { FC } from "react";
 import { useDocumentTitle } from "usehooks-ts";
 import { useGetMediaHeroQuery } from "../store/tmdb/tmdb.api";
 import { IAvailableMediaHeroTypes } from "../types/tmdb.models";
+import IconLabeled from "./UI/IconLabeled";
 
 interface MediaHeroProps {
   id: number;
@@ -34,15 +34,16 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
     : `${type} - Movies DB`;
   useDocumentTitle(title);
 
-  console.log("MediaHero2", data);
-
-  if (isError || !data)
+  if (isError)
     return (
       <AppError
         error={`MediaHero: Error occured while fetching hero data for the ${type} #${id}`}
       />
     );
 
+  if (!data && !isLoading) return null;
+
+  // TODO: make below works
   // const renderTags = () => {
   //   const tags = data.tags?.map((genre: IGenre) => (
   //     <li key={genre.id}>{genre.name}</li>
@@ -84,19 +85,11 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
           <AppFavorite type={type} id={id} title={data.title} />
 
           {data.date && data.date !== "" && (
-            // TODO: make a component for this
-            <span className="icon-labeled m-text_light m-text_normal">
-              <SvgIcon icon="calendar" />
-              <span className="icon-labeled__label">{data.date}</span>
-            </span>
+            <IconLabeled icon="calendar" label={data.date} />
           )}
 
           {data.partsSeasons && (
-            // TODO: make a component for this
-            <span className="icon-labeled m-text_light m-text_normal">
-              <SvgIcon icon="stack" />
-              <span className="icon-labeled__label">{data.partsSeasons}</span>
-            </span>
+            <IconLabeled icon="stack" label={data.partsSeasons} />
           )}
 
           {data.torrent && <TorrentSearch term={data.title} />}
