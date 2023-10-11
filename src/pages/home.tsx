@@ -1,7 +1,7 @@
 import AppSection from "../components/AppSection";
 import MediaListSection from "../components/MediaList/MediaListSection";
 import AppSectionHeader from "../components/AppSectionHeader";
-import AppCarousel from "../components/AppCarousel";
+import TrendingsCarousel from "../components/TrendingsCarousel";
 import RandomMedia from "../components/RandomMedia";
 import { IAvailableTrendingTypes } from "../types/tmdb.models";
 
@@ -24,7 +24,7 @@ export default function Home() {
           {trendingCarouselsTypes.map((type) => (
             <AppSection key={type}>
               <AppSectionHeader title={`trending ${type}s`} />
-              <AppCarousel itemsType={type} />
+              <TrendingsCarousel itemsType={type} />
             </AppSection>
           ))}
         </main>

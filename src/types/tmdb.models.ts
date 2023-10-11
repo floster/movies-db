@@ -356,3 +356,14 @@ export interface IMediaHeroData {
   belongs: IBelongs | null; // belongs_to_collection for Movie
   torrent: boolean;
 }
+
+/* ******************************* */
+/* ********** TRENDINGS ********** */
+/* ******************************* */
+
+export type IAvailableTrendingsTypes = Exclude<
+  IAvailableTileTypes,
+  "season" | "episode" | "collection"
+>;
+
+export type IAvailableTrendingsFields = IMovie & ITv & IPerson;

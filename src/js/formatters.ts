@@ -511,7 +511,7 @@ export function formatTile<T extends IAvailableTileFields>(tile: T): ITile {
   const { year } = formatDate(
     tile.release_date ? tile.release_date : tile.first_air_date
   );
-  const poster = getPosterUrl(tile.poster_path);
+  const poster = getPosterUrl(tile.poster_path || tile.profile_path);
 
   const label = type === "movie" || type === "tv" ? year : "";
 

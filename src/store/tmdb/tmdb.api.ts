@@ -16,6 +16,7 @@ import {
   IAvailableMediaHeroTypes,
   IAvailableMediaHeroFields,
   IMediaHeroData,
+  IAvailableTrendingsTypes,
 } from "../../types/tmdb.models";
 import { formatMediaHeroData, formatTiles } from "../../js/formatters";
 
@@ -97,6 +98,14 @@ export const tmdbApi = createApi({
       transformResponse: (response: IAvailableMediaHeroFields) =>
         formatMediaHeroData(response),
     }),
+    getTrendings: build.query<ITile[], IAvailableTrendingsTypes>({
+      query: (type) => ({
+        url: `trending/${type}/week`,
+        params: prepareParams,
+      }),
+      transformResponse: (response: ISearchResponse<IAvailableTileFields>) =>
+        formatTiles(response.results),
+    }),
   }),
 });
 
@@ -108,4 +117,5 @@ export const {
   useSearchCollectionQuery,
   useGetListQuery,
   useGetMediaHeroQuery,
+  useGetTrendingsQuery,
 } = tmdbApi;
