@@ -34,6 +34,9 @@ import {
   IRawCollection,
   ICollection as ICollectionModel,
   ITile,
+  IRawMovieCredisResponse,
+  IMovieCreditsNew,
+  ICrewMember,
 } from "../types/tmdb.models";
 import {
   IBasePerson,
@@ -58,6 +61,8 @@ import {
 import {
   createLink,
   createLinkFromTileData,
+  filterNoImage,
+  filterUncredits,
   formatDate,
   getBackdropUrl,
   getPosterUrl,
@@ -506,6 +511,8 @@ export function formatSearchResults(results: RawSearch): ISearchResults {
 ////////////////////////////////////////////////////////
 
 export function formatTile<T extends IAvailableTileFields>(tile: T): ITile {
+  console.log("formatTile", tile);
+
   const type = realizeMediaType(tile);
 
   const link = createLinkFromTileData(tile);
@@ -515,7 +522,12 @@ export function formatTile<T extends IAvailableTileFields>(tile: T): ITile {
   );
   const poster = getPosterUrl(tile.poster_path || tile.profile_path);
 
-  const label = type === "movie" || type === "tv" ? year : "";
+  const label =
+    type === "movie" || type === "tv"
+      ? year
+      : type === "person" && "character" in tile
+      ? tile.character
+      : "";
 
   return {
     id: tile.id,
@@ -598,5 +610,28 @@ export const formatCollectionNew = (
     poster: getPosterUrl(collection.poster_path),
     backdrop: getBackdropUrl(collection.backdrop_path),
     parts: formatTiles(collection.parts as IAvailableTileFields[]),
+  };
+};
+
+const CREW_QTY_TO_SHOW = +import.meta.env.VITE_MOVIE_CREW_QTY_TO_SHOW as number;
+
+export const formatMovieCreditsNew = (
+  credits: IRawMovieCredisResponse
+): IMovieCreditsNew => {
+  const _crew: ICrewMember[] = credits.crew
+    .slice(0, CREW_QTY_TO_SHOW)
+    .map((credit) => ({
+      id: credit.id,
+      name: credit.name,
+      job: credit.job,
+    }));
+
+  const _cast = formatTiles(credits.cast as IAvailableTileFields[]);
+  const _avoidNoImages = filterNoImage(_cast);
+  const _avoidNoCredits = filterUncredits(_avoidNoImages);
+
+  return {
+    crew: _crew,
+    cast: _avoidNoCredits,
   };
 };

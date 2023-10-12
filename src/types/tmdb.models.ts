@@ -24,7 +24,8 @@ export type IAvailableTileFields = IRawListResultMovie &
   IRawTv &
   IRawCollection &
   IRawCollectionPart &
-  IRawPerson;
+  IRawPerson &
+  IRawMovieCast;
 
 export interface ITile {
   id: number;
@@ -381,3 +382,52 @@ export type IAvailableTrendingsTypes = Exclude<
 >;
 
 export type IAvailableTrendingsFields = IRawMovie & IRawTv & IRawPerson;
+
+/* *********************************** */
+/* ********** MOVIE CREDITS ********** */
+/* *********************************** */
+export interface IRawMovieCredisResponse {
+  id: number;
+  cast: IRawMovieCast[];
+  crew: IRawMovieCrew[];
+}
+
+export interface IRawMovieCast {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path?: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}
+
+export interface IRawMovieCrew {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path?: string;
+  credit_id: string;
+  department: string;
+  job: string;
+}
+
+export interface ICrewMember {
+  id: number;
+  name: string;
+  job: string;
+}
+
+export interface IMovieCreditsNew {
+  cast: ITile[];
+  crew: ICrewMember[];
+}

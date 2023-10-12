@@ -1,6 +1,6 @@
 import { AvalableLocales, LOCALES } from "./config";
 import { ITileData, UTSortValues } from "../types/tmdb.types";
-import { IAvailableTileFields, IMediaTypes } from "../types/tmdb.models";
+import { IAvailableTileFields, IMediaTypes, ITile } from "../types/tmdb.models";
 
 /**
  * Filters an array of tile data to remove any tiles with a placeholder image.
@@ -8,7 +8,7 @@ import { IAvailableTileFields, IMediaTypes } from "../types/tmdb.models";
  * @param {ITileData[]} tiles - The array of tile data to filter.
  * @returns {ITileData[]} The filtered array of tile data.
  */
-export const filterNoImage = (tiles: ITileData[]): ITileData[] =>
+export const filterNoImage = (tiles: ITile[]): ITile[] =>
   tiles.filter((tile) => tile.poster.includes("via.placeholder.com") === false);
 
 /**
@@ -17,7 +17,7 @@ export const filterNoImage = (tiles: ITileData[]): ITileData[] =>
  * @param {ITileData[]} tiles - The array of tile data to filter.
  * @returns {ITileData[]} The filtered array of tile data.
  */
-export const filterUncredits = (tiles: ITileData[]): ITileData[] =>
+export const filterUncredits = (tiles: ITile[]): ITile[] =>
   tiles.filter((tile) => tile.label.includes("uncredited") === false);
 
 export function tilesSort<T>(tiles: T[], option: UTSortValues): T[] {
@@ -201,7 +201,7 @@ export const realizeMediaType = (tile: IAvailableTileFields): IMediaTypes => {
     ? "tv"
     : "parts" in tile // 'collection' -> exists in ICollection
     ? "collection"
-    : "biography" in tile // 'person' -> exists in IPerson
+    : "biography" || "known_for_department" in tile // 'person' -> exists in IPerson
     ? "person"
     : "movie";
 };

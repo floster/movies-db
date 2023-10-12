@@ -19,10 +19,13 @@ import {
   IAvailableTrendingsTypes,
   IRawCollection,
   ICollection,
+  IMovieCreditsNew,
+  IRawMovieCredisResponse,
 } from "../../types/tmdb.models";
 import {
   formatCollectionNew,
   formatMediaHeroData,
+  formatMovieCreditsNew,
   formatTiles,
 } from "../../js/formatters";
 
@@ -120,6 +123,14 @@ export const tmdbApi = createApi({
       transformResponse: (response: IRawCollection) =>
         formatCollectionNew(response),
     }),
+    getMovieCredits: build.query<IMovieCreditsNew, number>({
+      query: (id) => ({
+        url: `movie/${id}/credits`,
+        params: prepareParams,
+      }),
+      transformResponse: (response: IRawMovieCredisResponse) =>
+        formatMovieCreditsNew(response),
+    }),
   }),
 });
 
@@ -133,5 +144,5 @@ export const {
   useGetMediaHeroQuery,
   useGetTrendingsQuery,
   useGetCollectionQuery,
-  useLazyGetCollectionQuery,
+  useGetMovieCreditsQuery,
 } = tmdbApi;
