@@ -11,7 +11,7 @@ import { formatTilesData } from "../js/formatters";
 import { ITileData } from "../types/tmdb.types";
 
 import { useSortOption } from "../hooks/useSortOption";
-import { useTilesSort } from "../hooks/useTilesSort";
+import { useTilesSort } from "../hooks/tiles/tilesSort";
 import MediaHero from "../components/MediaHero";
 
 type PersonParams = {

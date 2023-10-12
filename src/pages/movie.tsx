@@ -16,7 +16,7 @@ import {
 } from "../js/helpers";
 import { formatTilesData } from "../js/formatters";
 
-import { useTilesPagination } from "./../hooks/useTilesPagination";
+import { useTilesShowMore } from "../hooks/tiles/tilesShowMore";
 import MediaHero from "../components/MediaHero";
 
 type MovieParams = {
@@ -39,7 +39,7 @@ const Movie: FC = () => {
     currentTiles: currentCast,
     handleShowMore: handleShowMoreCast,
     initPagination: initCastPagination,
-  } = useTilesPagination();
+  } = useTilesShowMore();
 
   const getData = useCallback(async () => {
     try {

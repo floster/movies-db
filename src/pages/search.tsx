@@ -9,7 +9,7 @@ import AppTile from "../components/AppTile";
 import { SearchForm } from "../components/SearchForm";
 
 import { useSearchResults } from "../hooks/useSearchResults";
-import { useTilesSort } from "../hooks/useTilesSort";
+import { useTilesSort } from "../hooks/tiles/tilesSort";
 import { useSortOption } from "../hooks/useSortOption";
 
 import { useDocumentTitle } from "usehooks-ts";
