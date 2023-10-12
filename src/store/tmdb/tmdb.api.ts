@@ -133,4 +133,5 @@ export const {
   useGetMediaHeroQuery,
   useGetTrendingsQuery,
   useGetCollectionQuery,
+  useLazyGetCollectionQuery,
 } = tmdbApi;

@@ -1,18 +1,16 @@
-import { useCallback, useEffect, useState } from "react";
 import AppSection from "../components/AppSection";
 import AppSectionHeader from "../components/AppSectionHeader";
 import AppTile from "../components/AppTile";
 import { useParams } from "react-router-dom";
 import AppSpinner from "../components/UI/AppSpinner";
-import tmdb from "../js/tmdb-api";
 import AppError from "../components/UI/AppError";
 import { getIdFromLink } from "../js/helpers";
-import { formatTilesData } from "../js/formatters";
 
-import { useTilesSort } from "../hooks/useTilesSort";
 import { useSortOption } from "../hooks/useSortOption";
-import { useTilesPagination } from "./../hooks/useTilesPagination";
 import MediaHero from "../components/MediaHero";
+import { useTilesShowMore } from "../hooks/tiles/tilesShowMore";
+import { useGetCollectionQuery } from "../store/tmdb/tmdb.api";
+import { useTilesSort } from "../hooks/tiles/tilesSort";
 
 type CollectionParams = {
   id: string;
@@ -22,50 +20,29 @@ export default function Collection() {
   const params = useParams<CollectionParams>();
   const collectionId = getIdFromLink(params.id!);
 
-  const [isDataLoading, setIsDataLoading] = useState(false);
-  const [isDataError, setIsDataError] = useState(false);
-
+  // TODO: improve this flow in future
+  // uses to pass unified sort option params through AppSectionHeader to AppSelect
   const collectionSortOption = useSortOption();
 
   const {
-    quantity,
-    currentPage,
-    currentTiles,
-    handleShowMore,
-    initPagination,
-  } = useTilesPagination();
+    data: tiles,
+    isError,
+    isLoading,
+  } = useGetCollectionQuery(collectionId);
+
+  const { pagesQty, currentPage, currentTiles, handleShowMore } =
+    useTilesShowMore(tiles?.parts ? tiles.parts : []);
 
   const { sortedTiles } = useTilesSort(
     currentTiles,
     collectionSortOption.currentSortOption
   );
 
-  const getPartsData = useCallback(async () => {
-    try {
-      setIsDataLoading(true);
-      const data = await tmdb.getCollection(collectionId);
-      const formattedTiles = formatTilesData(data.parts, "movie", "year", true);
-      initPagination(formattedTiles);
-    } catch (error) {
-      setIsDataError(true);
-      console.error(error);
-    } finally {
-      setIsDataLoading(false);
-    }
-  }, [collectionId]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await (getPartsData as () => Promise<void>)();
-    };
-    fetchData();
-  }, [getPartsData]);
-
   return (
     <>
       <MediaHero id={collectionId} type="collection" />
       <div className="l-content container">
-        {isDataError ? (
+        {isError ? (
           <AppError
             error={`Error occured while fetching collection #${collectionId} parts`}
           />
@@ -73,24 +50,25 @@ export default function Collection() {
           <>
             <AppSection extraClass="m-movies_list">
               <AppSectionHeader
-                title={`${sortedTiles.length} parts`}
+                title={`${tiles?.parts.length} parts`}
                 hasSelect={true}
                 {...collectionSortOption}
               />
               <div className="l-tiles_grid m-movies">
-                {isDataLoading ? (
+                {isLoading ? (
                   <AppSpinner visible={true} />
                 ) : (
                   <>
                     {sortedTiles.map((tile) => (
                       <AppTile tile={tile} key={tile.id} />
                     ))}
+                    {/* TODO: create separate component for button below */}
                     <button
                       className="app-button"
                       onClick={() => handleShowMore()}
-                      disabled={currentPage >= quantity.pages}
+                      disabled={currentPage >= pagesQty}
                     >
-                      show more ({currentPage} / {quantity.pages})
+                      show more ({currentPage} / {pagesQty})
                     </button>
                   </>
                 )}

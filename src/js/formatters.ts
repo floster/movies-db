@@ -31,6 +31,8 @@ import {
   IAvailableMediaHeroTypes,
   IAvailableTileFields,
   IMediaHeroData,
+  IRawCollection,
+  ICollection as ICollectionModel,
   ITile,
 } from "../types/tmdb.models";
 import {
@@ -584,4 +586,17 @@ export const formatMediaHeroData = (
   };
 
   return formated;
+};
+
+export const formatCollectionNew = (
+  collection: IRawCollection
+): ICollectionModel => {
+  return {
+    id: collection.id,
+    title: collection.name,
+    overview: collection.overview,
+    poster: getPosterUrl(collection.poster_path),
+    backdrop: getBackdropUrl(collection.backdrop_path),
+    parts: formatTiles(collection.parts as IAvailableTileFields[]),
+  };
 };
