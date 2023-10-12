@@ -45,7 +45,7 @@ const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
         />
       )}
       <div className="app-tile__content">
-        {tile.rating?.average && !isRow && (
+        {tile.rating && tile.rating?.average > 0 && !isRow && (
           <AppProgress value={tile.rating.average} />
         )}
         <p className="app-tile__label">{tile.label}</p>

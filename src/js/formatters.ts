@@ -511,8 +511,6 @@ export function formatSearchResults(results: RawSearch): ISearchResults {
 ////////////////////////////////////////////////////////
 
 export function formatTile<T extends IAvailableTileFields>(tile: T): ITile {
-  console.log("formatTile", tile);
-
   const type = realizeMediaType(tile);
 
   const link = createLinkFromTileData(tile);

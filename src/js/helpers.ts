@@ -213,4 +213,6 @@ export const getPosterUrl = (posterPath: string): string => {
 };
 
 export const getBackdropUrl = (path: string): string =>
-  `url(${import.meta.env.VITE_API_BACKDROP_BASE}${path})`;
+  path
+    ? `url(${import.meta.env.VITE_API_BACKDROP_BASE}${path})`
+    : "var(--gradient-dark)";
