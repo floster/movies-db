@@ -13,6 +13,7 @@ import { useTilesSort } from "../hooks/tiles/tilesSort";
 import { useSortOption } from "../hooks/useSortOption";
 
 import { useDocumentTitle } from "usehooks-ts";
+import { ShowMoreBtn } from "../components/UI/ShowMoreBtn";
 
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env
   .VITE_SYMBOLS_QTY_TO_SEARCH as number;
@@ -115,13 +116,11 @@ export default function Search() {
                   {sortedMovies.map((movie) => (
                     <AppTile tile={movie} key={movie.id} />
                   ))}
-                  <button
-                    className="app-button"
-                    onClick={() => handleShowMore("movies")}
-                    disabled={movies.currentPage >= movies.qty.pages}
-                  >
-                    show more ({movies.currentPage} / {movies.qty.pages})
-                  </button>
+                  {/* <ShowMoreBtn
+                    currentPage={movies.currentPage}
+                    pagesQty={movies.qty.pages}
+                    handleShowMore={handleShowMore("movies")}
+                  /> */}
                 </div>
               </AppSection>
             )}
@@ -137,13 +136,11 @@ export default function Search() {
                   {sortedTvs.map((tv) => (
                     <AppTile tile={tv} key={tv.id} />
                   ))}
-                  <button
-                    className="app-button"
-                    onClick={() => handleShowMore("tvs")}
-                    disabled={tvs.currentPage >= tvs.qty.pages}
-                  >
-                    show more ({tvs.currentPage} / {tvs.qty.pages})
-                  </button>
+                  {/* <ShowMoreBtn
+                    currentPage={movies.currentPage}
+                    pagesQty={movies.qty.pages}
+                    handleShowMore={handleShowMore("movies")}
+                  /> */}
                 </div>
               </AppSection>
             )}
@@ -159,13 +156,11 @@ export default function Search() {
                   {sortedPersons.map((person) => (
                     <AppTile tile={person} key={person.id} />
                   ))}
-                  <button
-                    className="app-button"
-                    onClick={() => handleShowMore("persons")}
-                    disabled={persons.currentPage >= persons.qty.pages}
-                  >
-                    show more ({persons.currentPage} / {persons.qty.pages})
-                  </button>
+                  {/* <ShowMoreBtn
+                    currentPage={movies.currentPage}
+                    pagesQty={movies.qty.pages}
+                    handleShowMore={handleShowMore("movies")}
+                  /> */}
                 </div>
               </AppSection>
             )}

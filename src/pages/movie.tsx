@@ -8,6 +8,8 @@ import tmdb from "../js/tmdb-api";
 import { IMovieCrew } from "../types/tmdb.types";
 import AppSpinner from "../components/UI/AppSpinner";
 import AppError from "../components/UI/AppError";
+import { ShowMoreBtn } from "../components/UI/ShowMoreBtn";
+
 import {
   cutArray,
   filterNoImage,
@@ -105,13 +107,11 @@ const Movie: FC = () => {
                       {currentCast.map((tile) => (
                         <AppTile tile={tile} key={tile.id} />
                       ))}
-                      <button
-                        className="app-button"
-                        onClick={() => handleShowMoreCast()}
-                        disabled={currentCastPage >= castQuantity.pages}
-                      >
-                        show more ({currentCastPage} / {castQuantity.pages})
-                      </button>
+                      <ShowMoreBtn
+                        currentPage={currentCastPage}
+                        pagesQty={castQuantity.pages}
+                        handleShowMore={handleShowMoreCast}
+                      />
                     </>
                   )}
                 </div>

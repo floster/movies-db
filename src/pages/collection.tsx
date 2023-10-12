@@ -11,6 +11,7 @@ import MediaHero from "../components/MediaHero";
 import { useTilesShowMore } from "../hooks/tiles/tilesShowMore";
 import { useGetCollectionQuery } from "../store/tmdb/tmdb.api";
 import { useTilesSort } from "../hooks/tiles/tilesSort";
+import { ShowMoreBtn } from "../components/UI/ShowMoreBtn";
 
 type CollectionParams = {
   id: string;
@@ -62,14 +63,11 @@ export default function Collection() {
                     {sortedTiles.map((tile) => (
                       <AppTile tile={tile} key={tile.id} />
                     ))}
-                    {/* TODO: create separate component for button below */}
-                    <button
-                      className="app-button"
-                      onClick={() => handleShowMore()}
-                      disabled={currentPage >= pagesQty}
-                    >
-                      show more ({currentPage} / {pagesQty})
-                    </button>
+                    <ShowMoreBtn
+                      currentPage={currentPage}
+                      pagesQty={pagesQty}
+                      handleShowMore={handleShowMore}
+                    />
                   </>
                 )}
               </div>
