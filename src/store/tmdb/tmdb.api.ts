@@ -8,7 +8,6 @@ import {
   IAvailableListsTypes,
   IRawCollectionSearch,
   IRawListResponse,
-  IRawMovieSearch,
   IRawSearchResponse,
   IAvailableListsOptions,
   ITile,
@@ -24,11 +23,14 @@ import {
   IRawPersonCreditsResponse,
   IRawPersonCreditsMovieCast,
   IRawPersonCreditsTvCast,
+  IRawSearchMultiResult,
+  ISearchResultsMulti,
 } from "../../types/tmdb.models";
 import {
   formatCollectionNew,
   formatMediaHeroData,
   formatMovieCreditsNew,
+  formatSearchResultsMulti,
   formatTiles,
 } from "../../js/formatters";
 
@@ -71,17 +73,19 @@ export const tmdbApi = createApi({
       transformResponse: (response: IRawSearchResponse<IRawCollectionSearch>) =>
         response.results,
     }),
-    searchMovie: build.query<IRawMovieSearch[], string>({
+    searchMulti: build.query<ISearchResultsMulti, string>({
       query: (term: string) => ({
-        url: `search/movie`,
+        url: `search/multi`,
         params: {
+          ...prepareParams,
           query: term,
         },
       }),
       // transformResponse - callback that will be called after request
       // here transformResponse is used to get only 'results' from response
-      transformResponse: (response: IRawSearchResponse<IRawMovieSearch>) =>
-        response.results,
+      transformResponse: (
+        response: IRawSearchResponse<IRawSearchMultiResult>
+      ) => formatSearchResultsMulti(response),
     }),
     getList: build.query<ITile[], IAvailableListsOptions>({
       query: (option: IAvailableListsOptions) => {
@@ -159,7 +163,7 @@ export const tmdbApi = createApi({
 // 'SearchMulti' - method name in 'endpoints' callback that we choose
 // 'Query' - build method
 export const {
-  useSearchMovieQuery,
+  useSearchMultiQuery,
   useSearchCollectionQuery,
   useGetListQuery,
   useGetMediaHeroQuery,

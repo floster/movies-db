@@ -1,85 +1,78 @@
-import { useCallback, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import AppError from "../components/UI/AppError";
-import AppSection from "../components/AppSection";
-import AppSectionHeader from "../components/AppSectionHeader";
-import AppSpinner from "../components/UI/AppSpinner";
-import TMDB from "../js/tmdb-api";
-import AppTile from "../components/AppTile";
-import { SearchForm } from "../components/SearchForm";
-
-import { useSearchResults } from "../hooks/useSearchResults";
-import { useTilesSort } from "../hooks/tiles/tilesSort";
-import { useSortOption } from "../hooks/useSortOption";
-
-import { useDocumentTitle } from "usehooks-ts";
-import ShowMoreBtn from "../components/UI/ShowMoreBtn";
-
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env
   .VITE_SYMBOLS_QTY_TO_SEARCH as number;
 
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useDocumentTitle } from "usehooks-ts";
+
+import AppError from "../components/UI/AppError";
+import AppSpinner from "../components/UI/AppSpinner";
+import { SearchForm } from "../components/SearchForm";
+
+import { useSortOption } from "../hooks/useSortOption";
+import { useSearchMultiQuery } from "../store/tmdb/tmdb.api";
+import { IAvailableTrendingAndSearchAllTypes } from "../types/tmdb.models";
+import SearchResultsSection from "../components/search/SearchResultsSection";
+import AppMessage from "../components/UI/AppMessage";
+
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [isDataLoading, setIsDataLoading] = useState(false);
-  const [isDataError, setIsDataError] = useState(false);
 
+  // reading/writing search params via URLSearchParams interface
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // set document title
   const title = searchTerm ? `searching '${searchTerm}'` : "search";
   useDocumentTitle(`${title} - Movies DB`);
 
-  const { movies, tvs, persons, handleShowMore, handleSearchResults } =
-    useSearchResults();
+  const searchTermIsShort = () => searchTerm.length < SYMBOLS_QTY_TO_SEARCH;
 
-  const moviesSortOption = useSortOption();
-  const tvsSortOption = useSortOption();
-  const personsSortOption = useSortOption();
+  const {
+    data: searchData,
+    isError,
+    isLoading,
+  } = useSearchMultiQuery(searchTerm, {
+    // prevents this query from automatically running if true
+    skip: searchTermIsShort(),
+  });
 
-  const { sortedTiles: sortedMovies } = useTilesSort(
-    movies.currentTiles,
-    moviesSortOption.currentSortOption
-  );
-  const { sortedTiles: sortedTvs } = useTilesSort(
-    tvs.currentTiles,
-    tvsSortOption.currentSortOption
-  );
-  const { sortedTiles: sortedPersons } = useTilesSort(
-    persons.currentTiles,
-    personsSortOption.currentSortOption
-  );
+  // const { movies, tvs, persons, handleShowMore, handleSearchResults } =
+  //   useSearchResults();
 
+  const sortOptions: {
+    [key in IAvailableTrendingAndSearchAllTypes]: {};
+  } = {
+    movie: useSortOption(),
+    tv: useSortOption(),
+    person: useSortOption(),
+  };
+
+  // const { sortedTiles: sortedMovies } = useTilesSort(
+  //   movies.currentTiles,
+  //   moviesSortOption.currentSortOption
+  // );
+  // const { sortedTiles: sortedTvs } = useTilesSort(
+  //   tvs.currentTiles,
+  //   tvsSortOption.currentSortOption
+  // );
+  // const { sortedTiles: sortedPersons } = useTilesSort(
+  //   persons.currentTiles,
+  //   personsSortOption.currentSortOption
+  // );
+
+  // set search term that comes from URLSearchParams: ?q=term into State
   useEffect(() => setSearchTerm(searchParams.get("q") || ""), [searchParams]);
 
   const handleSearchSubmit = (searchTerm: string) => {
+    // set search term that comes from SearchForm to URLSearchParams: ?q=term
     setSearchParams({ q: searchTerm } || {});
   };
-  const searchTermIsShort = () => searchTerm.length < SYMBOLS_QTY_TO_SEARCH;
 
-  const calcAllTilesQty = () =>
-    movies.qty.tiles + tvs.qty.tiles + persons.qty.tiles;
-
-  // looking if searchTerm were changed and load search results accordingly
-  const getSearchResults = useCallback(async () => {
-    try {
-      setIsDataLoading(true);
-      const searchResults = await TMDB.getAllSearch(searchTerm);
-      handleSearchResults(searchResults);
-    } catch (error) {
-      setIsDataError(true);
-      console.error(error);
-    } finally {
-      setIsDataLoading(false);
-    }
-  }, [searchTerm]);
-
-  useEffect(() => {
-    if (!searchTermIsShort()) {
-      const fetchData = async () => {
-        await (getSearchResults as () => Promise<void>)();
-      };
-      fetchData();
-    }
-  }, [getSearchResults]);
+  const AVAILABLE_SEARCH_TYPES: IAvailableTrendingAndSearchAllTypes[] = [
+    "movie",
+    "tv",
+    "person",
+  ];
 
   return (
     <>
@@ -88,82 +81,31 @@ export default function Search() {
       </section>
       <div className="l-content container search-results">
         {searchTermIsShort() ? (
-          <p className="message m-info align-self-center">
-            <span className="message__icon">ℹ</span> Enter at least{" "}
-            <strong>{SYMBOLS_QTY_TO_SEARCH}</strong> symbols to start searching
-          </p>
-        ) : isDataError ? (
+          <AppMessage
+            message={`Enter at least ${SYMBOLS_QTY_TO_SEARCH} symbols to start searching`}
+          />
+        ) : isError ? (
           <AppError error={`Error occured while finding for #${searchTerm}`} />
-        ) : isDataLoading ? (
+        ) : isLoading ? (
           <AppSpinner visible={true} />
         ) : (
           <>
             <h2 className="search-results__title">
               <mark>{searchTerm.replace(/\+/g, " ")}</mark>
-              &nbsp;➡ {calcAllTilesQty()} [{movies.qty.tiles}, {tvs.qty.tiles},{" "}
-              {persons.qty.tiles}]
+              &nbsp;➡ {searchData?.resultsQty} [{searchData?.movie.length},{" "}
+              {searchData?.tv.length}, {searchData?.person.length}]
             </h2>
 
-            {sortedMovies.length > 0 && (
-              <AppSection extraClass="m-movies_list">
-                <AppSectionHeader
-                  title={`movies (${movies.qty.tiles})`}
-                  alignStart
-                  hasSelect={true}
-                  {...moviesSortOption}
-                />
-                <div className="l-tiles_grid m-movies">
-                  {sortedMovies.map((movie) => (
-                    <AppTile tile={movie} key={movie.id} />
-                  ))}
-                  {/* <ShowMoreBtn
-                    currentPage={movies.currentPage}
-                    pagesQty={movies.qty.pages}
-                    handleShowMore={handleShowMore("movies")}
-                  /> */}
-                </div>
-              </AppSection>
-            )}
-            {sortedTvs.length > 0 && (
-              <AppSection extraClass="m-movies_list">
-                <AppSectionHeader
-                  title={`tvs (${tvs.qty.tiles})`}
-                  alignStart
-                  hasSelect={true}
-                  {...tvsSortOption}
-                />
-                <div className="l-tiles_grid m-movies">
-                  {sortedTvs.map((tv) => (
-                    <AppTile tile={tv} key={tv.id} />
-                  ))}
-                  {/* <ShowMoreBtn
-                    currentPage={movies.currentPage}
-                    pagesQty={movies.qty.pages}
-                    handleShowMore={handleShowMore("movies")}
-                  /> */}
-                </div>
-              </AppSection>
-            )}
-            {sortedPersons.length > 0 && (
-              <AppSection extraClass="m-movies_list">
-                <AppSectionHeader
-                  title={`persons (${persons.qty.tiles})`}
-                  alignStart
-                  hasSelect={true}
-                  {...personsSortOption}
-                />
-                <div className="l-tiles_grid m-movies">
-                  {sortedPersons.map((person) => (
-                    <AppTile tile={person} key={person.id} />
-                  ))}
-                  {/* <ShowMoreBtn
-                    currentPage={movies.currentPage}
-                    pagesQty={movies.qty.pages}
-                    handleShowMore={handleShowMore("movies")}
-                  /> */}
-                </div>
-              </AppSection>
-            )}
+            {AVAILABLE_SEARCH_TYPES.map((type) => {
+              if (searchData && searchData[type].length > 0)
+                return (
+                  <SearchResultsSection
+                    data={searchData}
+                    type={type}
+                    sortOptions={sortOptions}
+                  />
+                );
+            })}
           </>
         )}
       </div>

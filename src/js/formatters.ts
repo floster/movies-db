@@ -37,6 +37,9 @@ import {
   IRawMovieCredisResponse,
   IMovieCreditsNew,
   ICrewMember,
+  IRawSearchMultiResult,
+  ISearchResultsMulti,
+  IRawSearchResponse,
 } from "../types/tmdb.models";
 import {
   IBasePerson,
@@ -632,4 +635,23 @@ export const formatMovieCreditsNew = (
     crew: _crew,
     cast: _avoidNoCredits,
   };
+};
+
+export const formatSearchResultsMulti = (
+  results: IRawSearchResponse<IRawSearchMultiResult>
+) => {
+  const formattedResults: ISearchResultsMulti = {
+    resultsQty: results.total_results,
+    movie: [],
+    tv: [],
+    person: [],
+  };
+
+  results.results.forEach((result) => {
+    formattedResults[result.media_type].push(
+      formatTile(result as IAvailableTileFields)
+    );
+  });
+
+  return formattedResults;
 };

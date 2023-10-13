@@ -3,10 +3,10 @@ import MediaListSection from "../components/MediaList/MediaListSection";
 import AppSectionHeader from "../components/AppSectionHeader";
 import TrendingsCarousel from "../components/TrendingsCarousel";
 import RandomMedia from "../components/RandomMedia";
-import { IAvailableTrendingTypes } from "../types/tmdb.models";
+import { IAvailableTrendingAndSearchAllTypes } from "../types/tmdb.models";
 
 export default function Home() {
-  const trendingCarouselsTypes: IAvailableTrendingTypes[] = [
+  const trendingCarouselsTypes: IAvailableTrendingAndSearchAllTypes[] = [
     "movie",
     "tv",
     "person",

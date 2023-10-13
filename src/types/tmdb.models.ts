@@ -1,4 +1,4 @@
-export type IAvailableTrendingTypes = "movie" | "tv" | "person";
+export type IAvailableTrendingAndSearchAllTypes = "movie" | "tv" | "person";
 
 // all possible media types that comes from TMDB
 export type IMediaTypes =
@@ -27,7 +27,8 @@ export type IAvailableTileFields = IRawListResultMovie &
   IRawPerson &
   IRawMovieCast &
   IRawPersonCreditsMovieCast &
-  IRawPersonCreditsTvCast;
+  IRawPersonCreditsTvCast &
+  IRawSearchMultiResult;
 
 export interface ITile {
   id: number;
@@ -246,21 +247,52 @@ export interface IRawSearchResponse<T> {
   total_results: number;
 }
 
-export interface IRawMovieSearch {
+export interface IRawSearchMultiResult {
   adult: boolean;
   backdrop_path?: string;
-  genre_ids: number[];
   id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
+  title?: string;
+  original_language?: string;
+  original_title?: string;
+  overview?: string;
+  poster_path?: string;
+  media_type: IAvailableTrendingAndSearchAllTypes;
+  genre_ids?: number[];
   popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
+  release_date?: string;
+  video?: boolean;
+  vote_average?: number;
+  vote_count?: number;
+  name?: string;
+  original_name?: string;
+  first_air_date?: string;
+  origin_country?: string[];
+  gender?: number;
+  known_for_department?: string;
+  profile_path?: string;
+  known_for?: _IRawSearchMultiResultKnownFor[];
+}
+
+interface _IRawSearchMultiResultKnownFor {
+  adult: boolean;
+  backdrop_path?: string;
+  id: number;
+  title?: string;
+  original_language: string;
+  original_title?: string;
+  overview: string;
+  poster_path?: string;
+  media_type: string;
+  genre_ids: number[];
+  popularity: number;
+  release_date?: string;
+  video?: boolean;
   vote_average: number;
   vote_count: number;
+  name?: string;
+  original_name?: string;
+  first_air_date?: string;
+  origin_country?: string[];
 }
 
 export interface IRawCollectionSearch {
@@ -272,6 +304,13 @@ export interface IRawCollectionSearch {
   original_name: string;
   overview: string;
   poster_path: string;
+}
+
+export interface ISearchResultsMulti {
+  resultsQty: number;
+  movie: ITile[];
+  tv: ITile[];
+  person: ITile[];
 }
 
 /* ********************************* */
@@ -437,6 +476,7 @@ export interface IMovieCreditsNew {
 /* ************************************ */
 /* ********** PERSON CREDITS ********** */
 /* ************************************ */
+
 export interface IRawPersonCreditsResponse<T> {
   cast: T[];
   crew: [];

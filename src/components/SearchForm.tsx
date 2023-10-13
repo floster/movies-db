@@ -55,6 +55,7 @@ export const SearchForm: FC<SearchFormProps> = ({
         onChange={handleChange}
         className="quick-search-form__input"
         placeholder="start searching..."
+        minLength={4}
       />
       <button
         className="quick-search-form__clean app-button m-close"
