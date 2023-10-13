@@ -25,7 +25,9 @@ export type IAvailableTileFields = IRawListResultMovie &
   IRawCollection &
   IRawCollectionPart &
   IRawPerson &
-  IRawMovieCast;
+  IRawMovieCast &
+  IRawPersonCreditsMovieCast &
+  IRawPersonCreditsTvCast;
 
 export interface ITile {
   id: number;
@@ -430,4 +432,53 @@ export interface ICrewMember {
 export interface IMovieCreditsNew {
   cast: ITile[];
   crew: ICrewMember[];
+}
+
+/* ************************************ */
+/* ********** PERSON CREDITS ********** */
+/* ************************************ */
+export interface IRawPersonCreditsResponse<T> {
+  cast: T[];
+  crew: [];
+  id: number;
+}
+
+export interface IRawPersonCreditsMovieCast {
+  adult: boolean;
+  backdrop_path?: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path?: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}
+
+export interface IRawPersonCreditsTvCast {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  origin_country: string[];
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  first_air_date: string;
+  name: string;
+  vote_average: number;
+  vote_count: number;
+  character: string;
+  credit_id: string;
+  episode_count: number;
 }

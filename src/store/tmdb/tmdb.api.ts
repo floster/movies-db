@@ -21,6 +21,9 @@ import {
   ICollection,
   IMovieCreditsNew,
   IRawMovieCredisResponse,
+  IRawPersonCreditsResponse,
+  IRawPersonCreditsMovieCast,
+  IRawPersonCreditsTvCast,
 } from "../../types/tmdb.models";
 import {
   formatCollectionNew,
@@ -131,6 +134,24 @@ export const tmdbApi = createApi({
       transformResponse: (response: IRawMovieCredisResponse) =>
         formatMovieCreditsNew(response),
     }),
+    getPersonMovieCredits: build.query<ITile[], number>({
+      query: (id) => ({
+        url: `person/${id}/movie_credits`,
+        params: prepareParams,
+      }),
+      transformResponse: (
+        response: IRawPersonCreditsResponse<IRawPersonCreditsMovieCast>
+      ) => formatTiles(response.cast as IAvailableTileFields[]),
+    }),
+    getPersonTvCredits: build.query<ITile[], number>({
+      query: (id) => ({
+        url: `person/${id}/tv_credits`,
+        params: prepareParams,
+      }),
+      transformResponse: (
+        response: IRawPersonCreditsResponse<IRawPersonCreditsTvCast>
+      ) => formatTiles(response.cast as IAvailableTileFields[]),
+    }),
   }),
 });
 
@@ -145,4 +166,6 @@ export const {
   useGetTrendingsQuery,
   useGetCollectionQuery,
   useGetMovieCreditsQuery,
+  useGetPersonMovieCreditsQuery,
+  useGetPersonTvCreditsQuery,
 } = tmdbApi;
