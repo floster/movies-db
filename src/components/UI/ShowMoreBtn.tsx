@@ -4,7 +4,7 @@ interface ShowMoreBtnProps {
   pagesQty: number;
 }
 
-export const ShowMoreBtn: React.FC<ShowMoreBtnProps> = ({
+const ShowMoreBtn: React.FC<ShowMoreBtnProps> = ({
   currentPage,
   pagesQty,
   handleShowMore,
@@ -21,3 +21,5 @@ export const ShowMoreBtn: React.FC<ShowMoreBtnProps> = ({
     </button>
   );
 };
+
+export default ShowMoreBtn;

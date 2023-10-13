@@ -1,17 +1,19 @@
-import AppSection from "../components/AppSection";
-import AppSectionHeader from "../components/AppSectionHeader";
-import AppTile from "../components/AppTile";
 import { useParams } from "react-router-dom";
-import AppSpinner from "../components/UI/AppSpinner";
-import AppError from "../components/UI/AppError";
+
 import { getIdFromLink } from "../js/helpers";
 
-import { useSortOption } from "../hooks/useSortOption";
 import MediaHero from "../components/MediaHero";
+import AppSection from "../components/AppSection";
+import AppSectionHeader from "../components/AppSectionHeader";
+import AppSpinner from "../components/UI/AppSpinner";
+import AppError from "../components/UI/AppError";
+import AppTile from "../components/AppTile";
+import ShowMoreBtn from "../components/UI/ShowMoreBtn";
+
+import { useSortOption } from "../hooks/useSortOption";
 import { useTilesShowMore } from "../hooks/tiles/tilesShowMore";
-import { useGetCollectionQuery } from "../store/tmdb/tmdb.api";
 import { useTilesSort } from "../hooks/tiles/tilesSort";
-import { ShowMoreBtn } from "../components/UI/ShowMoreBtn";
+import { useGetCollectionQuery } from "../store/tmdb/tmdb.api";
 
 type CollectionParams = {
   id: string;

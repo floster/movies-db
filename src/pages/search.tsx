@@ -13,7 +13,7 @@ import { useTilesSort } from "../hooks/tiles/tilesSort";
 import { useSortOption } from "../hooks/useSortOption";
 
 import { useDocumentTitle } from "usehooks-ts";
-import { ShowMoreBtn } from "../components/UI/ShowMoreBtn";
+import ShowMoreBtn from "../components/UI/ShowMoreBtn";
 
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env
   .VITE_SYMBOLS_QTY_TO_SEARCH as number;

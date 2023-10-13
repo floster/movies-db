@@ -1,24 +1,24 @@
-import AppSection from "../components/AppSection";
-import AppSectionHeader from "../components/AppSectionHeader";
-import { FC } from "react";
-import MovieCrew from "../components/Movie/MovieCrew";
-import AppTile from "../components/AppTile";
 import { useParams } from "react-router-dom";
-import AppSpinner from "../components/UI/AppSpinner";
-import AppError from "../components/UI/AppError";
-import { ShowMoreBtn } from "../components/UI/ShowMoreBtn";
 
 import { getIdFromLink } from "../js/helpers";
 
-import { useTilesShowMore } from "../hooks/tiles/tilesShowMore";
 import MediaHero from "../components/MediaHero";
+import AppSection from "../components/AppSection";
+import AppSectionHeader from "../components/AppSectionHeader";
+import AppSpinner from "../components/UI/AppSpinner";
+import AppError from "../components/UI/AppError";
+import MovieCrew from "../components/Movie/MovieCrew";
+import AppTile from "../components/AppTile";
+import ShowMoreBtn from "../components/UI/ShowMoreBtn";
+
+import { useTilesShowMore } from "../hooks/tiles/tilesShowMore";
 import { useGetMovieCreditsQuery } from "../store/tmdb/tmdb.api";
 
 type MovieParams = {
   id: string;
 };
 
-const Movie: FC = () => {
+const Movie: React.FC = () => {
   const params = useParams<MovieParams>();
   const movieId = getIdFromLink(params.id!);
 
@@ -65,6 +65,7 @@ const Movie: FC = () => {
                       {currentCast.map((tile) => (
                         <AppTile tile={tile} key={tile.id} />
                       ))}
+                      {/* TODO: add 'show all' functionality */}
                       <ShowMoreBtn
                         currentPage={currentCastPage}
                         pagesQty={pagesQty}

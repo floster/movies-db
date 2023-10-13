@@ -8,7 +8,7 @@ import AppSectionHeader from "../components/AppSectionHeader";
 import AppSpinner from "../components/UI/AppSpinner";
 import AppError from "../components/UI/AppError";
 import AppTile from "../components/AppTile";
-import { ShowMoreBtn } from "../components/UI/ShowMoreBtn";
+import ShowMoreBtn from "../components/UI/ShowMoreBtn";
 
 import { useSortOption } from "../hooks/useSortOption";
 import { useTilesSort } from "../hooks/tiles/tilesSort";
