@@ -1,10 +1,6 @@
-interface ShowMoreBtnProps {
-  handleShowMore: () => void;
-  currentPage: number;
-  pagesQty: number;
-}
+import { ShowMoreBtnAttributes } from "../../types/tmdb.models";
 
-const ShowMoreBtn: React.FC<ShowMoreBtnProps> = ({
+const ShowMoreBtn: React.FC<ShowMoreBtnAttributes> = ({
   currentPage,
   pagesQty,
   handleShowMore,

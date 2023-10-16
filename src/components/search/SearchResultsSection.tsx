@@ -1,50 +1,57 @@
+import { useTilesShowMore } from "../../hooks/tiles/tilesShowMore";
+import { useTilesSort } from "../../hooks/tiles/tilesSort";
+import { useSortOption } from "../../hooks/useSortOption";
 import {
   IAvailableTrendingAndSearchAllTypes,
-  ISearchResultsMulti,
+  ITile,
 } from "../../types/tmdb.models";
 
 import AppSection from "../AppSection";
 import AppSectionHeader from "../AppSectionHeader";
 import AppTile from "../AppTile";
+import ShowMoreBtn from "../UI/ShowMoreBtn";
 
 interface ISearchResultsSectionProps {
-  data: ISearchResultsMulti;
+  tiles: ITile[] | null;
   type: IAvailableTrendingAndSearchAllTypes;
-  sortOptions: {
-    [key in IAvailableTrendingAndSearchAllTypes]: {};
-  };
 }
 
 const SearchResultsSection: React.FC<ISearchResultsSectionProps> = ({
-  data,
+  tiles,
   type,
-  sortOptions,
 }) => {
-  console.log("data", data);
-  console.log("type", type);
-  console.log("sortOptions", sortOptions);
+  if (!tiles) return null;
+
+  const { pagesQty, currentPage, currentTiles, handleShowMore } =
+    useTilesShowMore(tiles ? tiles : []);
+
+  const sortOptions = useSortOption();
+
+  const { sortedTiles } = useTilesSort(
+    currentTiles,
+    sortOptions.currentSortOption
+  );
+
   const markup = (
     <AppSection extraClass="m-movies_list">
       <AppSectionHeader
-        title={`${type}s (${data[type].length})`}
+        title={`${type}s (${tiles.length})`}
         alignStart
         hasSelect={true}
-        {...sortOptions[type]}
+        {...sortOptions}
       />
       <div className="l-tiles_grid m-movies">
-        {data[type].map((media) => (
+        {sortedTiles.map((media) => (
           <AppTile tile={media} key={media.id} />
         ))}
-        {/* <ShowMoreBtn
-                      currentPage={movies.currentPage}
-                      pagesQty={movies.qty.pages}
-                      handleShowMore={handleShowMore("movies")}
-                    /> */}
+        <ShowMoreBtn
+          currentPage={currentPage}
+          pagesQty={pagesQty}
+          handleShowMore={handleShowMore}
+        />
       </div>
     </AppSection>
   );
-
-  console.log(markup);
 
   return markup;
 };

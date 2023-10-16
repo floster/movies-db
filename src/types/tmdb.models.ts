@@ -41,6 +41,12 @@ export interface ITile {
   year: string | null;
 }
 
+export interface ShowMoreBtnAttributes {
+  handleShowMore: () => void;
+  currentPage: number;
+  pagesQty: number;
+}
+
 /* *********************************** */
 /* ********** GENERAL MEDIA ********** */
 /* *********************************** */

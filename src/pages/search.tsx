@@ -8,12 +8,11 @@ import { useDocumentTitle } from "usehooks-ts";
 import AppError from "../components/UI/AppError";
 import AppSpinner from "../components/UI/AppSpinner";
 import { SearchForm } from "../components/SearchForm";
-
-import { useSortOption } from "../hooks/useSortOption";
-import { useSearchMultiQuery } from "../store/tmdb/tmdb.api";
-import { IAvailableTrendingAndSearchAllTypes } from "../types/tmdb.models";
 import SearchResultsSection from "../components/search/SearchResultsSection";
 import AppMessage from "../components/UI/AppMessage";
+
+import { useSearchMultiQuery } from "../store/tmdb/tmdb.api";
+import { IAvailableTrendingAndSearchAllTypes } from "../types/tmdb.models";
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,6 +27,7 @@ export default function Search() {
   const searchTermIsShort = () => searchTerm.length < SYMBOLS_QTY_TO_SEARCH;
 
   const {
+    // all search results
     data: searchData,
     isError,
     isLoading,
@@ -35,30 +35,6 @@ export default function Search() {
     // prevents this query from automatically running if true
     skip: searchTermIsShort(),
   });
-
-  // const { movies, tvs, persons, handleShowMore, handleSearchResults } =
-  //   useSearchResults();
-
-  const sortOptions: {
-    [key in IAvailableTrendingAndSearchAllTypes]: {};
-  } = {
-    movie: useSortOption(),
-    tv: useSortOption(),
-    person: useSortOption(),
-  };
-
-  // const { sortedTiles: sortedMovies } = useTilesSort(
-  //   movies.currentTiles,
-  //   moviesSortOption.currentSortOption
-  // );
-  // const { sortedTiles: sortedTvs } = useTilesSort(
-  //   tvs.currentTiles,
-  //   tvsSortOption.currentSortOption
-  // );
-  // const { sortedTiles: sortedPersons } = useTilesSort(
-  //   persons.currentTiles,
-  //   personsSortOption.currentSortOption
-  // );
 
   // set search term that comes from URLSearchParams: ?q=term into State
   useEffect(() => setSearchTerm(searchParams.get("q") || ""), [searchParams]);
@@ -80,7 +56,9 @@ export default function Search() {
         <SearchForm searchSubmit={handleSearchSubmit} />
       </section>
       <div className="l-content container search-results">
-        {searchTermIsShort() ? (
+        {searchTerm.length === 0 ? (
+          ""
+        ) : searchTermIsShort() ? (
           <AppMessage
             message={`Enter at least ${SYMBOLS_QTY_TO_SEARCH} symbols to start searching`}
           />
@@ -97,12 +75,12 @@ export default function Search() {
             </h2>
 
             {AVAILABLE_SEARCH_TYPES.map((type) => {
-              if (searchData && searchData[type].length > 0)
+              if (searchData && searchData[type])
                 return (
                   <SearchResultsSection
-                    data={searchData}
+                    key={type}
+                    tiles={searchData[type]}
                     type={type}
-                    sortOptions={sortOptions}
                   />
                 );
             })}
