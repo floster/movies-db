@@ -33,7 +33,7 @@ export default function Search() {
   const searchTermIsShort = () => searchTerm.length < SYMBOLS_QTY_TO_SEARCH;
 
   const {
-    // all search results
+    // multi (movie, tv, person) search results
     data: searchMultiData,
     isError: isSearchMultiError,
     isLoading: isSearchMultiLoading,
@@ -43,7 +43,7 @@ export default function Search() {
   });
 
   const {
-    // all search results
+    // collection search results
     data: searchCollectionData,
     isError: isSearchCollectionError,
     isLoading: isSearchCollectionLoading,

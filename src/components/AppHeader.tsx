@@ -2,6 +2,7 @@ import SvgIcon from "./UI/SvgIcon";
 import ChangeLocale from "./UI/ChangeLocale";
 import { useSearchDialog } from "../contexts/SearchDialogContext";
 import useKeyboardShortcut from "../hooks/useKeyboardShortcut";
+import FavoritesLink from "./Favorites/FavoritesLink";
 
 export default function AppHeader() {
   const { show } = useSearchDialog();
@@ -35,14 +36,7 @@ export default function AppHeader() {
           >
             <SvgIcon icon="search" />
           </button>
-          <a
-            className="app-button m-open-favorites has-items m-icon m-primary"
-            href="/favorites"
-            aria-label="go to favorites"
-            data-favorites-count={0}
-          >
-            <SvgIcon icon="fire" />
-          </a>
+          <FavoritesLink />
         </nav>
       </div>
     </header>
