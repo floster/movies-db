@@ -8,7 +8,7 @@ export type FavoritesState = {
   [key in IAvailableFavoritesTypes]: number[];
 };
 
-type Payload = {
+type FavoriteTogglePayload = {
   type: IAvailableFavoritesTypes;
   id: number;
 };
@@ -21,7 +21,7 @@ export const favoritesSlice = createSlice({
   name: "favorites",
   initialState,
   reducers: {
-    toggle: (state, { payload }: PayloadAction<Payload>) => {
+    toggle: (state, { payload }: PayloadAction<FavoriteTogglePayload>) => {
       if (!state[payload.type].includes(payload.id)) {
         state[payload.type].push(payload.id);
       } else {
