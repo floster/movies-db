@@ -36,6 +36,7 @@ const SearchResultsSection: React.FC<ISearchResultsSectionProps> = ({
         alignStart
         hasSelect={true}
         {...sortOptions}
+        selectDisabled={tiles.length <= 1}
       />
       <div className="l-tiles_grid m-movies">
         {sortedTiles.map((media) => (

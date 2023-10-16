@@ -4,6 +4,7 @@ import AppSelect from "./UI/AppSelect";
 interface Props {
   title: string;
   hasSelect?: boolean;
+  selectDisabled?: boolean;
   currentSortOption?: string;
   onSortChange?: (option: string) => void;
   alignStart?: boolean;
@@ -12,6 +13,7 @@ interface Props {
 export default function AppSectionHeader({
   title,
   hasSelect,
+  selectDisabled,
   alignStart,
   currentSortOption,
   onSortChange,
@@ -27,6 +29,7 @@ export default function AppSectionHeader({
           currentOption={currentSortOption!}
           optionChanged={onSortChange!}
           label="Sort by:"
+          disabled={selectDisabled}
         />
       )}
     </header>
