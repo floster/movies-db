@@ -520,7 +520,6 @@ export function formatTile<T extends IAvailableTileFields>(
   type?: IMediaTypes
 ): ITile {
   const mediaType = type ? type : realizeMediaType(tile);
-  console.log("mediaType", mediaType, type);
 
   const link = createLinkFromTileData(tile, mediaType);
 
@@ -529,11 +528,15 @@ export function formatTile<T extends IAvailableTileFields>(
   );
   const poster = getPosterUrl(tile.poster_path || tile.profile_path);
 
+  const ratingAvg = tile.vote_average ? +tile.vote_average.toFixed(1) : 0;
+
   const label =
-    type === "movie" || type === "tv"
+    mediaType === "movie" || mediaType === "tv"
       ? year
-      : type === "person" && "character" in tile
+      : mediaType === "person" && "character" in tile
       ? tile.character
+      : mediaType === "person"
+      ? tile.known_for_department
       : "";
 
   return {
@@ -543,7 +546,7 @@ export function formatTile<T extends IAvailableTileFields>(
     poster,
     title: tile.title || tile.name,
     label,
-    rating: { average: tile.vote_average, count: tile.vote_count },
+    rating: { average: ratingAvg, count: tile.vote_count },
     year,
   };
 }

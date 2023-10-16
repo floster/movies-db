@@ -1,122 +1,120 @@
 .container {
-    position: relative;
-    width: calc(100% - var(--container-gap) * 2);
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
+  position: relative;
+  width: calc(100% - var(--container-gap) * 2);
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 
-    &:has(.quick-search-form) {
-        margin-top: var(--gap-md);
-    }
+  &:has(.quick-search-form) {
+    margin-top: var(--gap-md);
+  }
 }
 
 .l-content {
-    display: grid;
-    gap: var(--gap-lg);
-    margin-top: var(--gap-sm);
-    margin-bottom: var(--gap-sm);
-    padding: var(--gap-xs);
-    min-height: var(--control-height-xxl);
+  display: grid;
+  gap: var(--gap-lg);
+  margin-top: var(--gap-sm);
+  margin-bottom: var(--gap-sm);
+  padding: var(--gap-xs);
+  min-height: var(--control-height-xxl);
 
-    border-radius: var(--radius);
-    background-color: var(--color-white);
-    box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow);
+
+  @include media(md) {
+    gap: var(--gap-sm) var(--gap-lg);
+  }
+
+  @include media(lg) {
+    gap: var(--gap-md) var(--gap-xl);
+    margin-top: var(--gap-md);
+    margin-bottom: var(--gap-md);
+    padding: var(--gap-sm);
+  }
+
+  @include media(xl) {
+    gap: var(--gap-xl);
+  }
+
+  &.m-main_page {
+    grid-template-columns: 1fr;
 
     @include media(md) {
-        gap: var(--gap-sm) var(--gap-lg);
+      grid-template-columns: 2fr 5fr;
     }
-
-    @include media(lg) {
-        gap: var(--gap-md) var(--gap-xl);
-        margin-top: var(--gap-md);
-        margin-bottom: var(--gap-md);
-        padding: var(--gap-sm);
-    }
-
-    @include media(xl) {
-        gap: var(--gap-xl);
-    }
-
-    &.m-main_page {
-        grid-template-columns: 1fr;
-
-        @include media(md) {
-            grid-template-columns: 1fr 2fr;
-        }
-    }
-
+  }
 }
 
 // sidebar on main page
 .l-media_list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-xs);
-    margin-top: var(--gap-xs);
-    overflow-y: auto;
-    max-height: 40vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  margin-top: var(--gap-xs);
+  overflow-y: auto;
+  max-height: 40vh;
 
-    box-shadow: var(--shadow-inset);
-    border-bottom: 1px solid rgba(13, 28, 43, .2);
+  box-shadow: var(--shadow-inset);
+  border-bottom: 1px solid rgba(13, 28, 43, 0.2);
 
-    @include media(md) {
-        max-height: initial;
-        overflow-y: initial;
-        box-shadow: none;
-        border-bottom: none;
-    }
+  @include media(md) {
+    max-height: initial;
+    overflow-y: initial;
+    box-shadow: none;
+    border-bottom: none;
+  }
 }
 
 .l-seasons {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-xxl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxl);
 }
 
 // content on main page
 .l-main_page_content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-lg);
-    min-width: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+  min-width: 1px;
 
-    @include media(lg) {
-        gap: var(--gap-xl);
-    }
+  @include media(lg) {
+    gap: var(--gap-xl);
+  }
 }
 
 .l-tiles_grid {
-    display: grid;
-    gap: var(--gap-md) var(--gap-xs);
+  display: grid;
+  gap: var(--gap-md) var(--gap-xs);
+
+  @include media(md) {
+    gap: var(--gap-lg) var(--gap-sm);
+  }
+
+  &.m-movies {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
 
     @include media(md) {
-        gap: var(--gap-lg) var(--gap-sm);
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     }
+  }
 
-    &.m-movies {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  &.m-people {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
 
-        @include media(md) {
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        }
+    @include media(md) {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
-
-    &.m-people {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-
-        @include media(md) {
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        }
-    }
-
+  }
 }
 
 .l-search_header {
-    margin-top: var(--gap-sm);
-    margin-bottom: var(--gap-sm);
+  margin-top: var(--gap-sm);
+  margin-bottom: var(--gap-sm);
 
-    @include media(lg) {
-        margin-top: var(--gap-lg);
-        margin-bottom: var(--gap-lg);
-    }
+  @include media(lg) {
+    margin-top: var(--gap-lg);
+    margin-bottom: var(--gap-lg);
+  }
 }

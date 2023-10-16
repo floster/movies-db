@@ -90,7 +90,9 @@ export default function Search() {
             message={`Enter at least ${SYMBOLS_QTY_TO_SEARCH} symbols to start searching`}
           />
         ) : isSearchMultiError || isSearchCollectionError ? (
-          <AppError error={`Error occured while finding for #${searchTerm}`} />
+          <AppError
+            error={`Error occured while searching for #${searchTerm}`}
+          />
         ) : isSearchMultiLoading || isSearchCollectionLoading ? (
           <AppSpinner visible={true} />
         ) : (

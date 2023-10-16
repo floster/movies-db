@@ -204,7 +204,7 @@ export const realizeMediaType = (tile: IAvailableTileFields): IMediaTypes => {
     ? "tv"
     : "parts" in tile // 'collection' -> exists in ICollection
     ? "collection"
-    : "biography" || "known_for_department" in tile // 'person' -> exists in IPerson
+    : "biography" in tile || "known_for_department" in tile // 'person' -> exists in IPerson
     ? "person"
     : "movie";
 };
