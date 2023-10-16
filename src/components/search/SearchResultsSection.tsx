@@ -1,10 +1,7 @@
 import { useTilesShowMore } from "../../hooks/tiles/tilesShowMore";
 import { useTilesSort } from "../../hooks/tiles/tilesSort";
 import { useSortOption } from "../../hooks/useSortOption";
-import {
-  IAvailableTrendingAndSearchAllTypes,
-  ITile,
-} from "../../types/tmdb.models";
+import { IAvailableSearchAllTypes, ITile } from "../../types/tmdb.models";
 
 import AppSection from "../AppSection";
 import AppSectionHeader from "../AppSectionHeader";
@@ -13,7 +10,7 @@ import ShowMoreBtn from "../UI/ShowMoreBtn";
 
 interface ISearchResultsSectionProps {
   tiles: ITile[] | null;
-  type: IAvailableTrendingAndSearchAllTypes;
+  type: IAvailableSearchAllTypes;
 }
 
 const SearchResultsSection: React.FC<ISearchResultsSectionProps> = ({

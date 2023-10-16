@@ -11,8 +11,14 @@ import { SearchForm } from "../components/SearchForm";
 import SearchResultsSection from "../components/search/SearchResultsSection";
 import AppMessage from "../components/UI/AppMessage";
 
-import { useSearchMultiQuery } from "../store/tmdb/tmdb.api";
-import { IAvailableTrendingAndSearchAllTypes } from "../types/tmdb.models";
+import {
+  useSearchCollectionQuery,
+  useSearchMultiQuery,
+} from "../store/tmdb/tmdb.api";
+import {
+  IAvailableSearchAllTypes,
+  ISearchResultsAll,
+} from "../types/tmdb.models";
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,13 +34,33 @@ export default function Search() {
 
   const {
     // all search results
-    data: searchData,
-    isError,
-    isLoading,
+    data: searchMultiData,
+    isError: isSearchMultiError,
+    isLoading: isSearchMultiLoading,
   } = useSearchMultiQuery(searchTerm, {
     // prevents this query from automatically running if true
     skip: searchTermIsShort(),
   });
+
+  const {
+    // all search results
+    data: searchCollectionData,
+    isError: isSearchCollectionError,
+    isLoading: isSearchCollectionLoading,
+  } = useSearchCollectionQuery(searchTerm, {
+    // prevents this query from automatically running if true
+    skip: searchTermIsShort(),
+  });
+
+  const searchAllResults: ISearchResultsAll = {
+    resultsQty:
+      (searchMultiData?.resultsQty || 0) +
+        (searchCollectionData?.length || 0) || 0,
+    movie: searchMultiData?.movie || [],
+    tv: searchMultiData?.tv || [],
+    person: searchMultiData?.person || [],
+    collection: searchCollectionData || [],
+  };
 
   // set search term that comes from URLSearchParams: ?q=term into State
   useEffect(() => setSearchTerm(searchParams.get("q") || ""), [searchParams]);
@@ -44,7 +70,8 @@ export default function Search() {
     setSearchParams({ q: searchTerm } || {});
   };
 
-  const AVAILABLE_SEARCH_TYPES: IAvailableTrendingAndSearchAllTypes[] = [
+  const AVAILABLE_SEARCH_TYPES: IAvailableSearchAllTypes[] = [
+    "collection",
     "movie",
     "tv",
     "person",
@@ -62,24 +89,26 @@ export default function Search() {
           <AppMessage
             message={`Enter at least ${SYMBOLS_QTY_TO_SEARCH} symbols to start searching`}
           />
-        ) : isError ? (
+        ) : isSearchMultiError || isSearchCollectionError ? (
           <AppError error={`Error occured while finding for #${searchTerm}`} />
-        ) : isLoading ? (
+        ) : isSearchMultiLoading || isSearchCollectionLoading ? (
           <AppSpinner visible={true} />
         ) : (
           <>
             <h2 className="search-results__title">
               <mark>{searchTerm.replace(/\+/g, " ")}</mark>
-              &nbsp;➡ {searchData?.resultsQty} [{searchData?.movie.length},{" "}
-              {searchData?.tv.length}, {searchData?.person.length}]
+              &nbsp;➡ {searchAllResults?.resultsQty} [
+              {searchAllResults?.collection.length},{" "}
+              {searchAllResults?.movie.length}, {searchAllResults?.tv.length},{" "}
+              {searchAllResults?.person.length}]
             </h2>
 
             {AVAILABLE_SEARCH_TYPES.map((type) => {
-              if (searchData && searchData[type])
+              if (searchAllResults && searchAllResults[type])
                 return (
                   <SearchResultsSection
                     key={type}
-                    tiles={searchData[type]}
+                    tiles={searchAllResults[type]}
                     type={type}
                   />
                 );

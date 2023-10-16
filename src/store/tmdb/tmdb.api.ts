@@ -30,6 +30,7 @@ import {
   formatCollectionNew,
   formatMediaHeroData,
   formatMovieCreditsNew,
+  formatSearchResultsCollection,
   formatSearchResultsMulti,
   formatTiles,
 } from "../../js/formatters";
@@ -61,7 +62,7 @@ export const tmdbApi = createApi({
 
   endpoints: (build) => ({
     // <T, Q>: T - what will be returned; Q - type of param that'll be provided by us
-    searchCollection: build.query<IRawCollectionSearch[], string>({
+    searchCollection: build.query<ITile[] | [], string>({
       query: (term: string) => ({
         url: `search/collection`,
         params: {
@@ -71,7 +72,7 @@ export const tmdbApi = createApi({
       // transformResponse - callback that will be called after request
       // here transformResponse is used to get only 'results' from response
       transformResponse: (response: IRawSearchResponse<IRawCollectionSearch>) =>
-        response.results,
+        formatSearchResultsCollection(response.results),
     }),
     searchMulti: build.query<ISearchResultsMulti, string>({
       query: (term: string) => ({

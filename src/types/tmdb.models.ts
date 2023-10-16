@@ -1,4 +1,7 @@
-export type IAvailableTrendingAndSearchAllTypes = "movie" | "tv" | "person";
+export type IAvailableTrendingAndSearchMultiTypes = "movie" | "tv" | "person";
+export type IAvailableSearchAllTypes =
+  | IAvailableTrendingAndSearchMultiTypes
+  | "collection";
 
 // all possible media types that comes from TMDB
 export type IMediaTypes =
@@ -28,7 +31,8 @@ export type IAvailableTileFields = IRawListResultMovie &
   IRawMovieCast &
   IRawPersonCreditsMovieCast &
   IRawPersonCreditsTvCast &
-  IRawSearchMultiResult;
+  IRawSearchMultiResult &
+  IRawCollectionSearch;
 
 export interface ITile {
   id: number;
@@ -262,7 +266,7 @@ export interface IRawSearchMultiResult {
   original_title?: string;
   overview?: string;
   poster_path?: string;
-  media_type: IAvailableTrendingAndSearchAllTypes;
+  media_type: IAvailableTrendingAndSearchMultiTypes;
   genre_ids?: number[];
   popularity: number;
   release_date?: string;
@@ -317,6 +321,10 @@ export interface ISearchResultsMulti {
   movie: ITile[];
   tv: ITile[];
   person: ITile[];
+}
+
+export interface ISearchResultsAll extends ISearchResultsMulti {
+  collection: ITile[] | [];
 }
 
 /* ********************************* */

@@ -40,6 +40,8 @@ import {
   IRawSearchMultiResult,
   ISearchResultsMulti,
   IRawSearchResponse,
+  IRawCollectionSearch,
+  IMediaTypes,
 } from "../types/tmdb.models";
 import {
   IBasePerson,
@@ -513,10 +515,14 @@ export function formatSearchResults(results: RawSearch): ISearchResults {
 
 ////////////////////////////////////////////////////////
 
-export function formatTile<T extends IAvailableTileFields>(tile: T): ITile {
-  const type = realizeMediaType(tile);
+export function formatTile<T extends IAvailableTileFields>(
+  tile: T,
+  type?: IMediaTypes
+): ITile {
+  const mediaType = type ? type : realizeMediaType(tile);
+  console.log("mediaType", mediaType, type);
 
-  const link = createLinkFromTileData(tile);
+  const link = createLinkFromTileData(tile, mediaType);
 
   const { year } = formatDate(
     tile.release_date ? tile.release_date : tile.first_air_date
@@ -532,7 +538,7 @@ export function formatTile<T extends IAvailableTileFields>(tile: T): ITile {
 
   return {
     id: tile.id,
-    type,
+    type: mediaType,
     link,
     poster,
     title: tile.title || tile.name,
@@ -543,9 +549,10 @@ export function formatTile<T extends IAvailableTileFields>(tile: T): ITile {
 }
 
 export function formatTiles<T extends IAvailableTileFields>(
-  data: T[]
+  data: T[],
+  type?: IMediaTypes
 ): ITile[] {
-  return data.map((item) => formatTile(item));
+  return data.map((item) => formatTile(item, type));
 }
 
 export const formatMediaHeroData = (
@@ -654,4 +661,12 @@ export const formatSearchResultsMulti = (
   });
 
   return formattedResults;
+};
+
+export const formatSearchResultsCollection = (
+  results: IRawCollectionSearch[]
+): ITile[] | [] => {
+  if (!results.length) return [];
+
+  return formatTiles(results as IAvailableTileFields[], "collection");
 };

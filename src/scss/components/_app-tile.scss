@@ -1,214 +1,212 @@
 .app-tile {
-    position: relative;
-    border-radius: var(--radius);
-    max-width: 100%;
-    transition: box-shadow 0.2s ease-out;
-    background-color: var(--color-white);
-    overflow: hidden;
-    z-index: 1;
+  position: relative;
+  border-radius: var(--radius);
+  max-width: 100%;
+  transition: box-shadow 0.2s ease-out;
+  background-color: var(--color-white);
+  // overflow: hidden;
+  z-index: 1;
 
-    &:not(.m-actor) {
-
-        &:active,
-        &:focus-visible {
-            outline: 2px solid var(--color-secondary-dimmed);
-        }
-
-        &:hover {
-            box-shadow: var(--shadow-md-secondary);
-            cursor: pointer;
-
-            .app-tile__title {
-                color: var(--color-secondary);
-            }
-
-            .app-tile__img {
-                transform: scale(1.04);
-            }
-        }
+  &:not(.m-actor) {
+    &:active,
+    &:focus-visible {
+      outline: 2px solid var(--color-secondary-dimmed);
     }
 
-    &:not(.m-row) {
-        box-shadow: var(--shadow);
+    &:hover {
+      box-shadow: var(--shadow-md-secondary);
+      cursor: pointer;
+
+      .app-tile__title {
+        color: var(--color-secondary);
+      }
+
+      .app-tile__img {
+        transform: scale(1.04);
+      }
+    }
+  }
+
+  &:not(.m-row) {
+    box-shadow: var(--shadow);
+  }
+
+  &.m-row {
+    flex-shrink: 0;
+
+    &:active,
+    &:focus-visible {
+      outline: 2px solid var(--color-secondary-dimmed);
     }
 
-    &.m-row {
-        flex-shrink: 0;
+    &:hover {
+      box-shadow: var(--shadow);
+      cursor: pointer;
 
-        &:active,
-        &:focus-visible {
-            outline: 2px solid var(--color-secondary-dimmed);
-        }
-
-        &:hover {
-            box-shadow: var(--shadow);
-            cursor: pointer;
-
-            .movie-row__title {
-                color: var(--color-secondary);
-            }
-        }
-
-        .app-tile__inner {
-            flex-direction: row;
-            flex-shrink: 0;
-            align-items: center;
-            gap: var(--gap-sm);
-            padding-right: var(--control-height-lg);
-            width: 100%;
-        }
-
-        .app-tile__picture {
-            width: 20%;
-            max-width: 110px;
-            min-width: 4rem;
-            box-shadow: var(--shadow);
-            border-radius: var(--radius);
-        }
-
-        .app-favorite {
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .torrent-search {
-            top: 50%;
-            left: 4%;
-            transform: translateY(-50%) scale(1.5);
-        }
+      .movie-row__title {
+        color: var(--color-secondary);
+      }
     }
 
-    &.m-collection,
-    &.m-tvshow {
-
-        &::before,
-        &::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            left: 0;
-            margin: auto;
-            width: 100%;
-            height: 100%;
-            border-radius: var(--radius);
-            z-index: -1;
-            transition-duration: .35s;
-        }
-
-        &::after {
-            top: 4px;
-            background-color: hsl(216, 23%, 85%);
-            width: 98%;
-        }
-
-        &::before {
-            top: 8px;
-            background-color: hsl(215, 23%, 93%);
-            width: 94%;
-        }
-
-        &:focus-within,
-        &:hover {
-            box-shadow: var(--shadow);
-            cursor: pointer;
-
-            &::after {
-                top: 5px;
-                background-color: hsl(207, 75%, 80%);
-            }
-
-            &::before {
-                top: 10px;
-                background-color: hsl(207, 75%, 90%);
-            }
-        }
+    .app-tile__inner {
+      flex-direction: row;
+      flex-shrink: 0;
+      align-items: center;
+      gap: var(--gap-sm);
+      padding-right: var(--control-height-lg);
+      width: 100%;
     }
 
-    &__inner {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        background-color: var(--color-white);
-    }
-
-    &__picture {
-        position: relative;
-        flex-shrink: 0;
-    }
-
-    &__content {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        gap: var(--gap-xs);
-        background-color: var(--color-white);
-        border-bottom-right-radius: var(--radius);
-        border-bottom-left-radius: var(--radius);
-
-        .app-tile:not(.m-row) & {
-            padding: var(--gap-xs) var(--gap-sm) var(--gap-sm);
-
-            @include media(md) {
-                gap: var(--gap-sm);
-                padding: var(--gap-sm);
-            }
-        }
-    }
-
-    &__title {
-        font-size: var(--tile-text-font-size)
-    }
-
-    &__label {
-        font-size: var(--font-size-sm);
-        font-weight: bold;
-        color: var(--text-color-light);
-
-        .app-tile.m-row & {
-            order: 2;
-        }
-    }
-
-    &__rating {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        font-size: var(--font-size-5);
-        font-weight: bold;
-        color: var(--color-secondary-dimmed);
-    }
-
-    &__extraLabel {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        background-color: rgba(32, 137, 223, .7);
-        color: var(--color-white);
-        font-size: var(--font-size-sm);
-        line-height: 2;
-        border-radius: 0 var(--radius-sm) 0 var(--radius);
-        padding: 0 var(--gap-xs);
+    .app-tile__picture {
+      width: 20%;
+      max-width: 110px;
+      min-width: 4rem;
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
     }
 
     .app-favorite {
-        position: absolute;
-        top: 0;
-        right: 0;
-        z-index: 1;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     .torrent-search {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
+      top: 50%;
+      left: 4%;
+      transform: translateY(-50%) scale(1.5);
+    }
+  }
+
+  &.m-collection,
+  &.m-tvshow {
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      left: 0;
+      margin: auto;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius);
+      z-index: -1;
+      transition-duration: 0.35s;
     }
 
-    .app-progress {
-        position: absolute;
-        right: var(--gap-xs);
-        top: 0;
-        transform: translateY(-50%);
+    &::after {
+      top: 4px;
+      background-color: hsl(216, 23%, 85%);
+      width: 98%;
     }
+
+    &::before {
+      top: 8px;
+      background-color: hsl(215, 23%, 93%);
+      width: 94%;
+    }
+
+    &:focus-within,
+    &:hover {
+      box-shadow: var(--shadow);
+      cursor: pointer;
+
+      &::after {
+        top: 5px;
+        background-color: hsl(207, 75%, 80%);
+      }
+
+      &::before {
+        top: 10px;
+        background-color: hsl(207, 75%, 90%);
+      }
+    }
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--color-white);
+  }
+
+  &__picture {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: var(--gap-xs);
+    background-color: var(--color-white);
+    border-bottom-right-radius: var(--radius);
+    border-bottom-left-radius: var(--radius);
+
+    .app-tile:not(.m-row) & {
+      padding: var(--gap-xs) var(--gap-sm) var(--gap-sm);
+
+      @include media(md) {
+        gap: var(--gap-sm);
+        padding: var(--gap-sm);
+      }
+    }
+  }
+
+  &__title {
+    font-size: var(--tile-text-font-size);
+  }
+
+  &__label {
+    font-size: var(--font-size-sm);
+    font-weight: bold;
+    color: var(--text-color-light);
+
+    .app-tile.m-row & {
+      order: 2;
+    }
+  }
+
+  &__rating {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: var(--font-size-5);
+    font-weight: bold;
+    color: var(--color-secondary-dimmed);
+  }
+
+  &__extraLabel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(32, 137, 223, 0.7);
+    color: var(--color-white);
+    font-size: var(--font-size-sm);
+    line-height: 2;
+    border-radius: 0 var(--radius-sm) 0 var(--radius);
+    padding: 0 var(--gap-xs);
+  }
+
+  .app-favorite {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+  }
+
+  .torrent-search {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  .app-progress {
+    position: absolute;
+    right: var(--gap-xs);
+    top: 0;
+    transform: translateY(-50%);
+  }
 }

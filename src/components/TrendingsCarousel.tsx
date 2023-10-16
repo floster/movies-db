@@ -3,10 +3,10 @@ import AppTile from "./AppTile";
 import AppSpinner from "./UI/AppSpinner";
 
 import { useGetTrendingsQuery } from "../store/tmdb/tmdb.api";
-import { IAvailableTrendingAndSearchAllTypes } from "../types/tmdb.models";
+import { IAvailableTrendingAndSearchMultiTypes } from "../types/tmdb.models";
 
 interface Props {
-  itemsType: IAvailableTrendingAndSearchAllTypes;
+  itemsType: IAvailableTrendingAndSearchMultiTypes;
 }
 
 export default function TrendingsCarousel({ itemsType }: Props) {

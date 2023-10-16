@@ -182,8 +182,11 @@ export const createLink = (
  * @param {IAvailableTileFields} tile - The tile data to create a link from.
  * @returns {string} The created link.
  */
-export const createLinkFromTileData = (tile: IAvailableTileFields) => {
-  const _type = realizeMediaType(tile);
+export const createLinkFromTileData = (
+  tile: IAvailableTileFields,
+  type?: IMediaTypes
+) => {
+  const _type = type || realizeMediaType(tile);
   const _title = tile.title || tile.name;
   return `/${_type}/${tile.id}-${kebabText(_title)}`;
 };
