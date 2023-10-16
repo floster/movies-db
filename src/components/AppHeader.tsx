@@ -2,12 +2,11 @@ import SvgIcon from "./UI/SvgIcon";
 import ChangeLocale from "./UI/ChangeLocale";
 import { useSearchDialog } from "../contexts/SearchDialogContext";
 import useKeyboardShortcut from "../hooks/useKeyboardShortcut";
-import { useFavoritesState } from "../hooks/useFavoritesState";
 
 export default function AppHeader() {
   const { show } = useSearchDialog();
 
-  const { favoritesQty } = useFavoritesState();
+  // const { favoritesQty } = useFavoritesState();
 
   useKeyboardShortcut(() => show(), { code: "KeyK", metaKey: true });
 
@@ -40,7 +39,7 @@ export default function AppHeader() {
             className="app-button m-open-favorites has-items m-icon m-primary"
             href="/favorites"
             aria-label="go to favorites"
-            data-favorites-count={favoritesQty}
+            data-favorites-count={0}
           >
             <SvgIcon icon="fire" />
           </a>

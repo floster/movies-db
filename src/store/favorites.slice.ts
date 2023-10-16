@@ -1,30 +1,35 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+import { IAvailableFavoritesTypes } from "../types/tmdb.models";
+
 const LS_FAVORITES_KEY = "rtk_favorites";
 
-interface FavoritesState {
-  favorites: string[];
-}
-
-const initialState: FavoritesState = {
-  favorites: JSON.parse(localStorage.getItem(LS_FAVORITES_KEY) || "[]"),
+export type FavoritesState = {
+  [key in IAvailableFavoritesTypes]: number[];
 };
+
+type Payload = {
+  type: IAvailableFavoritesTypes;
+  id: number;
+};
+
+const initialState: FavoritesState = JSON.parse(
+  localStorage.getItem(LS_FAVORITES_KEY) || "{}"
+);
 
 export const favoritesSlice = createSlice({
   name: "favorites",
   initialState,
   reducers: {
-    addFavorite: (state, action: PayloadAction<string>) => {
-      if (!state.favorites.includes(action.payload)) {
-        state.favorites.push(action.payload);
-        localStorage.setItem(LS_FAVORITES_KEY, JSON.stringify(state.favorites));
+    toggle: (state, { payload }: PayloadAction<Payload>) => {
+      if (!state[payload.type].includes(payload.id)) {
+        state[payload.type].push(payload.id);
+      } else {
+        state[payload.type] = state[payload.type].filter(
+          (item) => item !== payload.id
+        );
       }
-    },
-    removeFavorite: (state, action: PayloadAction<string>) => {
-      state.favorites = state.favorites.filter(
-        (item) => item !== action.payload
-      );
-      localStorage.setItem(LS_FAVORITES_KEY, JSON.stringify(state.favorites));
+      localStorage.setItem(LS_FAVORITES_KEY, JSON.stringify(state));
     },
   },
 });

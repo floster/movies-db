@@ -25,6 +25,7 @@ import {
   IRawPersonCreditsTvCast,
   IRawSearchMultiResult,
   ISearchResultsMulti,
+  IAvailableFavoritesTypes,
 } from "../../types/tmdb.models";
 import {
   formatCollectionNew,
@@ -32,6 +33,7 @@ import {
   formatMovieCreditsNew,
   formatSearchResultsCollection,
   formatSearchResultsMulti,
+  formatTile,
   formatTiles,
 } from "../../js/formatters";
 
@@ -87,6 +89,17 @@ export const tmdbApi = createApi({
       transformResponse: (
         response: IRawSearchResponse<IRawSearchMultiResult>
       ) => formatSearchResultsMulti(response),
+    }),
+    getMediaTile: build.query<
+      ITile,
+      { type: IAvailableFavoritesTypes; id: number }
+    >({
+      query: ({ type, id }) => ({
+        url: `${type}/${id}`,
+        params: prepareParams,
+      }),
+      transformResponse: (response: IAvailableTileFields) =>
+        formatTile(response),
     }),
     getList: build.query<ITile[], IAvailableListsOptions>({
       query: (option: IAvailableListsOptions) => {
@@ -166,6 +179,7 @@ export const tmdbApi = createApi({
 export const {
   useSearchMultiQuery,
   useSearchCollectionQuery,
+  useLazyGetMediaTileQuery,
   useGetListQuery,
   useGetMediaHeroQuery,
   useGetTrendingsQuery,
