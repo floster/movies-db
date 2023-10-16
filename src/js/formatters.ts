@@ -533,6 +533,8 @@ export function formatTile<T extends IAvailableTileFields>(
   const label =
     mediaType === "movie" || mediaType === "tv"
       ? year
+      : mediaType === "collection"
+      ? `${tile.parts.length.toString()} parts`
       : mediaType === "person" && "character" in tile
       ? tile.character
       : mediaType === "person"
