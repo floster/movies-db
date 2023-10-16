@@ -8,7 +8,7 @@ import { useDocumentTitle } from "usehooks-ts";
 import AppError from "../components/UI/AppError";
 import AppSpinner from "../components/UI/AppSpinner";
 import { SearchForm } from "../components/SearchForm";
-import SearchResultsSection from "../components/search/SearchResultsSection";
+import TilesGrid from "../components/TilesGrid";
 import AppMessage from "../components/UI/AppMessage";
 
 import {
@@ -16,7 +16,7 @@ import {
   useSearchMultiQuery,
 } from "../store/tmdb/tmdb.api";
 import {
-  IAvailableSearchAllTypes,
+  IAvailableFavoritesTypes,
   ISearchResultsAll,
 } from "../types/tmdb.models";
 
@@ -33,7 +33,7 @@ export default function Search() {
   const searchTermIsShort = () => searchTerm.length < SYMBOLS_QTY_TO_SEARCH;
 
   const {
-    // all search results
+    // multi (movie, tv, person) search results
     data: searchMultiData,
     isError: isSearchMultiError,
     isLoading: isSearchMultiLoading,
@@ -43,7 +43,7 @@ export default function Search() {
   });
 
   const {
-    // all search results
+    // collection search results
     data: searchCollectionData,
     isError: isSearchCollectionError,
     isLoading: isSearchCollectionLoading,
@@ -70,7 +70,7 @@ export default function Search() {
     setSearchParams({ q: searchTerm } || {});
   };
 
-  const AVAILABLE_SEARCH_TYPES: IAvailableSearchAllTypes[] = [
+  const AVAILABLE_SEARCH_TYPES: IAvailableFavoritesTypes[] = [
     "collection",
     "movie",
     "tv",
@@ -108,7 +108,7 @@ export default function Search() {
             {AVAILABLE_SEARCH_TYPES.map((type) => {
               if (searchAllResults && searchAllResults[type])
                 return (
-                  <SearchResultsSection
+                  <TilesGrid
                     key={type}
                     tiles={searchAllResults[type]}
                     type={type}

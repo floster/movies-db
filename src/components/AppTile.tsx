@@ -5,7 +5,7 @@ import AppPicture from "./UI/AppPicture";
 import AppProgress from "./UI/AppProgress";
 import TorrentSearch from "./UI/TorrentSearch";
 
-import { useFavorites } from "../contexts/FavoritesContext";
+// import { useFavorites } from "../contexts/FavoritesContext";
 
 interface AppTileProps {
   tile: ITileData;
@@ -18,9 +18,9 @@ const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
   if (tile.type) classes.push(`m-${tile.type}`);
   if (isRow) classes.push("m-row");
 
-  const { isFavoritable } = useFavorites();
+  // const { isFavoritable } = useFavorites();
 
-  const hasFavoriteIcon = isFavoritable(tile.type as UTFavoritesType);
+  // const hasFavoriteIcon = isFavoritable(tile.type as UTFavoritesType);
   const isLink = !!tile.link;
   const isTorrentSearchable =
     (import.meta.env.VITE_TORRENT_SEARCH_ENABLED === "true" &&
@@ -37,7 +37,7 @@ const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
         )}
       </div>
 
-      {hasFavoriteIcon && (
+      {true && (
         <AppFavorite
           type={tile.type as UTFavoritesType}
           id={tile.id}

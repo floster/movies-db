@@ -1,5 +1,5 @@
 export type IAvailableTrendingAndSearchMultiTypes = "movie" | "tv" | "person";
-export type IAvailableSearchAllTypes =
+export type IAvailableFavoritesTypes =
   | IAvailableTrendingAndSearchMultiTypes
   | "collection";
 
