@@ -1,6 +1,4 @@
-import {
-  COLLECTIONS
-} from './config';
+import { COLLECTIONS } from "./config";
 
 import {
   IGenre,
@@ -20,7 +18,7 @@ import {
   ITvSeason,
   IQuickSearchResult,
   ISearchResults,
-} from '../types/tmdb.types';
+} from "../types/tmdb.types";
 
 import {
   RawCollection,
@@ -37,9 +35,9 @@ import {
   RawTvSeason,
   RawBaseTv,
   RawSearch,
-} from '../types/raw-tmdb.types';
+} from "../types/raw-tmdb.types";
 
-import { getCurrentLocale, getLocalCountryCode } from './helpers';
+import { getCurrentLocale, getLocalCountryCode } from "./helpers";
 
 import {
   formatBaseTvs,
@@ -53,8 +51,8 @@ import {
   formatTvSeason,
   formatCollection,
   formatSearchResults,
-  formatQuickSearchResults
-} from './formatters';
+  formatQuickSearchResults,
+} from "./formatters";
 
 export default class TMDB {
   static allGenres: IGenre[] = [];
@@ -67,16 +65,19 @@ export default class TMDB {
    * @returns {Promise<T>} - A Promise that resolves with the fetched data.
    * @throws {Error} - If an error occurs while fetching data.
    */
-  static async getJSON<T>(url: string, params: string = ''): Promise<T> {
+  static async getJSON<T>(url: string, params: string = ""): Promise<T> {
     const fetchUrl = import.meta.env.VITE_API_BASE + url;
     const fetchParams = new URLSearchParams(params);
-    fetchParams.append('api_key', import.meta.env.VITE_API_KEY);
-    fetchParams.append('language', getCurrentLocale());
-    fetchParams.append('region', getLocalCountryCode());
+    fetchParams.append("api_key", import.meta.env.VITE_API_KEY);
+    fetchParams.append("language", getCurrentLocale());
+    fetchParams.append("region", getLocalCountryCode());
 
-    const response: Response = await fetch(fetchUrl + '?' + fetchParams.toString());
+    const response: Response = await fetch(
+      fetchUrl + "?" + fetchParams.toString()
+    );
 
-    if (!response.ok) throw new Error(`getJSON: Error fetching data for URL: ${url}`);
+    if (!response.ok)
+      throw new Error(`getJSON: Error fetching data for URL: ${url}`);
 
     const data: T = await response.json();
     return data;
@@ -107,14 +108,16 @@ export default class TMDB {
   // along with popular and top rated tv shows
   static async getList(
     page: number,
-    mediaType: 'movie' | 'tv',
-    listType: UTListTypes,
+    mediaType: "movie" | "tv",
+    listType: UTListTypes
   ): Promise<IListData> {
-    let url = '';
-    let params = '';
-    if (listType === 'upcoming') {
-      const oneWeekLater = new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000);
-      const oneWeekLaterStr = oneWeekLater.toISOString().split('T')[0];
+    let url = "";
+    let params = "";
+    if (listType === "upcoming") {
+      const oneWeekLater = new Date(
+        new Date().getTime() + 1 * 24 * 60 * 60 * 1000
+      );
+      const oneWeekLaterStr = oneWeekLater.toISOString().split("T")[0];
       // get movies that will be released starts from tomorrow
       url = `/discover/movie`;
       params = `sort_by=primary_release_date.asc&primary_release_date.gte=${oneWeekLaterStr}`;
@@ -124,9 +127,10 @@ export default class TMDB {
     }
 
     const data: RawMoviesList = await this.getJSON(url, params);
-    const media = mediaType === 'movie'
-      ? formatBaseMovies(data.results as RawSearchMovie[])
-      : formatBaseTvs(data.results as RawBaseTv[]);
+    const media =
+      mediaType === "movie"
+        ? formatBaseMovies(data.results as RawSearchMovie[])
+        : formatBaseTvs(data.results as RawBaseTv[]);
 
     return {
       media,
@@ -149,24 +153,32 @@ export default class TMDB {
     return COLLECTIONS[Math.floor(Math.random() * COLLECTIONS.length)];
   }
 
-  static async getTrending(type: UTFavoritesType, period: 'day' | 'week' = 'week') {
+  static async getTrending(
+    type: UTFavoritesType,
+    period: "day" | "week" = "week"
+  ) {
     const url = `/trending/${type}/${period}`;
     const data: RawTrendingList = await this.getJSON(url);
 
     let trending: IBaseMovie[] | IBasePerson[] | IBaseTv[] = [];
 
     switch (type) {
-      case 'movie':
-        trending = formatBaseMovies(data.results as RawSearchMovie[]) as IBaseMovie[];
+      case "movie":
+        trending = formatBaseMovies(
+          data.results as RawSearchMovie[]
+        ) as IBaseMovie[];
         break;
-      case 'tv':
+      case "tv":
         trending = formatBaseTvs(data.results as RawTrendingTv[]) as IBaseTv[];
         break;
-      case 'person':
-        trending = formatPersons(data.results as RawBasePerson[], 'base') as IBasePerson[];
+      case "person":
+        trending = formatPersons(
+          data.results as RawBasePerson[],
+          "base"
+        ) as IBasePerson[];
         break;
       default:
-        console.error('Wrong trending type');
+        console.error("Wrong trending type");
         trending = [];
     }
 
@@ -186,8 +198,8 @@ export default class TMDB {
     const url = `/movie/${id}/credits`;
     const data: RawMovieCredits = await this.getJSON(url);
 
-    const cast = formatPersons(data.cast, 'cast') as IMovieCast[];
-    const crew = formatPersons(data.crew, 'crew') as IMovieCrew[];
+    const cast = formatPersons(data.cast, "cast") as IMovieCast[];
+    const crew = formatPersons(data.crew, "crew") as IMovieCrew[];
 
     return { cast, crew };
   }
@@ -225,7 +237,10 @@ export default class TMDB {
     return tv;
   }
 
-  static async getTvShowSeasons(tvId: number, seasonsQty: number): Promise<ITvSeason[]> {
+  static async getTvShowSeasons(
+    tvId: number,
+    seasonsQty: number
+  ): Promise<ITvSeason[]> {
     const seasons = [];
     for (let n = 1; n <= seasonsQty; n++) {
       const season = await this.getTvShowSeason(tvId, n);
@@ -244,7 +259,10 @@ export default class TMDB {
     return results;
   }
 
-  static async getSearch(query: string, page: number = 1): Promise<ISearchResults> {
+  static async getSearch(
+    query: string,
+    page: number = 1
+  ): Promise<ISearchResults> {
     const url = `/search/multi`;
     const params = `query=${query}&include_adult=false&page=${page}`;
     const data: RawSearch = await this.getJSON(url, params);

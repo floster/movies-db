@@ -11,14 +11,8 @@ import { SearchForm } from "../components/SearchForm";
 import TilesGrid from "../components/TilesGrid";
 import AppMessage from "../components/UI/AppMessage";
 
-import {
-  useSearchCollectionQuery,
-  useSearchMultiQuery,
-} from "../store/tmdb/tmdb.api";
-import {
-  IAvailableFavoritesTypes,
-  ISearchResultsAll,
-} from "../types/tmdb.models";
+import { IAvailableFavoritesTypes } from "../types/tmdb.models";
+import useSearch from "../hooks/search/search";
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,37 +24,9 @@ export default function Search() {
   const title = searchTerm ? `searching '${searchTerm}'` : "search";
   useDocumentTitle(`${title} - Movies DB`);
 
+  const { results, qty, isError, isLoading } = useSearch(searchTerm);
+
   const searchTermIsShort = () => searchTerm.length < SYMBOLS_QTY_TO_SEARCH;
-
-  const {
-    // multi (movie, tv, person) search results
-    data: searchMultiData,
-    isError: isSearchMultiError,
-    isLoading: isSearchMultiLoading,
-  } = useSearchMultiQuery(searchTerm, {
-    // prevents this query from automatically running if true
-    skip: searchTermIsShort(),
-  });
-
-  const {
-    // collection search results
-    data: searchCollectionData,
-    isError: isSearchCollectionError,
-    isLoading: isSearchCollectionLoading,
-  } = useSearchCollectionQuery(searchTerm, {
-    // prevents this query from automatically running if true
-    skip: searchTermIsShort(),
-  });
-
-  const searchAllResults: ISearchResultsAll = {
-    resultsQty:
-      (searchMultiData?.resultsQty || 0) +
-        (searchCollectionData?.length || 0) || 0,
-    movie: searchMultiData?.movie || [],
-    tv: searchMultiData?.tv || [],
-    person: searchMultiData?.person || [],
-    collection: searchCollectionData || [],
-  };
 
   // set search term that comes from URLSearchParams: ?q=term into State
   useEffect(() => setSearchTerm(searchParams.get("q") || ""), [searchParams]);
@@ -89,30 +55,24 @@ export default function Search() {
           <AppMessage
             message={`Enter at least ${SYMBOLS_QTY_TO_SEARCH} symbols to start searching`}
           />
-        ) : isSearchMultiError || isSearchCollectionError ? (
+        ) : isError ? (
           <AppError
             error={`Error occured while searching for #${searchTerm}`}
           />
-        ) : isSearchMultiLoading || isSearchCollectionLoading ? (
+        ) : isLoading ? (
           <AppSpinner visible={true} />
         ) : (
           <>
             <h2 className="search-results__title">
               <mark>{searchTerm.replace(/\+/g, " ")}</mark>
-              &nbsp;➡ {searchAllResults?.resultsQty} [
-              {searchAllResults?.collection.length},{" "}
-              {searchAllResults?.movie.length}, {searchAllResults?.tv.length},{" "}
-              {searchAllResults?.person.length}]
+              &nbsp;➡ {qty.all} [
+              {AVAILABLE_SEARCH_TYPES.map((type) => qty[type]).join(", ")}]
             </h2>
 
             {AVAILABLE_SEARCH_TYPES.map((type) => {
-              if (searchAllResults && searchAllResults[type])
+              if (results && results[type])
                 return (
-                  <TilesGrid
-                    key={type}
-                    tiles={searchAllResults[type]}
-                    type={type}
-                  />
+                  <TilesGrid key={type} tiles={results[type]} type={type} />
                 );
             })}
           </>

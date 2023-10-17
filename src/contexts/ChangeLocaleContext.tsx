@@ -22,7 +22,7 @@ export const ChangeLocaleProvider: FC<Props> = ({ children }) => {
   const defaultLocale = DEFAULT_LOCALE;
   const [currentLocale, setLocale] = useLocalStorage(
     "currentLocale",
-    defaultLocale,
+    defaultLocale
   );
 
   const change = (locale: AvalableLocales) => {

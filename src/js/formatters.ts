@@ -534,7 +534,9 @@ export function formatTile<T extends IAvailableTileFields>(
     mediaType === "movie" || mediaType === "tv"
       ? year
       : mediaType === "collection"
-      ? `${tile.parts.length.toString()} parts`
+      ? tile.parts
+        ? `${tile.parts.length.toString()} parts`
+        : ""
       : mediaType === "person" && "character" in tile
       ? tile.character
       : mediaType === "person"
@@ -653,7 +655,12 @@ export const formatSearchResultsMulti = (
   results: IRawSearchResponse<IRawSearchMultiResult>
 ) => {
   const formattedResults: ISearchResultsMulti = {
-    resultsQty: results.total_results,
+    qty: {
+      all: results.total_results,
+      movie: 0,
+      tv: 0,
+      person: 0,
+    },
     movie: [],
     tv: [],
     person: [],
@@ -664,6 +671,10 @@ export const formatSearchResultsMulti = (
       formatTile(result as IAvailableTileFields)
     );
   });
+
+  formattedResults.qty.movie = formattedResults.movie.length;
+  formattedResults.qty.tv = formattedResults.tv.length;
+  formattedResults.qty.person = formattedResults.person.length;
 
   return formattedResults;
 };

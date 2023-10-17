@@ -317,14 +317,33 @@ export interface IRawCollectionSearch {
 }
 
 export interface ISearchResultsMulti {
-  resultsQty: number;
+  qty: {
+    all: number;
+    movie: number;
+    tv: number;
+    person: number;
+  };
   movie: ITile[];
   tv: ITile[];
   person: ITile[];
 }
 
-export interface ISearchResultsAll extends ISearchResultsMulti {
-  collection: ITile[] | [];
+export interface ISearchResults {
+  qty: {
+    all: number;
+    movie: number;
+    tv: number;
+    person: number;
+    collection: number;
+  };
+  results: {
+    [key in IAvailableFavoritesTypes]: ITile[] | [];
+  };
+}
+
+export interface ISearchResultsAll extends ISearchResults {
+  isError: boolean;
+  isLoading: boolean;
 }
 
 /* ********************************* */
