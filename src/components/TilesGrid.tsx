@@ -39,7 +39,7 @@ const TilesGrid: React.FC<ITilesGridProps> = ({ tiles, type }) => {
       <AppSectionHeader
         title={`${type}s (${tiles.length})`}
         alignStart
-        hasSelect={true}
+        hasSelect={tiles.length > 0}
         {...sortOptions}
         selectDisabled={tiles.length <= 1}
       />
