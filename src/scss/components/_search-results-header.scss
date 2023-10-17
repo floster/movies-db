@@ -1,0 +1,30 @@
+.search-results-header {
+  display: flex;
+  align-items: center;
+  column-gap: var(--gap-xs);
+  color: var(--color-grey-200);
+  font-size: var(--font-size-5);
+  font-weight: normal;
+
+  &__links {
+    display: flex;
+    align-items: center;
+    // column-gap: var(--gap-xs);
+
+    &::before {
+      content: "[";
+    }
+
+    &::after {
+      content: "]";
+    }
+  }
+
+  &__link {
+    &:not(:last-child) {
+      &::after {
+        content: ",\00a0";
+      }
+    }
+  }
+}

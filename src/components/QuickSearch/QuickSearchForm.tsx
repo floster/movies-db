@@ -1,26 +1,20 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { QuickSearchHits } from "./QuickSearchHits";
 import AppError from "../UI/AppError";
 import AppSpinner from "../UI/AppSpinner";
-import TMDB from "../../js/tmdb-api";
-import { IQuickSearchResult } from "../../types/tmdb.types";
 import { useSearchDialog } from "../../contexts/SearchDialogContext";
 import { SearchForm } from "../SearchForm";
 import { formatSearchTerm } from "../../js/formatters";
-
-const SYMBOLS_QTY_TO_SEARCH = import.meta.env
-  .VITE_SYMBOLS_QTY_TO_SEARCH as number;
+import useSearch from "../../hooks/search/search";
 
 export default function QuickSearchForm() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [hits, setHits] = useState([] as IQuickSearchResult[]);
-  const [isDataLoading, setIsDataLoading] = useState(false);
-  const [isDataError, setIsDataError] = useState(false);
+
+  const navigate = useNavigate();
 
   // described in src/contexts/SearchDialogContext.tsx
   const { hide } = useSearchDialog();
-  const navigate = useNavigate();
 
   const handleSearchSubmit = (searchTerm: string) => {
     // hide search dialog
@@ -37,33 +31,7 @@ export default function QuickSearchForm() {
     setSearchTerm(searchTerm);
   };
 
-  const getSearchResults = useCallback(async () => {
-    // clear hits array to clear Quick Search Hits container
-    // if search term is empty or less than 4 symbols
-    if (!searchTerm || searchTerm.length < SYMBOLS_QTY_TO_SEARCH) {
-      setHits([]);
-    }
-
-    if (searchTerm.length >= SYMBOLS_QTY_TO_SEARCH) {
-      try {
-        setIsDataLoading(true);
-        const results = await TMDB.getQuickSearch(searchTerm);
-        setHits(results);
-      } catch (error) {
-        setIsDataError(true);
-        console.error(error);
-      } finally {
-        setIsDataLoading(false);
-      }
-    }
-  }, [searchTerm]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await (getSearchResults as () => Promise<void>)();
-    };
-    fetchData();
-  }, [getSearchResults]);
+  const { results, isError, isLoading } = useSearch(searchTerm);
 
   return (
     <>
@@ -71,14 +39,14 @@ export default function QuickSearchForm() {
         termChange={searchTermChanged}
         searchSubmit={handleSearchSubmit}
       ></SearchForm>
-      {isDataError ? (
+      {isError ? (
         <AppError
           error={`Error occured while getting search results by #${searchTerm}`}
         />
-      ) : isDataLoading ? (
+      ) : isLoading ? (
         <AppSpinner visible={true} />
       ) : (
-        <QuickSearchHits searchHits={hits} />
+        <QuickSearchHits results={results} />
       )}
     </>
   );

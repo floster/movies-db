@@ -1,5 +1,4 @@
 import { ITile } from "../../types/tmdb.models";
-import { ITileData } from "../../types/tmdb.types";
 import AppTile from "../AppTile";
 
 interface Props {
@@ -10,7 +9,7 @@ export default function MediaList({ media }: Props) {
   return (
     <div className="media-list l-media_list" role="list">
       {media.map((item) => (
-        <AppTile tile={item as ITileData} key={item.id} isRow={true} />
+        <AppTile tile={item as ITile} key={item.id} isRow={true} />
       ))}
     </div>
   );

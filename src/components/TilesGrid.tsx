@@ -11,6 +11,7 @@ import ShowMoreBtn from "./UI/ShowMoreBtn";
 interface ITilesGridProps {
   tiles: ITile[] | null;
   type: IAvailableFavoritesTypes;
+  showAll?: boolean;
 }
 
 /**
@@ -21,7 +22,11 @@ interface ITilesGridProps {
  * @param {IAvailableFavoritesTypes} props.type - The type of search result.
  * @returns {JSX.Element} The rendered component.
  */
-const TilesGrid: React.FC<ITilesGridProps> = ({ tiles, type }) => {
+const TilesGrid: React.FC<ITilesGridProps> = ({
+  tiles,
+  type,
+  showAll = false,
+}) => {
   if (!tiles) return null;
 
   const { pagesQty, currentPage, currentTiles, handleShowMore } =
@@ -30,7 +35,7 @@ const TilesGrid: React.FC<ITilesGridProps> = ({ tiles, type }) => {
   const sortOptions = useSortOption();
 
   const { sortedTiles } = useTilesSort(
-    currentTiles,
+    showAll ? tiles : currentTiles,
     sortOptions.currentSortOption
   );
 
@@ -39,19 +44,21 @@ const TilesGrid: React.FC<ITilesGridProps> = ({ tiles, type }) => {
       <AppSectionHeader
         title={`${type}s (${tiles.length})`}
         alignStart
-        hasSelect={true}
+        hasSelect={tiles.length > 0}
         {...sortOptions}
         selectDisabled={tiles.length <= 1}
       />
-      <div className="l-tiles_grid m-movies">
+      <div className="l-tiles_grid m-movies" id={type}>
         {sortedTiles.map((media) => (
           <AppTile tile={media} key={media.id} />
         ))}
-        <ShowMoreBtn
-          currentPage={currentPage}
-          pagesQty={pagesQty}
-          handleShowMore={handleShowMore}
-        />
+        {!showAll && (
+          <ShowMoreBtn
+            currentPage={currentPage}
+            pagesQty={pagesQty}
+            handleShowMore={handleShowMore}
+          />
+        )}
       </div>
     </AppSection>
   );
