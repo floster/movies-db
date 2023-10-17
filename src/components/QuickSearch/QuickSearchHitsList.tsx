@@ -2,14 +2,14 @@ import { IAvailableFavoritesTypes, ITile } from "../../types/tmdb.models";
 import QuickSearchHit from "./QuickSearchHit";
 
 type QuickSearchHitsListProps = {
-  hits: ITile[];
+  hits: ITile[] | null;
   type: IAvailableFavoritesTypes;
 };
 const QuickSearchHitsList: React.FC<QuickSearchHitsListProps> = ({
   hits,
   type,
 }) => {
-  if (hits && hits.length === 0) return null;
+  if (!hits) return null;
   return (
     <>
       <h3 className="quick-search-hits__title">

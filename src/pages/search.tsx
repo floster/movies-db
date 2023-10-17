@@ -1,5 +1,6 @@
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env
   .VITE_SYMBOLS_QTY_TO_SEARCH as number;
+import { AVAILABLE_SEARCH_TYPES } from "../config";
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -11,8 +12,8 @@ import { SearchForm } from "../components/SearchForm";
 import TilesGrid from "../components/TilesGrid";
 import AppMessage from "../components/UI/AppMessage";
 
-import { IAvailableFavoritesTypes } from "../types/tmdb.models";
 import useSearch from "../hooks/search/search";
+import SearchResultsHeader from "../components/Search/SearchResultsHeader";
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,7 +25,7 @@ export default function Search() {
   const title = searchTerm ? `searching '${searchTerm}'` : "search";
   useDocumentTitle(`${title} - Movies DB`);
 
-  const { results, qty, isError, isLoading } = useSearch(searchTerm);
+  const { results, isError, isLoading } = useSearch(searchTerm);
 
   const searchTermIsShort = () => searchTerm.length < SYMBOLS_QTY_TO_SEARCH;
 
@@ -35,13 +36,6 @@ export default function Search() {
     // set search term that comes from SearchForm to URLSearchParams: ?q=term
     setSearchParams({ q: searchTerm } || {});
   };
-
-  const AVAILABLE_SEARCH_TYPES: IAvailableFavoritesTypes[] = [
-    "collection",
-    "movie",
-    "tv",
-    "person",
-  ];
 
   return (
     <>
@@ -63,14 +57,9 @@ export default function Search() {
           <AppSpinner visible={true} />
         ) : (
           <>
-            <h2 className="search-results__title">
-              <mark>{searchTerm.replace(/\+/g, " ")}</mark>
-              &nbsp;➡ {qty.all} [
-              {AVAILABLE_SEARCH_TYPES.map((type) => qty[type]).join(", ")}]
-            </h2>
-
+            <SearchResultsHeader results={results} term={searchTerm} />
             {AVAILABLE_SEARCH_TYPES.map((type) => {
-              if (results && results[type])
+              if (type)
                 return (
                   <TilesGrid key={type} tiles={results[type]} type={type} />
                 );

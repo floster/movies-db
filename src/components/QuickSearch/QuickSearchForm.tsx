@@ -31,7 +31,7 @@ export default function QuickSearchForm() {
     setSearchTerm(searchTerm);
   };
 
-  const { results, qty, isError, isLoading } = useSearch(searchTerm);
+  const { results, isError, isLoading } = useSearch(searchTerm);
 
   return (
     <>
@@ -46,7 +46,7 @@ export default function QuickSearchForm() {
       ) : isLoading ? (
         <AppSpinner visible={true} />
       ) : (
-        <QuickSearchHits searchHits={{ results, qty }} />
+        <QuickSearchHits results={results} />
       )}
     </>
   );

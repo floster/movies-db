@@ -43,7 +43,7 @@ const TilesGrid: React.FC<ITilesGridProps> = ({ tiles, type }) => {
         {...sortOptions}
         selectDisabled={tiles.length <= 1}
       />
-      <div className="l-tiles_grid m-movies">
+      <div className="l-tiles_grid m-movies" id={type}>
         {sortedTiles.map((media) => (
           <AppTile tile={media} key={media.id} />
         ))}

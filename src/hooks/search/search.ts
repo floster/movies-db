@@ -2,7 +2,7 @@ import {
   useSearchCollectionQuery,
   useSearchMultiQuery,
 } from "../../store/tmdb/tmdb.api";
-import { ISearchResultsAll } from "../../types/tmdb.models";
+import { ISearchResultsState } from "../../types/tmdb.models";
 
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env
   .VITE_SYMBOLS_QTY_TO_SEARCH as number;
@@ -30,27 +30,18 @@ const useSearch = (query: string) => {
     skip: queryIsShort(),
   });
 
-  const searchResults: ISearchResultsAll = {
-    qty: {
-      all:
-        searchMultiData?.qty.all ||
-        0 + (searchCollectionData ? searchCollectionData.length : 0),
-      movie: searchMultiData?.qty.movie || 0,
-      tv: searchMultiData?.qty.tv || 0,
-      person: searchMultiData?.qty.person || 0,
-      collection: searchCollectionData ? searchCollectionData.length : 0,
-    },
+  const searchResults: ISearchResultsState = {
     results: {
-      movie: searchMultiData?.movie || [],
-      tv: searchMultiData?.tv || [],
-      person: searchMultiData?.person || [],
-      collection: searchCollectionData || [],
+      collection: searchCollectionData || null,
+      movie: searchMultiData?.movie || null,
+      tv: searchMultiData?.tv || null,
+      person: searchMultiData?.person || null,
     },
     isError: isSearchMultiError || isSearchCollectionError,
     isLoading: isSearchMultiLoading || isSearchCollectionLoading,
   };
 
-  return { ...searchResults };
+  return searchResults;
 };
 
 export default useSearch;
