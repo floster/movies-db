@@ -61,7 +61,12 @@ export default function Search() {
             {AVAILABLE_SEARCH_TYPES.map((type) => {
               if (type)
                 return (
-                  <TilesGrid key={type} tiles={results[type]} type={type} />
+                  <TilesGrid
+                    key={type}
+                    tiles={results[type]}
+                    type={type}
+                    showAll
+                  />
                 );
             })}
           </>
