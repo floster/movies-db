@@ -25,7 +25,7 @@ import {
   RawSearchPerson,
   RawSearchTv,
   RawSearchResult,
-} from "../types/raw-tmdb.types";
+} from '../types/raw-tmdb.types'
 import {
   IAvailableMediaHeroFields,
   IAvailableMediaHeroTypes,
@@ -42,7 +42,7 @@ import {
   IRawSearchResponse,
   IRawCollectionSearch,
   IMediaTypes,
-} from "../types/tmdb.models";
+} from '../types/tmdb.models'
 import {
   IBasePerson,
   IMovie,
@@ -62,7 +62,7 @@ import {
   ICollection,
   IQuickSearchResult,
   ISearchResults,
-} from "../types/tmdb.types";
+} from '../types/tmdb.types'
 import {
   createLink,
   createLinkFromTileData,
@@ -72,7 +72,7 @@ import {
   getBackdropUrl,
   getPosterUrl,
   realizeMediaType,
-} from "./helpers";
+} from './helpers'
 
 /**
  * Formats a search term by removing non-alphanumeric characters,
@@ -82,16 +82,16 @@ import {
  * @returns {string} The formatted search term.
  */
 export const formatSearchTerm = (term: string) => {
-  if (!term) return "";
+  if (!term) return ''
   return term
     .toLowerCase()
-    .replace(/:/g, "") // remove colons
-    .replace(/,/g, "") // remove commas
-    .replace(/[^a-z0-9\s-]/g, "") // remove non-alphanumeric characters except spaces and hyphens
-    .replace(/\s+/g, "+") // replace spaces with plus
-    .replace(/-+/g, "+") // remove consecutive plus
-    .replace(/^-+|-+$/g, ""); // remove leading and trailing hyphens
-};
+    .replace(/:/g, '') // remove colons
+    .replace(/,/g, '') // remove commas
+    .replace(/[^a-z0-9\s-]/g, '') // remove non-alphanumeric characters except spaces and hyphens
+    .replace(/\s+/g, '+') // replace spaces with plus
+    .replace(/-+/g, '+') // remove consecutive plus
+    .replace(/^-+|-+$/g, '') // remove leading and trailing hyphens
+}
 
 export function formatTileData<T extends UTileData>(
   tile: T,
@@ -100,19 +100,19 @@ export function formatTileData<T extends UTileData>(
   rating: boolean
 ): ITileData {
   const votes =
-    rating && "votes" in tile
+    rating && 'votes' in tile
       ? { average: tile.votes.average, count: tile.votes.count }
-      : null;
+      : null
 
-  const link = "link" in tile ? tile.link : null;
-  const year = (tile as IBaseMovie).year || null;
+  const link = 'link' in tile ? tile.link : null
+  const year = (tile as IBaseMovie).year || null
 
-  const dataType = (tile as IPersonCast).media_type || tile.type || type;
+  const dataType = (tile as IPersonCast).media_type || tile.type || type
 
   const labelText =
-    typeof label === "object"
+    typeof label === 'object'
       ? `${tile[label[0]]} ${label[1]}`
-      : `${tile[label]}`;
+      : `${tile[label]}`
 
   return {
     id: tile.id,
@@ -120,10 +120,10 @@ export function formatTileData<T extends UTileData>(
     link: link,
     poster: tile.poster!,
     title: tile.title,
-    label: labelText || "---",
+    label: labelText || '---',
     rating: votes,
     year,
-  };
+  }
 }
 
 export function formatTilesData<T extends UTileData>(
@@ -132,39 +132,39 @@ export function formatTilesData<T extends UTileData>(
   label: keyof T | [keyof T, string],
   rating: boolean
 ): ITileData[] {
-  return data.map((item) => formatTileData(item, type, label, rating));
+  return data.map(item => formatTileData(item, type, label, rating))
 }
 
 export function formatCollection(collection: RawCollection): ICollection {
-  const poster = getPosterUrl(collection.poster_path);
+  const poster = getPosterUrl(collection.poster_path)
 
   return {
     backdrop: `${import.meta.env.VITE_API_BACKDROP_BASE}${
       collection.backdrop_path
     }`,
     id: collection.id,
-    link: createLink("collection", collection.id, collection.name),
+    link: createLink('collection', collection.id, collection.name),
     title: collection.name,
     overview: collection.overview,
     parts: formatBaseMovies(collection.parts),
     partsCount: collection.parts.length,
     poster,
-    type: "collection",
-  };
+    type: 'collection',
+  }
 }
 
 export function formatBaseMovie(part: RawBaseMovie): IBaseMovie {
-  const poster = getPosterUrl(part.poster_path);
+  const poster = getPosterUrl(part.poster_path)
 
-  const date = formatDate(part.release_date);
+  const date = formatDate(part.release_date)
 
   const formatedData: IBaseMovie = {
     adult: part.adult,
     backdrop: `${import.meta.env.VITE_API_BACKDROP_BASE}${part.backdrop_path}`,
     genres: [], // convertMovieGenres(part.genre_ids),
     id: part.id,
-    link: createLink("movie", part.id, part.title),
-    type: "movie",
+    link: createLink('movie', part.id, part.title),
+    type: 'movie',
     overview: part.overview,
     popularity: part.popularity,
     poster,
@@ -172,20 +172,20 @@ export function formatBaseMovie(part: RawBaseMovie): IBaseMovie {
     year: date.year,
     title: part.title,
     votes: { average: +part.vote_average?.toFixed(1), count: part.vote_count },
-  };
+  }
 
-  return formatedData;
+  return formatedData
 }
 
 export function formatBaseMovies(movies: RawSearchMovie[]): IBaseMovie[] {
-  return movies.map((movie) => formatBaseMovie(movie));
+  return movies.map(movie => formatBaseMovie(movie))
 }
 
 export function formatTv(tv: RawTv): ITv {
-  const poster = getPosterUrl(tv.poster_path);
+  const poster = getPosterUrl(tv.poster_path)
 
-  const date = formatDate(tv.first_air_date);
-  const finishedDate = formatDate(tv.last_air_date);
+  const date = formatDate(tv.first_air_date)
+  const finishedDate = formatDate(tv.last_air_date)
 
   const formatedData: ITv = {
     adult: tv.adult,
@@ -195,7 +195,7 @@ export function formatTv(tv: RawTv): ITv {
     genres: tv.genres,
     id: tv.id,
     in_production: tv.in_production,
-    link: createLink("tv", tv.id, tv.name),
+    link: createLink('tv', tv.id, tv.name),
     overview: tv.overview,
     popularity: tv.popularity,
     poster: poster,
@@ -206,49 +206,49 @@ export function formatTv(tv: RawTv): ITv {
     status: tv.status,
     tagline: tv.tagline,
     title: tv.name,
-    type: "tv",
+    type: 'tv',
     votes: { average: +tv.vote_average?.toFixed(1), count: tv.vote_count },
-  };
+  }
 
-  return formatedData;
+  return formatedData
 }
 
 export function formatBaseTv(tv: RawBaseTv): IBaseTv {
-  const poster = getPosterUrl(tv.poster_path);
+  const poster = getPosterUrl(tv.poster_path)
 
-  const date = formatDate(tv.first_air_date);
+  const date = formatDate(tv.first_air_date)
 
   const formatedData: IBaseTv = {
     adult: tv.adult,
     backdrop: `${import.meta.env.VITE_API_BACKDROP_BASE}${tv.backdrop_path}`,
     genres: [], //convertMovieGenres(tv.genre_ids),
     id: tv.id,
-    link: createLink("tv", tv.id, tv.name),
+    link: createLink('tv', tv.id, tv.name),
     overview: tv.overview,
     popularity: tv.popularity,
     poster: poster,
     released: date.full,
     year: date.year,
     title: tv.name,
-    type: "tv",
+    type: 'tv',
     votes: { average: +tv.vote_average?.toFixed(1), count: tv.vote_count },
-  };
+  }
 
-  return formatedData;
+  return formatedData
 }
 
 export function formatBaseTvs(shows: RawBaseTv[]): IBaseTv[] {
-  return shows.map((show) => formatBaseTv(show));
+  return shows.map(show => formatBaseTv(show))
 }
 
 export function formatTvSeason(season: RawTvSeason): ITvSeason {
-  const poster = getPosterUrl(season.poster_path);
-  const date = formatDate(season.air_date);
-  const episodesQty = season.episodes?.length || season.episode_count || 0;
+  const poster = getPosterUrl(season.poster_path)
+  const date = formatDate(season.air_date)
+  const episodesQty = season.episodes?.length || season.episode_count || 0
 
   const episodes = season.episodes?.length
     ? formatTvEpisodes(season.episodes)
-    : [];
+    : []
 
   const formatedData: ITvSeason = {
     episodes_qty: episodesQty,
@@ -260,19 +260,19 @@ export function formatTvSeason(season: RawTvSeason): ITvSeason {
     released: date.full,
     year: date.year,
     season_number: season.season_number,
-    type: "season",
+    type: 'season',
     votes: { average: +season.vote_average?.toFixed(1), count: 0 },
-  };
+  }
 
-  return formatedData;
+  return formatedData
 }
 
 export function formatTvSeasons(seasons: RawTvSeason[]): ITvSeason[] {
-  return seasons.map((season) => formatTvSeason(season));
+  return seasons.map(season => formatTvSeason(season))
 }
 
 export function formatTvEpisode(episode: RawTvEpisode): ITvEpisode {
-  const date = formatDate(episode.air_date);
+  const date = formatDate(episode.air_date)
 
   return {
     id: episode.id,
@@ -282,7 +282,7 @@ export function formatTvEpisode(episode: RawTvEpisode): ITvEpisode {
     released: date.full,
     year: date.year,
     season_number: episode.season_number,
-    type: "episode",
+    type: 'episode',
     votes: {
       average: +episode.vote_average?.toFixed(1),
       count: episode.vote_count,
@@ -291,17 +291,17 @@ export function formatTvEpisode(episode: RawTvEpisode): ITvEpisode {
     episode_type: episode.episode_type,
     runtime: episode.runtime,
     show_id: episode.show_id,
-  };
+  }
 }
 
 export function formatTvEpisodes(episodes: RawTvEpisode[]): ITvEpisode[] {
-  return episodes.map((episode) => formatTvEpisode(episode));
+  return episodes.map(episode => formatTvEpisode(episode))
 }
 
 export function formatMovie(movie: RawMovie): IMovie {
-  const poster = getPosterUrl(movie.poster_path);
+  const poster = getPosterUrl(movie.poster_path)
 
-  const date = formatDate(movie.release_date);
+  const date = formatDate(movie.release_date)
 
   const formatedData: IMovie = {
     adult: movie.adult,
@@ -309,7 +309,7 @@ export function formatMovie(movie: RawMovie): IMovie {
     belongs_to_collection: movie.belongs_to_collection || null,
     budget: movie.budget,
     genres: movie.genres,
-    link: createLink("movie", movie.id, movie.title),
+    link: createLink('movie', movie.id, movie.title),
     id: movie.id,
     overview: movie.overview,
     popularity: movie.popularity,
@@ -320,56 +320,56 @@ export function formatMovie(movie: RawMovie): IMovie {
     status: movie.status,
     tagline: movie.tagline,
     title: movie.title,
-    type: "movie", // 'movie' | 'tv
+    type: 'movie', // 'movie' | 'tv
     votes: {
       average: +movie.vote_average?.toFixed(1),
       count: movie.vote_count,
     },
-  };
+  }
 
-  return formatedData;
+  return formatedData
 }
 
 export function formatBasePerson(person: RawBasePerson): IBasePerson {
-  const poster = getPosterUrl(person.profile_path);
+  const poster = getPosterUrl(person.profile_path)
 
   const formatedData: IBasePerson = {
     id: person.id,
-    link: createLink("person", person.id, person.name),
-    type: "person",
+    link: createLink('person', person.id, person.name),
+    type: 'person',
     department: person.known_for_department,
     title: person.name,
     popularity: person.popularity,
     poster: poster,
-  };
+  }
 
-  return formatedData;
+  return formatedData
 }
 
 export function formatPerson(member: RawPerson): IPerson {
-  const basicData = formatBasePerson(member);
+  const basicData = formatBasePerson(member)
 
-  const birthday = formatDate(member.birthday);
-  const deathday = formatDate(member.deathday ? member.deathday : null);
+  const birthday = formatDate(member.birthday)
+  const deathday = formatDate(member.deathday ? member.deathday : null)
 
   return {
     ...basicData,
-    backdrop: "",
+    backdrop: '',
     birthday: { date: birthday.full, year: birthday.year },
     deathday: { date: deathday.full, year: deathday.year },
     // TODO: think about using chatGPT API to format biography
     overview: member.biography,
     place_of_birth: member.place_of_birth,
-  };
+  }
 }
 
 export function formatPersonCrew(credits: RawPersonCrew[]): IPersonCrew[] {
   return credits.map((credit: RawPersonCrew) => {
-    let baseData: IBaseMovie | IBaseTv;
-    if (credit.media_type === "movie") {
-      baseData = formatBaseMovie(credit as RawPersonCrewMovie);
+    let baseData: IBaseMovie | IBaseTv
+    if (credit.media_type === 'movie') {
+      baseData = formatBaseMovie(credit as RawPersonCrewMovie)
     } else {
-      baseData = formatBaseTv(credit as RawPersonCrewTv);
+      baseData = formatBaseTv(credit as RawPersonCrewTv)
     }
 
     return {
@@ -377,92 +377,92 @@ export function formatPersonCrew(credits: RawPersonCrew[]): IPersonCrew[] {
       media_type: credit.media_type,
       department: credit.department,
       job: credit.job,
-    };
-  });
+    }
+  })
 }
 
 export function formatPersonCast(credits: RawPersonCast[]): IPersonCast[] {
   return credits.map((credit: RawPersonCast) => {
-    let baseData: IBaseMovie | IBaseTv;
-    if (credit.media_type === "movie") {
-      baseData = formatBaseMovie(credit as RawPersonCastMovie);
+    let baseData: IBaseMovie | IBaseTv
+    if (credit.media_type === 'movie') {
+      baseData = formatBaseMovie(credit as RawPersonCastMovie)
     } else {
-      baseData = formatBaseTv(credit as RawPersonCastTv);
+      baseData = formatBaseTv(credit as RawPersonCastTv)
     }
 
     return {
       ...baseData,
       media_type: credit.media_type,
       character: credit.character,
-    };
-  });
+    }
+  })
 }
 
 export function formatCastMember(member: RawCast): IMovieCast {
-  const basicData = formatBasePerson(member);
+  const basicData = formatBasePerson(member)
 
   return {
     ...basicData,
     cast_id: member.cast_id,
     character: member.character,
     order: member.order,
-  };
+  }
 }
 
 export function formatCrewMember(member: RawCrew): IMovieCrew {
-  const basicData = formatBasePerson(member);
+  const basicData = formatBasePerson(member)
 
   return {
     ...basicData,
     job: member.job,
-  };
+  }
 }
 
 export function formatPersons(
   credits: RawCast[] | RawCrew[] | RawBasePerson[],
-  type: "crew" | "cast" | "base"
+  type: 'crew' | 'cast' | 'base'
 ): IBasePerson[] | IMovieCast[] | IMovieCrew[] {
-  let data: IBasePerson[] | IMovieCast[] | IMovieCrew[] = [];
+  let data: IBasePerson[] | IMovieCast[] | IMovieCrew[] = []
 
   switch (type) {
-    case "base":
-      data = credits.map((credit) => formatBasePerson(credit as RawBasePerson));
-      break;
-    case "cast":
-      data = credits.map((credit) => formatCastMember(credit as RawCast));
-      break;
-    case "crew":
-      data = credits.map((credit) => formatCrewMember(credit as RawCrew));
-      break;
+    case 'base':
+      data = credits.map(credit => formatBasePerson(credit as RawBasePerson))
+      break
+    case 'cast':
+      data = credits.map(credit => formatCastMember(credit as RawCast))
+      break
+    case 'crew':
+      data = credits.map(credit => formatCrewMember(credit as RawCrew))
+      break
     default:
-      break;
+      break
   }
 
-  return data;
+  return data
 }
 
 export function formatQuickSearchResult(
   result: RawSearchResult
 ): IQuickSearchResult {
-  let title = "";
-  let poster = "";
-  let date = null;
+  let title = ''
+  let poster = ''
+  let date = null
 
-  if (result.media_type === "person") {
-    const person = result as RawSearchPerson;
-    title = person.name;
-    poster = person.profile_path;
-    date = formatDate(null);
-  } else if (result.media_type === "movie") {
-    const movie = result as RawSearchMovie;
-    title = movie.title;
-    poster = movie.poster_path;
-    date = formatDate(movie.release_date);
+  if (result.media_type === 'person') {
+    const person = result as RawSearchPerson
+    title = person.name
+    poster = person.profile_path
+    date = formatDate(null)
+  } else if (result.media_type === 'movie') {
+    const movie = result as RawSearchMovie
+    title = movie.title
+    poster = movie.poster_path
+    date = formatDate(movie.release_date)
   } else {
-    const tv = result as RawSearchTv;
-    title = tv.name;
-    poster = tv.poster_path;
-    date = formatDate(tv.first_air_date);
+    const tv = result as RawSearchTv
+    title = tv.name
+    poster = tv.poster_path
+    date = formatDate(tv.first_air_date)
   }
 
   return {
@@ -472,13 +472,13 @@ export function formatQuickSearchResult(
     title: title,
     type: result.media_type,
     year: date.year,
-  };
+  }
 }
 
 export function formatQuickSearchResults(
   results: RawSearchResult[]
 ): IQuickSearchResult[] {
-  return results.map((result) => formatQuickSearchResult(result));
+  return results.map(result => formatQuickSearchResult(result))
 }
 
 export function formatSearchResults(results: RawSearch): ISearchResults {
@@ -487,30 +487,30 @@ export function formatSearchResults(results: RawSearch): ISearchResults {
     movies: [],
     tvs: [],
     persons: [],
-  };
+  }
 
-  results.results.forEach((result) => {
+  results.results.forEach(result => {
     switch (result.media_type) {
-      case "movie":
-        const movie = formatBaseMovie(result as RawSearchMovie);
+      case 'movie':
+        const movie = formatBaseMovie(result as RawSearchMovie)
         formattedResults.movies.push(
-          formatTileData(movie, "movie", "released", true)
-        );
-        break;
-      case "tv":
-        const tv = formatBaseTv(result as RawSearchTv);
-        formattedResults.tvs.push(formatTileData(tv, "tv", "released", true));
-        break;
-      case "person":
-        const person = formatBasePerson(result as RawSearchPerson);
+          formatTileData(movie, 'movie', 'released', true)
+        )
+        break
+      case 'tv':
+        const tv = formatBaseTv(result as RawSearchTv)
+        formattedResults.tvs.push(formatTileData(tv, 'tv', 'released', true))
+        break
+      case 'person':
+        const person = formatBasePerson(result as RawSearchPerson)
         formattedResults.persons.push(
-          formatTileData(person, "person", "department", true)
-        );
-        break;
+          formatTileData(person, 'person', 'department', true)
+        )
+        break
     }
-  });
+  })
 
-  return formattedResults;
+  return formattedResults
 }
 
 ////////////////////////////////////////////////////////
@@ -519,29 +519,29 @@ export function formatTile<T extends IAvailableTileFields>(
   tile: T,
   type?: IMediaTypes
 ): ITile {
-  const mediaType = type ? type : realizeMediaType(tile);
+  const mediaType = type ? type : realizeMediaType(tile)
 
-  const link = createLinkFromTileData(tile, mediaType);
+  const link = createLinkFromTileData(tile, mediaType)
 
   const { year } = formatDate(
     tile.release_date ? tile.release_date : tile.first_air_date
-  );
-  const poster = getPosterUrl(tile.poster_path || tile.profile_path);
+  )
+  const poster = getPosterUrl(tile.poster_path || tile.profile_path)
 
-  const ratingAvg = tile.vote_average ? +tile.vote_average.toFixed(1) : 0;
+  const ratingAvg = tile.vote_average ? +tile.vote_average.toFixed(1) : 0
 
   const label =
-    mediaType === "movie" || mediaType === "tv"
+    mediaType === 'movie' || mediaType === 'tv'
       ? year
-      : mediaType === "collection"
+      : mediaType === 'collection'
       ? tile.parts
         ? `${tile.parts.length.toString()} parts`
-        : ""
-      : mediaType === "person" && "character" in tile
+        : ''
+      : mediaType === 'person' && 'character' in tile
       ? tile.character
-      : mediaType === "person"
+      : mediaType === 'person'
       ? tile.known_for_department
-      : "";
+      : ''
 
   return {
     id: tile.id,
@@ -552,46 +552,46 @@ export function formatTile<T extends IAvailableTileFields>(
     label,
     rating: { average: ratingAvg, count: tile.vote_count },
     year,
-  };
+  }
 }
 
 export function formatTiles<T extends IAvailableTileFields>(
   data: T[],
   type?: IMediaTypes
 ): ITile[] {
-  return data.map((item) => formatTile(item, type));
+  return data.map(item => formatTile(item, type))
 }
 
 export const formatMediaHeroData = (
   data: IAvailableMediaHeroFields
 ): IMediaHeroData => {
-  const subtitle = data.tagline || data.place_of_birth || null;
-  const rating = +data.vote_average?.toFixed(1) || null;
-  const link = createLinkFromTileData(data as IAvailableTileFields) || null;
-  const tags = data.known_for_department || null;
+  const subtitle = data.tagline || data.place_of_birth || null
+  const rating = +data.vote_average?.toFixed(1) || null
+  const link = createLinkFromTileData(data as IAvailableTileFields) || null
+  const tags = data.known_for_department || null
 
-  let date = "";
+  let date = ''
   if (data.release_date) {
-    date = formatDate(data.release_date).full;
+    date = formatDate(data.release_date).full
   } else if (data.first_air_date && data.last_air_date) {
-    const first = formatDate(data.first_air_date).year;
+    const first = formatDate(data.first_air_date).year
     const last =
-      data.status === "Ended" ? formatDate(data.last_air_date).year : "...";
-    date = `${first} - ${last}`;
+      data.status === 'Ended' ? formatDate(data.last_air_date).year : '...'
+    date = `${first} - ${last}`
   } else if (data.birthday) {
-    const deathday = data.deathday ? formatDate(data.deathday).full : "...";
-    date = `${formatDate(data.birthday).full} - ${deathday}`;
+    const deathday = data.deathday ? formatDate(data.deathday).full : '...'
+    date = `${formatDate(data.birthday).full} - ${deathday}`
   } else {
-    date = "";
+    date = ''
   }
 
   const partsSeasons = data.parts
     ? `${data.parts.length} parts`
     : data.seasons
     ? `${data.seasons.length} seasons`
-    : null;
-  const belongs = data.belongs_to_collection || null;
-  const torrent = true;
+    : null
+  const belongs = data.belongs_to_collection || null
+  const torrent = true
 
   const formated = {
     id: data.id,
@@ -600,7 +600,7 @@ export const formatMediaHeroData = (
     ) as IAvailableMediaHeroTypes,
     title: data.title || data.name,
     subtitle, // tagline for Movie | place_of_birth for Person
-    description: data.overview || data.biography || "",
+    description: data.overview || data.biography || '',
     poster: getPosterUrl(data.poster_path || data.profile_path),
     backdrop: getBackdropUrl(data.backdrop_path),
     rating, // number | null
@@ -610,10 +610,10 @@ export const formatMediaHeroData = (
     partsSeasons, // collection parts for Collection | seasons_qty for Tv
     belongs, // belongs_to_collection for Movie
     torrent, //
-  };
+  }
 
-  return formated;
-};
+  return formated
+}
 
 export const formatCollectionNew = (
   collection: IRawCollection
@@ -625,31 +625,31 @@ export const formatCollectionNew = (
     poster: getPosterUrl(collection.poster_path),
     backdrop: getBackdropUrl(collection.backdrop_path),
     parts: formatTiles(collection.parts as IAvailableTileFields[]),
-  };
-};
+  }
+}
 
-const CREW_QTY_TO_SHOW = +import.meta.env.VITE_MOVIE_CREW_QTY_TO_SHOW as number;
+const CREW_QTY_TO_SHOW = +import.meta.env.VITE_MOVIE_CREW_QTY_TO_SHOW as number
 
 export const formatMovieCreditsNew = (
   credits: IRawMovieCredisResponse
 ): IMovieCreditsNew => {
   const _crew: ICrewMember[] = credits.crew
     .slice(0, CREW_QTY_TO_SHOW)
-    .map((credit) => ({
+    .map(credit => ({
       id: credit.id,
       name: credit.name,
       job: credit.job,
-    }));
+    }))
 
-  const _cast = formatTiles(credits.cast as IAvailableTileFields[]);
-  const _avoidNoImages = filterNoImage(_cast);
-  const _avoidNoCredits = filterUncredits(_avoidNoImages);
+  const _cast = formatTiles(credits.cast as IAvailableTileFields[])
+  const _avoidNoImages = filterNoImage(_cast)
+  const _avoidNoCredits = filterUncredits(_avoidNoImages)
 
   return {
     crew: _crew,
     cast: _avoidNoCredits,
-  };
-};
+  }
+}
 
 export const formatSearchResultsMulti = (
   results: IRawSearchResponse<IRawSearchMultiResult>
@@ -658,21 +658,21 @@ export const formatSearchResultsMulti = (
     movie: [],
     tv: [],
     person: [],
-  };
+  }
 
-  results.results.forEach((result) => {
+  results.results.forEach(result => {
     formattedResults[result.media_type].push(
       formatTile(result as IAvailableTileFields)
-    );
-  });
+    )
+  })
 
-  return formattedResults;
-};
+  return formattedResults
+}
 
 export const formatSearchResultsCollection = (
   results: IRawCollectionSearch[]
 ): ITile[] | [] => {
-  if (!results.length) return [];
+  if (!results.length) return []
 
-  return formatTiles(results as IAvailableTileFields[], "collection");
-};
+  return formatTiles(results as IAvailableTileFields[], 'collection')
+}

@@ -1,18 +1,18 @@
-import AppError from "./UI/AppError";
-import AppTile from "./AppTile";
-import AppSpinner from "./UI/AppSpinner";
+import AppError from './UI/AppError'
+import AppTile from './AppTile'
+import AppSpinner from './UI/AppSpinner'
 
-import { useGetTrendingsQuery } from "../store/tmdb/tmdb.api";
-import { IAvailableTrendingAndSearchMultiTypes } from "../types/tmdb.models";
+import { useGetTrendingsQuery } from '../store/tmdb/tmdb.api'
+import { IAvailableTrendingAndSearchMultiTypes } from '../types/tmdb.models'
 
 interface Props {
-  itemsType: IAvailableTrendingAndSearchMultiTypes;
+  itemsType: IAvailableTrendingAndSearchMultiTypes
 }
 
 export default function TrendingsCarousel({ itemsType }: Props) {
-  const { data, isError, isLoading } = useGetTrendingsQuery(itemsType);
+  const { data, isError, isLoading } = useGetTrendingsQuery(itemsType)
 
-  if (!data && !isLoading) return null;
+  if (!data && !isLoading) return null
 
   return isError ? (
     <AppError error={`Error occured while fetching trending ${itemsType}s`} />
@@ -22,11 +22,11 @@ export default function TrendingsCarousel({ itemsType }: Props) {
         <AppSpinner visible={true} />
       ) : (
         <div className="app-carousel__track">
-          {data.map((item) => (
+          {data.map(item => (
             <AppTile tile={item} key={item.id} />
           ))}
         </div>
       )}
     </div>
-  );
+  )
 }

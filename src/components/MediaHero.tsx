@@ -1,47 +1,47 @@
-import AppPicture from "./UI/AppPicture";
-import AppSpinner from "./UI/AppSpinner";
-import AppFavorite from "./UI/AppFavorite";
-import AppProgress from "./UI/AppProgress";
-import MoviePartOf from "./Movie/MoviePartOf";
-import AppError from "./UI/AppError";
-import TorrentSearch from "./UI/TorrentSearch";
+import AppPicture from './UI/AppPicture'
+import AppSpinner from './UI/AppSpinner'
+import AppFavorite from './UI/AppFavorite'
+import AppProgress from './UI/AppProgress'
+import MoviePartOf from './Movie/MoviePartOf'
+import AppError from './UI/AppError'
+import TorrentSearch from './UI/TorrentSearch'
 
-import { FC } from "react";
+import { FC } from 'react'
 
-import { useDocumentTitle } from "usehooks-ts";
-import { useGetMediaHeroQuery } from "../store/tmdb/tmdb.api";
-import { IAvailableMediaHeroTypes } from "../types/tmdb.models";
-import IconLabeled from "./UI/IconLabeled";
+import { useDocumentTitle } from 'usehooks-ts'
+import { useGetMediaHeroQuery } from '../store/tmdb/tmdb.api'
+import { IAvailableMediaHeroTypes } from '../types/tmdb.models'
+import IconLabeled from './UI/IconLabeled'
 
 interface MediaHeroProps {
-  id: number;
-  type: IAvailableMediaHeroTypes;
-  withLink?: boolean;
+  id: number
+  type: IAvailableMediaHeroTypes
+  withLink?: boolean
 }
 
 const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
   const { data, isError, isLoading } = useGetMediaHeroQuery({
     type,
     id,
-  });
+  })
 
   const title = isLoading
-    ? "loading..."
+    ? 'loading...'
     : withLink // FIXME: search for a better way to do this
-    ? "Movies DB"
+    ? 'Movies DB'
     : data?.title
     ? `${data.title} - Movies DB`
-    : `${type} - Movies DB`;
-  useDocumentTitle(title);
+    : `${type} - Movies DB`
+  useDocumentTitle(title)
 
   if (isError)
     return (
       <AppError
         error={`MediaHero: Error occured while fetching hero data for the ${type} #${id}`}
       />
-    );
+    )
 
-  if (!data && !isLoading) return null;
+  if (!data && !isLoading) return null
 
   // TODO: make below works
   // const renderTags = () => {
@@ -56,8 +56,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
   ) : (
     <div
       className="media-hero"
-      style={{ "--backdrop-image": data.backdrop } as React.CSSProperties}
-    >
+      style={{ '--backdrop-image': data.backdrop } as React.CSSProperties}>
       <div className="media-hero__inner container">
         <div className="media-hero__picture">
           <AppPicture img={data.poster} alt={data.title} />
@@ -84,7 +83,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
         <footer className="media-hero__footer">
           <AppFavorite type={type} id={id} title={data.title} />
 
-          {data.date && data.date !== "" && (
+          {data.date && data.date !== '' && (
             <IconLabeled icon="calendar" label={data.date} />
           )}
 
@@ -98,7 +97,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
         </footer>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MediaHero;
+export default MediaHero

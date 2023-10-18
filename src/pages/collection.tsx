@@ -1,45 +1,45 @@
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom'
 
-import { getIdFromLink } from "../js/helpers";
+import { getIdFromLink } from '../js/helpers'
 
-import MediaHero from "../components/MediaHero";
-import AppSection from "../components/AppSection";
-import AppSectionHeader from "../components/AppSectionHeader";
-import AppSpinner from "../components/UI/AppSpinner";
-import AppError from "../components/UI/AppError";
-import AppTile from "../components/AppTile";
-import ShowMoreBtn from "../components/UI/ShowMoreBtn";
+import MediaHero from '../components/MediaHero'
+import AppSection from '../components/AppSection'
+import AppSectionHeader from '../components/AppSectionHeader'
+import AppSpinner from '../components/UI/AppSpinner'
+import AppError from '../components/UI/AppError'
+import AppTile from '../components/AppTile'
+import ShowMoreBtn from '../components/UI/ShowMoreBtn'
 
-import { useSortOption } from "../hooks/useSortOption";
-import { useTilesShowMore } from "../hooks/tiles/tilesShowMore";
-import { useTilesSort } from "../hooks/tiles/tilesSort";
-import { useGetCollectionQuery } from "../store/tmdb/tmdb.api";
+import { useSortOption } from '../hooks/useSortOption'
+import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
+import { useTilesSort } from '../hooks/tiles/tilesSort'
+import { useGetCollectionQuery } from '../store/tmdb/tmdb.api'
 
 type CollectionParams = {
-  id: string;
-};
+  id: string
+}
 
 export default function Collection() {
-  const params = useParams<CollectionParams>();
-  const collectionId = getIdFromLink(params.id!);
+  const params = useParams<CollectionParams>()
+  const collectionId = getIdFromLink(params.id!)
 
   // TODO: improve this flow in future
   // uses to pass unified sort option params through AppSectionHeader to AppSelect
-  const collectionSortOption = useSortOption();
+  const collectionSortOption = useSortOption()
 
   const {
     data: tiles,
     isError,
     isLoading,
-  } = useGetCollectionQuery(collectionId);
+  } = useGetCollectionQuery(collectionId)
 
   const { pagesQty, currentPage, currentTiles, handleShowMore } =
-    useTilesShowMore(tiles?.parts ? tiles.parts : []);
+    useTilesShowMore(tiles?.parts ? tiles.parts : [])
 
   const { sortedTiles } = useTilesSort(
     currentTiles,
     collectionSortOption.currentSortOption
-  );
+  )
 
   return (
     <>
@@ -62,7 +62,7 @@ export default function Collection() {
                   <AppSpinner visible={true} />
                 ) : (
                   <>
-                    {sortedTiles.map((tile) => (
+                    {sortedTiles.map(tile => (
                       <AppTile tile={tile} key={tile.id} />
                     ))}
                     <ShowMoreBtn
@@ -78,5 +78,5 @@ export default function Collection() {
         )}
       </div>
     </>
-  );
+  )
 }

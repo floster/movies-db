@@ -1,17 +1,17 @@
-import { useTilesShowMore } from "../hooks/tiles/tilesShowMore";
-import { useTilesSort } from "../hooks/tiles/tilesSort";
-import { useSortOption } from "../hooks/useSortOption";
-import { IAvailableFavoritesTypes, ITile } from "../types/tmdb.models";
+import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
+import { useTilesSort } from '../hooks/tiles/tilesSort'
+import { useSortOption } from '../hooks/useSortOption'
+import { IAvailableFavoritesTypes, ITile } from '../types/tmdb.models'
 
-import AppSection from "./AppSection";
-import AppSectionHeader from "./AppSectionHeader";
-import AppTile from "./AppTile";
-import ShowMoreBtn from "./UI/ShowMoreBtn";
+import AppSection from './AppSection'
+import AppSectionHeader from './AppSectionHeader'
+import AppTile from './AppTile'
+import ShowMoreBtn from './UI/ShowMoreBtn'
 
 interface ITilesGridProps {
-  tiles: ITile[] | null;
-  type: IAvailableFavoritesTypes;
-  showAll?: boolean;
+  tiles: ITile[] | null
+  type: IAvailableFavoritesTypes
+  showAll?: boolean
 }
 
 /**
@@ -27,17 +27,17 @@ const TilesGrid: React.FC<ITilesGridProps> = ({
   type,
   showAll = false,
 }) => {
-  if (!tiles) return null;
+  if (!tiles) return null
 
   const { pagesQty, currentPage, currentTiles, handleShowMore } =
-    useTilesShowMore(tiles ? tiles : []);
+    useTilesShowMore(tiles ? tiles : [])
 
-  const sortOptions = useSortOption();
+  const sortOptions = useSortOption()
 
   const { sortedTiles } = useTilesSort(
     showAll ? tiles : currentTiles,
     sortOptions.currentSortOption
-  );
+  )
 
   const markup = (
     <AppSection extraClass="m-movies_list">
@@ -49,7 +49,7 @@ const TilesGrid: React.FC<ITilesGridProps> = ({
         selectDisabled={tiles.length <= 1}
       />
       <div className="l-tiles_grid m-movies" id={type}>
-        {sortedTiles.map((media) => (
+        {sortedTiles.map(media => (
           <AppTile tile={media} key={media.id} />
         ))}
         {!showAll && (
@@ -61,9 +61,9 @@ const TilesGrid: React.FC<ITilesGridProps> = ({
         )}
       </div>
     </AppSection>
-  );
+  )
 
-  return markup;
-};
+  return markup
+}
 
-export default TilesGrid;
+export default TilesGrid

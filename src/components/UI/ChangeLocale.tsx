@@ -1,19 +1,19 @@
-import { AvalableLocales, LOCALES } from "../../js/config";
-import AppSelect from "./AppSelect";
-import { useChangeLocale } from "../../contexts/ChangeLocaleContext";
+import { AvalableLocales, LOCALES } from '../../js/config'
+import AppSelect from './AppSelect'
+import { useChangeLocale } from '../../contexts/ChangeLocaleContext'
 
 const ChangeLocale = () => {
-  const { locale, changeLocale } = useChangeLocale();
+  const { currentLocale, changeLocale } = useChangeLocale()
 
   return (
     <>
       <AppSelect
         options={LOCALES}
-        currentOption={locale}
-        optionChanged={(locale) => changeLocale(locale as AvalableLocales)}
+        currentOption={currentLocale}
+        optionChanged={locale => changeLocale(locale as AvalableLocales)}
       />
     </>
-  );
-};
+  )
+}
 
-export default ChangeLocale;
+export default ChangeLocale

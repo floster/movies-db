@@ -1,14 +1,14 @@
 import {
   useSearchCollectionQuery,
   useSearchMultiQuery,
-} from "../../store/tmdb/tmdb.api";
-import { ISearchResultsState } from "../../types/tmdb.models";
+} from '../../store/tmdb/tmdb.api'
+import { ISearchResultsState } from '../../types/tmdb.models'
 
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env
-  .VITE_SYMBOLS_QTY_TO_SEARCH as number;
+  .VITE_SYMBOLS_QTY_TO_SEARCH as number
 
 const useSearch = (query: string) => {
-  const queryIsShort = () => query.length < SYMBOLS_QTY_TO_SEARCH;
+  const queryIsShort = () => query.length < SYMBOLS_QTY_TO_SEARCH
 
   const {
     // multi (movie, tv, person) search results
@@ -18,7 +18,7 @@ const useSearch = (query: string) => {
   } = useSearchMultiQuery(query, {
     // prevents this query from automatically running if true
     skip: queryIsShort(),
-  });
+  })
 
   const {
     // collection search results
@@ -28,7 +28,7 @@ const useSearch = (query: string) => {
   } = useSearchCollectionQuery(query, {
     // prevents this query from automatically running if true
     skip: queryIsShort(),
-  });
+  })
 
   const searchResults: ISearchResultsState = {
     results: {
@@ -39,9 +39,9 @@ const useSearch = (query: string) => {
     },
     isError: isSearchMultiError || isSearchCollectionError,
     isLoading: isSearchMultiLoading || isSearchCollectionLoading,
-  };
+  }
 
-  return searchResults;
-};
+  return searchResults
+}
 
-export default useSearch;
+export default useSearch

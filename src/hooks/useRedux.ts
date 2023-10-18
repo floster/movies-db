@@ -1,9 +1,9 @@
-import { TypedUseSelectorHook, useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { TypedUseSelectorHook, useSelector } from 'react-redux'
+import { RootState } from '../store/store'
 
-import { bindActionCreators } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
-import { favoritesActions } from "../store/favorites.slice";
+import { bindActionCreators } from '@reduxjs/toolkit'
+import { useDispatch } from 'react-redux'
+import { favoritesActions } from '../store/favorites.slice'
 
 /**
  * A custom hook that wraps the `useSelector` hook from `react-redux` and is used to type the `RootState`.
@@ -13,11 +13,11 @@ import { favoritesActions } from "../store/favorites.slice";
  * @returns {TSelected} The selected state.
  * @example const favorites = useAppSelector(state => state.favorites)
  */
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 const actions = {
   ...favoritesActions,
-};
+}
 
 /**
  * A custom hook that wraps the `useDispatch` hook from `react-redux` and binds the action creators to the dispatch function.
@@ -25,6 +25,6 @@ const actions = {
  * @example const { addToFav, removeFromFavs, toggleFav } = useAppActions();
  */
 export const useAppActions = () => {
-  const dispatch = useDispatch();
-  return bindActionCreators(actions, dispatch);
-};
+  const dispatch = useDispatch()
+  return bindActionCreators(actions, dispatch)
+}

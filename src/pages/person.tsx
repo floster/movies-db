@@ -1,71 +1,71 @@
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom'
 
-import { getIdFromLink } from "../js/helpers";
+import { getIdFromLink } from '../js/helpers'
 
-import MediaHero from "../components/MediaHero";
-import AppSection from "../components/AppSection";
-import AppSectionHeader from "../components/AppSectionHeader";
-import AppSpinner from "../components/UI/AppSpinner";
-import AppError from "../components/UI/AppError";
-import AppTile from "../components/AppTile";
-import ShowMoreBtn from "../components/UI/ShowMoreBtn";
+import MediaHero from '../components/MediaHero'
+import AppSection from '../components/AppSection'
+import AppSectionHeader from '../components/AppSectionHeader'
+import AppSpinner from '../components/UI/AppSpinner'
+import AppError from '../components/UI/AppError'
+import AppTile from '../components/AppTile'
+import ShowMoreBtn from '../components/UI/ShowMoreBtn'
 
-import { useSortOption } from "../hooks/useSortOption";
-import { useTilesSort } from "../hooks/tiles/tilesSort";
-import { useTilesShowMore } from "../hooks/tiles/tilesShowMore";
+import { useSortOption } from '../hooks/useSortOption'
+import { useTilesSort } from '../hooks/tiles/tilesSort'
+import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
 
 import {
   useGetPersonMovieCreditsQuery,
   useGetPersonTvCreditsQuery,
-} from "../store/tmdb/tmdb.api";
+} from '../store/tmdb/tmdb.api'
 
 type PersonParams = {
-  id: string;
-};
+  id: string
+}
 
 const Person: React.FC = () => {
-  const params = useParams<PersonParams>();
-  const personId = getIdFromLink(params.id!);
+  const params = useParams<PersonParams>()
+  const personId = getIdFromLink(params.id!)
 
   const {
     data: movieCredits,
     isError: isMovieCreditsError,
     isLoading: isMovieCreditsLoading,
-  } = useGetPersonMovieCreditsQuery(personId);
+  } = useGetPersonMovieCreditsQuery(personId)
   const {
     data: tvCredits,
     isError: isTvCreditsError,
     isLoading: isTvCreditsLoading,
-  } = useGetPersonTvCreditsQuery(personId);
+  } = useGetPersonTvCreditsQuery(personId)
 
-  console.log("movieCredits", movieCredits);
-  console.log("tvCredits", tvCredits);
+  console.log('movieCredits', movieCredits)
+  console.log('tvCredits', tvCredits)
 
-  const movieCreditsSortOption = useSortOption();
-  const tvCreditsSortOption = useSortOption();
+  const movieCreditsSortOption = useSortOption()
+  const tvCreditsSortOption = useSortOption()
 
   const {
     pagesQty: movieCreditsPagesQty,
     currentPage: currentMovieCreditsPage,
     currentTiles: currentMovieCredits,
     handleShowMore: handleMovieCreditsShowMore,
-  } = useTilesShowMore(movieCredits || []);
+  } = useTilesShowMore(movieCredits || [])
 
   const {
     pagesQty: tvCreditsPagesQty,
     currentPage: currentTvCreditsPage,
     currentTiles: currentTvCredits,
     handleShowMore: handleTvCreditsShowMore,
-  } = useTilesShowMore(tvCredits || []);
+  } = useTilesShowMore(tvCredits || [])
 
   const { sortedTiles: sortedMovies } = useTilesSort(
     currentMovieCredits,
     movieCreditsSortOption.currentSortOption
-  );
+  )
   const { sortedTiles: sortedTvs } = useTilesSort(
     currentTvCredits,
     tvCreditsSortOption.currentSortOption
-  );
+  )
 
   return (
     <section className="movie-header">
@@ -87,7 +87,7 @@ const Person: React.FC = () => {
                 <AppSpinner visible={true} />
               ) : (
                 <>
-                  {sortedMovies.map((media) => (
+                  {sortedMovies.map(media => (
                     <AppTile
                       tile={media}
                       key={`${media.id}_${media.label}`}
@@ -120,7 +120,7 @@ const Person: React.FC = () => {
                 <AppSpinner visible={true} />
               ) : (
                 <>
-                  {sortedTvs.map((media) => (
+                  {sortedTvs.map(media => (
                     <AppTile
                       tile={media}
                       key={`${media.id}_${media.label}`}
@@ -139,7 +139,7 @@ const Person: React.FC = () => {
         )}
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Person;
+export default Person

@@ -1,13 +1,13 @@
-import { SORT_OPTIONS } from "../js/config";
-import AppSelect from "./UI/AppSelect";
+import { SORT_OPTIONS } from '../js/config'
+import AppSelect from './UI/AppSelect'
 
 interface Props {
-  title: string;
-  hasSelect?: boolean;
-  selectDisabled?: boolean;
-  currentSortOption?: string;
-  onSortChange?: (option: string) => void;
-  alignStart?: boolean;
+  title: string
+  hasSelect?: boolean
+  selectDisabled?: boolean
+  currentSortOption?: string
+  onSortChange?: (option: string) => void
+  alignStart?: boolean
 }
 
 export default function AppSectionHeader({
@@ -20,8 +20,7 @@ export default function AppSectionHeader({
 }: Props) {
   return (
     <header
-      className={`app-section__header ${alignStart ? "m-align_start" : ""}`}
-    >
+      className={`app-section__header ${alignStart ? 'm-align_start' : ''}`}>
       <h2 className="app-section__title">{title}</h2>
       {hasSelect && (
         <AppSelect
@@ -33,5 +32,5 @@ export default function AppSectionHeader({
         />
       )}
     </header>
-  );
+  )
 }

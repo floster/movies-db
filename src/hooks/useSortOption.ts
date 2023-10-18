@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { UTSortValues } from "../types/tmdb.types";
+import { useState } from 'react'
+import { UTSortValues } from '../types/tmdb.types'
 
 const defaultSortOption = import.meta.env
-  .VITE_DEFAULT_SORT_OPTION as UTSortValues;
+  .VITE_DEFAULT_SORT_OPTION as UTSortValues
 
 interface UseSortOption {
-  currentSortOption: UTSortValues;
-  onSortChange: (option: string) => void;
+  currentSortOption: UTSortValues
+  onSortChange: (option: string) => void
 }
 
 /**
@@ -16,7 +16,7 @@ interface UseSortOption {
 export const useSortOption = (): UseSortOption => {
   const [currentSortOption, setCurrentSortOption] = useState(
     defaultSortOption as UTSortValues
-  );
+  )
 
   /**
    * Function to update the current sort option.
@@ -24,10 +24,10 @@ export const useSortOption = (): UseSortOption => {
    * @returns {void}
    */
   const onSortChange = (option: string): void =>
-    setCurrentSortOption(option as UTSortValues);
+    setCurrentSortOption(option as UTSortValues)
 
   return {
     currentSortOption,
     onSortChange,
-  };
-};
+  }
+}
