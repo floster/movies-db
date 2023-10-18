@@ -1,25 +1,30 @@
-import { FC } from 'react'
-import { ITvSeason } from '../../types/tmdb.types'
 import AppPicture from '../UI/AppPicture'
 import AppProgress from '../UI/AppProgress'
 import TvEpisode from './TvEpisode'
+import { IRawTvSeasonResponse } from '../../types/tmdb.models'
+import { formatDate, getPosterUrl } from '../../js/helpers'
 
 interface TvSeasonProps {
-  season: ITvSeason
+  season: IRawTvSeasonResponse
 }
 
-export const TvSeason: FC<TvSeasonProps> = ({ season }) => {
+export const TvSeason: React.FC<TvSeasonProps> = ({ season }) => {
   return (
     <section className="tv-season">
       <figure className="tv-season__picture">
         <span className="tv-season__count">{season.season_number}</span>
-        <AppPicture img={season.poster} alt={season.title + ' poster'} />
-        <AppProgress value={season.votes.average} />
+        <AppPicture
+          img={getPosterUrl(season.poster_path)}
+          alt={season.name + ' poster'}
+        />
+        <AppProgress value={season.vote_average} />
       </figure>
       <div className="tv-season__content">
         <header className="tv-season__header">
-          <span className="tv-season__release">{season.released}</span>
-          <h3 className="tv-season__title">{season.title}</h3>
+          <span className="tv-season__release">
+            {formatDate(season.air_date).full}
+          </span>
+          <h3 className="tv-season__title">{season.name}</h3>
           <p className="tv-season__overview">{season.overview}</p>
         </header>
         <div className="tv-season__episodes">

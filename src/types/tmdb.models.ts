@@ -173,7 +173,7 @@ export interface IRawTv {
   poster_path: string
   production_companies: _ProductionCompany[]
   production_countries: _ProductionCountry[]
-  seasons: _Season[]
+  seasons: IRawTvSeason[]
   spoken_languages: _SpokenLanguage[]
   status: string
   tagline: string
@@ -230,7 +230,7 @@ interface _ProductionCountry {
   name: string
 }
 
-interface _Season {
+export interface IRawTvSeason {
   air_date: string
   episode_count: number
   id: number
@@ -245,6 +245,64 @@ interface _SpokenLanguage {
   english_name: string
   iso_639_1: string
   name: string
+}
+
+export interface IRawTvSeasonResponse {
+  _id: string
+  air_date: string
+  episodes: IRawTvEpisode[]
+  name: string
+  overview: string
+  id: number
+  poster_path: string
+  season_number: number
+  vote_average: number
+}
+
+export interface IRawTvEpisode {
+  air_date: string
+  episode_number: number
+  episode_type: string
+  id: number
+  name: string
+  overview: string
+  production_code: string
+  runtime: number
+  season_number: number
+  show_id: number
+  still_path: string
+  vote_average: number
+  vote_count: number
+  crew: _TvEpisodeCrew[]
+  guest_stars: _TvEpisodeGuestStar[]
+}
+
+interface _TvEpisodeCrew {
+  job: string
+  department: string
+  credit_id: string
+  adult: boolean
+  gender: number
+  id: number
+  known_for_department: string
+  name: string
+  original_name: string
+  popularity: number
+  profile_path?: string
+}
+
+interface _TvEpisodeGuestStar {
+  character: string
+  credit_id: string
+  order: number
+  adult: boolean
+  gender: number
+  id: number
+  known_for_department: string
+  name: string
+  original_name: string
+  popularity: number
+  profile_path: string
 }
 
 /* ************************************** */

@@ -26,6 +26,8 @@ import {
   IRawSearchMultiResult,
   ISearchResultsMulti,
   IAvailableFavoritesTypes,
+  IRawTv,
+  IRawTvSeasonResponse,
 } from '../../types/tmdb.models'
 import {
   formatCollectionNew,
@@ -36,6 +38,7 @@ import {
   formatTile,
   formatTiles,
 } from '../../js/formatters'
+import { TMDB_FETCH_OPTIONS } from '../../config'
 
 // set headers for all requests, main goal is to set Authorization header
 const prepareHeaders = (headers: Headers) => {
@@ -170,6 +173,44 @@ export const tmdbApi = createApi({
         response: IRawPersonCreditsResponse<IRawPersonCreditsTvCast>
       ) => formatTiles(response.cast as IAvailableTileFields[]),
     }),
+    getTvEpisodes: build.query<IRawTvSeasonResponse[], number>({
+      queryFn: async (id: number) => {
+        // fetch tv series data,
+        // just in purpose to check how much episodes the tv series has
+        const _tvResponse = await fetch(
+          `https://api.themoviedb.org/3/tv/${id}?language=en-US`,
+          TMDB_FETCH_OPTIONS
+        )
+
+        // in case if tv series not found or wrong id -> throw error
+        if (!_tvResponse.ok) {
+          throw new Error(`Error: TV Series with ID: ${id} not found`)
+        }
+
+        // get tv series data
+        const _tv: IRawTv = await _tvResponse.json()
+
+        // fetch all seasons of tv series "at once"
+        const _seasons = await Promise.all(
+          _tv.seasons.map(async (season: any) => {
+            const _seasonResponse = await fetch(
+              `https://api.themoviedb.org/3/tv/${id}/season/${season.season_number}?language=en-US`,
+              TMDB_FETCH_OPTIONS
+            )
+
+            if (!_seasonResponse.ok)
+              throw new Error(
+                `Error: Episode with ID: ${season.season_number} of TV Series with ID: ${id} not found`
+              )
+
+            const _season: IRawTvSeasonResponse = await _seasonResponse.json()
+            return _season
+          })
+        )
+
+        return { data: _seasons }
+      },
+    }),
   }),
 })
 
@@ -187,4 +228,5 @@ export const {
   useGetMovieCreditsQuery,
   useGetPersonMovieCreditsQuery,
   useGetPersonTvCreditsQuery,
+  useGetTvEpisodesQuery,
 } = tmdbApi
