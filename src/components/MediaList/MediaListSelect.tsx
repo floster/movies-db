@@ -1,10 +1,10 @@
-import SvgIcon from "../UI/SvgIcon";
-import { AVAILABLE_LIST_OPTIONS } from "../../js/config";
-import { IAvailableListsOptions } from "../../types/tmdb.models";
+import SvgIcon from '../UI/SvgIcon'
+import { AVAILABLE_LIST_OPTIONS } from '../../js/config'
+import { IAvailableListsOptions } from '../../types/tmdb.models'
 
 interface Props {
-  currentListType: IAvailableListsOptions;
-  onListTypeChange: (value: IAvailableListsOptions) => void;
+  currentListType: IAvailableListsOptions
+  onListTypeChange: (value: IAvailableListsOptions) => void
 }
 
 export default function MediaListSelect({
@@ -20,19 +20,18 @@ export default function MediaListSelect({
         name="media type"
         id="mediaTypeSelect"
         aria-label={`current media type ${currentListType
-          .replace(":", " ")
-          .replace("_", " ")}`}
+          .replace(':', ' ')
+          .replace('_', ' ')}`}
         value={currentListType}
-        onChange={(e) =>
+        onChange={e =>
           onListTypeChange(e.target.value as IAvailableListsOptions)
-        }
-      >
-        {AVAILABLE_LIST_OPTIONS.map((option) => (
+        }>
+        {AVAILABLE_LIST_OPTIONS.map(option => (
           <option value={option} key={option}>
-            {option.replace(":", "\\").replace("_", " ")}
+            {option.replace(':', '\\').replace('_', ' ')}
           </option>
         ))}
       </select>
     </div>
-  );
+  )
 }

@@ -1,35 +1,35 @@
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom'
 
-import { getIdFromLink } from "../js/helpers";
+import { getIdFromLink } from '../js/helpers'
 
-import MediaHero from "../components/MediaHero";
-import AppSection from "../components/AppSection";
-import AppSectionHeader from "../components/AppSectionHeader";
-import AppSpinner from "../components/UI/AppSpinner";
-import AppError from "../components/UI/AppError";
-import MovieCrew from "../components/Movie/MovieCrew";
-import AppTile from "../components/AppTile";
-import ShowMoreBtn from "../components/UI/ShowMoreBtn";
+import MediaHero from '../components/MediaHero'
+import AppSection from '../components/AppSection'
+import AppSectionHeader from '../components/AppSectionHeader'
+import AppSpinner from '../components/UI/AppSpinner'
+import AppError from '../components/UI/AppError'
+import MovieCrew from '../components/Movie/MovieCrew'
+import AppTile from '../components/AppTile'
+import ShowMoreBtn from '../components/UI/ShowMoreBtn'
 
-import { useTilesShowMore } from "../hooks/tiles/tilesShowMore";
-import { useGetMovieCreditsQuery } from "../store/tmdb/tmdb.api";
+import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
+import { useGetMovieCreditsQuery } from '../store/tmdb/tmdb.api'
 
 type MovieParams = {
-  id: string;
-};
+  id: string
+}
 
 const Movie: React.FC = () => {
-  const params = useParams<MovieParams>();
-  const movieId = getIdFromLink(params.id!);
+  const params = useParams<MovieParams>()
+  const movieId = getIdFromLink(params.id!)
 
-  const { data, isError, isLoading } = useGetMovieCreditsQuery(movieId);
+  const { data, isError, isLoading } = useGetMovieCreditsQuery(movieId)
 
   const {
     pagesQty,
     currentPage: currentCastPage,
     currentTiles: currentCast,
     handleShowMore,
-  } = useTilesShowMore(data?.cast ? data.cast : []);
+  } = useTilesShowMore(data?.cast ? data.cast : [])
 
   return (
     <section className="movie-header">
@@ -62,7 +62,7 @@ const Movie: React.FC = () => {
                     <AppSpinner visible={true} />
                   ) : (
                     <>
-                      {currentCast.map((tile) => (
+                      {currentCast.map(tile => (
                         <AppTile tile={tile} key={tile.id} />
                       ))}
                       {/* TODO: add 'show all' functionality */}
@@ -80,7 +80,7 @@ const Movie: React.FC = () => {
         </>
       )}
     </section>
-  );
-};
+  )
+}
 
-export default Movie;
+export default Movie

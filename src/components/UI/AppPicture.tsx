@@ -1,16 +1,16 @@
-import { useState } from "react";
-import AppSpinner from "./AppSpinner";
+import { useState } from 'react'
+import AppSpinner from './AppSpinner'
 
 interface Props {
-  img: string;
-  alt: string;
-  hasLoading?: boolean;
+  img: string
+  alt: string
+  hasLoading?: boolean
 }
 
 export default function AppPicture({ img, alt, hasLoading = true }: Props) {
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(true)
 
-  const pictureLoading = () => setIsLoaded(false);
+  const pictureLoading = () => setIsLoaded(false)
 
   return (
     <>
@@ -23,12 +23,12 @@ export default function AppPicture({ img, alt, hasLoading = true }: Props) {
           src={img}
           alt={alt}
           loading={
-            hasLoading && import.meta.env.VITE_LAZY_LOADING === "true"
-              ? "lazy"
-              : "eager"
+            hasLoading && import.meta.env.VITE_LAZY_LOADING === 'true'
+              ? 'lazy'
+              : 'eager'
           }
         />
       </picture>
     </>
-  );
+  )
 }

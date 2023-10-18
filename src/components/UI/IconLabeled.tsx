@@ -1,10 +1,10 @@
-import { FC } from "react";
-import SvgIcon from "./SvgIcon";
+import { FC } from 'react'
+import SvgIcon from './SvgIcon'
 
 interface IconLabeledProps {
-  icon: string;
-  label: string;
-  link?: { href: string; text: string } | null;
+  icon: string
+  label: string
+  link?: { href: string; text: string } | null
 }
 
 const IconLabeled: FC<IconLabeledProps> = ({ icon, label, link = null }) => {
@@ -14,7 +14,7 @@ const IconLabeled: FC<IconLabeledProps> = ({ icon, label, link = null }) => {
       <span className="icon-labeled__label">{label}</span>
       {link && <a href={link.href}>{link.text}</a>}
     </span>
-  );
-};
+  )
+}
 
-export default IconLabeled;
+export default IconLabeled

@@ -1,11 +1,11 @@
-import { FC } from "react";
-import { ITvSeason } from "../../types/tmdb.types";
-import AppPicture from "../UI/AppPicture";
-import AppProgress from "../UI/AppProgress";
-import TvEpisode from "./TvEpisode";
+import { FC } from 'react'
+import { ITvSeason } from '../../types/tmdb.types'
+import AppPicture from '../UI/AppPicture'
+import AppProgress from '../UI/AppProgress'
+import TvEpisode from './TvEpisode'
 
 interface TvSeasonProps {
-  season: ITvSeason;
+  season: ITvSeason
 }
 
 export const TvSeason: FC<TvSeasonProps> = ({ season }) => {
@@ -13,7 +13,7 @@ export const TvSeason: FC<TvSeasonProps> = ({ season }) => {
     <section className="tv-season">
       <figure className="tv-season__picture">
         <span className="tv-season__count">{season.season_number}</span>
-        <AppPicture img={season.poster} alt={season.title + " poster"} />
+        <AppPicture img={season.poster} alt={season.title + ' poster'} />
         <AppProgress value={season.votes.average} />
       </figure>
       <div className="tv-season__content">
@@ -23,13 +23,13 @@ export const TvSeason: FC<TvSeasonProps> = ({ season }) => {
           <p className="tv-season__overview">{season.overview}</p>
         </header>
         <div className="tv-season__episodes">
-          {season.episodes?.map((episode) => (
+          {season.episodes?.map(episode => (
             <TvEpisode episode={episode} key={episode.id} />
           ))}
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default TvSeason;
+export default TvSeason

@@ -1,7 +1,7 @@
-import { ICrewMember } from "../../types/tmdb.models";
+import { ICrewMember } from '../../types/tmdb.models'
 
 interface Props {
-  members: ICrewMember[];
+  members: ICrewMember[]
 }
 
 export default function MovieCrew({ members }: Props) {
@@ -11,9 +11,9 @@ export default function MovieCrew({ members }: Props) {
         <span className="crew-item__label">{member.job}</span>
         <span className="crew-item__value">{member.name}</span>
       </li>
-    );
-  };
+    )
+  }
   return (
-    <ul className="crew-list">{members.map((member) => memberItem(member))}</ul>
-  );
+    <ul className="crew-list">{members.map(member => memberItem(member))}</ul>
+  )
 }

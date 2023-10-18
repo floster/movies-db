@@ -1,10 +1,10 @@
-import { IAvailableFavoritesTypes, ITile } from "../../types/tmdb.models";
-import AppFavorite from "../UI/AppFavorite";
-import AppPicture from "../UI/AppPicture";
+import { IAvailableFavoritesTypes, ITile } from '../../types/tmdb.models'
+import AppFavorite from '../UI/AppFavorite'
+import AppPicture from '../UI/AppPicture'
 
 type QuickSearchHitProps = {
-  hit: ITile;
-};
+  hit: ITile
+}
 
 const QuickSearchHit: React.FC<QuickSearchHitProps> = ({ hit }) => {
   return (
@@ -24,7 +24,7 @@ const QuickSearchHit: React.FC<QuickSearchHitProps> = ({ hit }) => {
         type={hit.type as IAvailableFavoritesTypes}
       />
     </li>
-  );
-};
+  )
+}
 
-export default QuickSearchHit;
+export default QuickSearchHit

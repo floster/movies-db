@@ -1,16 +1,16 @@
-import AppSection from "../components/AppSection";
-import MediaListSection from "../components/MediaList/MediaListSection";
-import AppSectionHeader from "../components/AppSectionHeader";
-import TrendingsCarousel from "../components/TrendingsCarousel";
-import RandomMedia from "../components/RandomMedia";
-import { IAvailableTrendingAndSearchMultiTypes } from "../types/tmdb.models";
+import AppSection from '../components/AppSection'
+import MediaListSection from '../components/MediaList/MediaListSection'
+import AppSectionHeader from '../components/AppSectionHeader'
+import TrendingsCarousel from '../components/TrendingsCarousel'
+import RandomMedia from '../components/RandomMedia'
+import { IAvailableTrendingAndSearchMultiTypes } from '../types/tmdb.models'
 
 export default function Home() {
   const trendingCarouselsTypes: IAvailableTrendingAndSearchMultiTypes[] = [
-    "movie",
-    "tv",
-    "person",
-  ];
+    'movie',
+    'tv',
+    'person',
+  ]
   return (
     <>
       <div className="l-content m-main_page container">
@@ -21,7 +21,7 @@ export default function Home() {
             <RandomMedia />
           </AppSection>
 
-          {trendingCarouselsTypes.map((type) => (
+          {trendingCarouselsTypes.map(type => (
             <AppSection key={type}>
               <AppSectionHeader title={`trending ${type}s`} />
               <TrendingsCarousel itemsType={type} />
@@ -30,5 +30,5 @@ export default function Home() {
         </main>
       </div>
     </>
-  );
+  )
 }

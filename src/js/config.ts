@@ -1,56 +1,56 @@
-import { IAvailableListsOptions } from "../types/tmdb.models";
+import { IAvailableListsOptions } from '../types/tmdb.models'
 
 export const AVAILABLE_LIST_OPTIONS: IAvailableListsOptions[] = [
-  "movie:now_playing",
-  "movie:top_rated",
-  "movie:upcoming",
-  "tv:popular",
-  "tv:top_rated",
-];
+  'movie:now_playing',
+  'movie:top_rated',
+  'movie:upcoming',
+  'tv:popular',
+  'tv:top_rated',
+]
 
 interface SortOption {
-  title: string;
-  value: "year_asc" | "year_desc" | "title_asc" | "title_desc";
+  title: string
+  value: 'year_asc' | 'year_desc' | 'title_asc' | 'title_desc'
 }
 export const SORT_OPTIONS: SortOption[] = [
-  { title: "Year 0-9", value: "year_asc" },
-  { title: "Year 9-0", value: "year_desc" },
-  { title: "Title A-W", value: "title_asc" },
-  { title: "Title W-A", value: "title_desc" },
-];
+  { title: 'Year 0-9', value: 'year_asc' },
+  { title: 'Year 9-0', value: 'year_desc' },
+  { title: 'Title A-W', value: 'title_asc' },
+  { title: 'Title W-A', value: 'title_desc' },
+]
 
-export type AvalableLocales = "en" | "uk" | "de";
-type Locale = { title: string; value: AvalableLocales };
+export type AvalableLocales = 'en' | 'uk' | 'de'
+type Locale = { title: string; value: AvalableLocales }
 
 // TODO: refactor all about locales
 export const LOCALES: Locale[] = [
-  { title: "US", value: "en" },
-  { title: "UA", value: "uk" },
-  { title: "DE", value: "de" },
-];
+  { title: 'US', value: 'en' },
+  { title: 'UA', value: 'uk' },
+  { title: 'DE', value: 'de' },
+]
 
 ////////////////////////////////
 ////////// DUMMY DATA //////////
 ////////////////////////////////
-export const COLLECTIONS = [9485, 645, 10, 528, 5039, 126125, 1570, 1575, 2150];
+export const COLLECTIONS = [9485, 645, 10, 528, 5039, 126125, 1570, 1575, 2150]
 export const MOVIES = [
   603692, 502356, 569094, 385687, 890771, 447277, 879444, 713704, 640146,
   1073140,
-];
-export const TV_SHOWS = [71912, 615, 1399];
-export const PERSONS = [525, 500, 18897, 234352, 2963, 287, 31, 138, 976, 85];
+]
+export const TV_SHOWS = [71912, 615, 1399]
+export const PERSONS = [525, 500, 18897, 234352, 2963, 287, 31, 138, 976, 85]
 
 export const FAVORITES: {
-  [key in "movie" | "tv" | "person" | "collection" | "season"]: number[];
+  [key in 'movie' | 'tv' | 'person' | 'collection' | 'season']: number[]
 } = {
   movie: MOVIES,
   tv: TV_SHOWS,
   person: PERSONS,
   collection: COLLECTIONS,
   season: [],
-};
+}
 
-export const FAST_COLLECTION_ID = 9485;
+export const FAST_COLLECTION_ID = 9485
 
 export const MOVIES_500 = [
   603692, 502356, 569094, 385687, 890771, 447277, 879444, 713704, 640146,
@@ -105,4 +105,4 @@ export const MOVIES_500 = [
   987578, 1013870, 10192, 379686, 8966, 705996, 1030613, 214756, 629176, 821890,
   425909, 400160, 10020, 829165, 807, 607259, 801071, 259693, 928123, 829410,
   744, 61979, 272878, 626872, 497698, 1047431, 603, 782936, 795514,
-];
+]

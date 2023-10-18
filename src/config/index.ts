@@ -1,8 +1,8 @@
-import { IAvailableFavoritesTypes } from "../types/tmdb.models";
+import { IAvailableFavoritesTypes } from '../types/tmdb.models'
 
 export const AVAILABLE_SEARCH_TYPES: IAvailableFavoritesTypes[] = [
-  "collection",
-  "movie",
-  "tv",
-  "person",
-];
+  'collection',
+  'movie',
+  'tv',
+  'person',
+]

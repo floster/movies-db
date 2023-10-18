@@ -1,24 +1,24 @@
-import { useLocalStorage } from "usehooks-ts";
-import { useGetListQuery } from "../../store/tmdb/tmdb.api";
-import { AVAILABLE_LIST_OPTIONS } from "../../js/config";
-import { IAvailableListsOptions } from "../../types/tmdb.models";
+import { useLocalStorage } from 'usehooks-ts'
+import { useGetListQuery } from '../../store/tmdb/tmdb.api'
+import { AVAILABLE_LIST_OPTIONS } from '../../js/config'
+import { IAvailableListsOptions } from '../../types/tmdb.models'
 
-import AppError from "../UI/AppError";
-import AppSpinner from "../UI/AppSpinner";
-import MediaListSelect from "./MediaListSelect";
-import MediaList from "./MediaList";
+import AppError from '../UI/AppError'
+import AppSpinner from '../UI/AppSpinner'
+import MediaListSelect from './MediaListSelect'
+import MediaList from './MediaList'
 
 export default function MediaListSection() {
   const [currentListType, setCurrentListType] = useLocalStorage(
-    "currentListType",
+    'currentListType',
     AVAILABLE_LIST_OPTIONS[0]
-  );
+  )
 
-  const { data, isError, isLoading } = useGetListQuery(currentListType);
+  const { data, isError, isLoading } = useGetListQuery(currentListType)
 
   const onListTypeChange = (value: IAvailableListsOptions) => {
-    setCurrentListType(value);
-  };
+    setCurrentListType(value)
+  }
 
   return isError ? (
     <AppError error={`Error occured while fetching ${currentListType}`} />
@@ -34,5 +34,5 @@ export default function MediaListSection() {
         <MediaList media={data || []} />
       )}
     </aside>
-  );
+  )
 }

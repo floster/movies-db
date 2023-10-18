@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import SvgIcon from "./SvgIcon";
+import { useEffect, useState } from 'react'
+import SvgIcon from './SvgIcon'
 
-import { useAppActions, useAppSelector } from "../../hooks/useRedux";
-import { IAvailableFavoritesTypes } from "../../types/tmdb.models";
-import { FavoritesState } from "../../store/favorites.slice";
+import { useAppActions, useAppSelector } from '../../hooks/useRedux'
+import { IAvailableFavoritesTypes } from '../../types/tmdb.models'
+import { FavoritesState } from '../../store/favorites.slice'
 
 /**
  * Checks if an item with the given ID is already in the favorites list.
@@ -17,31 +17,31 @@ const isAlreadyFavorite = (
   type: IAvailableFavoritesTypes,
   favorites: FavoritesState
 ) => {
-  return !!favorites[type].some((item) => item === id);
-};
+  return !!favorites[type].some(item => item === id)
+}
 
 interface Props {
-  type: IAvailableFavoritesTypes;
-  id: number;
-  title: string;
+  type: IAvailableFavoritesTypes
+  id: number
+  title: string
 }
 
 export default function AppFavorite({ type, id, title }: Props) {
-  const { toggle } = useAppActions();
-  const favorites = useAppSelector((state) => state.favorites);
+  const { toggle } = useAppActions()
+  const favorites = useAppSelector(state => state.favorites)
 
   const [checkedState, setCheckedState] = useState(() =>
     isAlreadyFavorite(id, type, favorites)
-  );
+  )
 
   const handleChange = () => {
-    toggle({ type, id });
-    setCheckedState(isAlreadyFavorite(id, type, favorites));
-  };
+    toggle({ type, id })
+    setCheckedState(isAlreadyFavorite(id, type, favorites))
+  }
 
   useEffect(() => {
-    setCheckedState(isAlreadyFavorite(id, type, favorites));
-  }, [favorites, id, type]);
+    setCheckedState(isAlreadyFavorite(id, type, favorites))
+  }, [favorites, id, type])
 
   return (
     <>
@@ -56,5 +56,5 @@ export default function AppFavorite({ type, id, title }: Props) {
         <SvgIcon icon="fire_solid" extraClass="m-solid" />
       </label>
     </>
-  );
+  )
 }
