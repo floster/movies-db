@@ -4,6 +4,7 @@ import {
   IAvailableListsOptions,
   IAvailableSortValues,
   IAvailableFavoritesTypes,
+  IAvalableLocales,
 } from '../types/tmdb.models'
 
 export const AVAILABLE_SEARCH_TYPES: IAvailableFavoritesTypes[] = [
@@ -40,8 +41,7 @@ export const SORT_OPTIONS: SortOption[] = [
   { title: 'Title W-A', value: 'title_desc' },
 ]
 
-export type AvalableLocales = 'en' | 'uk' | 'de'
-type Locale = { title: string; value: AvalableLocales }
+type Locale = { title: string; value: IAvalableLocales }
 
 // TODO: refactor all about locales
 export const LOCALES: Locale[] = [

@@ -4,6 +4,8 @@ export type IAvailableSortValues =
   | 'title_asc'
   | 'title_desc'
 
+export type IAvalableLocales = 'en' | 'uk' | 'de'
+
 export type IAvailableTrendingAndSearchMultiTypes = 'movie' | 'tv' | 'person'
 export type IAvailableFavoritesTypes =
   | IAvailableTrendingAndSearchMultiTypes
