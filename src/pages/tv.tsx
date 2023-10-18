@@ -1,15 +1,12 @@
 import AppSection from '../components/AppSection'
 import AppSectionHeader from '../components/AppSectionHeader'
-import { useCallback, useEffect, useState } from 'react'
 import TvSeason from '../components/Tv/TvSeason'
 import { useParams } from 'react-router-dom'
-import tmdb from '../js/tmdb-api'
-import { ITileData, ITvSeason } from '../types/tmdb.types'
 import AppSpinner from '../components/UI/AppSpinner'
 import AppError from '../components/UI/AppError'
 import { getIdFromLink } from '../js/helpers'
-import { formatTilesData } from '../js/formatters'
 import MediaHero from '../components/MediaHero'
+import { useGetTvEpisodesQuery } from '../store/tmdb/tmdb.api'
 
 type TvParams = {
   id: string
@@ -19,63 +16,37 @@ export default function Tv() {
   const params = useParams<TvParams>()
   const tvId = getIdFromLink(params.id!)
 
-  const [baseSeasons, setBaseSeasons] = useState([] as ITileData[])
-  const [seasons, setSeasons] = useState([] as ITvSeason[])
-  const [isDataError, setIsDataError] = useState(false)
-  const [isDataLoading, setIsDataLoading] = useState(false)
-
-  const getData = useCallback(async () => {
-    try {
-      setIsDataLoading(true)
-      const data = await tmdb.getTvShow(tvId)
-
-      const seasons = await tmdb.getTvShowSeasons(tvId, data.seasons_qty)
-      setSeasons(seasons)
-
-      setBaseSeasons(
-        formatTilesData(data.seasons, 'tv', ['episodes_qty', 'episodes'], true)
-      )
-    } catch (error) {
-      setIsDataError(true)
-      console.error(error)
-    } finally {
-      setIsDataLoading(false)
-    }
-  }, [tvId])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await (getData as () => Promise<void>)()
-    }
-    fetchData()
-  }, [getData])
+  const { data, isError, isLoading } = useGetTvEpisodesQuery(tvId)
 
   return (
     <section className="movie-header">
       <MediaHero id={tvId} type="tv" />
-      {isDataError ? (
-        <AppError error={`Error occured while fetching tv show #${tvId}`} />
-      ) : (
-        <>
+      <>
+        {isError ? (
+          <AppError
+            error={`Error fetching episodes data for tv series #${tvId}`}
+          />
+        ) : (
           <div className="l-content container">
-            <AppSection>
-              <AppSectionHeader
-                title={`${baseSeasons.length} seasons`}
-                alignStart={true}
-              />
-              <div className="l-seasons">
-                {isDataLoading ? (
-                  <AppSpinner visible={true} />
-                ) : (
-                  seasons.map(season => (
+            {!data || isLoading ? (
+              <AppSpinner visible={true} />
+            ) : (
+              <AppSection>
+                <AppSectionHeader
+                  title={`${data.length} seasons`}
+                  alignStart={true}
+                />
+                <div className="l-seasons">
+                  {data.map(season => (
                     <TvSeason season={season} key={season.id} />
-                  ))
-                )}
-              </div>
-            </AppSection>
+                  ))}
+                </div>
+              </AppSection>
+            )}
           </div>
-        </>
-      )}
+        )}
+      </>
+      )
     </section>
   )
 }
