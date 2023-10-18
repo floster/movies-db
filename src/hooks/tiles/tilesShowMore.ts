@@ -23,14 +23,14 @@ export const useTilesShowMore = (tiles: ITile[] | []): UseTilesShowMore => {
   const pagesQty = useMemo(() => {
     const pages = Math.ceil(tiles.length / TILES_QTY_TO_SHOW)
     return pages
-  }, [tiles, TILES_QTY_TO_SHOW])
+  }, [tiles])
 
   // Updates the current tiles to show based on the current page and the total tiles available.
   useEffect(() => {
     const end = TILES_QTY_TO_SHOW * currentPage
     const newTiles = tiles.slice(0, end)
     setCurrentTiles(newTiles)
-  }, [currentPage, tiles, TILES_QTY_TO_SHOW])
+  }, [currentPage, tiles])
 
   const handleShowMore = useCallback(() => {
     if (currentPage >= pagesQty) return

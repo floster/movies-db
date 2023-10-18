@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 
-import { getIdFromLink } from '../js/helpers'
+import { getIdFromLink } from '../utils/helpers'
 
 import MediaHero from '../components/MediaHero'
 import AppSection from '../components/AppSection'

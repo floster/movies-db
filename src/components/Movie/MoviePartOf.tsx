@@ -1,4 +1,4 @@
-import { kebabText } from '../../js/helpers'
+import { kebabText } from '../../utils/helpers'
 import { IRawBelongs } from '../../types/tmdb.models'
 import IconLabeled from '../UI/IconLabeled'
 

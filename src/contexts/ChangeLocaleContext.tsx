@@ -1,6 +1,6 @@
 import { FC, createContext, useContext } from 'react'
-import { AvalableLocales } from '../js/config'
 import { useLocalStorage } from 'usehooks-ts'
+import { AvalableLocales } from '../config'
 
 const DEFAULT_LOCALE = import.meta.env.VITE_DEFAULT_LOCALE
 

@@ -14,7 +14,10 @@ const FavoritesLink: React.FC = () => {
   const calcFavoritesQty = () =>
     collection.length + movie.length + person.length + tv.length
 
-  useEffect(() => setQty(calcFavoritesQty()), [collection, movie, person, tv])
+  useEffect(
+    () => setQty(calcFavoritesQty()),
+    [collection, movie, person, tv, calcFavoritesQty]
+  )
 
   return (
     <Link

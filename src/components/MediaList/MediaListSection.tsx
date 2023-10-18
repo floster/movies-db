@@ -1,6 +1,6 @@
 import { useLocalStorage } from 'usehooks-ts'
 import { useGetListQuery } from '../../store/tmdb/tmdb.api'
-import { AVAILABLE_LIST_OPTIONS } from '../../js/config'
+import { AVAILABLE_LIST_OPTIONS } from '../../config/dummy'
 import { IAvailableListsOptions } from '../../types/tmdb.models'
 
 import AppError from '../UI/AppError'

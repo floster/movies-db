@@ -28,6 +28,7 @@ import {
   IAvailableFavoritesTypes,
   IRawTv,
   IRawTvSeasonResponse,
+  IRawTvSeason,
 } from '../../types/tmdb.models'
 import {
   formatCollectionNew,
@@ -37,7 +38,7 @@ import {
   formatSearchResultsMulti,
   formatTile,
   formatTiles,
-} from '../../js/formatters'
+} from '../../utils/formatters'
 import { TMDB_FETCH_OPTIONS } from '../../config'
 
 // set headers for all requests, main goal is to set Authorization header
@@ -192,7 +193,7 @@ export const tmdbApi = createApi({
 
         // fetch all seasons of tv series "at once"
         const _seasons = await Promise.all(
-          _tv.seasons.map(async (season: any) => {
+          _tv.seasons.map(async (season: IRawTvSeason) => {
             const _seasonResponse = await fetch(
               `https://api.themoviedb.org/3/tv/${id}/season/${season.season_number}?language=en-US`,
               TMDB_FETCH_OPTIONS

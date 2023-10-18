@@ -4,7 +4,7 @@ import TvSeason from '../components/Tv/TvSeason'
 import { useParams } from 'react-router-dom'
 import AppSpinner from '../components/UI/AppSpinner'
 import AppError from '../components/UI/AppError'
-import { getIdFromLink } from '../js/helpers'
+import { getIdFromLink } from '../utils/helpers'
 import MediaHero from '../components/MediaHero'
 import { useGetTvEpisodesQuery } from '../store/tmdb/tmdb.api'
 

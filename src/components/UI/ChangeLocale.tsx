@@ -1,4 +1,4 @@
-import { AvalableLocales, LOCALES } from '../../js/config'
+import { AvalableLocales, LOCALES } from '../../config/dummy'
 import AppSelect from './AppSelect'
 import { useChangeLocale } from '../../contexts/ChangeLocaleContext'
 

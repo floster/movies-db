@@ -1,4 +1,4 @@
-import { formatDate, getPosterUrl } from '../../js/helpers'
+import { formatDate, getPosterUrl } from '../../utils/helpers'
 import { IRawTvEpisode } from '../../types/tmdb.models'
 import AppPicture from '../UI/AppPicture'
 
