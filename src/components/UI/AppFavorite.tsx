@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import SvgIcon from './SvgIcon'
 
 import { useAppActions, useAppSelector } from '../../hooks/useRedux'
 import { IAvailableFavoritesTypes } from '../../types/tmdb.models'
-import { FavoritesState } from '../../store/slices/favorites.slice'
 
 /**
  * Checks if an item with the given ID is already in the favorites list.
@@ -12,13 +11,6 @@ import { FavoritesState } from '../../store/slices/favorites.slice'
  * @param {FavoritesState} favorites - The favorites state object.
  * @returns {boolean} Whether the item is already in the favorites list.
  */
-const isAlreadyFavorite = (
-  id: number,
-  type: IAvailableFavoritesTypes,
-  favorites: FavoritesState
-) => {
-  return !!favorites[type].some(item => item === id)
-}
 
 interface Props {
   type: IAvailableFavoritesTypes
@@ -30,18 +22,20 @@ export default function AppFavorite({ type, id, title }: Props) {
   const { toggle } = useAppActions()
   const favorites = useAppSelector(state => state.favorites)
 
-  const [checkedState, setCheckedState] = useState(() =>
-    isAlreadyFavorite(id, type, favorites)
-  )
+  const isAlreadyFavorite = useMemo(() => {
+    return favorites[type].some(item => item === id)
+  }, [favorites, id, type])
+
+  const [checkedState, setCheckedState] = useState(isAlreadyFavorite)
 
   const handleChange = () => {
     toggle({ type, id })
-    setCheckedState(isAlreadyFavorite(id, type, favorites))
+    setCheckedState(isAlreadyFavorite)
   }
 
   useEffect(() => {
-    setCheckedState(isAlreadyFavorite(id, type, favorites))
-  }, [favorites, id, type])
+    setCheckedState(isAlreadyFavorite)
+  }, [isAlreadyFavorite])
 
   return (
     <>
