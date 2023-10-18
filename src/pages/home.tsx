@@ -1,8 +1,8 @@
 import AppSection from '../components/AppSection'
 import MediaListSection from '../components/MediaList/MediaListSection'
 import AppSectionHeader from '../components/AppSectionHeader'
-import TrendingsCarousel from '../components/TrendingsCarousel'
-import RandomMedia from '../components/RandomMedia'
+import TrendingsCarousel from '../components/Home/TrendingsCarousel'
+import RandomMedia from '../components/Home/RandomMedia'
 import { IAvailableTrendingAndSearchMultiTypes } from '../types/tmdb.models'
 
 export default function Home() {

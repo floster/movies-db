@@ -2,7 +2,7 @@ const DEBOUNCE_DELAY = 500
 const MIN_SEARCH_TERM_LENGTH = 4
 
 import { useEffect, useState } from 'react'
-import { useSearchCollectionQuery } from '../../store/tmdb/tmdb.api'
+import { useSearchCollectionQuery } from '../../store/api/tmdb.api'
 import { useDebounce } from '../debounce'
 
 /**

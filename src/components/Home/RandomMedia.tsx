@@ -1,5 +1,5 @@
-import { COLLECTIONS } from '../config/dummy'
-import MediaHero from './MediaHero'
+import { COLLECTIONS } from '../../config/dummy'
+import MediaHero from '../MediaHero'
 
 export default function RandomMedia() {
   const id = COLLECTIONS[Math.floor(Math.random() * COLLECTIONS.length)]

@@ -12,7 +12,7 @@ import AppTile from '../components/AppTile'
 import ShowMoreBtn from '../components/UI/ShowMoreBtn'
 
 import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
-import { useGetMovieCreditsQuery } from '../store/tmdb/tmdb.api'
+import { useGetMovieCreditsQuery } from '../store/api/tmdb.api'
 
 type MovieParams = {
   id: string

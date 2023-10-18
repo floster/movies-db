@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { IAvailableFavoritesTypes } from '../types/tmdb.models'
+import { IAvailableFavoritesTypes } from '../../types/tmdb.models'
 
 const LS_FAVORITES_KEY = 'rtk_favorites'
 

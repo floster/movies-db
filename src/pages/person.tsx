@@ -17,7 +17,7 @@ import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
 import {
   useGetPersonMovieCreditsQuery,
   useGetPersonTvCreditsQuery,
-} from '../store/tmdb/tmdb.api'
+} from '../store/api/tmdb.api'
 
 type PersonParams = {
   id: string

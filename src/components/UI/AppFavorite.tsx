@@ -3,7 +3,7 @@ import SvgIcon from './SvgIcon'
 
 import { useAppActions, useAppSelector } from '../../hooks/useRedux'
 import { IAvailableFavoritesTypes } from '../../types/tmdb.models'
-import { FavoritesState } from '../../store/favorites.slice'
+import { FavoritesState } from '../../store/slices/favorites.slice'
 
 /**
  * Checks if an item with the given ID is already in the favorites list.

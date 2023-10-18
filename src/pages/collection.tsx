@@ -13,7 +13,7 @@ import ShowMoreBtn from '../components/UI/ShowMoreBtn'
 import { useSortOption } from '../hooks/useSortOption'
 import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
 import { useTilesSort } from '../hooks/tiles/tilesSort'
-import { useGetCollectionQuery } from '../store/tmdb/tmdb.api'
+import { useGetCollectionQuery } from '../store/api/tmdb.api'
 
 type CollectionParams = {
   id: string

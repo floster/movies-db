@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLazyGetMediaTileQuery } from '../../store/tmdb/tmdb.api'
+import { useLazyGetMediaTileQuery } from '../../store/api/tmdb.api'
 import { ITile } from '../../types/tmdb.models'
 import { IAvailableFavoritesTypes } from '../../types/tmdb.models'
 
