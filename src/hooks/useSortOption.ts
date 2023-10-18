@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { UTSortValues } from '../types/tmdb.types'
+import { IAvailableSortValues } from '../types/tmdb.models'
 
 const defaultSortOption = import.meta.env
-  .VITE_DEFAULT_SORT_OPTION as UTSortValues
+  .VITE_DEFAULT_SORT_OPTION as IAvailableSortValues
 
 interface UseSortOption {
-  currentSortOption: UTSortValues
+  currentSortOption: IAvailableSortValues
   onSortChange: (option: string) => void
 }
 
@@ -15,7 +15,7 @@ interface UseSortOption {
  */
 export const useSortOption = (): UseSortOption => {
   const [currentSortOption, setCurrentSortOption] = useState(
-    defaultSortOption as UTSortValues
+    defaultSortOption as IAvailableSortValues
   )
 
   /**
@@ -24,7 +24,7 @@ export const useSortOption = (): UseSortOption => {
    * @returns {void}
    */
   const onSortChange = (option: string): void =>
-    setCurrentSortOption(option as UTSortValues)
+    setCurrentSortOption(option as IAvailableSortValues)
 
   return {
     currentSortOption,

@@ -1,4 +1,4 @@
-import { AvalableLocales, LOCALES } from '../config/dummy'
+import { AvalableLocales, LOCALES } from '../config'
 import {
   IAvailableSortValues,
   IAvailableTileFields,

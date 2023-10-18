@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { ITileData, UTFavoritesType } from '../types/tmdb.types'
+import { ITile, IAvailableFavoritesTypes } from '../types/tmdb.models'
 import AppFavorite from './UI/AppFavorite'
 import AppPicture from './UI/AppPicture'
 import AppProgress from './UI/AppProgress'
@@ -8,7 +8,7 @@ import TorrentSearch from './UI/TorrentSearch'
 // import { useFavorites } from "../contexts/FavoritesContext";
 
 interface AppTileProps {
-  tile: ITileData
+  tile: ITile
   isRow?: boolean
   extraLabel?: 'year' | 'type'
 }
@@ -39,7 +39,7 @@ const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
 
       {true && (
         <AppFavorite
-          type={tile.type as UTFavoritesType}
+          type={tile.type as IAvailableFavoritesTypes}
           id={tile.id}
           title={tile.title}
         />

@@ -1,4 +1,4 @@
-import { SORT_OPTIONS } from '../config/dummy'
+import { SORT_OPTIONS } from '../config/'
 import AppSelect from './UI/AppSelect'
 
 interface Props {
