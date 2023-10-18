@@ -9,7 +9,7 @@ import TorrentSearch from './UI/TorrentSearch'
 import { FC } from 'react'
 
 import { useDocumentTitle } from 'usehooks-ts'
-import { useGetMediaHeroQuery } from '../store/tmdb/tmdb.api'
+import { useGetMediaHeroQuery } from '../store/api/tmdb.api'
 import { IAvailableMediaHeroTypes } from '../types/tmdb.models'
 import IconLabeled from './UI/IconLabeled'
 

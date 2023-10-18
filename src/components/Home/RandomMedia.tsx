@@ -1,8 +1,8 @@
-import tmdb from '../js/tmdb-api'
-import MediaHero from './MediaHero'
+import { COLLECTIONS } from '../../config/dummy'
+import MediaHero from '../MediaHero'
 
 export default function RandomMedia() {
-  const id = tmdb.getRandomCollectionId()
+  const id = COLLECTIONS[Math.floor(Math.random() * COLLECTIONS.length)]
 
   return (
     <div className="random-media">

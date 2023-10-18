@@ -1,9 +1,9 @@
-import AppError from './UI/AppError'
-import AppTile from './AppTile'
-import AppSpinner from './UI/AppSpinner'
+import AppError from '../UI/AppError'
+import AppTile from '../AppTile'
+import AppSpinner from '../UI/AppSpinner'
 
-import { useGetTrendingsQuery } from '../store/tmdb/tmdb.api'
-import { IAvailableTrendingAndSearchMultiTypes } from '../types/tmdb.models'
+import { useGetTrendingsQuery } from '../../store/api/tmdb.api'
+import { IAvailableTrendingAndSearchMultiTypes } from '../../types/tmdb.models'
 
 interface Props {
   itemsType: IAvailableTrendingAndSearchMultiTypes

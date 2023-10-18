@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import SvgIcon from './SvgIcon'
-import { formatSearchTerm } from '../../js/formatters'
+import { formatSearchTerm } from '../../utils/formatters'
 interface TorrentSearchProps {
   term: string
 }

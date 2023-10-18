@@ -3,7 +3,7 @@ import { RootState } from '../store/store'
 
 import { bindActionCreators } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
-import { favoritesActions } from '../store/favorites.slice'
+import { favoritesActions } from '../store/slices/favorites.slice'
 
 /**
  * A custom hook that wraps the `useSelector` hook from `react-redux` and is used to type the `RootState`.

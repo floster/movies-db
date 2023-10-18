@@ -1,7 +1,7 @@
 import {
   useSearchCollectionQuery,
   useSearchMultiQuery,
-} from '../../store/tmdb/tmdb.api'
+} from '../../store/api/tmdb.api'
 import { ISearchResultsState } from '../../types/tmdb.models'
 
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env

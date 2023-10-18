@@ -1,16 +1,19 @@
-import { AvalableLocales, LOCALES } from '../../js/config'
+import { useState } from 'react'
+import { LOCALES } from '../../config/'
+import { IAvalableLocales } from '../../types/tmdb.models'
 import AppSelect from './AppSelect'
-import { useChangeLocale } from '../../contexts/ChangeLocaleContext'
 
 const ChangeLocale = () => {
-  const { currentLocale, changeLocale } = useChangeLocale()
+  // TODO: meke it with Redux
+  const [locale, setLocale] = useState(LOCALES[0].value)
+  const changeLocale = (locale: IAvalableLocales) => setLocale(locale)
 
   return (
     <>
       <AppSelect
         options={LOCALES}
-        currentOption={currentLocale}
-        optionChanged={locale => changeLocale(locale as AvalableLocales)}
+        currentOption={locale}
+        optionChanged={locale => changeLocale(locale as IAvalableLocales)}
       />
     </>
   )

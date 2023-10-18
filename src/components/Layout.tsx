@@ -4,20 +4,17 @@ import '../app.scss'
 import AppDialog from './AppDialog'
 import QuickSearchForm from './QuickSearch/QuickSearchForm'
 import { SearchDialogProvider } from '../contexts/SearchDialogContext'
-import { ChangeLocaleProvider } from '../contexts/ChangeLocaleContext'
 
 export default function Layout() {
   return (
     <SearchDialogProvider>
-      <ChangeLocaleProvider>
-        <AppHeader />
+      <AppHeader />
 
-        <Outlet />
+      <Outlet />
 
-        <AppDialog>
-          <QuickSearchForm />
-        </AppDialog>
-      </ChangeLocaleProvider>
+      <AppDialog>
+        <QuickSearchForm />
+      </AppDialog>
     </SearchDialogProvider>
   )
 }

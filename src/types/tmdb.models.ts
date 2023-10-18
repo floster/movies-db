@@ -1,3 +1,11 @@
+export type IAvailableSortValues =
+  | 'year_asc'
+  | 'year_desc'
+  | 'title_asc'
+  | 'title_desc'
+
+export type IAvalableLocales = 'en' | 'uk' | 'de'
+
 export type IAvailableTrendingAndSearchMultiTypes = 'movie' | 'tv' | 'person'
 export type IAvailableFavoritesTypes =
   | IAvailableTrendingAndSearchMultiTypes
@@ -134,9 +142,9 @@ export interface IRawPerson {
   also_known_as: string[]
   biography: string
   birthday: string
-  deathday: any
+  deathday: string
   gender: number
-  homepage: any
+  homepage: string | null
   id: number
   imdb_id: string
   known_for_department: string
@@ -161,7 +169,7 @@ export interface IRawTv {
   last_air_date: string
   last_episode_to_air: _LastEpisodeToAir
   name: string
-  next_episode_to_air: any
+  next_episode_to_air: IRawTvEpisode | null
   networks: _Network[]
   number_of_episodes: number
   number_of_seasons: number

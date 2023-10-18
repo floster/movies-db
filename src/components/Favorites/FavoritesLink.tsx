@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useAppSelector } from '../../hooks/useRedux'
 import SvgIcon from '../UI/SvgIcon'
 import { Link } from 'react-router-dom'
@@ -11,10 +11,12 @@ const FavoritesLink: React.FC = () => {
     state => state.favorites
   )
 
-  const calcFavoritesQty = () =>
-    collection.length + movie.length + person.length + tv.length
+  const calcFavoritesQty = useMemo(
+    () => collection.length + movie.length + person.length + tv.length,
+    [collection, movie, person, tv]
+  )
 
-  useEffect(() => setQty(calcFavoritesQty()), [collection, movie, person, tv])
+  useEffect(() => setQty(calcFavoritesQty), [calcFavoritesQty])
 
   return (
     <Link

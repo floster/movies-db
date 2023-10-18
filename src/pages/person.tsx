@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 
-import { getIdFromLink } from '../js/helpers'
+import { getIdFromLink } from '../utils/helpers'
 
 import MediaHero from '../components/MediaHero'
 import AppSection from '../components/AppSection'
@@ -17,7 +17,7 @@ import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
 import {
   useGetPersonMovieCreditsQuery,
   useGetPersonTvCreditsQuery,
-} from '../store/tmdb/tmdb.api'
+} from '../store/api/tmdb.api'
 
 type PersonParams = {
   id: string
@@ -37,9 +37,6 @@ const Person: React.FC = () => {
     isError: isTvCreditsError,
     isLoading: isTvCreditsLoading,
   } = useGetPersonTvCreditsQuery(personId)
-
-  console.log('movieCredits', movieCredits)
-  console.log('tvCredits', tvCredits)
 
   const movieCreditsSortOption = useSortOption()
   const tvCreditsSortOption = useSortOption()

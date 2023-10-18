@@ -1,26 +1,27 @@
-import { AvalableLocales, LOCALES } from './config'
-import { ITileData, UTSortValues } from '../types/tmdb.types'
-import { IAvailableTileFields, IMediaTypes, ITile } from '../types/tmdb.models'
+import { AvalableLocales, LOCALES } from '../config'
+import {
+  IAvailableSortValues,
+  IAvailableTileFields,
+  IMediaTypes,
+  ITile,
+} from '../types/tmdb.models'
 
 /**
  * Filters an array of tile data to remove any tiles with a placeholder image.
- *
- * @param {ITileData[]} tiles - The array of tile data to filter.
- * @returns {ITileData[]} The filtered array of tile data.
  */
 export const filterNoImage = (tiles: ITile[]): ITile[] =>
   tiles.filter(tile => tile.poster.includes('via.placeholder.com') === false)
 
 /**
  * Filters an array of tile data to remove any tiles with an 'uncredited' label.
- *
- * @param {ITileData[]} tiles - The array of tile data to filter.
- * @returns {ITileData[]} The filtered array of tile data.
  */
 export const filterUncredits = (tiles: ITile[]): ITile[] =>
   tiles.filter(tile => tile.label.includes('uncredited') === false)
 
-export function tilesSort<T>(tiles: T[], option: UTSortValues): T[] {
+/**
+ * Sorts an array of tile data by a specified property.
+ */
+export function tilesSort<T>(tiles: T[], option: IAvailableSortValues): T[] {
   const sortBy = option.split('_')[0] as keyof T
   const sortOrder = option.split('_')[1] as 'asc' | 'desc'
 
@@ -32,13 +33,8 @@ export function tilesSort<T>(tiles: T[], option: UTSortValues): T[] {
 
 /**
  * Filters an array of tile data to pull any tiles with a placeholder image to the end.
- *
- * @param {ITileData[]} tiles - The array of tile data to filter.
- * @returns {ITileData[]} Array with tiles without poster in the end.
  */
-export const pullTilesWithoutPosterToTheEnd = (
-  tiles: ITileData[]
-): ITileData[] => {
+export const pullTilesWithoutPosterToTheEnd = (tiles: ITile[]): ITile[] => {
   const withPoster = tiles.filter(tile =>
     tile.poster.includes('image.tmdb.org')
   )
@@ -50,61 +46,6 @@ export const pullTilesWithoutPosterToTheEnd = (
 }
 
 /**
- * Splits an array into a two-dimensional array of smaller arrays.
- *
- * @template T
- * @param {T[]} arr - The array to split.
- * @param {number} tilesPerPage - The number of pages to split the array into.
- * @returns {T[][]} An array of smaller arrays.
- */
-export const splitArray = <T>(arr: T[], tilesPerPage: number): T[][] | null => {
-  if (!arr.length) return null
-  if (tilesPerPage < 1) return [arr]
-  if (arr.length < tilesPerPage) return [arr]
-
-  const arrCopy = [...arr]
-  const pages = Math.ceil(arrCopy.length / tilesPerPage)
-
-  const result = []
-  for (let i = 0; i < pages; i++) {
-    result.push(arrCopy.splice(0, tilesPerPage))
-  }
-  return result
-}
-
-/**
- * Returns a portion of an array starting from a specified index and containing a specified number of elements.
- *
- * @template T
- * @param {T[]} arr - The input array to extract elements from.
- * @param {number} startFrom - The index to start extracting elements from.
- * @param {number} tilesQty - The number of elements to extract.
- * @returns {T[]} A new array containing the extracted elements.
- */
-export const getTilesPortion = <T>(
-  arr: T[],
-  startFrom: number,
-  tilesQty: number
-): T[] => {
-  if (startFrom < 0) return []
-  if (tilesQty < 1) return []
-  if (arr.length < tilesQty) return arr
-
-  return arr.slice(startFrom, startFrom + tilesQty)
-}
-
-/**
- * Cut an array to a specified size.
- * @template T - The type of elements in the input array.
- * @param {T[]} arr - The input array to cut.
- * @param {number} size - The number of elements to include in the output array.
- * @returns {T[]} - A new array containing the first `size` elements of the input array.
- */
-export function cutArray<T>(arr: T[], size: number): T[] {
-  return [...arr].splice(0, size)
-}
-
-/**
  * Extracts the ID from a link string and returns it as a number.
  * Used to extract ID from URL created by 'createLink' function.
  * @param {string} link - The link string to extract the ID from.
@@ -112,10 +53,6 @@ export function cutArray<T>(arr: T[], size: number): T[] {
  */
 export const getIdFromLink = (link: string): number =>
   parseInt(link.split('-')[0])
-
-////////////////////////////////////////
-////////// general formatters //////////
-////////////////////////////////////////
 
 // TODO: refactor all about locales
 export const getCurrentLocale = () =>
@@ -132,8 +69,6 @@ export const getLocalCountryCode = () => {
 
 /**
  * Formats a date object
- * @param date - The date object to be formatted.
- * @returns An object with the 'MMM DD, YYYY' date and the year itself.
  */
 // FIXME: find a better way to store current locale and country code
 export const formatDate = (date: string | null) => {
@@ -163,10 +98,6 @@ export const kebabText = (link: string) => {
 
 /**
  * Creates a link string from the provided type, ID, and title.
- * @param {string} type - The type of the link (e.g. 'movie', 'tv', etc.).
- * @param {number} id - The ID of the item to link to.
- * @param {string} title - The title of the item to link to.
- * @returns {string} - A link string that looks like '/movie/12345-the-movie-title'.
  */
 export const createLink = (
   type: IMediaTypes,
@@ -178,9 +109,6 @@ export const createLink = (
 
 /**
  * Creates a link from tile data.
- *
- * @param {IAvailableTileFields} tile - The tile data to create a link from.
- * @returns {string} The created link.
  */
 export const createLinkFromTileData = (
   tile: IAvailableTileFields,
@@ -193,9 +121,6 @@ export const createLinkFromTileData = (
 
 /**
  * Determines the media type of a given tile based on its properties.
- *
- * @param {IAvailableTileFields} tile - The tile to determine the media type of.
- * @returns {IMediaTypes} The media type of the tile ("movie" or "tv").
  */
 export const realizeMediaType = (tile: IAvailableTileFields): IMediaTypes => {
   return tile.media_type // 'movie' -> exists in ICollectionPart

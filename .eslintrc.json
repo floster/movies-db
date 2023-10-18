@@ -17,6 +17,8 @@
   },
   "plugins": ["@typescript-eslint", "react", "react-refresh"],
   "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
     "prettier/prettier": [
       "warn",
       {

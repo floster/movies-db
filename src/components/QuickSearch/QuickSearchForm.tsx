@@ -5,7 +5,7 @@ import AppError from '../UI/AppError'
 import AppSpinner from '../UI/AppSpinner'
 import { useSearchDialog } from '../../contexts/SearchDialogContext'
 import { SearchForm } from '../SearchForm'
-import { formatSearchTerm } from '../../js/formatters'
+import { formatSearchTerm } from '../../utils/formatters'
 import useSearch from '../../hooks/search/search'
 
 export default function QuickSearchForm() {

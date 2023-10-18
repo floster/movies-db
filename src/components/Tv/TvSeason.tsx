@@ -2,7 +2,7 @@ import AppPicture from '../UI/AppPicture'
 import AppProgress from '../UI/AppProgress'
 import TvEpisode from './TvEpisode'
 import { IRawTvSeasonResponse } from '../../types/tmdb.models'
-import { formatDate, getPosterUrl } from '../../js/helpers'
+import { formatDate, getPosterUrl } from '../../utils/helpers'
 
 interface TvSeasonProps {
   season: IRawTvSeasonResponse
