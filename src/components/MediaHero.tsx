@@ -1,148 +1,103 @@
-import SvgIcon from "./SvgIcon";
-import AppPicture from "./AppPicture";
-import AppSpinner from "./AppSpinner";
-import AppFavorite from "./AppFavorite";
-import AppProgress from "./AppProgress";
-import MoviePartOf from "./MoviePartOf";
-import AppError from "./AppError";
-import TorrentSearch from "./TorrentSearch";
+import AppPicture from './UI/AppPicture'
+import AppSpinner from './UI/AppSpinner'
+import AppFavorite from './UI/AppFavorite'
+import AppProgress from './UI/AppProgress'
+import MoviePartOf from './Movie/MoviePartOf'
+import AppError from './UI/AppError'
+import TorrentSearch from './UI/TorrentSearch'
 
-import { IBaseMovie, ICollection, IMovie, ITv, IGenre, UMediaTypes, UMediaHeroData, IPerson } from "../types/tmdb.types";
-import { FC, useCallback, useEffect, useState } from "react";
-import tmdb from "../js/tmdb-api";
+import { FC } from 'react'
 
-import { useDocumentTitle } from "@uidotdev/usehooks";
+import { useDocumentTitle } from 'usehooks-ts'
+import { useGetMediaHeroQuery } from '../store/api/tmdb.api'
+import { IAvailableMediaHeroTypes } from '../types/tmdb.models'
+import IconLabeled from './UI/IconLabeled'
 
 interface MediaHeroProps {
-    id: number;
-    type: UMediaTypes;
-    withLink?: boolean;
+  id: number
+  type: IAvailableMediaHeroTypes
+  withLink?: boolean
 }
 
 const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
-    const [data, setData] = useState({} as UMediaHeroData);
-    const [isDataLoading, setIsDataLoading] = useState(false);
-    const [isDataError, setIsDataError] = useState(false);
+  const { data, isError, isLoading } = useGetMediaHeroQuery({
+    type,
+    id,
+  })
 
-    const title = isDataLoading ? 'loading...' : withLink ? 'Movies DB' : data.title ? `${data.title} - Movies DB` : `${type} - Movies DB`;
-    useDocumentTitle(title);
+  const title = isLoading
+    ? 'loading...'
+    : withLink // FIXME: search for a better way to do this
+    ? 'Movies DB'
+    : data?.title
+    ? `${data.title} - Movies DB`
+    : `${type} - Movies DB`
+  useDocumentTitle(title)
 
-    const getData = useCallback(async (): Promise<void> => {
-        try {
-            setIsDataLoading(true);
-            let data = {} as UMediaHeroData;
-            switch (type) {
-                case 'collection':
-                    data = await tmdb.getCollection(id);
-                    setData(data);
-                    break;
-                case 'movie':
-                    data = await tmdb.getMovie(id);
-                    setData(data);
-                    break;
-                case 'tv':
-                    data = await tmdb.getTvShow(id);
-                    setData(data);
-                    break;
-                case 'person':
-                    data = await tmdb.getPerson(id);
-                    setData(data);
-                    break;
-                default:
-                    setIsDataError(true);
-            }
-        } catch (error) {
-            setIsDataError(true);
-            console.error(error);
-        } finally {
-            setIsDataLoading(false);
-        }
-    }, [id, type]);
-
-    useEffect(() => {
-        async function fetchData() {
-            await getData();
-        }
-        fetchData();
-    }, [getData]);
-
-    const renderTags = () => {
-        const tags = (data as IMovie).genres?.map((genre: IGenre) => <li key={genre.id}>{genre.name}</li>);
-        return <ul className="media-hero__tags">{tags}</ul>
-    }
-
-    const isTv = type === 'tv' && (data as ITv).released && (data as ITv).finished;
-    const isPerson = type === 'person';
-    const backdrop = `url(${data.backdrop})`;
-    const hasGenres = (data as IBaseMovie).genres;
-    const hasTagline = (data as IMovie | ITv).tagline;
-    const hasRating = (data as IMovie).votes;
-    const hasParts = (data as ICollection).partsCount;
-    const hasSeasons = (data as ITv).seasons_qty;
-    const hasBelongsTo = (data as IMovie).belongs_to_collection;
-    const hasDate = type !== 'tv' && (data as IMovie).released;
-    const hasTorrentSearch = type === 'tv' || type === 'movie' || type === 'season'
-
-    const personDates = `${(data as IPerson).birthday?.date}${(data as IPerson).deathday?.date !== '-' ? ' - ' + (data as IPerson).deathday?.date : ''}`;
-
-    const date = hasDate ? (data as IMovie | ITv).released
-        : isPerson ? personDates
-            : isTv ? `${(data as ITv).year} - ${(data as ITv).finished.year}`
-                : null;
-
-    const heroInner = (
-        <div className='media-hero__inner container'>
-            <div className="media-hero__picture">
-                <AppPicture img={data.poster} alt={data.title} />
-                {hasRating && <AppProgress value={(data as IMovie).votes?.average} />}
-            </div>
-            <div className="media-hero__content">
-                {withLink && <a href={`/${type}/${id}`} className="media-hero__link">{data.title}</a>}
-                {!withLink && <h2 className="media-hero__title">{data.title}</h2>}
-
-                {hasGenres && renderTags()}
-                {hasTagline && <h3 className="media-hero__subtitle">{(data as IMovie).tagline}</h3>}
-                {(isPerson && (data as IPerson).place_of_birth) && <h3 className="media-hero__subtitle">{(data as IPerson).place_of_birth}</h3>}
-
-                {isPerson && <p className="media-hero__tags">{(data as IPerson).department}</p>}
-
-                <p className="media-hero__description">{data.overview}</p>
-            </div>
-            <footer className="media-hero__footer">
-                <AppFavorite checked={true} title={data.title} />
-
-                {date && <span className='icon-labeled m-text_light m-text_normal'>
-                    <SvgIcon icon="calendar" />
-                    <span className="icon-labeled__label">
-                        {date}
-                    </span>
-                </span>}
-
-                {(hasParts || hasSeasons) &&
-                    <span className='icon-labeled m-text_light m-text_normal'>
-                        <SvgIcon icon="stack" />
-                        <span className="icon-labeled__label">
-                            {hasParts && (data as ICollection).partsCount + ' parts'}
-                            {hasSeasons && (data as ITv).seasons_qty + ' seasons'}
-                        </span>
-                    </span>
-                }
-
-                {hasTorrentSearch && <TorrentSearch term={data.title} />}
-
-                {hasBelongsTo && <MoviePartOf data={(data as IMovie).belongs_to_collection} />}
-            </footer>
-        </div>
-    )
-
+  if (isError)
     return (
-        isDataError
-            ? <AppError error={`MediaHero: Error occured while fetching hero data for the ${type} #${id}`} />
-            : isDataLoading ? <AppSpinner visible={true} />
-                : <div className="media-hero" style={{ "--backdrop-image": backdrop } as React.CSSProperties}>
-                    {heroInner}
-                </div>
+      <AppError
+        error={`MediaHero: Error occured while fetching hero data for the ${type} #${id}`}
+      />
     )
+
+  if (!data && !isLoading) return null
+
+  // TODO: make below works
+  // const renderTags = () => {
+  //   const tags = data.tags?.map((genre: IGenre) => (
+  //     <li key={genre.id}>{genre.name}</li>
+  //   ));
+  //   return <ul className="media-hero__tags">{tags}</ul>;
+  // };
+
+  return isLoading ? (
+    <AppSpinner visible={true} />
+  ) : (
+    <div
+      className="media-hero"
+      style={{ '--backdrop-image': data.backdrop } as React.CSSProperties}>
+      <div className="media-hero__inner container">
+        <div className="media-hero__picture">
+          <AppPicture img={data.poster} alt={data.title} />
+          {data.rating && <AppProgress value={data.rating} />}
+        </div>
+        <div className="media-hero__content">
+          {withLink && data.link ? (
+            <a href={data.link} className="media-hero__link">
+              {data.title}
+            </a>
+          ) : (
+            <h2 className="media-hero__title">{data.title}</h2>
+          )}
+
+          {/* {hasGenres && renderTags()} */}
+          {data.subtitle && (
+            <p className="media-hero__subtitle">{data.subtitle}</p>
+          )}
+
+          {data.tags && <p className="media-hero__tags">{data.tags}</p>}
+
+          <p className="media-hero__description">{data.description}</p>
+        </div>
+        <footer className="media-hero__footer">
+          <AppFavorite type={type} id={id} title={data.title} />
+
+          {data.date && data.date !== '' && (
+            <IconLabeled icon="calendar" label={data.date} />
+          )}
+
+          {data.partsSeasons && (
+            <IconLabeled icon="stack" label={data.partsSeasons} />
+          )}
+
+          {data.torrent && <TorrentSearch term={data.title} />}
+
+          {data.belongs && <MoviePartOf data={data.belongs} />}
+        </footer>
+      </div>
+    </div>
+  )
 }
 
-export default MediaHero;
+export default MediaHero

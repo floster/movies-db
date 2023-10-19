@@ -7,12 +7,11 @@ import Layout from './components/Layout'
 import NoMatch from './pages/404'
 import Favorites from './pages/favorites'
 import Tv from './pages/tv'
-import Search from './pages/search';
+import Search from './pages/search'
 
 // [ ] TODO: animation for tiles when 'show more' clicked | sorting changed
 
 export default function App() {
-
   return (
     <BrowserRouter>
       <Routes>
@@ -27,7 +26,7 @@ export default function App() {
           <Route path="search/" element={<Search />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
-      </Routes >
+      </Routes>
     </BrowserRouter>
   )
 }

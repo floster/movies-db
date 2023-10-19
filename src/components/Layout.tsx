@@ -1,23 +1,19 @@
-import { Outlet } from "react-router-dom";
-import AppHeader from "./AppHeader";
+import { Outlet } from 'react-router-dom'
+import AppHeader from './AppHeader'
 import '../app.scss'
-import AppDialog from "./AppDialog";
-import QuickSearchForm from "./QuickSearchForm";
-import { SearchDialogProvider } from "../contexts/SearchDialogContext";
-import { ChangeLocaleProvider } from "../contexts/ChangeLocaleContext";
+import AppDialog from './AppDialog'
+import QuickSearchForm from './QuickSearch/QuickSearchForm'
 
 export default function Layout() {
-    return (
-        <SearchDialogProvider>
-            <ChangeLocaleProvider>
-                <AppHeader />
+  return (
+    <>
+      <AppHeader />
 
-                <Outlet />
+      <Outlet />
 
-                <AppDialog>
-                    <QuickSearchForm />
-                </AppDialog>
-            </ChangeLocaleProvider>
-        </SearchDialogProvider>
-    )
+      <AppDialog>
+        <QuickSearchForm />
+      </AppDialog>
+    </>
+  )
 }

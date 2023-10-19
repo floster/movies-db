@@ -1,108 +1,86 @@
-import AppSection from '../components/AppSection';
-import AppSectionHeader from '../components/AppSectionHeader';
-import { FC, useCallback, useEffect, useState } from 'react';
-import MediaHero from '../components/MediaHero';
-import MovieCrew from '../components/MovieCrew';
-import AppTile from '../components/AppTile';
-import { useParams } from 'react-router-dom';
-import tmdb from '../js/tmdb-api';
-import { IMovieCrew } from '../types/tmdb.types';
-import AppSpinner from '../components/AppSpinner';
-import AppError from '../components/AppError';
-import { cutArray, filterNoImage, filterUncredits, getIdFromLink } from '../js/helpers';
-import { formatTilesData } from '../js/formatters';
+import { useParams } from 'react-router-dom'
 
-import { useTilesPagination } from './../hooks/useTilesPagination'
+import { getIdFromLink } from '../utils/helpers'
+
+import MediaHero from '../components/MediaHero'
+import AppSection from '../components/AppSection'
+import AppSectionHeader from '../components/AppSectionHeader'
+import AppSpinner from '../components/UI/AppSpinner'
+import AppError from '../components/UI/AppError'
+import MovieCrew from '../components/Movie/MovieCrew'
+import AppTile from '../components/AppTile'
+import ShowMoreBtn from '../components/UI/ShowMoreBtn'
+
+import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
+import { useGetMovieCreditsQuery } from '../store/api/tmdb.api'
 
 type MovieParams = {
-  id: string;
+  id: string
 }
 
-const Movie: FC = () => {
-  const params = useParams<MovieParams>();
-  const movieId = getIdFromLink(params.id!);
+const Movie: React.FC = () => {
+  const params = useParams<MovieParams>()
+  const movieId = getIdFromLink(params.id!)
 
-  const [, setCrew] = useState([] as IMovieCrew[]);
-  const [crewToShow, setCrewToShow] = useState([] as IMovieCrew[]);
-
-  const [isDataLoading, setIsDataLoading] = useState(false);
-  const [isDataError, setIsDataError] = useState(false);
+  const { data, isError, isLoading } = useGetMovieCreditsQuery(movieId)
 
   const {
-    quantity: castQuantity,
+    pagesQty,
     currentPage: currentCastPage,
     currentTiles: currentCast,
-    handleShowMore: handleShowMoreCast,
-    initPagination: initCastPagination
-  } = useTilesPagination();
-
-  const getData = useCallback(async () => {
-    try {
-      setIsDataLoading(true);
-      const data = await tmdb.getMovieCredits(movieId);
-
-      setCrew(data.crew);
-      setCrewToShow(cutArray(data.crew, 6));
-      const formattedCast = formatTilesData(data.cast, 'person', 'character', false, false);
-      const avoidNoImages = filterNoImage(formattedCast);
-      const avoidUncredits = filterUncredits(avoidNoImages);
-      initCastPagination(avoidUncredits);
-    } catch (error) {
-      setIsDataError(true);
-      console.error(error);
-    } finally {
-      setIsDataLoading(false);
-    }
-  }, [movieId]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await (getData as () => Promise<void>)();
-    };
-    fetchData();
-  }, [getData]);
-
+    handleShowMore,
+  } = useTilesShowMore(data?.cast ? data.cast : [])
 
   return (
     <section className="movie-header">
-      <MediaHero id={movieId} type='movie' />
-      {isDataError
-        ? <AppError error={`Error occured while fetching movie #${movieId} credits`} />
-        : <>
-          {crewToShow.length !== 0 && <AppSection extraClass="m-movie_crew">
-            <div className="container">
-              {isDataLoading
-                ? <AppSpinner visible={true} />
-                : <MovieCrew members={crewToShow} />
-              }
-              <AppSectionHeader title="crew" />
-            </div>
-          </AppSection>}
-          {currentCast.length !== 0 &&
+      <MediaHero id={movieId} type="movie" />
+      {isError ? (
+        <AppError
+          error={`Error occured while fetching movie #${movieId} credits`}
+        />
+      ) : (
+        <>
+          {data?.crew.length !== 0 && (
+            // TODO: combine AppSection and AppSectionHeader into one component
+            <AppSection extraClass="m-movie_crew">
+              <div className="container">
+                {isLoading ? (
+                  <AppSpinner visible={true} />
+                ) : (
+                  <MovieCrew members={data?.crew || []} />
+                )}
+                <AppSectionHeader title="crew" />
+              </div>
+            </AppSection>
+          )}
+          {currentCast.length !== 0 && (
             <div className="l-content container">
               <AppSection>
                 <AppSectionHeader title="cast" />
                 <div className="l-tiles_grid m-people">
-                  {isDataLoading
-                    ? <AppSpinner visible={true} />
-                    : <>
-                      {currentCast.map((tile) => <AppTile tile={tile} key={tile.id} />)}
-                      <button
-                        className="app-button"
-                        onClick={() => handleShowMoreCast()}
-                        disabled={currentCastPage >= castQuantity.pages}
-                      >
-                        show more ({currentCastPage} / {castQuantity.pages})
-                      </button>
+                  {isLoading ? (
+                    <AppSpinner visible={true} />
+                  ) : (
+                    <>
+                      {currentCast.map(tile => (
+                        <AppTile tile={tile} key={tile.id} />
+                      ))}
+                      {/* TODO: add 'show all' functionality */}
+                      <ShowMoreBtn
+                        currentPage={currentCastPage}
+                        pagesQty={pagesQty}
+                        handleShowMore={handleShowMore}
+                      />
                     </>
-                  }
+                  )}
                 </div>
               </AppSection>
-            </div>}
+            </div>
+          )}
         </>
-      }
+      )}
     </section>
   )
 }
 
-export default Movie;
+export default Movie

@@ -2,8 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 
+// to make redux works
+import { Provider } from 'react-redux'
+import { store } from './store/store.ts'
+
+// TODO: change components import to default
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
+  <Provider store={store}>
     <React.StrictMode>
-        <App />
-    </React.StrictMode>,
+      <App />
+    </React.StrictMode>
+  </Provider>
 )
