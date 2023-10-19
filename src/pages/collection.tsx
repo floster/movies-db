@@ -5,9 +5,9 @@ import { getIdFromLink } from '../utils/helpers'
 import MediaHero from '../components/MediaHero'
 import AppSection from '../components/AppSection'
 import AppSectionHeader from '../components/AppSectionHeader'
-import AppSpinner from '../components/UI/Spinner'
-import AppError from '../components/UI/Error'
-import AppTile from '../components/Tile'
+import Spinner from '../components/UI/Spinner'
+import Error from '../components/UI/Error'
+import Tile from '../components/Tile'
 import ShowMoreBtn from '../components/UI/ShowMoreBtn'
 
 import { useSortOption } from '../hooks/useSortOption'
@@ -46,7 +46,7 @@ const Collection: React.FC = () => {
       <MediaHero id={collectionId} type="collection" />
       <div className="l-content container">
         {isError ? (
-          <AppError
+          <Error
             error={`Error occured while fetching collection #${collectionId} parts`}
           />
         ) : (
@@ -54,16 +54,15 @@ const Collection: React.FC = () => {
             <AppSection extraClass="m-movies_list">
               <AppSectionHeader
                 title={`${tiles?.parts.length} parts`}
-                hasSelect={true}
-                {...collectionSortOption}
+                select={{ ...collectionSortOption }}
               />
               <div className="l-tiles_grid m-movies">
                 {isLoading ? (
-                  <AppSpinner visible={true} />
+                  <Spinner />
                 ) : (
                   <>
                     {sortedTiles.map(tile => (
-                      <AppTile tile={tile} key={tile.id} />
+                      <Tile tile={tile} key={tile.id} />
                     ))}
                     <ShowMoreBtn
                       currentPage={currentPage}

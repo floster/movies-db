@@ -1,6 +1,6 @@
-import AppError from '../UI/Error'
-import AppTile from '../Tile'
-import AppSpinner from '../UI/Spinner'
+import Error from '../UI/Error'
+import Tile from '../Tile'
+import Spinner from '../UI/Spinner'
 
 import { useGetTrendingsQuery } from '../../store/api/tmdb.api'
 import { IAvailableTrendingAndSearchMultiTypes } from '../../types/tmdb.models'
@@ -15,15 +15,15 @@ const TrendingsCarousel: React.FC<Props> = ({ itemsType }) => {
   if (!data && !isLoading) return null
 
   return isError ? (
-    <AppError error={`Error occured while fetching trending ${itemsType}s`} />
+    <Error error={`Error occured while fetching trending ${itemsType}s`} />
   ) : (
     <div className="app-carousel has-scroll">
       {isLoading ? (
-        <AppSpinner visible={true} />
+        <Spinner />
       ) : (
         <div className="app-carousel__track">
           {data.map(item => (
-            <AppTile tile={item} key={item.id} />
+            <Tile tile={item} key={item.id} />
           ))}
         </div>
       )}

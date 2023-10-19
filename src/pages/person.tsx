@@ -5,9 +5,9 @@ import { getIdFromLink } from '../utils/helpers'
 import MediaHero from '../components/MediaHero'
 import AppSection from '../components/AppSection'
 import AppSectionHeader from '../components/AppSectionHeader'
-import AppSpinner from '../components/UI/Spinner'
-import AppError from '../components/UI/Error'
-import AppTile from '../components/Tile'
+import Spinner from '../components/UI/Spinner'
+import Error from '../components/UI/Error'
+import Tile from '../components/Tile'
 import ShowMoreBtn from '../components/UI/ShowMoreBtn'
 
 import { useSortOption } from '../hooks/useSortOption'
@@ -69,23 +69,22 @@ const Person: React.FC = () => {
       <MediaHero id={personId} type="person" />
       <div className="l-content container">
         {isMovieCreditsError ? (
-          <AppError
+          <Error
             error={`Error occured while fetching movie credits for person #${personId}`}
           />
         ) : (
           <AppSection>
             <AppSectionHeader
               title={`${movieCredits?.length} movies`}
-              hasSelect={true}
-              {...movieCreditsSortOption}
+              select={{ ...movieCreditsSortOption }}
             />
             <div className="l-tiles_grid m-movies">
               {isMovieCreditsLoading ? (
-                <AppSpinner visible={true} />
+                <Spinner />
               ) : (
                 <>
                   {sortedMovies.map(media => (
-                    <AppTile
+                    <Tile
                       tile={media}
                       key={`${media.id}_${media.label}`}
                       extraLabel="year"
@@ -102,23 +101,22 @@ const Person: React.FC = () => {
           </AppSection>
         )}
         {isTvCreditsError ? (
-          <AppError
+          <Error
             error={`Error occured while fetching tv credits for person #${personId}`}
           />
         ) : (
           <AppSection>
             <AppSectionHeader
               title={`${tvCredits?.length} tv shows`}
-              hasSelect={true}
-              {...tvCreditsSortOption}
+              select={{ ...tvCreditsSortOption }}
             />
             <div className="l-tiles_grid m-movies">
               {isTvCreditsLoading ? (
-                <AppSpinner visible={true} />
+                <Spinner />
               ) : (
                 <>
                   {sortedTvs.map(media => (
-                    <AppTile
+                    <Tile
                       tile={media}
                       key={`${media.id}_${media.label}`}
                       extraLabel="year"

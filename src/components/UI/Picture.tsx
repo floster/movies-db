@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import AppSpinner from './Spinner'
+import Spinner from './Spinner'
 
 interface Props {
   img: string
@@ -14,7 +14,7 @@ const Picture: React.FC<Props> = ({ img, alt, hasLoading = true }) => {
 
   return (
     <>
-      <AppSpinner visible={isLoaded} />
+      <Spinner visible={isLoaded} />
       <picture className="app-picture" onLoad={pictureLoading}>
         <source srcSet={img} media="(min-width: 744px)" />
         <source srcSet={img} media="(min-width: 1024px)" />

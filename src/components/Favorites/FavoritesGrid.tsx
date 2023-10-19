@@ -1,8 +1,8 @@
 import useGetTilesData from '../../hooks/tmdb/getTilesData'
 import { IAvailableFavoritesTypes } from '../../types/tmdb.models'
 import TilesGrid from '../TilesGrid'
-import AppError from '../UI/Error'
-import AppSpinner from '../UI/Spinner'
+import Error from '../UI/Error'
+import Spinner from '../UI/Spinner'
 
 type Props = {
   ids: number[]
@@ -13,9 +13,9 @@ const FavoritesGrid: React.FC<Props> = ({ ids, type }) => {
   const { tiles, isError, isLoading } = useGetTilesData(type, ids)
 
   return isError ? (
-    <AppError error={`Error occured while getting #${type}s favorites data`} />
+    <Error error={`Error occured while getting #${type}s favorites data`} />
   ) : isLoading ? (
-    <AppSpinner visible={true} />
+    <Spinner />
   ) : (
     <TilesGrid tiles={tiles} type={type} />
   )

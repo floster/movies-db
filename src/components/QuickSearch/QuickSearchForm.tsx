@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { formatSearchTerm } from '../../utils/formatters'
 
-import AppError from '../UI/Error'
-import AppSpinner from '../UI/Spinner'
+import Error from '../UI/Error'
+import Spinner from '../UI/Spinner'
 import SearchForm from '../SearchForm'
 import QuickSearchHits from './QuickSearchHits'
 
@@ -41,11 +41,11 @@ const QuickSearchForm: React.FC = () => {
         termChange={searchTermChanged}
         searchSubmit={handleSearchSubmit}></SearchForm>
       {isError ? (
-        <AppError
+        <Error
           error={`Error occured while getting search results by #${searchTerm}`}
         />
       ) : isLoading ? (
-        <AppSpinner visible={true} />
+        <Spinner />
       ) : (
         <QuickSearchHits results={results} />
       )}

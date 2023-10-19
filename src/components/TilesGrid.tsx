@@ -32,14 +32,15 @@ const TilesGrid: React.FC<Props> = ({ tiles, type, showAll = false }) => {
     sortOptions.currentSortOption
   )
 
+  const select =
+    tiles.length === 0 ? null : { ...sortOptions, disabled: tiles.length === 1 }
+
   const markup = (
     <AppSection extraClass="m-movies_list">
       <AppSectionHeader
         title={`${type}s (${tiles.length})`}
         alignStart
-        hasSelect={tiles.length > 0}
-        {...sortOptions}
-        selectDisabled={tiles.length <= 1}
+        select={select}
       />
       <div className="l-tiles_grid m-movies" id={type}>
         {sortedTiles.map(media => (

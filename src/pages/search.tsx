@@ -6,11 +6,11 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useDocumentTitle } from 'usehooks-ts'
 
-import AppError from '../components/UI/Error'
-import AppSpinner from '../components/UI/Spinner'
+import Error from '../components/UI/Error'
+import Spinner from '../components/UI/Spinner'
 import SearchForm from '../components/SearchForm'
 import TilesGrid from '../components/TilesGrid'
-import AppMessage from '../components/UI/Message'
+import Message from '../components/UI/Message'
 
 import useSearch from '../hooks/search/search'
 import SearchResultsHeader from '../components/Search/SearchResultsHeader'
@@ -46,15 +46,13 @@ const Search: React.FC = () => {
         {searchTerm.length === 0 ? (
           ''
         ) : searchTermIsShort() ? (
-          <AppMessage
+          <Message
             message={`Enter at least ${SYMBOLS_QTY_TO_SEARCH} symbols to start searching`}
           />
         ) : isError ? (
-          <AppError
-            error={`Error occured while searching for #${searchTerm}`}
-          />
+          <Error error={`Error occured while searching for #${searchTerm}`} />
         ) : isLoading ? (
-          <AppSpinner visible={true} />
+          <Spinner />
         ) : (
           <>
             <SearchResultsHeader results={results} term={searchTerm} />

@@ -1,9 +1,9 @@
-import AppPicture from './UI/Picture'
-import AppSpinner from './UI/Spinner'
-import AppFavorite from './UI/FavoriteBtn'
-import AppProgress from './UI/Rating'
+import Picture from './UI/Picture'
+import Error from './UI/Error'
+import Spinner from './UI/Spinner'
+import Favorite from './UI/FavoriteBtn'
+import Rating from './UI/Rating'
 import MoviePartOf from './Movie/MoviePartOf'
-import AppError from './UI/Error'
 import TorrentSearch from './UI/TorrentSearch'
 
 import { FC } from 'react'
@@ -36,7 +36,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
 
   if (isError)
     return (
-      <AppError
+      <Error
         error={`MediaHero: Error occured while fetching hero data for the ${type} #${id}`}
       />
     )
@@ -52,15 +52,15 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
   // };
 
   return isLoading ? (
-    <AppSpinner visible={true} />
+    <Spinner />
   ) : (
     <div
       className="media-hero"
       style={{ '--backdrop-image': data.backdrop } as React.CSSProperties}>
       <div className="media-hero__inner container">
         <div className="media-hero__picture">
-          <AppPicture img={data.poster} alt={data.title} />
-          {data.rating && <AppProgress value={data.rating} />}
+          <Picture img={data.poster} alt={data.title} />
+          {data.rating && <Rating value={data.rating} />}
         </div>
         <div className="media-hero__content">
           {withLink && data.link ? (
@@ -81,7 +81,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
           <p className="media-hero__description">{data.description}</p>
         </div>
         <footer className="media-hero__footer">
-          <AppFavorite type={type} id={id} title={data.title} />
+          <Favorite type={type} id={id} title={data.title} />
 
           {data.date && data.date !== '' && (
             <IconLabeled icon="calendar" label={data.date} />

@@ -1,6 +1,6 @@
 import AppSection from '../components/AppSection'
-import MediaListSection from '../components/MediaList/MediaListSection'
 import AppSectionHeader from '../components/AppSectionHeader'
+import MediaListSection from '../components/MediaList/MediaListSection'
 import TrendingsCarousel from '../components/Home/TrendingsCarousel'
 import RandomMedia from '../components/Home/RandomMedia'
 

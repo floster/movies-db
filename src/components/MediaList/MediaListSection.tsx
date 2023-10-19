@@ -3,8 +3,8 @@ import { useGetListQuery } from '../../store/api/tmdb.api'
 import { AVAILABLE_LIST_OPTIONS } from '../../config/'
 import { IAvailableListsOptions } from '../../types/tmdb.models'
 
-import AppError from '../UI/Error'
-import AppSpinner from '../UI/Spinner'
+import Error from '../UI/Error'
+import Spinner from '../UI/Spinner'
 import MediaListSelect from './MediaListSelect'
 import MediaList from './MediaList'
 
@@ -21,18 +21,14 @@ const MediaListSection: React.FC = () => {
   }
 
   return isError ? (
-    <AppError error={`Error occured while fetching ${currentListType}`} />
+    <Error error={`Error occured while fetching ${currentListType}`} />
   ) : (
     <aside className="sidebar">
       <MediaListSelect
         onListTypeChange={onListTypeChange}
         currentListType={currentListType}
       />
-      {isLoading ? (
-        <AppSpinner visible={true} />
-      ) : (
-        <MediaList media={data || []} />
-      )}
+      {isLoading ? <Spinner /> : <MediaList media={data || []} />}
     </aside>
   )
 }

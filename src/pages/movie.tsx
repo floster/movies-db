@@ -5,10 +5,10 @@ import { getIdFromLink } from '../utils/helpers'
 import MediaHero from '../components/MediaHero'
 import AppSection from '../components/AppSection'
 import AppSectionHeader from '../components/AppSectionHeader'
-import AppSpinner from '../components/UI/Spinner'
-import AppError from '../components/UI/Error'
+import Spinner from '../components/UI/Spinner'
+import Error from '../components/UI/Error'
 import MovieCrew from '../components/Movie/MovieCrew'
-import AppTile from '../components/Tile'
+import Tile from '../components/Tile'
 import ShowMoreBtn from '../components/UI/ShowMoreBtn'
 
 import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
@@ -35,7 +35,7 @@ const Movie: React.FC = () => {
     <section className="movie-header">
       <MediaHero id={movieId} type="movie" />
       {isError ? (
-        <AppError
+        <Error
           error={`Error occured while fetching movie #${movieId} credits`}
         />
       ) : (
@@ -45,7 +45,7 @@ const Movie: React.FC = () => {
             <AppSection extraClass="m-movie_crew">
               <div className="container">
                 {isLoading ? (
-                  <AppSpinner visible={true} />
+                  <Spinner />
                 ) : (
                   <MovieCrew members={data?.crew || []} />
                 )}
@@ -59,11 +59,11 @@ const Movie: React.FC = () => {
                 <AppSectionHeader title="cast" />
                 <div className="l-tiles_grid m-people">
                   {isLoading ? (
-                    <AppSpinner visible={true} />
+                    <Spinner />
                   ) : (
                     <>
                       {currentCast.map(tile => (
-                        <AppTile tile={tile} key={tile.id} />
+                        <Tile tile={tile} key={tile.id} />
                       ))}
                       {/* TODO: add 'show all' functionality */}
                       <ShowMoreBtn
