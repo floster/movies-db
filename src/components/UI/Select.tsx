@@ -11,7 +11,7 @@ interface Props {
   disabled?: boolean
 }
 
-const Select: React.FC<Props> = ({
+export const Select: React.FC<Props> = ({
   options,
   currentOption,
   optionChanged,

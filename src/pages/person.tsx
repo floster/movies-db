@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getIdFromLink } from '../utils/helpers'
 
 import MediaHero from '../components/MediaHero'
-import AppSection from '../components/AppSection'
-import AppSectionHeader from '../components/AppSectionHeader'
+import PageSection from '../components/PageSection'
 import Spinner from '../components/UI/Spinner'
 import Error from '../components/UI/Error'
 import Tile from '../components/Tile'
@@ -73,11 +72,9 @@ const Person: React.FC = () => {
             error={`Error occured while fetching movie credits for person #${personId}`}
           />
         ) : (
-          <AppSection>
-            <AppSectionHeader
-              title={`${movieCredits?.length} movies`}
-              select={{ ...movieCreditsSortOption }}
-            />
+          <PageSection
+            title={`${movieCredits?.length} movies`}
+            select={{ ...movieCreditsSortOption }}>
             <div className="l-tiles_grid m-movies">
               {isMovieCreditsLoading ? (
                 <Spinner />
@@ -98,18 +95,16 @@ const Person: React.FC = () => {
                 </>
               )}
             </div>
-          </AppSection>
+          </PageSection>
         )}
         {isTvCreditsError ? (
           <Error
             error={`Error occured while fetching tv credits for person #${personId}`}
           />
         ) : (
-          <AppSection>
-            <AppSectionHeader
-              title={`${tvCredits?.length} tv shows`}
-              select={{ ...tvCreditsSortOption }}
-            />
+          <PageSection
+            title={`${tvCredits?.length} tv shows`}
+            select={{ ...tvCreditsSortOption }}>
             <div className="l-tiles_grid m-movies">
               {isTvCreditsLoading ? (
                 <Spinner />
@@ -130,7 +125,7 @@ const Person: React.FC = () => {
                 </>
               )}
             </div>
-          </AppSection>
+          </PageSection>
         )}
       </div>
     </section>

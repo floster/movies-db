@@ -1,7 +1,7 @@
-import { SORT_OPTIONS } from '../config/'
-import AppSelect from './UI/Select'
+import { SORT_OPTIONS } from '../config'
+import Select from './UI/Select'
 
-type Select = {
+export type ISelectProps = {
   disabled?: boolean
   currentSortOption?: string
   onSortChange?: (option: string) => void
@@ -9,21 +9,26 @@ type Select = {
 
 interface Props {
   title: string
-  alignStart?: boolean
-  select?: Select | null
+  align?: 'start' | 'center' | 'end'
+  select?: ISelectProps | null
 }
 
-const AppSectionHeader: React.FC<Props> = ({
+const PageSectionHeader: React.FC<Props> = ({
   title,
-  alignStart,
-  // TODO: make next props as an object | null
+  align,
   select = null,
 }) => (
   <header
-    className={`app-section__header ${alignStart ? 'm-align_start' : ''}`}>
+    className={`app-section__header ${
+      align === 'start'
+        ? 'm-align_start'
+        : align === 'center'
+        ? 'm-align_center'
+        : ''
+    }`}>
     <h2 className="app-section__title">{title}</h2>
     {select && (
-      <AppSelect
+      <Select
         options={SORT_OPTIONS}
         currentOption={select.currentSortOption!}
         optionChanged={select.onSortChange!}
@@ -34,4 +39,4 @@ const AppSectionHeader: React.FC<Props> = ({
   </header>
 )
 
-export default AppSectionHeader
+export default PageSectionHeader

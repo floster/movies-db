@@ -3,9 +3,8 @@ import { useTilesSort } from '../hooks/tiles/tilesSort'
 import { useSortOption } from '../hooks/useSortOption'
 import { IAvailableFavoritesTypes, ITile } from '../types/tmdb.models'
 
-import AppSection from './AppSection'
-import AppSectionHeader from './AppSectionHeader'
-import AppTile from './Tile'
+import PageSection from './PageSection'
+import Tile from './Tile'
 import ShowMoreBtn from './UI/ShowMoreBtn'
 
 interface Props {
@@ -36,15 +35,14 @@ const TilesGrid: React.FC<Props> = ({ tiles, type, showAll = false }) => {
     tiles.length === 0 ? null : { ...sortOptions, disabled: tiles.length === 1 }
 
   const markup = (
-    <AppSection extraClass="m-movies_list">
-      <AppSectionHeader
-        title={`${type}s (${tiles.length})`}
-        alignStart
-        select={select}
-      />
+    <PageSection
+      extraClass="m-movies_list"
+      title={`${type}s (${tiles.length})`}
+      select={select}
+      align="start">
       <div className="l-tiles_grid m-movies" id={type}>
         {sortedTiles.map(media => (
-          <AppTile tile={media} key={media.id} />
+          <Tile tile={media} key={media.id} />
         ))}
         {!showAll && (
           <ShowMoreBtn
@@ -54,7 +52,7 @@ const TilesGrid: React.FC<Props> = ({ tiles, type, showAll = false }) => {
           />
         )}
       </div>
-    </AppSection>
+    </PageSection>
   )
 
   return markup

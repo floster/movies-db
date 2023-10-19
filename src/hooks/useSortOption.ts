@@ -11,7 +11,7 @@ interface UseSortOption {
 
 /**
  * Hook that manages the current sort option.
- * than returned options could be spreaded directly into AppSectionHeader component
+ * than returned options could be spreaded directly into PageSection component
  * @returns {Object} An object containing the current sort option and a function to update it.
  */
 export const useSortOption = (): UseSortOption => {

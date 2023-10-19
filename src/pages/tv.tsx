@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useGetTvEpisodesQuery } from '../store/api/tmdb.api'
 import { getIdFromLink } from '../utils/helpers'
 
-import AppSection from '../components/AppSection'
-import AppSectionHeader from '../components/AppSectionHeader'
+import PageSection from '../components/PageSection'
 import TvSeason from '../components/Tv/TvSeason'
 import Spinner from '../components/UI/Spinner'
 import Error from '../components/UI/Error'
@@ -33,14 +32,13 @@ const Tv: React.FC = () => {
             {!data || isLoading ? (
               <Spinner />
             ) : (
-              <AppSection>
-                <AppSectionHeader title={`${data.length} seasons`} alignStart />
+              <PageSection title={`${data.length} seasons`} align="start">
                 <div className="l-seasons">
                   {data.map(season => (
                     <TvSeason season={season} key={season.id} />
                   ))}
                 </div>
-              </AppSection>
+              </PageSection>
             )}
           </div>
         )}

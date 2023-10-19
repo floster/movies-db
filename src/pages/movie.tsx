@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getIdFromLink } from '../utils/helpers'
 
 import MediaHero from '../components/MediaHero'
-import AppSection from '../components/AppSection'
-import AppSectionHeader from '../components/AppSectionHeader'
+import PageSection from '../components/PageSection'
 import Spinner from '../components/UI/Spinner'
 import Error from '../components/UI/Error'
 import MovieCrew from '../components/Movie/MovieCrew'
@@ -41,22 +40,19 @@ const Movie: React.FC = () => {
       ) : (
         <>
           {data?.crew.length !== 0 && (
-            // TODO: combine AppSection and AppSectionHeader into one component
-            <AppSection extraClass="m-movie_crew">
+            <PageSection extraClass="m-movie_crew" title="crew">
               <div className="container">
                 {isLoading ? (
                   <Spinner />
                 ) : (
                   <MovieCrew members={data?.crew || []} />
                 )}
-                <AppSectionHeader title="crew" />
               </div>
-            </AppSection>
+            </PageSection>
           )}
           {currentCast.length !== 0 && (
             <div className="l-content container">
-              <AppSection>
-                <AppSectionHeader title="cast" />
+              <PageSection title="cast">
                 <div className="l-tiles_grid m-people">
                   {isLoading ? (
                     <Spinner />
@@ -74,7 +70,7 @@ const Movie: React.FC = () => {
                     </>
                   )}
                 </div>
-              </AppSection>
+              </PageSection>
             </div>
           )}
         </>

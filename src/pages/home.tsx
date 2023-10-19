@@ -1,5 +1,4 @@
-import AppSection from '../components/AppSection'
-import AppSectionHeader from '../components/AppSectionHeader'
+import PageSection from '../components/PageSection'
 import MediaListSection from '../components/MediaList/MediaListSection'
 import TrendingsCarousel from '../components/Home/TrendingsCarousel'
 import RandomMedia from '../components/Home/RandomMedia'
@@ -17,16 +16,14 @@ const Home: React.FC = () => {
       <div className="l-content m-main_page container">
         <MediaListSection />
         <main className="l-main_page_content">
-          <AppSection extraClass="m-random_media">
-            <AppSectionHeader title="random collection" />
+          <PageSection extraClass="m-random_media" title="random collection">
             <RandomMedia />
-          </AppSection>
+          </PageSection>
 
           {trendingCarouselsTypes.map(type => (
-            <AppSection key={type}>
-              <AppSectionHeader title={`trending ${type}s`} />
+            <PageSection key={type} title={`trending ${type}s`}>
               <TrendingsCarousel itemsType={type} />
-            </AppSection>
+            </PageSection>
           ))}
         </main>
       </div>
