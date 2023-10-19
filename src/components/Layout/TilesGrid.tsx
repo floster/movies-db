@@ -31,7 +31,6 @@ const TilesGrid: React.FC<Props> = ({
 
   const { sortedTiles } = useTilesSort(tiles, sortOptions.currentSortOption)
 
-  // TODO: change behavior - first sort tiles than paginate them
   const { pagesQty, currentPage, currentTiles, handleShowMore } =
     useTilesShowMore(sortedTiles ? sortedTiles : [])
 

@@ -6,7 +6,7 @@
     gap: var(--gap-lg) var(--gap-sm);
   }
 
-  &.m-tv_seasons {
+  .l-content.m-tv_seasons &.m-tv {
     display: flex;
     flex-direction: column;
     gap: var(--gap-xxl);

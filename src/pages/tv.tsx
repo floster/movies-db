@@ -29,12 +29,12 @@ const Tv: React.FC = () => {
             error={`Error fetching episodes data for tv series #${tvId}`}
           />
         ) : (
-          <div className="l-content container">
+          <div className="l-content m-tv_seasons container">
             {!data || isLoading ? (
               <Spinner />
             ) : (
               <PageSection title={`${data.length} seasons`} align="start">
-                <TilesLayout type="tv_seasons">
+                <TilesLayout type="tv">
                   {data.map(season => (
                     <TvSeason season={season} key={season.id} />
                   ))}
