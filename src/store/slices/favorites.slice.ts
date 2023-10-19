@@ -13,6 +13,14 @@ type FavoriteTogglePayload = {
   id: number
 }
 
+const emptyLSFavorites: {
+  [key in IAvailableFavoritesTypes]: number[]
+} = { collection: [], movie: [], person: [], tv: [] }
+
+if (localStorage.getItem(LS_FAVORITES_KEY) === null) {
+  localStorage.setItem(LS_FAVORITES_KEY, JSON.stringify(emptyLSFavorites))
+}
+
 const initialState: FavoritesState = JSON.parse(
   localStorage.getItem(LS_FAVORITES_KEY) || '{}'
 )
