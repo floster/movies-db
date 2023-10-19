@@ -3,11 +3,10 @@ import AppHeader from './AppHeader'
 import '../app.scss'
 import AppDialog from './AppDialog'
 import QuickSearchForm from './QuickSearch/QuickSearchForm'
-import { SearchDialogProvider } from '../contexts/SearchDialogContext'
 
 export default function Layout() {
   return (
-    <SearchDialogProvider>
+    <>
       <AppHeader />
 
       <Outlet />
@@ -15,6 +14,6 @@ export default function Layout() {
       <AppDialog>
         <QuickSearchForm />
       </AppDialog>
-    </SearchDialogProvider>
+    </>
   )
 }
