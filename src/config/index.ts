@@ -1,4 +1,4 @@
-// const BEARER_KEY = import.meta.env.VITE_TMDB_BEARER_KEY
+const BEARER_KEY = import.meta.env.VITE_TMDB_BEARER_KEY
 
 // The delay time in milliseconds. After this amount of time, the latest value is used.
 export const DEBOUNCE_DELAY = 500
@@ -21,7 +21,7 @@ export const TMDB_FETCH_OPTIONS = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MDMwNTgzMmYxYWRkMTAzY2UwMzhkMTA3MzFjM2M0MiIsInN1YiI6IjYyOWY2M2EwODUwMDVkMDA1MmI5NmFjZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RWD_0mbpzN1nW_ujjwQrAmyMh9Mk8rM1CFiDBfY0WnY`,
+    Authorization: `Bearer ${BEARER_KEY}`,
   },
 }
 

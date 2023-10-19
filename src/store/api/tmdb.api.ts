@@ -1,5 +1,4 @@
-const BEARER_KEY =
-  'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MDMwNTgzMmYxYWRkMTAzY2UwMzhkMTA3MzFjM2M0MiIsInN1YiI6IjYyOWY2M2EwODUwMDVkMDA1MmI5NmFjZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RWD_0mbpzN1nW_ujjwQrAmyMh9Mk8rM1CFiDBfY0WnY'
+const BEARER_KEY = import.meta.env.VITE_TMDB_BEARER_KEY
 const API_LANGUAGE = 'en-US' //"uk-UA";
 const API_ADULTS = false
 
