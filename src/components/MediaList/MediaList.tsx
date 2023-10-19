@@ -1,11 +1,11 @@
 import { ITile } from '../../types/tmdb.models'
-import AppTile from '../AppTile'
+import AppTile from '../Tile'
 
 interface Props {
   media: ITile[] | []
 }
 
-export default function MediaList({ media }: Props) {
+const MediaList: React.FC<Props> = ({ media }) => {
   return (
     <div className="media-list l-media_list" role="list">
       {media.map(item => (
@@ -14,3 +14,5 @@ export default function MediaList({ media }: Props) {
     </div>
   )
 }
+
+export default MediaList

@@ -1,5 +1,8 @@
 const BEARER_KEY = import.meta.env.VITE_TMDB_BEARER_KEY
 
+// The delay time in milliseconds. After this amount of time, the latest value is used.
+export const DEBOUNCE_DELAY = 500
+
 import {
   IAvailableListsOptions,
   IAvailableSortValues,

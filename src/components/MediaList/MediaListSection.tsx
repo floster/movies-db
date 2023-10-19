@@ -3,12 +3,12 @@ import { useGetListQuery } from '../../store/api/tmdb.api'
 import { AVAILABLE_LIST_OPTIONS } from '../../config/'
 import { IAvailableListsOptions } from '../../types/tmdb.models'
 
-import AppError from '../UI/AppError'
-import AppSpinner from '../UI/AppSpinner'
+import AppError from '../UI/Error'
+import AppSpinner from '../UI/Spinner'
 import MediaListSelect from './MediaListSelect'
 import MediaList from './MediaList'
 
-export default function MediaListSection() {
+const MediaListSection: React.FC = () => {
   const [currentListType, setCurrentListType] = useLocalStorage(
     'currentListType',
     AVAILABLE_LIST_OPTIONS[0]
@@ -36,3 +36,5 @@ export default function MediaListSection() {
     </aside>
   )
 }
+
+export default MediaListSection

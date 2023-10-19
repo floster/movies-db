@@ -12,7 +12,7 @@ const AVAILABLE_FAVORITES_TYPES: IAvailableFavoritesTypes[] = [
   'person',
 ]
 
-export default function Favorites() {
+const Favorites: React.FC = () => {
   useDocumentTitle('favorites - Movies DB')
 
   // get favorites IDs from redux store
@@ -28,3 +28,5 @@ export default function Favorites() {
     </div>
   )
 }
+
+export default Favorites

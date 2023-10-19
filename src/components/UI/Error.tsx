@@ -2,6 +2,8 @@ interface Props {
   error: string
 }
 
-export default function AppError({ error }: Props) {
+const Error: React.FC<Props> = ({ error }) => {
   return <span className="app-error">⚠️ {error} ⚠️</span>
 }
+
+export default Error

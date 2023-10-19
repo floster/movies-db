@@ -5,9 +5,9 @@ import { getIdFromLink } from '../utils/helpers'
 import MediaHero from '../components/MediaHero'
 import AppSection from '../components/AppSection'
 import AppSectionHeader from '../components/AppSectionHeader'
-import AppSpinner from '../components/UI/AppSpinner'
-import AppError from '../components/UI/AppError'
-import AppTile from '../components/AppTile'
+import AppSpinner from '../components/UI/Spinner'
+import AppError from '../components/UI/Error'
+import AppTile from '../components/Tile'
 import ShowMoreBtn from '../components/UI/ShowMoreBtn'
 
 import { useSortOption } from '../hooks/useSortOption'
@@ -19,7 +19,7 @@ type CollectionParams = {
   id: string
 }
 
-export default function Collection() {
+const Collection: React.FC = () => {
   const params = useParams<CollectionParams>()
   const collectionId = getIdFromLink(params.id!)
 
@@ -80,3 +80,5 @@ export default function Collection() {
     </>
   )
 }
+
+export default Collection

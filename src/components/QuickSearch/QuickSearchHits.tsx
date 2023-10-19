@@ -6,11 +6,11 @@ import { AVAILABLE_SEARCH_TYPES } from '../../config'
 const SYMBOLS_QTY_TO_SEARCH = import.meta.env
   .VITE_SYMBOLS_QTY_TO_SEARCH as number
 
-interface QuickSearchHitsProps {
+interface Props {
   results: ISearchResults
 }
 
-export const QuickSearchHits: FC<QuickSearchHitsProps> = ({ results }) => {
+const QuickSearchHits: FC<Props> = ({ results }) => {
   const isSearchHitsEmpty = () =>
     Object.values(results).every(hits => hits === null)
 
@@ -31,3 +31,5 @@ export const QuickSearchHits: FC<QuickSearchHitsProps> = ({ results }) => {
     </section>
   )
 }
+
+export default QuickSearchHits

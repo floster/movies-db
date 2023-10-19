@@ -6,16 +6,16 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useDocumentTitle } from 'usehooks-ts'
 
-import AppError from '../components/UI/AppError'
-import AppSpinner from '../components/UI/AppSpinner'
-import { SearchForm } from '../components/SearchForm'
+import AppError from '../components/UI/Error'
+import AppSpinner from '../components/UI/Spinner'
+import SearchForm from '../components/SearchForm'
 import TilesGrid from '../components/TilesGrid'
-import AppMessage from '../components/UI/AppMessage'
+import AppMessage from '../components/UI/Message'
 
 import useSearch from '../hooks/search/search'
 import SearchResultsHeader from '../components/Search/SearchResultsHeader'
 
-export default function Search() {
+const Search: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('')
 
   // reading/writing search params via URLSearchParams interface
@@ -75,3 +75,5 @@ export default function Search() {
     </>
   )
 }
+
+export default Search

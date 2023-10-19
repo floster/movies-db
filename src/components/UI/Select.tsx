@@ -11,13 +11,13 @@ interface Props {
   disabled?: boolean
 }
 
-export default function AppSelect({
+const Select: React.FC<Props> = ({
   options,
   currentOption,
   optionChanged,
   label,
   disabled,
-}: Props) {
+}) => {
   return (
     <div className="app-select">
       {label && <label className="app-select__label">{label}</label>}
@@ -34,3 +34,4 @@ export default function AppSelect({
     </div>
   )
 }
+export default Select

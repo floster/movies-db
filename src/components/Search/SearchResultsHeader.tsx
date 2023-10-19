@@ -1,13 +1,10 @@
 import { ISearchResults } from '../../types/tmdb.models'
 
-type searchResultsHeaderProps = {
+type Props = {
   term: string
   results: ISearchResults
 }
-const SearchResultsHeader: React.FC<searchResultsHeaderProps> = ({
-  term,
-  results,
-}) => {
+const SearchResultsHeader: React.FC<Props> = ({ term, results }) => {
   const lengths: { [key: string]: number } = {}
 
   Object.entries(results).forEach(

@@ -1,7 +1,7 @@
 import { COLLECTIONS } from '../../config/dummy'
 import MediaHero from '../MediaHero'
 
-export default function RandomMedia() {
+const RandomMedia: React.FC = () => {
   const id = COLLECTIONS[Math.floor(Math.random() * COLLECTIONS.length)]
 
   return (
@@ -10,3 +10,5 @@ export default function RandomMedia() {
     </div>
   )
 }
+
+export default RandomMedia

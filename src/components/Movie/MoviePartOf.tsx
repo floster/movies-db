@@ -6,7 +6,7 @@ interface Props {
   data: IRawBelongs | null
 }
 
-export default function PartOf({ data }: Props) {
+const PartOf: React.FC<Props> = ({ data }) => {
   if (!data) return null
 
   const linkData = {
@@ -20,3 +20,5 @@ export default function PartOf({ data }: Props) {
     </div>
   )
 }
+
+export default PartOf

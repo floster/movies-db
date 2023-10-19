@@ -1,12 +1,12 @@
 import { IAvailableFavoritesTypes, ITile } from '../../types/tmdb.models'
-import AppFavorite from '../UI/AppFavorite'
-import AppPicture from '../UI/AppPicture'
+import AppFavorite from '../UI/FavoriteBtn'
+import AppPicture from '../UI/Picture'
 
-type QuickSearchHitProps = {
+type Props = {
   hit: ITile
 }
 
-const QuickSearchHit: React.FC<QuickSearchHitProps> = ({ hit }) => {
+const QuickSearchHit: React.FC<Props> = ({ hit }) => {
   return (
     <li className="quick-search-hits__item" key={hit.id}>
       <AppPicture img={hit.poster} alt={hit.title} hasLoading={false} />

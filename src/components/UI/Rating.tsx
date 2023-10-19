@@ -2,28 +2,20 @@ interface Props {
   value: number | null
 }
 
-export default function AppProgress({ value }: Props) {
-  let label = ''
-  let wholeValue = null
-
-  if (!value) {
-    label = 'nr'
-    wholeValue = 0
-  } else {
-    label = value + ''
-    wholeValue = +value * 10
-  }
+const Rating: React.FC<Props> = ({ value }) => {
+  const label = value ? value : 'nr'
+  const _value = value ? +value * 10 : 0
 
   return (
     <div
       className="app-progress"
       style={
         {
-          '--value': wholeValue === 0 ? null : wholeValue,
+          '--value': _value === 0 ? null : _value,
         } as React.CSSProperties
       }
       role="progressbar"
-      aria-valuenow={wholeValue}
+      aria-valuenow={_value}
       aria-valuemin={0}
       aria-valuemax={100}
       aria-label={`The Fast and the Furious Collection rating is + ${label}`}>
@@ -31,3 +23,5 @@ export default function AppProgress({ value }: Props) {
     </div>
   )
 }
+
+export default Rating

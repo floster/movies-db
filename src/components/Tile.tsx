@@ -1,26 +1,21 @@
-import { FC } from 'react'
 import { ITile, IAvailableFavoritesTypes } from '../types/tmdb.models'
-import AppFavorite from './UI/AppFavorite'
-import AppPicture from './UI/AppPicture'
-import AppProgress from './UI/AppProgress'
+
+import AppFavorite from './UI/FavoriteBtn'
+import AppPicture from './UI/Picture'
+import AppProgress from './UI/Rating'
 import TorrentSearch from './UI/TorrentSearch'
 
-// import { useFavorites } from "../contexts/FavoritesContext";
-
-interface AppTileProps {
+interface Props {
   tile: ITile
   isRow?: boolean
   extraLabel?: 'year' | 'type'
 }
 
-const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
+const Tile: React.FC<Props> = ({ tile, isRow = false, extraLabel }) => {
   const classes = ['app-tile']
   if (tile.type) classes.push(`m-${tile.type}`)
   if (isRow) classes.push('m-row')
 
-  // const { isFavoritable } = useFavorites();
-
-  // const hasFavoriteIcon = isFavoritable(tile.type as UTFavoritesType);
   const isLink = !!tile.link
   const isTorrentSearchable =
     (import.meta.env.VITE_TORRENT_SEARCH_ENABLED === 'true' &&
@@ -75,4 +70,4 @@ const AppTile: FC<AppTileProps> = ({ tile, isRow = false, extraLabel }) => {
   )
 }
 
-export default AppTile
+export default Tile

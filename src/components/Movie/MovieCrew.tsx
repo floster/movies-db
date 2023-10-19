@@ -4,7 +4,7 @@ interface Props {
   members: ICrewMember[]
 }
 
-export default function MovieCrew({ members }: Props) {
+const MovieCrew: React.FC<Props> = ({ members }) => {
   const memberItem = (member: ICrewMember) => {
     return (
       <li className="crew-item" key={`${member.job}_${member.id}`}>
@@ -17,3 +17,4 @@ export default function MovieCrew({ members }: Props) {
     <ul className="crew-list">{members.map(member => memberItem(member))}</ul>
   )
 }
+export default MovieCrew

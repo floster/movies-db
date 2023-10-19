@@ -3,7 +3,7 @@ import Home from './pages/home'
 import Movie from './pages/movie'
 import Person from './pages/person'
 import Collection from './pages/collection'
-import Layout from './components/Layout'
+import AppLayout from './components/AppLayout'
 import NoMatch from './pages/404'
 import Favorites from './pages/favorites'
 import Tv from './pages/tv'
@@ -15,7 +15,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<AppLayout />}>
           <Route index element={<Home />} />
           <Route path="movie/:id" element={<Movie />} />
           <Route path="person/:id" element={<Person />} />

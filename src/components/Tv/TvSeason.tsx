@@ -1,14 +1,14 @@
-import AppPicture from '../UI/AppPicture'
-import AppProgress from '../UI/AppProgress'
+import AppPicture from '../UI/Picture'
+import AppProgress from '../UI/Rating'
 import TvEpisode from './TvEpisode'
 import { IRawTvSeasonResponse } from '../../types/tmdb.models'
 import { formatDate, getPosterUrl } from '../../utils/helpers'
 
-interface TvSeasonProps {
+interface Props {
   season: IRawTvSeasonResponse
 }
 
-export const TvSeason: React.FC<TvSeasonProps> = ({ season }) => {
+const TvSeason: React.FC<Props> = ({ season }) => {
   return (
     <section className="tv-season">
       <figure className="tv-season__picture">

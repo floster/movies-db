@@ -1,6 +1,6 @@
-import AppError from '../UI/AppError'
-import AppTile from '../AppTile'
-import AppSpinner from '../UI/AppSpinner'
+import AppError from '../UI/Error'
+import AppTile from '../Tile'
+import AppSpinner from '../UI/Spinner'
 
 import { useGetTrendingsQuery } from '../../store/api/tmdb.api'
 import { IAvailableTrendingAndSearchMultiTypes } from '../../types/tmdb.models'
@@ -9,7 +9,7 @@ interface Props {
   itemsType: IAvailableTrendingAndSearchMultiTypes
 }
 
-export default function TrendingsCarousel({ itemsType }: Props) {
+const TrendingsCarousel: React.FC<Props> = ({ itemsType }) => {
   const { data, isError, isLoading } = useGetTrendingsQuery(itemsType)
 
   if (!data && !isLoading) return null
@@ -30,3 +30,5 @@ export default function TrendingsCarousel({ itemsType }: Props) {
     </div>
   )
 }
+
+export default TrendingsCarousel

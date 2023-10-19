@@ -1,7 +1,9 @@
 import { useDocumentTitle } from 'usehooks-ts'
 
-export default function NoMatch() {
+const NoMatch: React.FC = () => {
   useDocumentTitle('404 - Movies DB')
 
   return <div>404</div>
 }
+
+export default NoMatch

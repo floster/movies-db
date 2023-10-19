@@ -1,8 +1,8 @@
 import useGetTilesData from '../../hooks/tmdb/getTilesData'
 import { IAvailableFavoritesTypes } from '../../types/tmdb.models'
 import TilesGrid from '../TilesGrid'
-import AppError from '../UI/AppError'
-import AppSpinner from '../UI/AppSpinner'
+import AppError from '../UI/Error'
+import AppSpinner from '../UI/Spinner'
 
 type Props = {
   ids: number[]

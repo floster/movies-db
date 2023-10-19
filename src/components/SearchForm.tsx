@@ -1,19 +1,15 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDebounce } from 'usehooks-ts'
+
 import SvgIcon from './UI/SvgIcon'
+import { DEBOUNCE_DELAY } from '../config'
 
-// The delay time in milliseconds. After this amount of time, the latest value is used.
-const DEBOUNCE_DELAY = 500
-
-type SearchFormProps = {
+type Props = {
   searchSubmit: (searchTerm: string) => void
   termChange?: (searchTerm: string) => void
 }
 
-export const SearchForm: FC<SearchFormProps> = ({
-  searchSubmit,
-  termChange,
-}) => {
+const SearchForm: React.FC<Props> = ({ searchSubmit, termChange }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const searchInputRef = useRef(null as HTMLInputElement | null)
 
@@ -73,3 +69,5 @@ export const SearchForm: FC<SearchFormProps> = ({
     </form>
   )
 }
+
+export default SearchForm

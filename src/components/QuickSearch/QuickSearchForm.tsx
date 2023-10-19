@@ -3,15 +3,15 @@ import { useNavigate } from 'react-router-dom'
 
 import { formatSearchTerm } from '../../utils/formatters'
 
-import AppError from '../UI/AppError'
-import AppSpinner from '../UI/AppSpinner'
-import { SearchForm } from '../SearchForm'
-import { QuickSearchHits } from './QuickSearchHits'
+import AppError from '../UI/Error'
+import AppSpinner from '../UI/Spinner'
+import SearchForm from '../SearchForm'
+import QuickSearchHits from './QuickSearchHits'
 
 import useSearch from '../../hooks/search/search'
 import { useAppActions } from '../../hooks/useRedux'
 
-export default function QuickSearchForm() {
+const QuickSearchForm: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('')
 
   const navigate = useNavigate()
@@ -52,3 +52,5 @@ export default function QuickSearchForm() {
     </>
   )
 }
+
+export default QuickSearchForm

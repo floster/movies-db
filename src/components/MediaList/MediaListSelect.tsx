@@ -7,10 +7,10 @@ interface Props {
   onListTypeChange: (value: IAvailableListsOptions) => void
 }
 
-export default function MediaListSelect({
+const MediaListSelect: React.FC<Props> = ({
   onListTypeChange,
   currentListType,
-}: Props) {
+}) => {
   return (
     <div className="app-select m-huge" aria-labelledby="moviesTypeSelect">
       <span className="app-select__arrow" aria-hidden="true">
@@ -35,3 +35,4 @@ export default function MediaListSelect({
     </div>
   )
 }
+export default MediaListSelect

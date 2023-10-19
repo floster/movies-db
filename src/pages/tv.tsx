@@ -1,18 +1,20 @@
+import { useParams } from 'react-router-dom'
+
+import { useGetTvEpisodesQuery } from '../store/api/tmdb.api'
+import { getIdFromLink } from '../utils/helpers'
+
 import AppSection from '../components/AppSection'
 import AppSectionHeader from '../components/AppSectionHeader'
 import TvSeason from '../components/Tv/TvSeason'
-import { useParams } from 'react-router-dom'
-import AppSpinner from '../components/UI/AppSpinner'
-import AppError from '../components/UI/AppError'
-import { getIdFromLink } from '../utils/helpers'
+import AppSpinner from '../components/UI/Spinner'
+import AppError from '../components/UI/Error'
 import MediaHero from '../components/MediaHero'
-import { useGetTvEpisodesQuery } from '../store/api/tmdb.api'
 
 type TvParams = {
   id: string
 }
 
-export default function Tv() {
+const Tv: React.FC = () => {
   const params = useParams<TvParams>()
   const tvId = getIdFromLink(params.id!)
 
@@ -50,3 +52,5 @@ export default function Tv() {
     </section>
   )
 }
+
+export default Tv

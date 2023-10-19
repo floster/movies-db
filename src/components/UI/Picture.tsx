@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import AppSpinner from './AppSpinner'
+import AppSpinner from './Spinner'
 
 interface Props {
   img: string
@@ -7,7 +7,7 @@ interface Props {
   hasLoading?: boolean
 }
 
-export default function AppPicture({ img, alt, hasLoading = true }: Props) {
+const Picture: React.FC<Props> = ({ img, alt, hasLoading = true }) => {
   const [isLoaded, setIsLoaded] = useState(true)
 
   const pictureLoading = () => setIsLoaded(false)
@@ -32,3 +32,5 @@ export default function AppPicture({ img, alt, hasLoading = true }: Props) {
     </>
   )
 }
+
+export default Picture

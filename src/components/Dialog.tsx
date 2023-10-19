@@ -5,7 +5,7 @@ interface Props {
   children: React.ReactNode
 }
 
-export default function AppDialog({ children }: Props) {
+const Dialog: React.FC<Props> = ({ children }) => {
   const ref = useRef<HTMLDialogElement>(null)
 
   const { isOpen } = useAppSelector(state => state.dialog)
@@ -38,3 +38,5 @@ export default function AppDialog({ children }: Props) {
     </dialog>
   )
 }
+
+export default Dialog

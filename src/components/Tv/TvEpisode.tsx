@@ -1,12 +1,12 @@
 import { formatDate, getPosterUrl } from '../../utils/helpers'
 import { IRawTvEpisode } from '../../types/tmdb.models'
-import AppPicture from '../UI/AppPicture'
+import AppPicture from '../UI/Picture'
 
-interface TvEpisodeProps {
+interface Props {
   episode: IRawTvEpisode
 }
 
-const TvEpisode: React.FC<TvEpisodeProps> = ({ episode }) => {
+const TvEpisode: React.FC<Props> = ({ episode }) => {
   return (
     <div className="tv-episode">
       <span className="tv-episode__count">{episode.episode_number}</span>

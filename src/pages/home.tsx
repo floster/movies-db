@@ -3,9 +3,10 @@ import MediaListSection from '../components/MediaList/MediaListSection'
 import AppSectionHeader from '../components/AppSectionHeader'
 import TrendingsCarousel from '../components/Home/TrendingsCarousel'
 import RandomMedia from '../components/Home/RandomMedia'
+
 import { IAvailableTrendingAndSearchMultiTypes } from '../types/tmdb.models'
 
-export default function Home() {
+const Home: React.FC = () => {
   const trendingCarouselsTypes: IAvailableTrendingAndSearchMultiTypes[] = [
     'movie',
     'tv',
@@ -32,3 +33,5 @@ export default function Home() {
     </>
   )
 }
+
+export default Home

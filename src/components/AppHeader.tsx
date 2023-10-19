@@ -1,10 +1,11 @@
+import { useAppActions } from '../hooks/useRedux'
+import useKeyboardShortcut from '../hooks/useKeyboardShortcut'
+
 import SvgIcon from './UI/SvgIcon'
 import ChangeLocale from './UI/ChangeLocale'
-import useKeyboardShortcut from '../hooks/useKeyboardShortcut'
 import FavoritesLink from './Favorites/FavoritesLink'
-import { useAppActions } from '../hooks/useRedux'
 
-export default function AppHeader() {
+const AppHeader: React.FC = () => {
   const { openDialog } = useAppActions()
 
   useKeyboardShortcut(() => openDialog(), { code: 'KeyK', metaKey: true })
@@ -26,6 +27,8 @@ export default function AppHeader() {
           <div className="app-header__locale">
             <ChangeLocale />
           </div>
+
+          {/* TODO: make it as a separate component */}
           <button
             className="app-button m-icon m-secondary open-search"
             aria-label="open search dialog"
@@ -38,3 +41,5 @@ export default function AppHeader() {
     </header>
   )
 }
+
+export default AppHeader

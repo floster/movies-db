@@ -1,14 +1,11 @@
 import { IAvailableFavoritesTypes, ITile } from '../../types/tmdb.models'
 import QuickSearchHit from './QuickSearchHit'
 
-type QuickSearchHitsListProps = {
+type Props = {
   hits: ITile[] | null
   type: IAvailableFavoritesTypes
 }
-const QuickSearchHitsList: React.FC<QuickSearchHitsListProps> = ({
-  hits,
-  type,
-}) => {
+const QuickSearchHitsList: React.FC<Props> = ({ hits, type }) => {
   if (!hits) return null
   return (
     <>

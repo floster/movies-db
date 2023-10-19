@@ -1,5 +1,5 @@
 import { SORT_OPTIONS } from '../config/'
-import AppSelect from './UI/AppSelect'
+import AppSelect from './UI/Select'
 
 interface Props {
   title: string
@@ -10,27 +10,28 @@ interface Props {
   alignStart?: boolean
 }
 
-export default function AppSectionHeader({
+const AppSectionHeader: React.FC<Props> = ({
   title,
+  alignStart,
+  // TODO: make next props as an object | null
   hasSelect,
   selectDisabled,
-  alignStart,
   currentSortOption,
   onSortChange,
-}: Props) {
-  return (
-    <header
-      className={`app-section__header ${alignStart ? 'm-align_start' : ''}`}>
-      <h2 className="app-section__title">{title}</h2>
-      {hasSelect && (
-        <AppSelect
-          options={SORT_OPTIONS}
-          currentOption={currentSortOption!}
-          optionChanged={onSortChange!}
-          label="Sort by:"
-          disabled={selectDisabled}
-        />
-      )}
-    </header>
-  )
-}
+}) => (
+  <header
+    className={`app-section__header ${alignStart ? 'm-align_start' : ''}`}>
+    <h2 className="app-section__title">{title}</h2>
+    {hasSelect && (
+      <AppSelect
+        options={SORT_OPTIONS}
+        currentOption={currentSortOption!}
+        optionChanged={onSortChange!}
+        label="Sort by:"
+        disabled={selectDisabled}
+      />
+    )}
+  </header>
+)
+
+export default AppSectionHeader

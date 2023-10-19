@@ -6,7 +6,7 @@ interface Props {
   logo?: boolean
 }
 
-export default function SvgIcon({ icon, extraClass, logo }: Props) {
+const SvgIcon: React.FC<Props> = ({ icon, extraClass, logo }) => {
   const viewBox = logo ? '0 0 720 100' : '0 0 32 32'
 
   return (
@@ -18,3 +18,5 @@ export default function SvgIcon({ icon, extraClass, logo }: Props) {
     </svg>
   )
 }
+
+export default SvgIcon

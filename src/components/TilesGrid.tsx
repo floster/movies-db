@@ -5,10 +5,10 @@ import { IAvailableFavoritesTypes, ITile } from '../types/tmdb.models'
 
 import AppSection from './AppSection'
 import AppSectionHeader from './AppSectionHeader'
-import AppTile from './AppTile'
+import AppTile from './Tile'
 import ShowMoreBtn from './UI/ShowMoreBtn'
 
-interface ITilesGridProps {
+interface Props {
   tiles: ITile[] | null
   type: IAvailableFavoritesTypes
   showAll?: boolean
@@ -17,16 +17,8 @@ interface ITilesGridProps {
 /**
  * Renders a section with a list of tiles for a specific type of search result or favorites.
  * Has built-in sorting and show more functionality.
- * @param {Object} props - The component props.
- * @param {ITile[] | null} props.tiles - The list of tiles to display.
- * @param {IAvailableFavoritesTypes} props.type - The type of search result.
- * @returns {JSX.Element} The rendered component.
  */
-const TilesGrid: React.FC<ITilesGridProps> = ({
-  tiles,
-  type,
-  showAll = false,
-}) => {
+const TilesGrid: React.FC<Props> = ({ tiles, type, showAll = false }) => {
   if (!tiles) return null
 
   // TODO: change behavior - first sort tiles than paginate them
