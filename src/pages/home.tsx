@@ -1,4 +1,4 @@
-import PageSection from '../components/PageSection'
+import PageSection from '../components/Layout/PageSection'
 import MediaListSection from '../components/MediaList/MediaListSection'
 import TrendingsCarousel from '../components/Home/TrendingsCarousel'
 import RandomMedia from '../components/Home/RandomMedia'

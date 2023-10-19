@@ -1,0 +1,34 @@
+.tiles-layout {
+  display: grid;
+  gap: var(--gap-md) var(--gap-xs);
+
+  @include media(md) {
+    gap: var(--gap-lg) var(--gap-sm);
+  }
+
+  &.m-tv_seasons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xxl);
+
+    @include media(md) {
+      gap: var(--gap-xxl);
+    }
+  }
+
+  &.m-movies {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+
+    @include media(md) {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+  }
+
+  &.m-people {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+
+    @include media(md) {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+  }
+}

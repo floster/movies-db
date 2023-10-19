@@ -4,7 +4,7 @@ interface Props {
   children: React.ReactNode
   extraClass?: string
   align?: 'start' | 'center' | 'end'
-  title: string
+  title?: string
   select?: ISelectProps | null
 }
 
@@ -13,12 +13,14 @@ const PageSection: React.FC<Props> = ({
   extraClass,
   title,
   select,
-  align = 'start',
+  align = 'end',
 }) => (
-  <>
-    <PageSectionHeader title={title} select={select} align={align} />
-    <section className={`app-section ${extraClass || ''}`}>{children}</section>
-  </>
+  <section className={`page-section ${extraClass || ''}`}>
+    {(title || select) && (
+      <PageSectionHeader title={title} select={select} align={align} />
+    )}
+    <section className={`page-section__inner`}>{children}</section>
+  </section>
 )
 
 export default PageSection

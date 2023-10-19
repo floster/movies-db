@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom'
 
-import '../app.scss'
+import '../../app.scss'
 
-import AppDialog from './Dialog'
-import AppHeader from './AppHeader'
-import QuickSearchForm from './QuickSearch/QuickSearchForm'
+import AppDialog from '../Dialog'
+import AppHeader from '../AppHeader'
+import QuickSearchForm from '../QuickSearch/QuickSearchForm'
 
 const AppLayout: React.FC = () => (
   <>

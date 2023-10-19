@@ -1,5 +1,5 @@
-import { SORT_OPTIONS } from '../config'
-import Select from './UI/Select'
+import { SORT_OPTIONS } from '../../config'
+import Select from '../UI/Select'
 
 export type ISelectProps = {
   disabled?: boolean
@@ -8,7 +8,7 @@ export type ISelectProps = {
 }
 
 interface Props {
-  title: string
+  title?: string
   align?: 'start' | 'center' | 'end'
   select?: ISelectProps | null
 }
@@ -19,14 +19,14 @@ const PageSectionHeader: React.FC<Props> = ({
   select = null,
 }) => (
   <header
-    className={`app-section__header ${
+    className={`page-section__header ${
       align === 'start'
         ? 'm-align_start'
         : align === 'center'
         ? 'm-align_center'
         : ''
     }`}>
-    <h2 className="app-section__title">{title}</h2>
+    <h2 className="page-section__title">{title}</h2>
     {select && (
       <Select
         options={SORT_OPTIONS}

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getIdFromLink } from '../utils/helpers'
 
 import MediaHero from '../components/MediaHero'
-import PageSection from '../components/PageSection'
+import PageSection from '../components/Layout/PageSection'
 import Spinner from '../components/UI/Spinner'
 import Error from '../components/UI/Error'
 import MovieCrew from '../components/Movie/MovieCrew'
@@ -12,6 +12,7 @@ import ShowMoreBtn from '../components/UI/ShowMoreBtn'
 
 import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
 import { useGetMovieCreditsQuery } from '../store/api/tmdb.api'
+import TilesLayout from '../components/Layout/TilesLayout'
 
 type MovieParams = {
   id: string
@@ -40,7 +41,7 @@ const Movie: React.FC = () => {
       ) : (
         <>
           {data?.crew.length !== 0 && (
-            <PageSection extraClass="m-movie_crew" title="crew">
+            <PageSection extraClass="m-movie_crew">
               <div className="container">
                 {isLoading ? (
                   <Spinner />
@@ -53,7 +54,7 @@ const Movie: React.FC = () => {
           {currentCast.length !== 0 && (
             <div className="l-content container">
               <PageSection title="cast">
-                <div className="l-tiles_grid m-people">
+                <TilesLayout type="people">
                   {isLoading ? (
                     <Spinner />
                   ) : (
@@ -69,7 +70,7 @@ const Movie: React.FC = () => {
                       />
                     </>
                   )}
-                </div>
+                </TilesLayout>
               </PageSection>
             </div>
           )}

@@ -1,6 +1,6 @@
 import useGetTilesData from '../../hooks/tmdb/getTilesData'
 import { IAvailableFavoritesTypes } from '../../types/tmdb.models'
-import TilesGrid from '../TilesGrid'
+import TilesGrid from '../Layout/TilesGrid'
 import Error from '../UI/Error'
 import Spinner from '../UI/Spinner'
 

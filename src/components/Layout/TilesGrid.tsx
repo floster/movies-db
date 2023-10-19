@@ -1,11 +1,12 @@
-import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
-import { useTilesSort } from '../hooks/tiles/tilesSort'
-import { useSortOption } from '../hooks/useSortOption'
-import { IAvailableFavoritesTypes, ITile } from '../types/tmdb.models'
+import { useTilesShowMore } from '../../hooks/tiles/tilesShowMore'
+import { useTilesSort } from '../../hooks/tiles/tilesSort'
+import { useSortOption } from '../../hooks/useSortOption'
+import { IAvailableFavoritesTypes, ITile } from '../../types/tmdb.models'
+import TilesLayout from './TilesLayout'
 
 import PageSection from './PageSection'
-import Tile from './Tile'
-import ShowMoreBtn from './UI/ShowMoreBtn'
+import Tile from '../Tile'
+import ShowMoreBtn from '../UI/ShowMoreBtn'
 
 interface Props {
   tiles: ITile[] | null
@@ -40,7 +41,7 @@ const TilesGrid: React.FC<Props> = ({ tiles, type, showAll = false }) => {
       title={`${type}s (${tiles.length})`}
       select={select}
       align="start">
-      <div className="l-tiles_grid m-movies" id={type}>
+      <TilesLayout type="movies" id={type}>
         {sortedTiles.map(media => (
           <Tile tile={media} key={media.id} />
         ))}
@@ -51,7 +52,7 @@ const TilesGrid: React.FC<Props> = ({ tiles, type, showAll = false }) => {
             handleShowMore={handleShowMore}
           />
         )}
-      </div>
+      </TilesLayout>
     </PageSection>
   )
 

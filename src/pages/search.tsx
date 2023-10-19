@@ -9,7 +9,7 @@ import { useDocumentTitle } from 'usehooks-ts'
 import Error from '../components/UI/Error'
 import Spinner from '../components/UI/Spinner'
 import SearchForm from '../components/SearchForm'
-import TilesGrid from '../components/TilesGrid'
+import TilesGrid from '../components/Layout/TilesGrid'
 import Message from '../components/UI/Message'
 
 import useSearch from '../hooks/search/search'

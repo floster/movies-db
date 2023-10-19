@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getIdFromLink } from '../utils/helpers'
 
 import MediaHero from '../components/MediaHero'
-import PageSection from '../components/PageSection'
+import PageSection from '../components/Layout/PageSection'
 import Spinner from '../components/UI/Spinner'
 import Error from '../components/UI/Error'
 import Tile from '../components/Tile'
@@ -17,6 +17,7 @@ import {
   useGetPersonMovieCreditsQuery,
   useGetPersonTvCreditsQuery,
 } from '../store/api/tmdb.api'
+import TilesLayout from '../components/Layout/TilesLayout'
 
 type PersonParams = {
   id: string
@@ -75,7 +76,7 @@ const Person: React.FC = () => {
           <PageSection
             title={`${movieCredits?.length} movies`}
             select={{ ...movieCreditsSortOption }}>
-            <div className="l-tiles_grid m-movies">
+            <TilesLayout type="movies">
               {isMovieCreditsLoading ? (
                 <Spinner />
               ) : (
@@ -94,7 +95,7 @@ const Person: React.FC = () => {
                   />
                 </>
               )}
-            </div>
+            </TilesLayout>
           </PageSection>
         )}
         {isTvCreditsError ? (
@@ -105,7 +106,7 @@ const Person: React.FC = () => {
           <PageSection
             title={`${tvCredits?.length} tv shows`}
             select={{ ...tvCreditsSortOption }}>
-            <div className="l-tiles_grid m-movies">
+            <TilesLayout type="movies">
               {isTvCreditsLoading ? (
                 <Spinner />
               ) : (
@@ -124,7 +125,7 @@ const Person: React.FC = () => {
                   />
                 </>
               )}
-            </div>
+            </TilesLayout>
           </PageSection>
         )}
       </div>

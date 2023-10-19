@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getIdFromLink } from '../utils/helpers'
 
 import MediaHero from '../components/MediaHero'
-import PageSection from '../components/PageSection'
+import PageSection from '../components/Layout/PageSection'
 import Spinner from '../components/UI/Spinner'
 import Error from '../components/UI/Error'
 import Tile from '../components/Tile'
@@ -13,6 +13,7 @@ import { useSortOption } from '../hooks/useSortOption'
 import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
 import { useTilesSort } from '../hooks/tiles/tilesSort'
 import { useGetCollectionQuery } from '../store/api/tmdb.api'
+import TilesLayout from '../components/Layout/TilesLayout'
 
 type CollectionParams = {
   id: string
@@ -23,7 +24,7 @@ const Collection: React.FC = () => {
   const collectionId = getIdFromLink(params.id!)
 
   // TODO: improve this flow in future
-  // uses to pass unified sort option params through AppSection to AppSelect
+  // uses to pass unified sort option params through PageSection to Select
   const collectionSortOption = useSortOption()
 
   const {
@@ -54,7 +55,7 @@ const Collection: React.FC = () => {
               extraClass="m-movies_list"
               title={`${tiles?.parts.length} parts`}
               select={{ ...collectionSortOption }}>
-              <div className="l-tiles_grid m-movies">
+              <TilesLayout type="movies">
                 {isLoading ? (
                   <Spinner />
                 ) : (
@@ -69,7 +70,7 @@ const Collection: React.FC = () => {
                     />
                   </>
                 )}
-              </div>
+              </TilesLayout>
             </PageSection>
           </>
         )}
