@@ -1,5 +1,7 @@
+import { IAvailableFavoritesTypes } from '../../types/tmdb.models'
+
 type Props = {
-  type: 'tv_seasons' | 'movies' | 'people'
+  type: IAvailableFavoritesTypes
   id?: string
   children: React.ReactNode
 }

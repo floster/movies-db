@@ -120,7 +120,7 @@ export const formatMediaHeroData = (
   const partsSeasons = data.parts
     ? `${data.parts.length} parts`
     : data.seasons
-    ? `${data.seasons.length} seasons`
+    ? `${data.number_of_seasons} seasons`
     : null
   const belongs = data.belongs_to_collection || null
   const torrent = true

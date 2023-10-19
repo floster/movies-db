@@ -3,16 +3,12 @@ import { useParams } from 'react-router-dom'
 import { getIdFromLink } from '../utils/helpers'
 
 import MediaHero from '../components/MediaHero'
-import PageSection from '../components/Layout/PageSection'
 import Spinner from '../components/UI/Spinner'
 import Error from '../components/UI/Error'
 import MovieCrew from '../components/Movie/MovieCrew'
-import Tile from '../components/Tile'
-import ShowMoreBtn from '../components/UI/ShowMoreBtn'
+import TilesGrid from '../components/Layout/TilesGrid'
 
-import { useTilesShowMore } from '../hooks/tiles/tilesShowMore'
 import { useGetMovieCreditsQuery } from '../store/api/tmdb.api'
-import TilesLayout from '../components/Layout/TilesLayout'
 
 type MovieParams = {
   id: string
@@ -24,13 +20,6 @@ const Movie: React.FC = () => {
 
   const { data, isError, isLoading } = useGetMovieCreditsQuery(movieId)
 
-  const {
-    pagesQty,
-    currentPage: currentCastPage,
-    currentTiles: currentCast,
-    handleShowMore,
-  } = useTilesShowMore(data?.cast ? data.cast : [])
-
   return (
     <section className="movie-header">
       <MediaHero id={movieId} type="movie" />
@@ -38,42 +27,18 @@ const Movie: React.FC = () => {
         <Error
           error={`Error occured while fetching movie #${movieId} credits`}
         />
+      ) : isLoading ? (
+        <Spinner />
       ) : (
         <>
-          {data?.crew.length !== 0 && (
-            <PageSection extraClass="m-movie_crew">
-              <div className="container">
-                {isLoading ? (
-                  <Spinner />
-                ) : (
-                  <MovieCrew members={data?.crew || []} />
-                )}
-              </div>
-            </PageSection>
-          )}
-          {currentCast.length !== 0 && (
-            <div className="l-content container">
-              <PageSection title="cast">
-                <TilesLayout type="people">
-                  {isLoading ? (
-                    <Spinner />
-                  ) : (
-                    <>
-                      {currentCast.map(tile => (
-                        <Tile tile={tile} key={tile.id} />
-                      ))}
-                      {/* TODO: add 'show all' functionality */}
-                      <ShowMoreBtn
-                        currentPage={currentCastPage}
-                        pagesQty={pagesQty}
-                        handleShowMore={handleShowMore}
-                      />
-                    </>
-                  )}
-                </TilesLayout>
-              </PageSection>
-            </div>
-          )}
+          {data?.crew.length !== 0 && <MovieCrew members={data?.crew || []} />}
+          <div className="l-content container">
+            <TilesGrid
+              tiles={data?.cast ? data.cast : []}
+              type="person"
+              title="actors"
+            />
+          </div>
         </>
       )}
     </section>

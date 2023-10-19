@@ -16,7 +16,9 @@
     }
   }
 
-  &.m-movies {
+  &.m-movie,
+  &.m-collection,
+  &.m-tv {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
 
     @include media(md) {
@@ -24,7 +26,7 @@
     }
   }
 
-  &.m-people {
+  &.m-person {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
 
     @include media(md) {

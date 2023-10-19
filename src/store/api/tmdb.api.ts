@@ -28,7 +28,6 @@ import {
   IAvailableFavoritesTypes,
   IRawTv,
   IRawTvSeasonResponse,
-  IRawTvSeason,
 } from '../../types/tmdb.models'
 import {
   formatCollectionNew,
@@ -193,20 +192,26 @@ export const tmdbApi = createApi({
 
         // fetch all seasons of tv series "at once"
         const _seasons = await Promise.all(
-          _tv.seasons.map(async (season: IRawTvSeason) => {
-            const _seasonResponse = await fetch(
-              `https://api.themoviedb.org/3/tv/${id}/season/${season.season_number}?language=en-US`,
-              TMDB_FETCH_OPTIONS
-            )
-
-            if (!_seasonResponse.ok)
-              throw new Error(
-                `Error: Episode with ID: ${season.season_number} of TV Series with ID: ${id} not found`
+          Array(_tv.number_of_seasons)
+            .fill(1)
+            .map(async (_, idx) => {
+              const _seasonResponse = await fetch(
+                `https://api.themoviedb.org/3/tv/${id}/season/${
+                  idx + 1
+                }?language=en-US`,
+                TMDB_FETCH_OPTIONS
               )
 
-            const _season: IRawTvSeasonResponse = await _seasonResponse.json()
-            return _season
-          })
+              if (!_seasonResponse.ok)
+                throw new Error(
+                  `Error: Episode with ID: ${
+                    idx + 1
+                  } of TV Series with ID: ${id} not found`
+                )
+
+              const _season: IRawTvSeasonResponse = await _seasonResponse.json()
+              return _season
+            })
         )
 
         return { data: _seasons }

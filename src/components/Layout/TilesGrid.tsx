@@ -11,6 +11,7 @@ import ShowMoreBtn from '../UI/ShowMoreBtn'
 interface Props {
   tiles: ITile[] | null
   type: IAvailableFavoritesTypes
+  title?: string
   showAll?: boolean
 }
 
@@ -18,31 +19,35 @@ interface Props {
  * Renders a section with a list of tiles for a specific type of search result or favorites.
  * Has built-in sorting and show more functionality.
  */
-const TilesGrid: React.FC<Props> = ({ tiles, type, showAll = false }) => {
+const TilesGrid: React.FC<Props> = ({
+  tiles,
+  type,
+  title,
+  showAll = false,
+}) => {
   if (!tiles) return null
-
-  // TODO: change behavior - first sort tiles than paginate them
-  const { pagesQty, currentPage, currentTiles, handleShowMore } =
-    useTilesShowMore(tiles ? tiles : [])
 
   const sortOptions = useSortOption()
 
-  const { sortedTiles } = useTilesSort(
-    showAll ? tiles : currentTiles,
-    sortOptions.currentSortOption
-  )
+  const { sortedTiles } = useTilesSort(tiles, sortOptions.currentSortOption)
+
+  // TODO: change behavior - first sort tiles than paginate them
+  const { pagesQty, currentPage, currentTiles, handleShowMore } =
+    useTilesShowMore(sortedTiles ? sortedTiles : [])
 
   const select =
     tiles.length === 0 ? null : { ...sortOptions, disabled: tiles.length === 1 }
 
+  const tilesToShow = showAll ? sortedTiles : currentTiles
+
   const markup = (
     <PageSection
       extraClass="m-movies_list"
-      title={`${type}s (${tiles.length})`}
+      title={`${title ? title : type + 's'} (${tiles.length})`}
       select={select}
       align="start">
-      <TilesLayout type="movies" id={type}>
-        {sortedTiles.map(media => (
+      <TilesLayout type={type} id={type}>
+        {tilesToShow.map(media => (
           <Tile tile={media} key={media.id} />
         ))}
         {!showAll && (
