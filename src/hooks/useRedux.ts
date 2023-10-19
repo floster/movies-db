@@ -4,6 +4,7 @@ import { RootState } from '../store/store'
 import { bindActionCreators } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 import { favoritesActions } from '../store/slices/favorites.slice'
+import { dialogActions } from '../store/slices/dialog.slice'
 
 /**
  * A custom hook that wraps the `useSelector` hook from `react-redux` and is used to type the `RootState`.
@@ -17,6 +18,7 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 const actions = {
   ...favoritesActions,
+  ...dialogActions,
 }
 
 /**

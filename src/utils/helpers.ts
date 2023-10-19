@@ -1,7 +1,8 @@
-import { AvalableLocales, LOCALES } from '../config'
+import { LOCALES } from '../config'
 import {
   IAvailableSortValues,
   IAvailableTileFields,
+  IAvalableLocales,
   IMediaTypes,
   ITile,
 } from '../types/tmdb.models'
@@ -56,7 +57,7 @@ export const getIdFromLink = (link: string): number =>
 
 // TODO: refactor all about locales
 export const getCurrentLocale = () =>
-  (localStorage.getItem('locale') as AvalableLocales) ||
+  (localStorage.getItem('locale') as IAvalableLocales) ||
   import.meta.env.VITE_DEFAULT_LOCALE
 
 export const getLocalCountryCode = () => {
