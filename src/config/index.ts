@@ -21,7 +21,7 @@ export const TMDB_FETCH_OPTIONS = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization: `Bearer ${BEARER_KEY}`,
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MDMwNTgzMmYxYWRkMTAzY2UwMzhkMTA3MzFjM2M0MiIsInN1YiI6IjYyOWY2M2EwODUwMDVkMDA1MmI5NmFjZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RWD_0mbpzN1nW_ujjwQrAmyMh9Mk8rM1CFiDBfY0WnY`,
   },
 }
 
