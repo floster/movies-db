@@ -4,7 +4,7 @@ export type IAvailableSortValues =
   | 'title_asc'
   | 'title_desc'
 
-export type IAvailableTilesQtyValues = 5 | 10 | 20 | 'all'
+export type IAvailableTilesQtyValues = '5' | '10' | '20' | 'all'
 
 export type IAvalableLocales = 'en' | 'uk' | 'de'
 

@@ -34,22 +34,22 @@ export const AVAILABLE_LIST_OPTIONS: IAvailableListsOptions[] = [
   'tv:top_rated',
 ]
 
-export interface SelectOptions<T> {
+export interface SelectOption<T> {
   title: string
   value: T
   default?: boolean
 }
-export const SORT_OPTIONS: SelectOptions<IAvailableSortValues>[] = [
+export const SORT_OPTIONS: SelectOption<IAvailableSortValues>[] = [
   { title: 'Year 0-9', value: 'year_asc', default: true },
   { title: 'Year 9-0', value: 'year_desc' },
   { title: 'Title A-W', value: 'title_asc' },
   { title: 'Title W-A', value: 'title_desc' },
 ]
 
-export const TILES_QTY_OPTIONS: SelectOptions<IAvailableTilesQtyValues>[] = [
-  { title: '5', value: 5 },
-  { title: '10', value: 10, default: true },
-  { title: '20', value: 20 },
+export const TILES_QTY_OPTIONS: SelectOption<IAvailableTilesQtyValues>[] = [
+  { title: '5', value: '5' },
+  { title: '10', value: '10', default: true },
+  { title: '20', value: '20' },
   { title: 'all', value: 'all' },
 ]
 
