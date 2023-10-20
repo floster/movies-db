@@ -56,9 +56,9 @@ const Search: React.FC = () => {
         ) : (
           <>
             <SearchResultsHeader results={results} term={searchTerm} />
-            {AVAILABLE_SEARCH_TYPES.map(type => {
-              if (type)
-                return (
+            {AVAILABLE_SEARCH_TYPES.map(
+              type =>
+                results[type] && (
                   <TilesGrid
                     key={type}
                     tiles={results[type]}
@@ -66,7 +66,7 @@ const Search: React.FC = () => {
                     showAll
                   />
                 )
-            })}
+            )}
           </>
         )}
       </div>

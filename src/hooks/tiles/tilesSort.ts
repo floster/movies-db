@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { ITile, IAvailableSortValues } from '../../types/tmdb.models'
 import { pullTilesWithoutPosterToTheEnd, tilesSort } from '../../utils/helpers'
 
-// TODO: add possibility to sort by rating
+// TODO: #sort add possibility to sort by rating
 export const useTilesSort = (
   tiles: ITile[],
   currentSort: IAvailableSortValues

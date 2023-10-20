@@ -1,4 +1,5 @@
 import { ICrewMember } from '../../types/tmdb.models'
+import PageSection from '../Layout/PageSection'
 
 interface Props {
   members: ICrewMember[]
@@ -14,7 +15,13 @@ const MovieCrew: React.FC<Props> = ({ members }) => {
     )
   }
   return (
-    <ul className="crew-list">{members.map(member => memberItem(member))}</ul>
+    <PageSection extraClass="m-movie_crew">
+      <div className="container">
+        <ul className="crew-list">
+          {members.map(member => memberItem(member))}
+        </ul>
+      </div>
+    </PageSection>
   )
 }
 export default MovieCrew

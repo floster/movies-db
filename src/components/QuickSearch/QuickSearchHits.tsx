@@ -16,7 +16,7 @@ const QuickSearchHits: FC<Props> = ({ results }) => {
 
   return (
     <section className="quick-search-hits">
-      {!isSearchHitsEmpty ? (
+      {isSearchHitsEmpty() ? (
         <p className="quick-search-hits__empty">
           No results. To start searching enter at least {SYMBOLS_QTY_TO_SEARCH}{' '}
           symbols
