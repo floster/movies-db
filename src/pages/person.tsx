@@ -73,6 +73,7 @@ const Person: React.FC = () => {
             error={`Error occured while fetching movie credits for person #${personId}`}
           />
         ) : (
+          // TODO: make this section with TilesGrid component
           <PageSection
             title={`${movieCredits?.length} movies`}
             select={{ ...movieCreditsSortOption }}>

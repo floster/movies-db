@@ -9,8 +9,6 @@ import Favorites from './pages/favorites'
 import Tv from './pages/tv'
 import Search from './pages/search'
 
-// [ ] TODO: animation for tiles when 'show more' clicked | sorting changed
-
 export default function App() {
   return (
     <BrowserRouter>

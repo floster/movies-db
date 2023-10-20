@@ -1,27 +1,33 @@
-# React + TypeScript + Vite
+# Movies DB
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TypeScript and React App leverages Redux Toolkit (RTK) and RTK Query to connect to [The Movie DB API](https://developer.themoviedb.org/reference/intro/getting-started).
+Here's possibility to search for movies, TV shows, collections, and actors, get detailed information about them.
 
-Currently, two official plugins are available:
+## Project configuration
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [Vite](https://vitejs.dev/) 4.4.5+
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [React 18+](https://react.dev/reference/react) + [TypeScript](https://www.typescriptlang.org/)
+- [Redux Toolkit (RTK)](https://redux-toolkit.js.org/) + [RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
+- [React Router 6+](https://reactrouter.com/en/main)
+- Prettier + ESLint (install the appropriate plugins for [VSCode](https://code.visualstudio.com/download))
 
-## Expanding the ESLint configuration
+## Project setup
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+```bash
+git clone git@github.com:floster/movies-db.git
 
-- Configure the top-level `parserOptions` property like this:
+cd movies-db
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+npm i
+
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+**!!!** it is necessary to create `.env.local`
+
+```
+VITE_TMDB_BEARER_KEY = YOUR_API_KEY_HERE
+```
+
+_[Get the API key](https://www.themoviedb.org/settings/api)_
