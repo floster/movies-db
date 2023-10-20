@@ -8,6 +8,7 @@ import {
   IAvailableSortValues,
   IAvailableFavoritesTypes,
   IAvalableLocales,
+  IAvailableTilesQtyValues,
 } from '../types/tmdb.models'
 
 export const AVAILABLE_SEARCH_TYPES: IAvailableFavoritesTypes[] = [
@@ -33,15 +34,25 @@ export const AVAILABLE_LIST_OPTIONS: IAvailableListsOptions[] = [
   'tv:top_rated',
 ]
 
-interface SortOption {
+export interface SelectOption<T> {
   title: string
-  value: IAvailableSortValues
+  value: T
+  default?: boolean
 }
-export const SORT_OPTIONS: SortOption[] = [
+export const SORT_OPTIONS: SelectOption<IAvailableSortValues>[] = [
   { title: 'Year 0-9', value: 'year_asc' },
-  { title: 'Year 9-0', value: 'year_desc' },
+  { title: 'Year 9-0', value: 'year_desc', default: true },
   { title: 'Title A-W', value: 'title_asc' },
   { title: 'Title W-A', value: 'title_desc' },
+  { title: 'Rtng 0-9', value: 'rating_asc' },
+  { title: 'Rtng 9-0', value: 'rating_desc' },
+]
+
+export const TILES_QTY_OPTIONS: SelectOption<IAvailableTilesQtyValues>[] = [
+  { title: '5', value: '5' },
+  { title: '10', value: '10', default: true },
+  { title: '20', value: '20' },
+  { title: 'all', value: 'all' },
 ]
 
 type Locale = { title: string; value: IAvalableLocales }

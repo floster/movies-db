@@ -82,7 +82,8 @@ export function formatTile<T extends IAvailableTileFields>(
     poster,
     title: tile.title || tile.name,
     label,
-    rating: { average: ratingAvg, count: tile.vote_count },
+    votes: { average: ratingAvg, count: tile.vote_count },
+    rating: ratingAvg,
     year,
   }
 }

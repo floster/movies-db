@@ -3,6 +3,10 @@ export type IAvailableSortValues =
   | 'year_desc'
   | 'title_asc'
   | 'title_desc'
+  | 'rating_asc'
+  | 'rating_desc'
+
+export type IAvailableTilesQtyValues = '5' | '10' | '20' | 'all'
 
 export type IAvalableLocales = 'en' | 'uk' | 'de'
 
@@ -49,7 +53,8 @@ export interface ITile {
   poster: string
   title: string
   label: string
-  rating: { average: number; count: number } | null
+  votes: { average: number; count: number } | null
+  rating: number | null
   year: string | null
 }
 
