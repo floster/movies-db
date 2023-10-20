@@ -37,6 +37,7 @@ const Movie: React.FC = () => {
               tiles={data?.cast ? data.cast : []}
               type="person"
               title="actors"
+              hasQty={true}
             />
           </div>
         </>

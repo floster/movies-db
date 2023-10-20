@@ -11,8 +11,8 @@ interface Props {
 const PageSectionHeader: React.FC<Props> = ({
   title,
   align,
-  hasSort = false,
-  hasQty = true,
+  hasSort,
+  hasQty,
 }) => (
   <header
     className={`page-section__header ${
@@ -23,8 +23,8 @@ const PageSectionHeader: React.FC<Props> = ({
         : ''
     }`}>
     <h2 className="page-section__title">{title}</h2>
-    {hasSort && <SelectSort />}
-    {hasQty && <SelectQty />}
+    {!!hasSort && <SelectSort />}
+    {!!hasQty && <SelectQty />}
   </header>
 )
 

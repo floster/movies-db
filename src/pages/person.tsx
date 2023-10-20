@@ -43,14 +43,24 @@ const Person: React.FC = () => {
         ) : isMovieCreditsLoading ? (
           <Spinner />
         ) : (
-          <TilesGrid tiles={movieCredits ? movieCredits : []} type="movie" />
+          <TilesGrid
+            tiles={movieCredits ? movieCredits : []}
+            type="movie"
+            hasSort={true}
+            hasQty={true}
+          />
         )}
         {isTvCreditsError ? (
           <Error error={`Error fetching tv credits for person #${personId}`} />
         ) : isTvCreditsLoading ? (
           <Spinner />
         ) : (
-          <TilesGrid tiles={tvCredits ? tvCredits : []} type="tv" />
+          <TilesGrid
+            tiles={tvCredits ? tvCredits : []}
+            type="tv"
+            hasSort={true}
+            hasQty={true}
+          />
         )}
       </div>
     </section>

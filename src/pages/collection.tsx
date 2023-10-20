@@ -34,6 +34,8 @@ const Collection: React.FC = () => {
             tiles={data?.parts ? data.parts : []}
             type={'collection'}
             title="parts"
+            hasSort={true}
+            hasQty={true}
           />
         )}
       </div>

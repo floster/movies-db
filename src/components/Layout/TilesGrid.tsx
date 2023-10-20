@@ -50,7 +50,20 @@ interface Props {
   type: IAvailableFavoritesTypes
   title?: string
   showAll?: boolean
+  hasSort?: boolean
+  hasQty?: boolean
 }
+
+// TODO: hide selectQty if tiles.length < TYLES_QTY
+// TODO: 'default' sort option -> show 'raw' tiles order
+// TODO: possibility to set default sort option separately for each section
+// clarify for prev:
+//   - home -> defult (off)
+//   - collection -> year 9-0
+//   - movie cast -> default (off)
+//   - person -> year 9-0
+//   - search -> rating 9-0
+//   - favorites -> default (off)
 
 /**
  * Renders a section with a list of tiles for a specific type of search result or favorites.
@@ -61,6 +74,8 @@ const TilesGrid: React.FC<Props> = ({
   type,
   title,
   showAll = false,
+  hasSort = false,
+  hasQty = false,
 }) => {
   if (!tiles) return null
 
@@ -97,7 +112,9 @@ const TilesGrid: React.FC<Props> = ({
         <PageSection
           extraClass="m-movies_list"
           title={`${title ? title : type + 's'} (${tiles.length})`}
-          align="start">
+          align="start"
+          hasSort={hasSort}
+          hasQty={hasQty}>
           <TilesLayout type={type} id={type}>
             {currentTiles.map(media => (
               <Tile tile={media} key={media.id} />
