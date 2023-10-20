@@ -8,7 +8,6 @@ const AppHeader: React.FC = () => {
       <div className="app-header__inner container">
         <Logo />
         <nav className="app-header__nav">
-          {/* <ChangeLocale /> */}
           <OpenSerachBtn />
           <FavoritesLink />
         </nav>

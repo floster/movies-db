@@ -14,9 +14,7 @@ const PageSection: React.FC<Props> = ({
   align = 'end',
 }) => (
   <section className={`page-section ${extraClass || ''}`}>
-    {title && (
-      <PageSectionHeader title={title} align={align} hasSort hasTilesQty />
-    )}
+    {title && <PageSectionHeader title={title} align={align} hasSort hasQty />}
     <section className={`page-section__inner`}>{children}</section>
   </section>
 )
