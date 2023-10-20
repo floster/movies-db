@@ -55,7 +55,7 @@ export const pullTilesWithoutPosterToTheEnd = (tiles: ITile[]): ITile[] => {
 export const getIdFromLink = (link: string): number =>
   parseInt(link.split('-')[0])
 
-// TODO: refactor all about locales
+// TODO: #locale refactor all about locales
 export const getCurrentLocale = () =>
   (localStorage.getItem('locale') as IAvalableLocales) ||
   import.meta.env.VITE_DEFAULT_LOCALE

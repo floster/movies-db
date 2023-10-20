@@ -43,7 +43,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
 
   if (!data && !isLoading) return null
 
-  // TODO: make below works
+  // TODO: #tags make below works
   // const renderTags = () => {
   //   const tags = data.tags?.map((genre: IGenre) => (
   //     <li key={genre.id}>{genre.name}</li>

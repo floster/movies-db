@@ -48,7 +48,7 @@ const prepareHeaders = (headers: Headers) => {
 }
 
 // set params for all requests
-// TODO: think about how to set language dynamically
+// TODO: #locale think about how to set language dynamically
 const prepareParams = (params: Record<string, any>) => {
   params['language'] = API_LANGUAGE
   params['include_adult'] = API_ADULTS

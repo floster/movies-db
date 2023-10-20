@@ -46,7 +46,7 @@ export const SORT_OPTIONS: SortOption[] = [
 
 type Locale = { title: string; value: IAvalableLocales }
 
-// TODO: refactor all about locales
+// TODO: #locale refactor all about locales
 export const LOCALES: Locale[] = [
   { title: 'US', value: 'en' },
   { title: 'UA', value: 'uk' },

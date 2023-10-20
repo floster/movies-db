@@ -7,6 +7,7 @@ const ShowMoreBtn: React.FC<ShowMoreBtnAttributes> = ({
 }) => {
   const isHidden = currentPage >= pagesQty
 
+  // TODO: #wantall add 'want all' button
   return (
     <button
       className={`app-button ${isHidden && 'm-hidden'}`}

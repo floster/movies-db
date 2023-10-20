@@ -4,7 +4,7 @@ import { IAvalableLocales } from '../../types/tmdb.models'
 import AppSelect from './Select'
 
 const ChangeLocale = () => {
-  // TODO: make it with Redux
+  // TODO: #locale make it with Redux
   const [locale, setLocale] = useState(LOCALES[0].value)
   const changeLocale = (locale: IAvalableLocales) => setLocale(locale)
 
