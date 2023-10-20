@@ -1,22 +1,15 @@
-import { SORT_OPTIONS } from '../../config'
-import Select from '../UI/Select'
-
-export type ISelectProps = {
-  disabled?: boolean
-  currentSortOption?: string
-  onSortChange?: (option: string) => void
-}
+import SortSelect from '../UI/SortSelect'
 
 interface Props {
   title?: string
   align?: 'start' | 'center' | 'end'
-  select?: ISelectProps | null
+  hasSort?: boolean
 }
 
 const PageSectionHeader: React.FC<Props> = ({
   title,
   align,
-  select = null,
+  hasSort = false,
 }) => (
   <header
     className={`page-section__header ${
@@ -27,15 +20,7 @@ const PageSectionHeader: React.FC<Props> = ({
         : ''
     }`}>
     <h2 className="page-section__title">{title}</h2>
-    {select && (
-      <Select
-        options={SORT_OPTIONS}
-        currentOption={select.currentSortOption!}
-        optionChanged={select.onSortChange!}
-        label="Sort by:"
-        disabled={select.disabled}
-      />
-    )}
+    {hasSort && <SortSelect />}
   </header>
 )
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { LOCALES } from '../../config/'
 import { IAvalableLocales } from '../../types/tmdb.models'
-import AppSelect from './Select'
+import AppSelect from './SortSelect'
 
 const ChangeLocale = () => {
   // TODO: #locale make it with Redux

@@ -3,10 +3,7 @@ import { ITile, IAvailableSortValues } from '../../types/tmdb.models'
 import { pullTilesWithoutPosterToTheEnd, tilesSort } from '../../utils/helpers'
 
 // TODO: #sort add possibility to sort by rating
-export const useTilesSort = (
-  tiles: ITile[],
-  currentSort: IAvailableSortValues
-) => {
+const useTilesSort = (tiles: ITile[], currentSort: IAvailableSortValues) => {
   const [sortedTiles, setSortedTiles] = useState([] as ITile[])
 
   const handleSort = useCallback(() => {
@@ -19,3 +16,4 @@ export const useTilesSort = (
 
   return { sortedTiles }
 }
+export default useTilesSort

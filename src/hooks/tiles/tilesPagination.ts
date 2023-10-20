@@ -3,7 +3,7 @@ import { ITile } from '../../types/tmdb.models'
 
 const TILES_QTY_TO_SHOW = +import.meta.env.VITE_TILES_QTY_TO_SHOW as number
 
-interface UseTilesShowMore {
+interface UseTilesPagination {
   pagesQty: number
   currentTiles: ITile[]
   currentPage: number
@@ -15,7 +15,7 @@ interface UseTilesShowMore {
  * @param {Array} tiles - The array of tiles to make pagination for.
  * @returns {Object} An object containing the current page, current tiles, total number of pages, and a function to load more tiles.
  */
-export const useTilesShowMore = (tiles: ITile[] | []): UseTilesShowMore => {
+const useTilesPagination = (tiles: ITile[] | []): UseTilesPagination => {
   const [currentPage, setCurrentPage] = useState(1)
   const [currentTiles, setCurrentTiles] = useState<ITile[]>([])
 
@@ -44,3 +44,5 @@ export const useTilesShowMore = (tiles: ITile[] | []): UseTilesShowMore => {
     handleShowMore,
   }
 }
+
+export default useTilesPagination

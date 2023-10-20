@@ -8,6 +8,7 @@ import { store } from './store/store.ts'
 
 // [ ] TODO: select with tiles qty to show for each section
 // [ ] TODO: small search field instead of icon with hint about shortcut
+// [ ] TODO: link to Wikipedia for persons (maybe use link preview)
 // [ ] TODO: improve mobile layout
 // [ ] TODO: Footer with links to TMDB, GitHub, etc.
 // [ ] TODO: animation for tiles when 'show more' clicked | sorting changed

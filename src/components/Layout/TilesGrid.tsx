@@ -1,12 +1,28 @@
-import { useTilesShowMore } from '../../hooks/tiles/tilesShowMore'
-import { useTilesSort } from '../../hooks/tiles/tilesSort'
-import { useSortOption } from '../../hooks/useSortOption'
-import { IAvailableFavoritesTypes, ITile } from '../../types/tmdb.models'
+import useTilesPagination from '../../hooks/tiles/tilesPagination'
+import {
+  IAvailableFavoritesTypes,
+  IAvailableSortValues,
+  ITile,
+} from '../../types/tmdb.models'
 import TilesLayout from './TilesLayout'
 
 import PageSection from './PageSection'
 import Tile from '../Tile'
 import ShowMoreBtn from '../UI/ShowMoreBtn'
+import { createContext, useContext, useState } from 'react'
+import { SORT_OPTIONS } from '../../config'
+import useTilesSort from '../../hooks/tiles/tilesSort'
+
+// Context for sorting
+interface ISortContext {
+  onSortChange: (option: IAvailableSortValues) => void
+  currentSort: IAvailableSortValues
+}
+const SortContext = createContext<ISortContext>({
+  onSortChange: () => {},
+  currentSort: SORT_OPTIONS.find(option => option.default)!.value,
+})
+export const useSectionSort = () => useContext(SortContext)
 
 interface Props {
   tiles: ITile[] | null
@@ -27,37 +43,42 @@ const TilesGrid: React.FC<Props> = ({
 }) => {
   if (!tiles) return null
 
-  const sortOptions = useSortOption()
+  const [currentSort, setCurrentSort] = useState(
+    SORT_OPTIONS.find(option => option.default)!.value
+  )
 
-  const { sortedTiles } = useTilesSort(tiles, sortOptions.currentSortOption)
+  const onSortChange = (option: IAvailableSortValues) => setCurrentSort(option)
 
+  // 1. Sort tiles
+  const { sortedTiles } = useTilesSort(tiles, currentSort)
+
+  // 2. ...than paginate them
   const { pagesQty, currentPage, currentTiles, handleShowMore } =
-    useTilesShowMore(sortedTiles ? sortedTiles : [])
+    useTilesPagination(sortedTiles ? sortedTiles : [])
 
-  const select =
-    tiles.length === 0 ? null : { ...sortOptions, disabled: tiles.length === 1 }
-
+  // 3. ...and finally show all sorted if showAll is true or paginated otherwise
   const tilesToShow = showAll ? sortedTiles : currentTiles
 
   const markup = (
-    <PageSection
-      extraClass="m-movies_list"
-      title={`${title ? title : type + 's'} (${tiles.length})`}
-      select={select}
-      align="start">
-      <TilesLayout type={type} id={type}>
-        {tilesToShow.map(media => (
-          <Tile tile={media} key={media.id} />
-        ))}
-        {!showAll && (
-          <ShowMoreBtn
-            currentPage={currentPage}
-            pagesQty={pagesQty}
-            handleShowMore={handleShowMore}
-          />
-        )}
-      </TilesLayout>
-    </PageSection>
+    <SortContext.Provider value={{ onSortChange, currentSort }}>
+      <PageSection
+        extraClass="m-movies_list"
+        title={`${title ? title : type + 's'} (${tiles.length})`}
+        align="start">
+        <TilesLayout type={type} id={type}>
+          {tilesToShow.map(media => (
+            <Tile tile={media} key={media.id} />
+          ))}
+          {!showAll && (
+            <ShowMoreBtn
+              currentPage={currentPage}
+              pagesQty={pagesQty}
+              handleShowMore={handleShowMore}
+            />
+          )}
+        </TilesLayout>
+      </PageSection>
+    </SortContext.Provider>
   )
 
   return markup
