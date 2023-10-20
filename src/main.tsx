@@ -6,7 +6,7 @@ import App from './App.tsx'
 import { Provider } from 'react-redux'
 import { store } from './store/store.ts'
 
-// [ ] TODO: select with tiles qty to show for each section
+// [x] TODO: select with tiles qty to show for each section
 // [ ] TODO: small search field instead of icon with hint about shortcut
 // [ ] TODO: link to Wikipedia for persons (maybe use link preview)
 // [ ] TODO: improve mobile layout

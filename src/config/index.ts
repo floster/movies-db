@@ -40,10 +40,12 @@ export interface SelectOption<T> {
   default?: boolean
 }
 export const SORT_OPTIONS: SelectOption<IAvailableSortValues>[] = [
-  { title: 'Year 0-9', value: 'year_asc', default: true },
-  { title: 'Year 9-0', value: 'year_desc' },
+  { title: 'Year 0-9', value: 'year_asc' },
+  { title: 'Year 9-0', value: 'year_desc', default: true },
   { title: 'Title A-W', value: 'title_asc' },
   { title: 'Title W-A', value: 'title_desc' },
+  { title: 'Rtng 0-9', value: 'rating_asc' },
+  { title: 'Rtng 9-0', value: 'rating_desc' },
 ]
 
 export const TILES_QTY_OPTIONS: SelectOption<IAvailableTilesQtyValues>[] = [

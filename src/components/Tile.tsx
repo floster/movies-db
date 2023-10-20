@@ -40,15 +40,15 @@ const Tile: React.FC<Props> = ({ tile, isRow = false, extraLabel }) => {
         />
       )}
       <div className="app-tile__content">
-        {tile.rating && tile.rating?.average > 0 && !isRow && (
-          <AppProgress value={tile.rating.average} />
+        {!!tile.rating && tile.rating > 0 && !isRow && (
+          <AppProgress value={tile.rating} />
         )}
         <p className="app-tile__label">{tile.label}</p>
         <h3 className="app-tile__title">{tile.title}</h3>
       </div>
-      {tile.rating && isRow && (
+      {tile.votes && isRow && (
         <span className="app-tile__rating">
-          {tile.rating.average} / {tile.rating.count}
+          {tile.votes?.average} / {tile.votes?.count}
         </span>
       )}
     </>
