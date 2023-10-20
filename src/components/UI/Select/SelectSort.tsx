@@ -19,14 +19,12 @@ export const SortSelect: React.FC<ISelectProps> = ({ disabled = false }) => {
   }
 
   return (
-    <div className="app-select">
-      <Select
-        disabled={disabled}
-        defaultValue={currentOption}
-        onChange={handleOptionChange}
-        options={SORT_OPTIONS}
-      />
-    </div>
+    <Select
+      disabled={disabled}
+      defaultValue={currentOption}
+      onChange={handleOptionChange}
+      options={SORT_OPTIONS}
+    />
   )
 }
 export default SortSelect

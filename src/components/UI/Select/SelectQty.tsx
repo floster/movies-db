@@ -5,7 +5,7 @@ import { useSectionQtyCtx } from '../../Layout/TilesGrid'
 import Select from './Select'
 
 export const QtySelect: React.FC = () => {
-  const { currentQty, onQtyChange } = useSectionQtyCtx()
+  const { currentQty, onQtyChange, disabled } = useSectionQtyCtx()
 
   const [currentOption, setCurrentOption] = useState(currentQty)
 
@@ -16,6 +16,7 @@ export const QtySelect: React.FC = () => {
 
   return (
     <Select
+      disabled={disabled}
       defaultValue={currentOption}
       onChange={handleOptionChange}
       options={TILES_QTY_OPTIONS}

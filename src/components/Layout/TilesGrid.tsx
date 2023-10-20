@@ -36,10 +36,12 @@ interface Props {
 interface IQtyContext {
   onQtyChange: (option: IAvailableTilesQtyValues) => void
   currentQty: IAvailableTilesQtyValues
+  disabled: boolean
 }
 const QtyContext = createContext<IQtyContext>({
   onQtyChange: () => {},
   currentQty: TILES_QTY_OPTIONS.find(option => option.default)!.value,
+  disabled: false,
 })
 export const useSectionQtyCtx = () => useContext(QtyContext)
 
@@ -71,6 +73,13 @@ const TilesGrid: React.FC<Props> = ({
     showAll ? 'all' : TILES_QTY_OPTIONS.find(option => option.default)!.value
   )
 
+  const [qtyDisabled, setQtyDisabled] = useState(false)
+
+  const handleShowMoreClick = () => {
+    handleShowMore()
+    setQtyDisabled(true)
+  }
+
   const onQtyChange = (option: IAvailableTilesQtyValues) =>
     setCurrentQty(option)
 
@@ -83,7 +92,8 @@ const TilesGrid: React.FC<Props> = ({
 
   const markup = (
     <SortContext.Provider value={{ onSortChange, currentSort }}>
-      <QtyContext.Provider value={{ onQtyChange, currentQty }}>
+      <QtyContext.Provider
+        value={{ onQtyChange, currentQty, disabled: qtyDisabled }}>
         <PageSection
           extraClass="m-movies_list"
           title={`${title ? title : type + 's'} (${tiles.length})`}
@@ -96,7 +106,7 @@ const TilesGrid: React.FC<Props> = ({
               <ShowMoreBtn
                 currentPage={currentPage}
                 pagesQty={pagesQty}
-                handleShowMore={handleShowMore}
+                handleShowMore={handleShowMoreClick}
               />
             )}
           </TilesLayout>
