@@ -30,6 +30,11 @@
     @include media(md) {
       height: var(--control-height-lg);
     }
+
+    &:disabled {
+      color: var(--color-grey-400);
+      cursor: not-allowed;
+    }
   }
 
   &.m-huge {

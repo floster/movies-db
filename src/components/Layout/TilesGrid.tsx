@@ -54,9 +54,9 @@ interface Props {
   hasQty?: boolean
 }
 
-// [] TODO: hide selectQty if tiles.length < TYLES_QTY
-// [] TODO: 'default' sort option -> show 'raw' tiles order
-// [] TODO: possibility to set default sort option separately for each section
+// [x] TODO: hide selectQty if tiles.length < TYLES_QTY[0].value
+// [x] TODO: 'default' sort option -> show 'raw' tiles order
+// [ ] TODO: possibility to set default sort option separately for each section
 // clarify for prev:
 //   - home -> defult (off)
 //   - collection -> year 9-0
@@ -86,7 +86,9 @@ const TilesGrid: React.FC<Props> = ({
     showAll ? 'all' : TILES_QTY_OPTIONS.find(option => option.default)!.value
   )
 
-  const [qtyDisabled, setQtyDisabled] = useState(false)
+  const [qtyDisabled, setQtyDisabled] = useState(
+    tiles.length <= +TILES_QTY_OPTIONS[0].value
+  )
 
   const handleShowMoreClick = () => {
     handleShowMore()
