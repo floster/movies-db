@@ -1,4 +1,5 @@
 export type IAvailableSortValues =
+  | 'default'
   | 'year_asc'
   | 'year_desc'
   | 'title_asc'

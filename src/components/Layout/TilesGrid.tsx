@@ -21,7 +21,7 @@ interface ISortContext {
 }
 const SortContext = createContext<ISortContext>({
   onSortChange: () => {},
-  currentSort: SORT_OPTIONS.find(option => option.default)!.value,
+  currentSort: SORT_OPTIONS[0].value,
 })
 export const useSectionSortCtx = () => useContext(SortContext)
 
@@ -54,9 +54,9 @@ interface Props {
   hasQty?: boolean
 }
 
-// TODO: hide selectQty if tiles.length < TYLES_QTY
-// TODO: 'default' sort option -> show 'raw' tiles order
-// TODO: possibility to set default sort option separately for each section
+// [] TODO: hide selectQty if tiles.length < TYLES_QTY
+// [] TODO: 'default' sort option -> show 'raw' tiles order
+// [] TODO: possibility to set default sort option separately for each section
 // clarify for prev:
 //   - home -> defult (off)
 //   - collection -> year 9-0
@@ -79,9 +79,7 @@ const TilesGrid: React.FC<Props> = ({
 }) => {
   if (!tiles) return null
 
-  const [currentSort, setCurrentSort] = useState(
-    SORT_OPTIONS.find(option => option.default)!.value
-  )
+  const [currentSort, setCurrentSort] = useState(SORT_OPTIONS[0].value)
   const onSortChange = (option: IAvailableSortValues) => setCurrentSort(option)
 
   const [currentQty, setCurrentQty] = useState(

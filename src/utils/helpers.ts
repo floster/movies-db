@@ -23,6 +23,8 @@ export const filterUncredits = (tiles: ITile[]): ITile[] =>
  * Sorts an array of tile data by a specified property.
  */
 export function tilesSort<T>(tiles: T[], option: IAvailableSortValues): T[] {
+  if (option === 'default') return tiles
+
   const sortBy = option.split('_')[0] as keyof T
   const sortOrder = option.split('_')[1] as 'asc' | 'desc'
 
