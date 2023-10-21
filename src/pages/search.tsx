@@ -63,6 +63,8 @@ const Search: React.FC = () => {
                     key={type}
                     tiles={results[type]}
                     type={type}
+                    hasSort={true}
+                    defaultSort="rating_desc"
                     showAll
                   />
                 )

@@ -35,6 +35,7 @@ const Collection: React.FC = () => {
             type={'collection'}
             title="parts"
             hasSort={true}
+            defaultSort="year_desc"
             hasQty={true}
           />
         )}

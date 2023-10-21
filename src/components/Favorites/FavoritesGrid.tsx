@@ -17,7 +17,7 @@ const FavoritesGrid: React.FC<Props> = ({ ids, type }) => {
   ) : isLoading ? (
     <Spinner />
   ) : (
-    <TilesGrid tiles={tiles} type={type} />
+    <TilesGrid tiles={tiles} type={type} hasSort hasQty />
   )
 }
 

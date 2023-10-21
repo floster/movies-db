@@ -51,19 +51,20 @@ interface Props {
   title?: string
   showAll?: boolean
   hasSort?: boolean
+  defaultSort?: IAvailableSortValues
   hasQty?: boolean
 }
 
 // [x] TODO: hide selectQty if tiles.length < TYLES_QTY[0].value
 // [x] TODO: 'default' sort option -> show 'raw' tiles order
-// [ ] TODO: possibility to set default sort option separately for each section
+// [x] TODO: possibility to set default sort option separately for each section
 // clarify for prev:
 //   - home -> defult (off)
-//   - collection -> year 9-0
 //   - movie cast -> default (off)
+//   - favorites -> default (off)
+//   - collection -> year 9-0
 //   - person -> year 9-0
 //   - search -> rating 9-0
-//   - favorites -> default (off)
 
 /**
  * Renders a section with a list of tiles for a specific type of search result or favorites.
@@ -75,11 +76,12 @@ const TilesGrid: React.FC<Props> = ({
   title,
   showAll = false,
   hasSort = false,
+  defaultSort = SORT_OPTIONS[0].value,
   hasQty = false,
 }) => {
   if (!tiles) return null
 
-  const [currentSort, setCurrentSort] = useState(SORT_OPTIONS[0].value)
+  const [currentSort, setCurrentSort] = useState(defaultSort)
   const onSortChange = (option: IAvailableSortValues) => setCurrentSort(option)
 
   const [currentQty, setCurrentQty] = useState(

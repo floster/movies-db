@@ -47,6 +47,7 @@ const Person: React.FC = () => {
             tiles={movieCredits ? movieCredits : []}
             type="movie"
             hasSort={true}
+            defaultSort="year_desc"
             hasQty={true}
           />
         )}
@@ -59,6 +60,7 @@ const Person: React.FC = () => {
             tiles={tvCredits ? tvCredits : []}
             type="tv"
             hasSort={true}
+            defaultSort="year_desc"
             hasQty={true}
           />
         )}
