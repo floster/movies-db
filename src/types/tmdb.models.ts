@@ -59,7 +59,7 @@ export interface ITile {
   year: string | null
 }
 
-export interface ShowMoreBtnAttributes {
+export interface BtnShowMoreAttributes {
   handleShowMore: () => void
   currentPage: number
   pagesQty: number

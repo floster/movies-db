@@ -9,7 +9,7 @@ import TilesLayout from './TilesLayout'
 
 import PageSection from './PageSection'
 import Tile from '../Tile'
-import ShowMoreBtn from '../UI/ShowMoreBtn'
+import BtnShowMore from '../UI/BtnShowMore'
 import { createContext, useContext, useState } from 'react'
 import { SORT_OPTIONS, TILES_QTY_OPTIONS } from '../../config'
 import useTilesSort from '../../hooks/tiles/tilesSort'
@@ -56,6 +56,7 @@ interface Props {
 }
 
 // [x] TODO: hide selectQty if tiles.length < TYLES_QTY[0].value
+// [ ] TODO: disable sort if there is only one tile
 // [x] TODO: 'default' sort option -> show 'raw' tiles order
 // [x] TODO: possibility to set default sort option separately for each section
 // clarify for prev:
@@ -122,7 +123,7 @@ const TilesGrid: React.FC<Props> = ({
               <Tile tile={media} key={media.id} />
             ))}
             {!showAll && (
-              <ShowMoreBtn
+              <BtnShowMore
                 currentPage={currentPage}
                 pagesQty={pagesQty}
                 handleShowMore={handleShowMoreClick}

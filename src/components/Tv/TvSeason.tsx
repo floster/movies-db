@@ -1,4 +1,4 @@
-import AppPicture from '../UI/Picture'
+import AppPicture from '../UI/AppPicture'
 import AppProgress from '../UI/Rating'
 import TvEpisode from './TvEpisode'
 import { IRawTvSeasonResponse } from '../../types/tmdb.models'

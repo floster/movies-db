@@ -7,10 +7,12 @@ interface Props {
 
 const MediaList: React.FC<Props> = ({ media }) => {
   return (
-    <div className="media-list l-media_list" role="list">
-      {media.map(item => (
-        <AppTile tile={item as ITile} key={item.id} isRow={true} />
-      ))}
+    <div className="media-list">
+      <div className="media-list__inner" role="list">
+        {media.map(item => (
+          <AppTile tile={item as ITile} key={item.id} isRow={true} />
+        ))}
+      </div>
     </div>
   )
 }

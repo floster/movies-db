@@ -1,7 +1,7 @@
 import { ITile, IAvailableFavoritesTypes } from '../types/tmdb.models'
 
 import AppFavorite from './UI/FavoriteBtn'
-import AppPicture from './UI/Picture'
+import AppPicture from './UI/AppPicture'
 import AppProgress from './UI/Rating'
 import TorrentSearch from './UI/TorrentSearch'
 
@@ -46,11 +46,6 @@ const Tile: React.FC<Props> = ({ tile, isRow = false, extraLabel }) => {
         <p className="app-tile__label">{tile.label}</p>
         <h3 className="app-tile__title">{tile.title}</h3>
       </div>
-      {tile.votes && isRow && (
-        <span className="app-tile__rating">
-          {tile.votes?.average} / {tile.votes?.count}
-        </span>
-      )}
     </>
   )
 

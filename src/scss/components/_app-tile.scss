@@ -42,10 +42,6 @@
     &:hover {
       box-shadow: var(--shadow);
       cursor: pointer;
-
-      .movie-row__title {
-        color: var(--color-secondary);
-      }
     }
 
     .app-tile__inner {
@@ -81,7 +77,7 @@
   &.m-tvshow {
     &::before,
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       right: 0;
       left: 0;
@@ -156,6 +152,8 @@
   }
 
   &__title {
+    @include line-clamp(2);
+
     font-size: var(--tile-text-font-size);
   }
 

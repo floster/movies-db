@@ -12,12 +12,10 @@
     border-bottom-right-radius: var(--radius);
     box-shadow: var(--shadow);
 
-    padding-top: var(--gap-sm);
-    padding-bottom: var(--gap-sm);
+    padding: var(--gap-md) var(--gap-xs);
 
     @include media(md) {
-      padding-top: var(--gap-lg);
-      padding-bottom: var(--gap-lg);
+      padding: var(--gap-lg) 0;
     }
 
     .container {
@@ -30,6 +28,13 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    flex-wrap: wrap;
+    row-gap: var(--gap-sm);
+
+    @include media(md) {
+      flex-wrap: nowrap;
+      row-gap: 0;
+    }
 
     &.m-align_start {
       justify-content: flex-start;
@@ -53,9 +58,11 @@
     font-weight: bold;
     color: var(--color-secondary-dimmed);
     text-align: right;
+    width: 100%;
 
     @include media(md) {
       font-size: var(--font-size-2);
+      width: auto;
     }
 
     @include media(xl) {

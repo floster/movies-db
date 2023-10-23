@@ -1,4 +1,4 @@
-import Picture from './UI/Picture'
+import Picture from './UI/AppPicture'
 import Error from './UI/Error'
 import Spinner from './UI/Spinner'
 import Favorite from './UI/FavoriteBtn'
@@ -79,6 +79,8 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
           {data.tags && <p className="media-hero__tags">{data.tags}</p>}
 
           <p className="media-hero__description">{data.description}</p>
+
+          {data.belongs && <MoviePartOf data={data.belongs} />}
         </div>
         <footer className="media-hero__footer">
           <Favorite type={type} id={id} title={data.title} />

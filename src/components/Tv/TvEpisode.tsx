@@ -1,6 +1,6 @@
 import { formatDate, getPosterUrl } from '../../utils/helpers'
 import { IRawTvEpisode } from '../../types/tmdb.models'
-import AppPicture from '../UI/Picture'
+import AppPicture from '../UI/AppPicture'
 
 interface Props {
   episode: IRawTvEpisode

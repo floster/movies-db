@@ -1,29 +1,35 @@
 @mixin poster($size: lg) {
-    @if $size ==sm {
-        border-radius: var(--radius-sm);
-        box-shadow: var(--shadow);
-    }
-
-    @else if $size ==lg {
-        border-radius: var(--radius);
-    }
+  @if $size ==sm {
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+  } @else if $size ==lg {
+    border-radius: var(--radius);
+  }
 }
 
 %link-base {
-    cursor: pointer;
-    text-decoration-line: underline;
-    text-decoration-thickness: 2px;
-    text-decoration-skip-ink: auto;
+  cursor: pointer;
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-skip-ink: auto;
 }
 
 @mixin link {
-    @extend %link-base;
+  @extend %link-base;
 
-    text-decoration-color: var(--color-secondary-dimmed);
+  text-decoration-color: var(--color-secondary-dimmed);
 }
 
 @mixin link-hover {
-    @extend %link-base;
+  @extend %link-base;
 
-    text-decoration-color: var(--color-secondary);
+  text-decoration-color: var(--color-secondary);
+}
+
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
