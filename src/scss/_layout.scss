@@ -46,26 +46,6 @@
   }
 }
 
-// sidebar on main page
-.l-media_list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-xs);
-  margin-top: var(--gap-xs);
-  overflow-y: auto;
-  max-height: 40vh;
-
-  box-shadow: var(--shadow-inset);
-  border-bottom: 1px solid rgba(13, 28, 43, 0.2);
-
-  @include media(md) {
-    max-height: initial;
-    overflow-y: initial;
-    box-shadow: none;
-    border-bottom: none;
-  }
-}
-
 // content on main page
 .l-main_page_content {
   display: flex;

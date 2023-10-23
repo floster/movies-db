@@ -56,6 +56,7 @@ interface Props {
 }
 
 // [x] TODO: hide selectQty if tiles.length < TYLES_QTY[0].value
+// [ ] TODO: disable sort if there is only one tile
 // [x] TODO: 'default' sort option -> show 'raw' tiles order
 // [x] TODO: possibility to set default sort option separately for each section
 // clarify for prev:
