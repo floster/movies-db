@@ -1,5 +1,5 @@
 import FavoritesLink from './Favorites/FavoritesLink'
-import OpenSerachBtn from './UI/OpenSearchBtn'
+import OpenSerachBtn from './UI/BtnOpenSearch'
 import Logo from './UI/Logo'
 
 const AppHeader: React.FC = () => {

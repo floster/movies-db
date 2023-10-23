@@ -1,7 +1,8 @@
 import useKeyboardShortcut from '../../hooks/useKeyboardShortcut'
 import { useAppActions } from '../../hooks/useRedux'
-
 import SvgIcon from './SvgIcon'
+
+// import SvgIcon from './SvgIcon'
 
 const OpenSerachBtn: React.FC = () => {
   const { openDialog } = useAppActions()
@@ -10,10 +11,14 @@ const OpenSerachBtn: React.FC = () => {
 
   return (
     <button
-      className="app-button m-icon m-secondary open-search"
-      aria-label="open search dialog"
-      onClick={() => openDialog()}>
+      type="button"
+      onClick={() => openDialog()}
+      className="btn-open_search">
       <SvgIcon icon="search" />
+      <span className="btn-open_search__label">search...</span>
+      <kbd className="btn-open_search__kbd">
+        <abbr title="Command">⌘</abbr> K
+      </kbd>
     </button>
   )
 }
