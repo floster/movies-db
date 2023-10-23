@@ -42,10 +42,6 @@
     &:hover {
       box-shadow: var(--shadow);
       cursor: pointer;
-
-      .movie-row__title {
-        color: var(--color-secondary);
-      }
     }
 
     .app-tile__inner {

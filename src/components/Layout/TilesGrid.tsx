@@ -9,7 +9,7 @@ import TilesLayout from './TilesLayout'
 
 import PageSection from './PageSection'
 import Tile from '../Tile'
-import ShowMoreBtn from '../UI/ShowMoreBtn'
+import BtnShowMore from '../UI/BtnShowMore'
 import { createContext, useContext, useState } from 'react'
 import { SORT_OPTIONS, TILES_QTY_OPTIONS } from '../../config'
 import useTilesSort from '../../hooks/tiles/tilesSort'
@@ -123,7 +123,7 @@ const TilesGrid: React.FC<Props> = ({
               <Tile tile={media} key={media.id} />
             ))}
             {!showAll && (
-              <ShowMoreBtn
+              <BtnShowMore
                 currentPage={currentPage}
                 pagesQty={pagesQty}
                 handleShowMore={handleShowMoreClick}

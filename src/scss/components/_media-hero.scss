@@ -4,6 +4,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  background-attachment: fixed;
 
   @include media(md) {
     background-image: var(--gradient-dark), var(--backdrop-image);
@@ -17,34 +18,29 @@
       'image'
       'footer'
       'content';
-    row-gap: var(--gap-xs);
+    gap: var(--gap-xs);
 
-    padding-top: var(--gap-sm);
-    padding-bottom: calc(var(--gap-xxl) * 2);
+    width: 100%;
 
     @include media(md) {
-      row-gap: var(--gap-md);
+      width: calc(100% - var(--container-gap) * 2);
+      gap: var(--gap-sm);
       grid-template-rows: 1fr min-content;
       grid-template-columns: 1fr 3fr;
       grid-template-areas:
         'image content'
         'image footer';
-
-      padding-bottom: var(--gap-lg);
     }
 
     @include media(lg) {
       gap: var(--gap-lg);
-
-      padding-top: var(--gap-md);
-      padding-bottom: var(--gap-md);
     }
 
     .random-media & {
-      width: 100%;
       padding: 0;
 
       @include media(md) {
+        width: 100%;
         grid-template-columns: 1fr 2fr;
       }
     }
@@ -68,14 +64,14 @@
     flex-direction: column;
     justify-content: center;
     gap: var(--gap-md);
+    padding: 0 var(--gap-sm) var(--gap-md);
 
     @include media(md) {
       gap: var(--gap-sm);
+      padding: var(--gap-sm) 0 0;
     }
 
-    .media-hero & {
-      padding: 0 var(--gap-sm) var(--gap-md);
-
+    .random-media & {
       @include media(md) {
         padding: var(--gap-sm) var(--gap-md) 0 0;
       }
@@ -165,7 +161,11 @@
     line-height: 1.4;
     font-style: italic;
 
-    @include media(md) {
+    &:empty {
+      display: none;
+    }
+
+    @include media(lg) {
       margin-top: var(--gap-md);
       line-height: 1.7;
     }
@@ -177,16 +177,18 @@
     flex-wrap: wrap;
     align-items: center;
     gap: var(--gap-sm);
+    padding: var(--gap-xs) var(--gap-sm);
 
     @include media(md) {
       gap: var(--gap-lg);
+      padding-bottom: var(--gap-sm);
+      padding-left: 0;
+      padding-right: 0;
     }
 
-    .media-hero & {
-      padding: var(--gap-xs) var(--gap-sm);
-
+    .random-media & {
       @include media(md) {
-        padding: 0 var(--gap-md) var(--gap-sm) 0;
+        padding-top: 0;
       }
     }
 
@@ -197,18 +199,6 @@
       @include media(md) {
         order: initial;
         margin-left: initial;
-      }
-    }
-
-    .part-of {
-      position: absolute;
-      bottom: var(--gap-lg);
-      z-index: 1;
-
-      @include media(md) {
-        position: relative;
-        bottom: initial;
-        margin-left: auto;
       }
     }
 

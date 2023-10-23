@@ -1,19 +1,26 @@
 .part-of {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    align-self: start;
-    background-color: rgba(13, 28, 43, 0.15);
-    border-radius: var(--radius);
-    padding: var(--gap-sm);
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-self: start;
+  background-color: rgba(13, 28, 43, 0.15);
+  border-radius: var(--radius);
+  padding: var(--gap-xs) var(--gap-sm);
 
-    .icon-labeled__label {
-        color: var(--color-grey-200);
-        font-weight: var(--font-weight);
+  .media-hero__footer & {
+    display: none;
 
-        a {
-            font-weight: bold;
-            color: var(--color-secondary);
-        }
+    @include media(md) {
+      display: flex;
     }
+  }
+
+  .media-hero__content & {
+    width: 100%;
+    margin-top: var(--gap-lg);
+
+    @include media(md) {
+      display: none;
+    }
+  }
 }

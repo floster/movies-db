@@ -1,6 +1,6 @@
-import { ShowMoreBtnAttributes } from '../../types/tmdb.models'
+import { BtnShowMoreAttributes } from '../../types/tmdb.models'
 
-const ShowMoreBtn: React.FC<ShowMoreBtnAttributes> = ({
+const BtnShowMore: React.FC<BtnShowMoreAttributes> = ({
   currentPage,
   pagesQty,
   handleShowMore,
@@ -9,7 +9,7 @@ const ShowMoreBtn: React.FC<ShowMoreBtnAttributes> = ({
 
   return (
     <button
-      className={`app-button ${isHidden && 'm-hidden'}`}
+      className={`app-button btn-show_more ${isHidden ? 'm-hidden' : ''}`}
       onClick={() => handleShowMore()}
       disabled={isHidden}>
       need more ({currentPage} / {pagesQty})
@@ -17,4 +17,4 @@ const ShowMoreBtn: React.FC<ShowMoreBtnAttributes> = ({
   )
 }
 
-export default ShowMoreBtn
+export default BtnShowMore
