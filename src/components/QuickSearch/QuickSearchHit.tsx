@@ -1,6 +1,6 @@
 import { IAvailableFavoritesTypes, ITile } from '../../types/tmdb.models'
 import AppFavorite from '../UI/FavoriteBtn'
-import AppPicture from '../UI/Picture'
+import AppPicture from '../UI/AppPicture'
 
 type Props = {
   hit: ITile

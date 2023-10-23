@@ -1,4 +1,4 @@
-import Picture from './UI/Picture'
+import Picture from './UI/AppPicture'
 import Error from './UI/Error'
 import Spinner from './UI/Spinner'
 import Favorite from './UI/FavoriteBtn'

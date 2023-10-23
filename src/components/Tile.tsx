@@ -1,7 +1,7 @@
 import { ITile, IAvailableFavoritesTypes } from '../types/tmdb.models'
 
 import AppFavorite from './UI/FavoriteBtn'
-import AppPicture from './UI/Picture'
+import AppPicture from './UI/AppPicture'
 import AppProgress from './UI/Rating'
 import TorrentSearch from './UI/TorrentSearch'
 

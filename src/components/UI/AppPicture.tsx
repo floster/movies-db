@@ -7,7 +7,7 @@ interface Props {
   hasLoading?: boolean
 }
 
-const Picture: React.FC<Props> = ({ img, alt, hasLoading = true }) => {
+const AppPicture: React.FC<Props> = ({ img, alt, hasLoading = true }) => {
   const [isLoaded, setIsLoaded] = useState(true)
 
   const pictureLoading = () => setIsLoaded(false)
@@ -33,4 +33,4 @@ const Picture: React.FC<Props> = ({ img, alt, hasLoading = true }) => {
   )
 }
 
-export default Picture
+export default AppPicture
