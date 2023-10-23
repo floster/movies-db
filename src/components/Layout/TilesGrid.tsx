@@ -18,10 +18,12 @@ import useTilesSort from '../../hooks/tiles/tilesSort'
 interface ISortContext {
   onSortChange: (option: IAvailableSortValues) => void
   currentSort: IAvailableSortValues
+  disabled: boolean
 }
 const SortContext = createContext<ISortContext>({
   onSortChange: () => {},
   currentSort: SORT_OPTIONS[0].value,
+  disabled: false,
 })
 export const useSectionSortCtx = () => useContext(SortContext)
 
@@ -54,18 +56,6 @@ interface Props {
   defaultSort?: IAvailableSortValues
   hasQty?: boolean
 }
-
-// [x] TODO: hide selectQty if tiles.length < TYLES_QTY[0].value
-// [ ] TODO: disable sort if there is only one tile
-// [x] TODO: 'default' sort option -> show 'raw' tiles order
-// [x] TODO: possibility to set default sort option separately for each section
-// clarify for prev:
-//   - home -> defult (off)
-//   - movie cast -> default (off)
-//   - favorites -> default (off)
-//   - collection -> year 9-0
-//   - person -> year 9-0
-//   - search -> rating 9-0
 
 /**
  * Renders a section with a list of tiles for a specific type of search result or favorites.
@@ -109,7 +99,8 @@ const TilesGrid: React.FC<Props> = ({
     useTilesPagination(sortedTiles ? sortedTiles : [], currentQty)
 
   const markup = (
-    <SortContext.Provider value={{ onSortChange, currentSort }}>
+    <SortContext.Provider
+      value={{ onSortChange, currentSort, disabled: tiles.length <= 1 }}>
       <QtyContext.Provider
         value={{ onQtyChange, currentQty, disabled: qtyDisabled }}>
         <PageSection

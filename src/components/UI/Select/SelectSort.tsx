@@ -4,12 +4,8 @@ import { IAvailableSortValues } from '../../../types/tmdb.models'
 import { useSectionSortCtx } from '../../Layout/TilesGrid'
 import Select from './Select'
 
-export interface ISelectProps {
-  disabled?: boolean
-}
-
-export const SortSelect: React.FC<ISelectProps> = ({ disabled = false }) => {
-  const { currentSort, onSortChange } = useSectionSortCtx()
+export const SortSelect: React.FC = () => {
+  const { currentSort, onSortChange, disabled } = useSectionSortCtx()
 
   const [currentOption, setCurrentOption] = useState(currentSort)
 
