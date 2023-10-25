@@ -1,17 +1,17 @@
 .torrent-search {
-    display: flex;
-    padding: var(--gap-xs);
-    opacity: .15;
-    color: var(--color-secondary-dimmed);
+  display: flex;
+  padding: var(--gap-xs);
+  opacity: 0.15;
+  color: var(--primary-100);
 
-    &:hover,
-    &:active {
-        opacity: .9;
-        color: var(--color-primary);
-    }
+  &:hover,
+  &:active {
+    opacity: 0.9;
+    color: var(--secondary-500);
+  }
 
-    .svg-icon {
-        height: var(--control-height-sm);
-        width: var(--control-height-sm);
-    }
+  .svg-icon {
+    height: var(--control-size-sm);
+    width: var(--control-size-sm);
+  }
 }

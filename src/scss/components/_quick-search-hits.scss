@@ -1,5 +1,5 @@
 .quick-search-hits {
-  background-color: var(--color-grey-100);
+  background-color: var(--grey-100);
   padding: var(--gap-md) var(--gap-sm) var(--gap-sm);
   border-radius: 0 0 var(--radius) var(--radius);
   width: calc(100% - var(--gap-xs));
@@ -21,14 +21,14 @@
   }
 
   &__title {
-    color: var(--color-grey-300);
+    color: var(--grey-400);
     font-size: var(--font-size-sm);
     font-weight: normal;
     margin-top: var(--gap-sm);
   }
 
   &__empty {
-    color: var(--color-grey-500);
+    color: var(--grey-500);
     font-style: italic;
   }
 
@@ -45,7 +45,7 @@
   }
 
   &__link {
-    color: var(--color-secondary);
+    color: var(--primary-500);
 
     &:hover {
       text-decoration: underline;
@@ -53,13 +53,13 @@
   }
 
   &__year {
-    color: var(--color-grey-500);
+    color: var(--grey-500);
   }
 
   &__type {
     font-size: var(--font-size);
     font-style: italic;
-    color: var(--color-grey-400);
+    color: var(--grey-400);
 
     &::before {
       content: '\00a0\00a0\2014\00a0\00a0';

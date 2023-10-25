@@ -1,32 +1,32 @@
 .crew-list {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--gap-md) var(--gap-lg);
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-md) var(--gap-lg);
 
-    @include media(lg) {
-        gap: var(--gap-lg) var(--gap-xxl);
-    }
+  @include media(lg) {
+    gap: var(--gap-lg) var(--gap-xxl);
+  }
 }
 
 .crew-item {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    @include media(md) {
-        gap: var(--gap-xs);
-    }
+  @include media(md) {
+    gap: var(--gap-xs);
+  }
 
-    &__label {
-        font-size: var(--font-size-sm);
-        color: var(--color-secondary);
-    }
+  &__label {
+    font-size: var(--font-size-sm);
+    color: var(--primary-500);
+  }
 
-    &__value {
-        font-weight: bold;
-        font-size: var(--font-size);
-    }
+  &__value {
+    font-weight: bold;
+    font-size: var(--font-size);
+  }
 }

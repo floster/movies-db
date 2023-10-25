@@ -10,7 +10,7 @@
   &:not(.m-actor) {
     &:active,
     &:focus-visible {
-      outline: 2px solid var(--color-secondary-dimmed);
+      outline: 2px solid var(--primary-100);
     }
 
     &:hover {
@@ -18,7 +18,7 @@
       cursor: pointer;
 
       .app-tile__title {
-        color: var(--color-secondary);
+        color: var(--primary-500);
       }
 
       .app-tile__img {
@@ -36,7 +36,7 @@
 
     &:active,
     &:focus-visible {
-      outline: 2px solid var(--color-secondary-dimmed);
+      outline: 2px solid var(--primary-100);
     }
 
     &:hover {
@@ -49,7 +49,7 @@
       flex-shrink: 0;
       align-items: center;
       gap: var(--gap-sm);
-      padding-right: var(--control-height-lg);
+      padding-right: var(--control-size-lg);
       width: 100%;
     }
 
@@ -154,13 +154,13 @@
   &__title {
     @include line-clamp(2);
 
-    font-size: var(--tile-text-font-size);
+    font-size: var(--font-size);
   }
 
   &__label {
     font-size: var(--font-size-sm);
     font-weight: bold;
-    color: var(--text-color-light);
+    color: var(--grey-400);
 
     .app-tile.m-row & {
       order: 2;
@@ -173,7 +173,7 @@
     right: 0;
     font-size: var(--font-size-5);
     font-weight: bold;
-    color: var(--color-secondary-dimmed);
+    color: var(--primary-100);
   }
 
   &__extraLabel {

@@ -8,8 +8,8 @@
   cursor: pointer;
   transition: all 0.1s linear;
   border: none;
-  background-color: var(--color-secondary-dimmed);
-  color: var(--color-secondary-darken);
+  background-color: var(--primary-100);
+  color: var(--primary-700);
   white-space: nowrap;
   text-decoration: none;
 
@@ -47,50 +47,50 @@
         position: absolute;
         right: 0;
         bottom: 0;
-        width: var(--control-height-xs);
-        height: var(--control-height-xs);
-        background-color: var(--color-secondary);
+        width: var(--control-size-xs);
+        height: var(--control-size-xs);
+        background-color: var(--primary-500);
         border-radius: 9999px;
-        color: var(--color-grey-100);
+        color: var(--grey-100);
         font-size: 0.7rem;
-        line-height: var(--control-height-xs);
+        line-height: var(--control-size-xs);
       }
     }
   }
 
   &.m-icon {
-    color: var(--color-grey-200);
+    color: var(--grey-300);
     padding: var(--gap-xs);
     background-color: transparent;
 
     &:hover {
-      color: var(--color-grey-800);
+      color: var(--grey-800);
       box-shadow: none;
     }
 
     &.m-sm {
       .svg-icon {
-        height: var(--control-height-xs);
-        width: var(--control-height-xs);
+        height: var(--control-size-xs);
+        width: var(--control-size-xs);
 
         @include media(lg) {
-          height: var(--control-height-sm);
-          width: var(--control-height-sm);
+          height: var(--control-size-sm);
+          width: var(--control-size-sm);
         }
       }
     }
 
     &.m-active {
-      color: var(--color-primary);
+      color: var(--secondary-500);
     }
 
     .svg-icon {
-      height: var(--control-height-sm);
-      width: var(--control-height-sm);
+      height: var(--control-size-sm);
+      width: var(--control-size-sm);
 
       @include media(lg) {
-        height: var(--control-height-md);
-        width: var(--control-height-md);
+        height: var(--control-size-md);
+        width: var(--control-size-md);
       }
     }
   }
@@ -108,20 +108,20 @@
     }
 
     .svg-icon {
-      width: var(--control-height-xs);
-      height: var(--control-height-xs);
+      width: var(--control-size-xs);
+      height: var(--control-size-xs);
     }
   }
 
   &.m-primary {
     &:hover {
-      color: var(--color-primary);
+      color: var(--secondary-500);
     }
   }
 
   &.m-secondary {
     &:hover {
-      color: var(--color-secondary);
+      color: var(--primary-500);
     }
   }
 }
