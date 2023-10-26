@@ -8,8 +8,8 @@
   cursor: pointer;
   transition: all 0.1s linear;
   border: none;
-  background-color: var(--primary-100);
-  color: var(--primary-700);
+  background-color: var(--grey-50);
+  color: var(--color-text);
   white-space: nowrap;
   text-decoration: none;
 
@@ -23,39 +23,11 @@
   }
 
   &:hover {
-    filter: brightness(0.99);
-    box-shadow: var(--shadow);
-  }
-
-  &:active {
-    box-shadow: var(--shadow-sm);
+    background-color: var(--grey-100);
   }
 
   &.m-hidden {
     display: none;
-  }
-
-  &.m-open-favorites {
-    position: relative;
-
-    &.has-items {
-      &::after {
-        content: attr(data-favorites-count);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: var(--control-size-xs);
-        height: var(--control-size-xs);
-        background-color: var(--primary-500);
-        border-radius: 9999px;
-        color: var(--grey-100);
-        font-size: 0.7rem;
-        line-height: var(--control-size-xs);
-      }
-    }
   }
 
   &.m-icon {
@@ -121,7 +93,34 @@
 
   &.m-secondary {
     &:hover {
-      color: var(--primary-500);
+      color: var(--color-primary);
+    }
+  }
+
+  &.m-open-favorites {
+    position: relative;
+
+    &:hover {
+      color: var(--accent-500);
+    }
+
+    &.has-items {
+      &::after {
+        content: attr(data-favorites-count);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: var(--control-size-xs);
+        height: var(--control-size-xs);
+        background-color: var(--color-primary);
+        border-radius: 9999px;
+        color: var(--grey-100);
+        font-size: 0.7rem;
+        line-height: var(--control-size-xs);
+      }
     }
   }
 }

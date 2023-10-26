@@ -1,28 +1,27 @@
-.btn-open_search {
+.quick-search-open-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--gap-xs);
   background-color: transparent;
   border: none;
-  color: var(--grey-300);
+  color: var(--grey-500);
 
   @include media(md) {
     column-gap: var(--gap-sm);
     font-size: var(--font-size);
-    background-color: var(--grey-600);
-    border-radius: var(--radius);
+    background-color: var(--grey-300);
+    border-radius: var(--radius-round);
     height: 2.5rem;
     padding: 0 var(--gap-sm);
   }
 
   &:hover {
-    background-color: var(--grey-800);
+    background-color: var(--grey-200);
   }
 
   &__label {
     display: none;
-    color: var(--grey-400);
 
     @include media(md) {
       display: block;

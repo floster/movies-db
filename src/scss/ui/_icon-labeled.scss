@@ -3,7 +3,7 @@
   flex-wrap: nowrap;
   align-items: flex-end;
   gap: var(--gap-xs);
-  color: var(--primary-500);
+  color: var(--color-primary);
 
   &.m-text_light &__label {
     color: var(--grey-100);

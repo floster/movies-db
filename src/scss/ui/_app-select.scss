@@ -32,7 +32,8 @@
     }
 
     &:disabled {
-      color: var(--grey-400);
+      background-color: var(--grey-50);
+      color: var(--grey-300);
       cursor: not-allowed;
     }
   }
@@ -40,7 +41,7 @@
   &.m-huge {
     height: var(--control-size-md);
     border-radius: var(--radius);
-    background-color: var(--color-white);
+    background-color: var(--white);
     font-size: var(--font-size-4);
     font-weight: bold;
     line-height: 1;
@@ -49,10 +50,6 @@
     @include media(lg) {
       height: var(--control-size-xl);
       font-size: var(--font-size-3);
-    }
-
-    @include media(xl) {
-      font-size: var(--font-size-2);
     }
 
     &:active,
@@ -66,7 +63,7 @@
       appearance: none;
       padding: 0;
       padding-right: var(--gap-lg);
-      background-color: var(--color-white);
+      background-color: var(--white);
       font-size: inherit;
       font-weight: bold;
       color: var(--primary-100);

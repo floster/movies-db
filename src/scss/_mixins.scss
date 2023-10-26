@@ -23,7 +23,7 @@
 @mixin link-hover {
   @extend %link-base;
 
-  text-decoration-color: var(--primary-500);
+  text-decoration-color: var(--color-primary);
 }
 
 @mixin line-clamp($lines: 2) {

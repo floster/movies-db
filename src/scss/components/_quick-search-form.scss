@@ -1,19 +1,20 @@
 .quick-search-form {
   position: relative;
+  margin-top: var(--gap-md);
 
   &__input {
     width: 100%;
-    height: var(--control-size-lg);
+    height: var(--control-size-xl);
     padding-left: var(--gap-sm);
     padding-right: calc(var(--control-size-sm) * 2 + var(--gap-sm) * 2);
-    background-color: var(--color-white);
+    background-color: var(--white);
     border: none;
-    border-radius: var(--radius);
+    border-radius: var(--radius-round);
     box-shadow: var(--shadow-md);
     font-size: var(--font-size-5);
 
     @include media(md) {
-      height: var(--control-size-xl);
+      height: var(--control-size-xxl);
       font-size: var(--font-size-2);
     }
 
@@ -54,7 +55,7 @@
     }
 
     svg {
-      color: var(--primary-500);
+      color: var(--color-primary);
       opacity: 0.5;
     }
 
