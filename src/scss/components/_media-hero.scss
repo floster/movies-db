@@ -115,14 +115,16 @@
   }
 
   &__subtitle {
-    color: var(--grey-300);
-    font-size: var(--font-size-5);
+    color: var(--grey-100);
+    font-size: var(--font-size);
     font-weight: normal;
-    font-style: italic;
+    margin-top: -8px;
+    // font-style: italic;
 
     &::after,
     &::before {
       content: '"';
+      font-weight: bold;
       color: var(--color-primary);
     }
   }
@@ -158,8 +160,6 @@
   }
 
   &__description {
-    @include line-clamp(3);
-
     color: var(--grey-200);
     font-size: var(--font-size);
     line-height: 1.4;

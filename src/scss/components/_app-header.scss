@@ -1,7 +1,9 @@
 .app-header {
+  position: relative;
+  z-index: 1;
   background: rgb(13, 28, 43);
   background: var(--gradient-dark);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-md);
   padding-top: var(--gap-xs);
   padding-bottom: var(--gap-xs);
 

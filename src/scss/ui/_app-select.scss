@@ -21,7 +21,7 @@
     height: var(--control-size-md);
     width: auto;
     padding: 0 var(--gap-sm) 0 var(--gap-md);
-    background-color: var(--grey-100);
+    background-color: var(--primary-50);
     border: none;
     border-radius: var(--radius);
     font-size: var(--font-size);
@@ -33,7 +33,7 @@
 
     &:disabled {
       background-color: var(--grey-50);
-      color: var(--grey-300);
+      color: var(--grey-200);
       cursor: not-allowed;
     }
   }
