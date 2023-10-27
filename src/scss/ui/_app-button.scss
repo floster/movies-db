@@ -1,3 +1,4 @@
+// TODO: refactor button mods
 .app-button {
   display: inline-flex;
   align-items: center;
@@ -16,10 +17,6 @@
   &[disabled] {
     cursor: not-allowed;
     opacity: 0.5;
-
-    &:hover {
-      box-shadow: none;
-    }
   }
 
   &:hover {
@@ -37,7 +34,6 @@
 
     &:hover {
       color: var(--grey-800);
-      box-shadow: none;
     }
 
     &.m-sm {
@@ -122,5 +118,22 @@
         line-height: var(--control-size-xs);
       }
     }
+  }
+
+  &.m-outline {
+    border: 1px solid var(--grey-500);
+    color: var(--grey-300);
+    background-color: transparent;
+    padding-left: var(--gap-sm);
+    padding-right: var(--gap-sm);
+
+    &:hover {
+      border: 1px solid var(--grey-100);
+      color: var(--grey-100);
+    }
+  }
+
+  &.m-show_clamped {
+    margin-top: var(--gap-xs);
   }
 }

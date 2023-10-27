@@ -12,6 +12,7 @@ import { useDocumentTitle } from 'usehooks-ts'
 import { useGetMediaHeroQuery } from '../store/api/tmdb.api'
 import { IAvailableMediaHeroTypes } from '../types/tmdb.models'
 import IconLabeled from './UI/IconLabeled'
+import TextClamp from './UI/TextClamp'
 
 interface MediaHeroProps {
   id: number
@@ -72,13 +73,17 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
           )}
 
           {/* {hasGenres && renderTags()} */}
+
           {data.subtitle && (
             <p className="media-hero__subtitle">{data.subtitle}</p>
           )}
 
           {data.tags && <p className="media-hero__tags">{data.tags}</p>}
 
-          <p className="media-hero__description">{data.description}</p>
+          {/* TODO: trim ACTOR's description to 3 lines and show "Show all text" */}
+          <div className="media-hero__description">
+            <TextClamp text={data.description} lines={8} />
+          </div>
 
           {data.belongs && <MoviePartOf data={data.belongs} />}
         </div>
