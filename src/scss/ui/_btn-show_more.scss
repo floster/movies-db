@@ -1,9 +1,0 @@
-.btn-show_more {
-  grid-column: 1 / span 2;
-  margin-bottom: var(--gap-sm);
-  padding: var(--gap-sm);
-
-  @include media(md) {
-    grid-column: 1;
-  }
-}

@@ -40,20 +40,20 @@
   // secondary
   --secondary-h: 350;
   --secondary-100: hsl(var(--secondary-h), var(--color-sl-100));
-  --secondary-500: hsl(var(--secondary-h), var(--color-sl-100));
-  --secondary-900: hsl(var(--secondary-h), var(--color-sl-100));
+  --secondary-500: hsl(var(--secondary-h), var(--color-sl-500));
+  --secondary-900: hsl(var(--secondary-h), var(--color-sl-900));
 
   // accent
   --accent-h: 50;
   --accent-100: hsl(var(--accent-h), var(--color-sl-100));
-  --accent-500: hsl(var(--accent-h), var(--color-sl-100));
-  --accent-900: hsl(var(--accent-h), var(--color-sl-100));
+  --accent-500: hsl(var(--accent-h), var(--color-sl-500));
+  --accent-900: hsl(var(--accent-h), var(--color-sl-900));
 
   // active
   --active-h: 266;
   --active-100: hsl(var(--active-h), var(--color-sl-100));
-  --active-500: hsl(var(--active-h), var(--color-sl-100));
-  --active-900: hsl(var(--active-h), var(--color-sl-100));
+  --active-500: hsl(var(--active-h), var(--color-sl-500));
+  --active-900: hsl(var(--active-h), var(--color-sl-900));
 
   --white: #fff;
 

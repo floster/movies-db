@@ -3,12 +3,11 @@ import { CSSProperties, useEffect, useRef, useState } from 'react'
 type Props = {
   text: string
   lines?: number
-  extraClass?: string
 }
 
 // TODO: need to deal with cases when window is resized
 // ResizeObserver observe window?
-const TextClamp: React.FC<Props> = ({ text, lines = 4, extraClass }) => {
+const TextClamp: React.FC<Props> = ({ text, lines = 4 }) => {
   const textStyles: CSSProperties = {
     WebkitLineClamp: lines,
   }
@@ -41,14 +40,12 @@ const TextClamp: React.FC<Props> = ({ text, lines = 4, extraClass }) => {
 
   return (
     <>
-      <p ref={textRef} className={`truncate ${extraClass}`} style={textStyles}>
+      <p ref={textRef} className="truncate" style={textStyles}>
         {text}
       </p>
       {showButton && (
-        <button
-          className="app-button m-outline m-show_clamped"
-          onClick={handleTruncating}>
-          show {isClamped ? 'more' : 'less'}
+        <button className="button m-outline m-sm" onClick={handleTruncating}>
+          {isClamped ? '...⤵' : '...⤴'}
         </button>
       )}
     </>

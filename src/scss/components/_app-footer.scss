@@ -1,0 +1,8 @@
+.app-footer {
+  display: grid;
+  grid-auto-flow: column;
+  gap: var(--gap-md);
+  background-color: var(--white);
+  padding-top: var(--container-gap);
+  padding-bottom: var(--container-gap);
+}

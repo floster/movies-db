@@ -80,7 +80,6 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
 
           {data.tags && <p className="media-hero__tags">{data.tags}</p>}
 
-          {/* TODO: trim ACTOR's description to 3 lines and show "Show all text" */}
           <div className="media-hero__description">
             <TextClamp text={data.description} lines={8} />
           </div>
