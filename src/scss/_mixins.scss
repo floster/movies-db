@@ -17,13 +17,13 @@
 @mixin link {
   @extend %link-base;
 
-  text-decoration-color: var(--color-secondary-dimmed);
+  text-decoration-color: var(--primary-100);
 }
 
 @mixin link-hover {
   @extend %link-base;
 
-  text-decoration-color: var(--color-secondary);
+  text-decoration-color: var(--color-primary);
 }
 
 @mixin line-clamp($lines: 2) {

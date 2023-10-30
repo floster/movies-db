@@ -1,60 +1,60 @@
 .tv-episode {
-    position: relative;
+  position: relative;
+  display: flex;
+  gap: var(--gap-sm);
+
+  &__count {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    font-size: var(--font-size-3);
+    font-weight: bold;
+    color: var(--primary-100);
+  }
+
+  &__content {
+    flex-grow: 1;
     display: flex;
-    gap: var(--gap-sm);
+    flex-direction: column;
+    padding-top: var(--gap-sm);
+  }
 
-    &__count {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-        font-size: var(--font-size-3);
-        font-weight: bold;
-        color: var(--color-secondary-dimmed);
+  &__release {
+    font-size: var(--font-size-sm);
+    color: var(--grey-400);
+    margin-bottom: var(--gap-xs);
+  }
+
+  &__title {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-xs);
+    font-size: var(--font-size-5);
+  }
+
+  &__overview {
+    font-size: var(--font-size);
+    font-style: italic;
+    color: var(--grey-600);
+    margin-top: var(--gap-sm);
+    max-width: 95%;
+
+    &:empty {
+      display: none;
     }
+  }
 
-    &__content {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        padding-top: var(--gap-sm);
+  .app-picture {
+    position: relative;
+    flex-shrink: 0;
+    width: 25%;
+    min-width: 100px;
+    transition: transform 0.35s;
+
+    @include media(md) {
+      width: 10%;
+      min-width: 120px;
     }
-
-    &__release {
-        font-size: var(--font-size-sm);
-        color: var(--color-grey-400);
-        margin-bottom: var(--gap-xs);
-    }
-
-    &__title {
-        display: flex;
-        align-items: flex-start;
-        gap: var(--gap-xs);
-        font-size: var(--font-size-5);
-    }
-
-    &__overview {
-        font-size: var(--font-size);
-        font-style: italic;
-        color: var(--color-grey-700);
-        margin-top: var(--gap-sm);
-        max-width: 95%;
-
-        &:empty {
-            display: none;
-        }
-    }
-
-    .app-picture {
-        position: relative;
-        flex-shrink: 0;
-        width: 25%;
-        min-width: 100px;
-        transition: transform .35s;
-
-        @include media(md) {
-            width: 10%;
-            min-width: 120px;
-        }
-    }
+  }
 }

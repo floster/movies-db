@@ -1,28 +1,7 @@
+@import './colors';
+
 :root {
-  --color-primary: rgb(230, 57, 70);
-  --color-secondary: hsl(207, 75%, 50%);
-  --color-secondary-dimmed: hsl(208, 76%, 95%);
-  --color-secondary-darken: hsl(207, 75%, 30%);
-  --color-accent: hsla(48, 95%, 65%, 1);
-  --color-accent-darken: rgb(74, 65, 24);
-  --color-accent-dimmed: hsla(48, 95%, 90%, 1);
-  --color-active: rgb(135, 43, 255);
-  --color-white: hsla(0, 0%, 100%, 1);
-  --color-grey-100: rgb(245, 245, 244);
-  --color-grey-200: rgb(223, 224, 220);
-  --color-grey-300: rgb(207, 207, 201);
-  --color-grey-400: rgb(178, 190, 181);
-  --color-grey-500: hsl(135, 8%, 55%);
-  --color-grey-700: rgb(65, 90, 118);
-  --color-grey-800: rgb(43, 62, 84);
-  --color-grey-900: rgb(13, 28, 43);
-
-  --gradient-dark: linear-gradient(
-    200deg,
-    rgba(10, 44, 72, 0.85) 70%,
-    rgba(19, 82, 134, 0.9) 100%
-  );
-
+  // font sizes
   --font-size-sm: 0.75rem; // 12px
   --font-size: 1rem; // 16px
   --font-size-5: 1.25rem; // 20px
@@ -31,17 +10,22 @@
   --font-size-2: 2.5rem; // 40px
   --font-size-1: 3rem; // 48px
 
-  --control-height-xxs: 1rem; // 20px
-  --control-height-xs: 1.25rem; // 20px
-  --control-height-sm: 1.5rem; // 24px
-  --control-height-md: 2rem; // 32px
-  --control-height-lg: 3rem; // 48px
-  --control-height-xl: 4rem; // 60px
-  --control-height-xxl: 5rem; // 80px
+  // control sizes (height/width)
+  --control-size-xs: 1.25rem; // 20px
+  --control-size-sm: 1.5rem; // 24px
+  --control-size-md: 2rem; // 32px
+  --control-size-lg: 3rem; // 48px
+  --control-size-xl: 4rem; // 60px
+  --control-size-xxl: 5rem; // 80px
 
+  // border radius
   --radius-sm: 0.25rem; // 4px
   --radius: 0.5rem; // 8px
+  --radius-md: 0.75rem; // 12px
+  --radius-round: 100px; // 100px
 
+  // gaps
+  --gap-xxs: 0.25rem; // 4px
   --gap-xs: 0.5rem; // 8px
   --gap-sm: 1rem; // 16px
   --gap-md: 1.5rem; // 24px
@@ -49,55 +33,54 @@
   --gap-xl: 2.5rem; // 40px
   --gap-xxl: 3.75rem; // 60px
 
+  // general
+  --font-family: 'Merriweather Sans', sans-serif;
+  --line-height: 1.3;
+  --font-weight: 300;
+
+  --body-color: var(--grey-50);
+  --text-color: var(--color-text);
+
+  // header
+  --gradient-dark: linear-gradient(
+    200deg,
+    var(--primary-900) 30%,
+    var(--primary-800) 100%
+  );
+  // media hero
+  --gradient-dark-semi: linear-gradient(
+    200deg,
+    rgb(33 2 75 / 85%) 30%,
+    rgb(3 84 124 / 95%) 100%
+  );
+  --gradient-light-semi: linear-gradient(
+    70deg,
+    rgb(187 220 236 / 65%),
+    rgb(2 50 75 / 85%) 40%
+  );
+
   --shadow-sm: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
     0px 1px 2px -1px rgba(0, 0, 0, 0.1);
   --shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1),
     0px 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-secondary: 0px 4px 6px -1px rgba(32, 137, 223, 0.25),
-    0px 2px 4px -2px rgba(32, 137, 223, 0.25);
   --shadow-md: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
     0px 4px 6px -4px rgba(0, 0, 0, 0.1);
   --shadow-md-primary: 0px 10px 15px -3px rgba(230, 57, 70, 0.25),
     0px 4px 6px -4px rgba(230, 57, 70, 0.25);
   --shadow-md-secondary: 0px 10px 15px -3px rgba(32, 137, 223, 0.25),
     0px 4px 6px -4px rgba(32, 137, 223, 0.25);
-  --shadow-lg: 0px 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0px 8px 10px -6px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
-  --shadow-stack: 2px 2px white, 3px 3px hsl(212, 32%, 80%), 5px 5px white,
-    6px 6px hsl(212, 32%, 80%), 8px 8px white, 9px 9px hsl(212, 32%, 80%);
-  --shadow-inset: rgba(13, 28, 43, 0.2) 0px -40px 40px -40px inset;
 
-  --shadow-stack-grey: hsl(212, 32%, 77%) 2px 4px, hsl(212, 32%, 85%) 4px 8px,
+  --shadow-stack: hsl(212, 32%, 77%) 2px 4px, hsl(212, 32%, 85%) 4px 8px,
     hsl(212, 32%, 92%) 6px 12px;
-  --shadow-stack-secondary: hsl(207, 75%, 80%) 2px 4px,
-    hsl(207, 75%, 87%) 4px 8px, hsl(207, 75%, 95%) 6px 12px;
+  --shadow-stack-active: hsl(207, 75%, 80%) 2px 4px, hsl(207, 75%, 87%) 4px 8px,
+    hsl(207, 75%, 95%) 6px 12px;
 
   @include media(md) {
-    --shadow-stack-grey: hsl(212, 32%, 77%) 4px 5px, hsl(212, 32%, 85%) 8px 10px,
+    --shadow-stack: hsl(212, 32%, 77%) 4px 5px, hsl(212, 32%, 85%) 8px 10px,
       hsl(212, 32%, 92%) 12px 15px;
-    --shadow-stack-secondary: hsl(207, 75%, 80%) 4px 5px,
+    --shadow-stack-active: hsl(207, 75%, 80%) 4px 5px,
       hsl(207, 75%, 87%) 8px 10px, hsl(207, 75%, 95%) 12px 15px;
   }
-
-  --easing-in: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --easing-out: cubic-bezier(0.55, 0.085, 0.68, 0.53);
-
-  // general
-  --font-family: 'Merriweather Sans', sans-serif;
-  --line-height: 1.3;
-  --font-weight: 300;
-
-  // dark/light
-  --header-color: linear-gradient(
-    200deg,
-    rgba(10, 44, 72, 1) 40%,
-    rgba(19, 82, 134, 1) 100%
-  );
-  --body-color: var(--color-grey-100);
-  --body-color-dark: var(--color-grey-700);
-  --text-color: var(--color-grey-700);
-  --text-color-light: hsl(208, 40%, 80%);
 
   // dynamic container gap
   --container-gap: var(--gap-xs);
@@ -113,7 +96,4 @@
   @include media(xl) {
     --container-gap: var(--gap-xxl);
   }
-
-  // tile text - title and description
-  --tile-text-font-size: var(--font-size);
 }

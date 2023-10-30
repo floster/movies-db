@@ -3,14 +3,14 @@
   border-radius: var(--radius);
   max-width: 100%;
   transition: box-shadow 0.2s ease-out;
-  background-color: var(--color-white);
+  background-color: var(--white);
   overflow: hidden;
   z-index: 1;
 
   &:not(.m-actor) {
     &:active,
     &:focus-visible {
-      outline: 2px solid var(--color-secondary-dimmed);
+      outline: 2px solid var(--primary-100);
     }
 
     &:hover {
@@ -18,7 +18,7 @@
       cursor: pointer;
 
       .app-tile__title {
-        color: var(--color-secondary);
+        color: var(--color-primary);
       }
 
       .app-tile__img {
@@ -36,7 +36,7 @@
 
     &:active,
     &:focus-visible {
-      outline: 2px solid var(--color-secondary-dimmed);
+      outline: 2px solid var(--primary-100);
     }
 
     &:hover {
@@ -49,7 +49,7 @@
       flex-shrink: 0;
       align-items: center;
       gap: var(--gap-sm);
-      padding-right: var(--control-height-lg);
+      padding-right: var(--control-size-lg);
       width: 100%;
     }
 
@@ -123,7 +123,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: var(--color-white);
+    background-color: var(--white);
   }
 
   &__picture {
@@ -137,7 +137,7 @@
     flex-direction: column;
     flex-grow: 1;
     gap: var(--gap-xs);
-    background-color: var(--color-white);
+    background-color: var(--white);
     border-bottom-right-radius: var(--radius);
     border-bottom-left-radius: var(--radius);
 
@@ -154,13 +154,13 @@
   &__title {
     @include line-clamp(2);
 
-    font-size: var(--tile-text-font-size);
+    font-size: var(--font-size);
   }
 
   &__label {
     font-size: var(--font-size-sm);
     font-weight: bold;
-    color: var(--text-color-light);
+    color: var(--grey-300);
 
     .app-tile.m-row & {
       order: 2;
@@ -173,7 +173,7 @@
     right: 0;
     font-size: var(--font-size-5);
     font-weight: bold;
-    color: var(--color-secondary-dimmed);
+    color: var(--primary-100);
   }
 
   &__extraLabel {
@@ -181,7 +181,7 @@
     bottom: 0;
     left: 0;
     background-color: rgba(32, 137, 223, 0.7);
-    color: var(--color-white);
+    color: var(--white);
     font-size: var(--font-size-sm);
     line-height: 2;
     border-radius: 0 var(--radius-sm) 0 var(--radius);

@@ -1,47 +1,56 @@
 .app-favorite {
-    display: flex;
-    padding: var(--gap-xs);
+  display: flex;
+  padding: var(--gap-xs);
 
-    &:active,
-    &:focus-within {
-        outline: 1px dotted var(--color-grey-400);
+  &:active,
+  &:focus-within {
+    outline: 1px dotted var(--grey-400);
+  }
+
+  input {
+    appearance: none;
+    margin: 0;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
     }
 
-    input {
-        appearance: none;
-        margin: 0;
-
-        &:focus {
-            outline: none;
-            box-shadow: none;
-        }
-
-        &:checked {
-            ~.svg-icon {
-                color: var(--color-accent);
-
-                &.m-solid {
-                    display: block;
-                }
-
-                &.m-outline {
-                    display: none;
-                }
-            }
-        }
-    }
-
-    .svg-icon {
-        height: var(--control-height-sm);
-        width: var(--control-height-sm);
-        color: var(--color-grey-200);
+    &:checked {
+      ~ .svg-icon {
+        color: var(--accent-500);
 
         &.m-solid {
-            display: none;
+          display: block;
         }
 
         &.m-outline {
-            display: block;
+          display: none;
         }
+      }
     }
+  }
+
+  .svg-icon {
+    height: var(--control-size-sm);
+    width: var(--control-size-sm);
+    color: var(--accent-100);
+
+    &.m-solid {
+      display: none;
+    }
+
+    &.m-outline {
+      display: block;
+      opacity: 0.5;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      .app-tile.m-row & {
+        opacity: 1;
+      }
+    }
+  }
 }

@@ -22,7 +22,7 @@ const QuickSearchHits: FC<Props> = ({ results }) => {
           symbols
         </p>
       ) : (
-        <section className="quick-search-hits__list">
+        <section className="quick-search-hits__wrapper">
           {AVAILABLE_SEARCH_TYPES.map(type => (
             <QuickSearchHitsList hits={results[type]} type={type} key={type} />
           ))}

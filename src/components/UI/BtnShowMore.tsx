@@ -9,7 +9,7 @@ const BtnShowMore: React.FC<BtnShowMoreAttributes> = ({
 
   return (
     <button
-      className={`app-button btn-show_more ${isHidden ? 'm-hidden' : ''}`}
+      className={`button m-block m-show_more ${isHidden ? 'm-hidden' : ''}`}
       onClick={() => handleShowMore()}
       disabled={isHidden}>
       need more ({currentPage} / {pagesQty})

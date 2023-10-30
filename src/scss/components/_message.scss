@@ -1,25 +1,25 @@
 .message {
-    display: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.25rem;
+
+  &__icon {
+    background-color: transparent;
+    border-radius: 50%;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    column-gap: .25rem;
+    width: var(--control-size-xs);
+    height: var(--control-size-xs);
+    margin-left: var(--gap-xs);
+  }
 
-    &__icon {
-        background-color: transparent;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: var(--control-height-xs);
-        height: var(--control-height-xs);
-        margin-left: var(--gap-xs);
+  &.m-info {
+    color: var(--primary-700);
+
+    .message__icon {
+      background-color: var(--accent-500);
     }
-
-    &.m-info {
-        color: var(--color-secondary-darken);
-
-        .message__icon {
-            background-color: var(--color-accent);
-        }
-    }
+  }
 }

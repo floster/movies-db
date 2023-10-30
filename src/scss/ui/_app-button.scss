@@ -1,104 +1,154 @@
-.app-button {
+// TODO: refactor button mods
+@mixin button() {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--font-size-sm);
-  padding: 0.25rem var(--gap-md);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all 0.1s linear;
-  border: none;
-  background-color: var(--color-secondary-dimmed);
-  color: var(--color-secondary-darken);
-  white-space: nowrap;
+  border: 1px solid transparent;
+  background-color: transparent;
+  box-shadow: none;
+  font-weight: 300;
+  line-height: inherit;
   text-decoration: none;
+
+  &:hover {
+    border: 1px solid transparent;
+    background-color: transparent;
+  }
 
   &[disabled] {
     cursor: not-allowed;
     opacity: 0.5;
-
-    &:hover {
-      box-shadow: none;
-    }
   }
 
-  &:hover {
-    filter: brightness(0.99);
-    box-shadow: var(--shadow);
-  }
-
-  &:active {
-    box-shadow: var(--shadow-sm);
+  &.m-block {
+    width: 100%;
   }
 
   &.m-hidden {
     display: none;
   }
+}
 
-  &.m-open-favorites {
-    position: relative;
+@mixin button-variant(
+  $color: var(--grey-600),
+  $hover-color: var(--color-text),
+  $background: var(--grey-50),
+  $hover-background: var(--primary-50),
+  $border-color: var(--grey-50),
+  $hover-border-color: var(--primary-50)
+) {
+  background-color: $background;
+  border-color: $border-color;
+  color: $color;
 
-    &.has-items {
-      &::after {
-        content: attr(data-favorites-count);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: var(--control-height-xs);
-        height: var(--control-height-xs);
-        background-color: var(--color-secondary);
-        border-radius: 9999px;
-        color: var(--color-grey-100);
-        font-size: 0.7rem;
-        line-height: var(--control-height-xs);
-      }
+  &:hover {
+    background-color: $hover-background;
+    border-color: $hover-border-color;
+    color: $hover-color;
+  }
+}
+
+@mixin button-size(
+  $height: var(--control-size-lg),
+  $width: fit-content,
+  $padding-v: 0,
+  $padding-h: var(--gap-md),
+  $radius: var(--radius-sm),
+  $font-size: var(--font-size-sm)
+) {
+  height: $height;
+  width: $width;
+  padding: $padding-v $padding-h;
+  font-size: $font-size;
+  line-height: $height;
+  border-radius: $radius;
+}
+
+$button-variants: (
+  'primary': (
+    'color': var(--primary-50),
+    'background': var(--color-primary),
+    'border-color': var(--color-primary),
+    'hover-color': var(--white),
+    'hover-background': var(--primary-500),
+    'hover-border-color': var(--primary-500),
+  ),
+  'outline': (
+    'color': var(--grey-400),
+    'background': transparent,
+    'border-color': var(--grey-400),
+    'hover-color': var(--grey-100),
+    'hover-background': transparent,
+    'hover-border-color': var(--grey-100),
+  ),
+  'transparent': (
+    'color': var(--grey-300),
+    'background': transparent,
+    'border-color': transparent,
+    'hover-color': var(--grey-800),
+    'hover-background': transparent,
+    'hover-border-color': transparent,
+  ),
+);
+
+$button-sizes: (
+  'sm': (
+    'height': var(--control-size-md),
+    'font-size': var(--font-size-sm),
+  ),
+  // 'md': (
+  //   'height': var(--control-size-lg),
+  //   'padding-h': var(--gap-lg),
+  //   'font-size': var(--font-size),
+  // ),
+  // 'lg': (
+  //   'height': var(--control-size-xl),
+  //   'padding-h': var(--gap-xxl),
+  //   'radius': var(--radius),
+  //   'font-size': var(--font-size-5),
+  // ),
+);
+
+.button {
+  @include button;
+  @include button-variant;
+  @include button-size;
+
+  // generate button variants, i.e. .button.m-primary
+  @each $size, $size-props in $button-sizes {
+    &.m-#{$size} {
+      @include button-size($size-props...);
     }
   }
 
+  // generate button variants, i.e. .button.m-sm
+  @each $variant, $variant-props in $button-variants {
+    &.m-#{$variant} {
+      @include button-variant($variant-props...);
+    }
+  }
+
+  // specific button variants
   &.m-icon {
-    color: var(--color-grey-200);
-    padding: var(--gap-xs);
-    background-color: transparent;
+    @include button-variant(map-get($button-variants, 'transparent')...);
 
-    &:hover {
-      color: var(--color-grey-800);
-      box-shadow: none;
-    }
-
-    &.m-sm {
-      .svg-icon {
-        height: var(--control-height-xs);
-        width: var(--control-height-xs);
-
-        @include media(lg) {
-          height: var(--control-height-sm);
-          width: var(--control-height-sm);
-        }
-      }
-    }
-
-    &.m-active {
-      color: var(--color-primary);
-    }
+    height: var(--control-size-lg); // 48px
+    width: var(--control-size-lg); // 48px
+    padding: 0;
+    border-radius: var(--radius-sm);
 
     .svg-icon {
-      height: var(--control-height-sm);
-      width: var(--control-height-sm);
+      height: var(--control-size-sm);
+      width: var(--control-size-sm);
 
       @include media(lg) {
-        height: var(--control-height-md);
-        width: var(--control-height-md);
+        height: var(--control-size-md);
+        width: var(--control-size-md);
       }
     }
   }
 
-  &.m-close {
-    @extend .m-icon;
-
-    color: inherit;
+  &.m-clear {
     opacity: 0.25;
 
     &:hover,
@@ -108,20 +158,37 @@
     }
 
     .svg-icon {
-      width: var(--control-height-xs);
-      height: var(--control-height-xs);
+      width: var(--control-size-xs);
+      height: var(--control-size-xs);
     }
   }
 
-  &.m-primary {
-    &:hover {
-      color: var(--color-primary);
-    }
+  &.m-show_more {
+    height: 100%;
   }
 
-  &.m-secondary {
+  &.m-open_favorites {
+    position: relative;
+
     &:hover {
-      color: var(--color-secondary);
+      color: var(--accent-500);
+    }
+
+    &::after {
+      content: attr(data-favorites-count);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: var(--control-size-xs);
+      height: var(--control-size-xs);
+      background-color: var(--color-primary);
+      border-radius: 9999px;
+      color: var(--grey-100);
+      font-size: 0.7rem;
+      line-height: var(--control-size-xs);
     }
   }
 }

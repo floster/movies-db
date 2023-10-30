@@ -20,7 +20,7 @@ const FavoritesLink: React.FC = () => {
 
   return (
     <Link
-      className="app-button m-open-favorites has-items m-icon m-primary"
+      className="button m-icon m-open_favorites"
       to="favorites"
       aria-label="go to favorites"
       data-favorites-count={qty}>

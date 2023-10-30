@@ -8,6 +8,12 @@
   &:has(.quick-search-form) {
     margin-top: var(--gap-md);
   }
+
+  &.m-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+  }
 }
 
 .l-content {
@@ -16,10 +22,10 @@
   margin-top: var(--gap-sm);
   margin-bottom: var(--gap-sm);
   padding: var(--gap-xs);
-  min-height: var(--control-height-xxl);
+  min-height: var(--control-size-xxl);
 
   border-radius: var(--radius);
-  background-color: var(--color-white);
+  background-color: var(--white);
   box-shadow: var(--shadow);
 
   @include media(md) {

@@ -54,14 +54,14 @@ const SearchForm: React.FC<Props> = ({ searchSubmit, termChange }) => {
         minLength={4}
       />
       <button
-        className="quick-search-form__clean app-button m-close"
+        className="quick-search-form__clean button m-icon"
         aria-label="search"
         type="reset"
         onClick={handleReset}>
         <SvgIcon icon="close" />
       </button>
       <button
-        className="quick-search-form__submit app-button m-icon m-primary"
+        className="quick-search-form__submit button m-icon m-primary"
         aria-label="search"
         type="submit">
         <SvgIcon icon="search" />

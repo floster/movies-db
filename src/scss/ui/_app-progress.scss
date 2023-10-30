@@ -1,42 +1,50 @@
 .app-progress {
-    --value: null;
-    --size: var(--control-height-md);
-    --thickness: calc(var(--size) / 10);
+  --value: null;
+  --size: var(--control-size-md);
+  --thickness: calc(var(--size) / 10);
 
-    position: relative;
-    display: inline-grid;
-    height: var(--size);
-    width: var(--size);
-    place-content: center;
+  position: relative;
+  display: inline-grid;
+  height: var(--size);
+  width: var(--size);
+  place-content: center;
+  border-radius: 9999px;
+  background-color: hsla(211, 53%, 11%, 0.65);
+  box-shadow: 0 0 0 2px hsla(211, 53%, 11%, 0.65);
+  vertical-align: middle;
+  box-sizing: content-box;
+  font-size: var(--font-size-sm);
+  color: var(--grey-100);
+  font-weight: bold;
+  flex-shrink: 0;
+
+  @include media(md) {
+    --size: var(--control-size-md);
+  }
+
+  &::before {
+    position: absolute;
     border-radius: 9999px;
-    background-color: hsla(211, 53%, 11%, .65);
-    box-shadow: 0 0 0 2px hsla(211, 53%, 11%, .65);
-    vertical-align: middle;
-    box-sizing: content-box;
-    font-size: var(--font-size-sm);
-    color: var(--color-grey-100);
-    font-weight: bold;
-    flex-shrink: 0;
+    content: '';
+    inset: 0;
+    background:
+      radial-gradient(farthest-side, var(--accent-500) 98%, #0000)
+        top/var(--thickness) var(--thickness) no-repeat,
+      conic-gradient(var(--accent-500) calc(var(--value) * 1%), #0000 0);
+    mask: radial-gradient(
+      farthest-side,
+      #0000 calc(99% - var(--thickness)),
+      #000 calc(100% - var(--thickness))
+    );
+  }
 
-    @include media(md) {
-        --size: var(--control-height-md);
-    }
-
-    &::before {
-        position: absolute;
-        border-radius: 9999px;
-        content: "";
-        inset: 0;
-        background: radial-gradient(farthest-side, var(--color-accent) 98%, #0000) top/var(--thickness) var(--thickness) no-repeat, conic-gradient(var(--color-accent) calc(var(--value) * 1%), #0000 0);
-        mask: radial-gradient(farthest-side, #0000 calc(99% - var(--thickness)), #000 calc(100% - var(--thickness)));
-    }
-
-    &::after {
-        position: absolute;
-        border-radius: 9999px;
-        content: "";
-        inset: calc(50% - var(--thickness)/2);
-        transform: rotate(calc(var(--value) * 3.6deg - 90deg)) translate(calc(var(--size)/2 - 50%));
-        background-color: var(--color-accent);
-    }
+  &::after {
+    position: absolute;
+    border-radius: 9999px;
+    content: '';
+    inset: calc(50% - var(--thickness) / 2);
+    transform: rotate(calc(var(--value) * 3.6deg - 90deg))
+      translate(calc(var(--size) / 2 - 50%));
+    background-color: var(--accent-500);
+  }
 }

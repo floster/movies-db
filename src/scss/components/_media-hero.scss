@@ -4,10 +4,10 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-attachment: fixed;
+  // background-attachment: fixed;
 
   @include media(md) {
-    background-image: var(--gradient-dark), var(--backdrop-image);
+    background-image: var(--gradient-light-semi), var(--backdrop-image);
   }
 
   &__inner {
@@ -24,6 +24,8 @@
 
     @include media(md) {
       width: calc(100% - var(--container-gap) * 2);
+      padding-top: var(--gap-sm);
+      padding-bottom: var(--gap-sm);
       gap: var(--gap-sm);
       grid-template-rows: 1fr min-content;
       grid-template-columns: 1fr 3fr;
@@ -67,25 +69,27 @@
     padding: 0 var(--gap-sm) var(--gap-md);
 
     @include media(md) {
+      width: 80%;
       gap: var(--gap-sm);
       padding: var(--gap-sm) 0 0;
     }
 
     .random-media & {
       @include media(md) {
+        width: 100%;
         padding: var(--gap-sm) var(--gap-md) 0 0;
       }
     }
   }
 
   &__date {
-    color: var(--color-grey-500);
+    color: var(--grey-500);
     margin-bottom: calc(var(--gap-xs) * -1);
   }
 
   &__title,
   &__link {
-    color: var(--color-grey-100);
+    color: var(--grey-100);
     font-size: var(--font-size-4);
     font-weight: bold;
 
@@ -111,15 +115,17 @@
   }
 
   &__subtitle {
-    color: var(--color-grey-200);
-    font-size: var(--font-size-5);
+    color: var(--grey-100);
+    font-size: var(--font-size);
     font-weight: normal;
-    font-style: italic;
+    margin-top: -8px;
+    // font-style: italic;
 
     &::after,
     &::before {
       content: '"';
-      color: var(--color-secondary);
+      font-weight: bold;
+      color: var(--color-primary);
     }
   }
 
@@ -128,13 +134,13 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
-    color: var(--color-grey-200);
+    color: var(--grey-300);
 
     &::after,
     &::before {
       content: '[ ';
       font-weight: bold;
-      color: var(--color-secondary);
+      color: var(--color-primary);
     }
 
     &::after {
@@ -154,9 +160,7 @@
   }
 
   &__description {
-    @include line-clamp(3);
-
-    color: var(--color-grey-200);
+    color: var(--grey-200);
     font-size: var(--font-size);
     line-height: 1.4;
     font-style: italic;

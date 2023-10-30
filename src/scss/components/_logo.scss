@@ -1,0 +1,37 @@
+.logo {
+  display: flex;
+
+  &__svg {
+    height: var(--control-size-sm);
+
+    @include media(md) {
+      height: var(--control-size-md);
+    }
+
+    .app-footer & {
+      height: var(--control-size-xs);
+
+      @include media(md) {
+        height: var(--control-size-sm);
+      }
+    }
+  }
+}
+
+.tmdb-logo {
+  &__img {
+    height: var(--control-size-sm);
+
+    @include media(md) {
+      height: var(--control-size-md);
+    }
+
+    .app-footer & {
+      height: var(--control-size-xs);
+
+      @include media(md) {
+        height: var(--control-size-sm);
+      }
+    }
+  }
+}

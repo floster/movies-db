@@ -1,18 +1,18 @@
 .quick-search-hits {
-  background-color: var(--color-grey-100);
-  padding: var(--gap-md) var(--gap-sm) var(--gap-sm);
-  border-radius: 0 0 var(--radius) var(--radius);
+  background-color: var(--primary-50);
+  padding: var(--gap-sm);
+  border-radius: var(--radius);
   width: calc(100% - var(--gap-xs));
-  max-height: 80vh;
-  margin: calc(var(--gap-xs) * -1) auto 0;
+  max-height: 70vh;
+  margin: var(--gap-sm) auto 0;
   overflow-y: auto;
 
   @include media(md) {
-    padding: var(--gap-lg) var(--gap-xl) var(--gap-md);
+    padding: var(--gap-xs) var(--gap-xl);
   }
 
   &__list {
-    padding: 0;
+    padding: 0 0 0 var(--gap-sm);
     margin: 0;
     display: flex;
     list-style-type: none;
@@ -21,14 +21,15 @@
   }
 
   &__title {
-    color: var(--color-grey-300);
+    color: var(--grey-400);
     font-size: var(--font-size-sm);
     font-weight: normal;
-    margin-top: var(--gap-sm);
+    margin-top: var(--gap-md);
+    margin-bottom: var(--gap-sm);
   }
 
   &__empty {
-    color: var(--color-grey-500);
+    color: var(--grey-500);
     font-style: italic;
   }
 
@@ -45,7 +46,7 @@
   }
 
   &__link {
-    color: var(--color-secondary);
+    color: var(--color-primary);
 
     &:hover {
       text-decoration: underline;
@@ -53,13 +54,13 @@
   }
 
   &__year {
-    color: var(--color-grey-500);
+    color: var(--grey-500);
   }
 
   &__type {
     font-size: var(--font-size);
     font-style: italic;
-    color: var(--color-grey-400);
+    color: var(--grey-400);
 
     &::before {
       content: '\00a0\00a0\2014\00a0\00a0';

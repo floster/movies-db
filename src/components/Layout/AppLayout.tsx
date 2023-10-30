@@ -5,6 +5,7 @@ import '../../app.scss'
 import AppDialog from '../Dialog'
 import AppHeader from '../AppHeader'
 import QuickSearchForm from '../QuickSearch/QuickSearchForm'
+import AppFooter from '../AppFooter'
 
 const AppLayout: React.FC = () => (
   <>
@@ -15,6 +16,7 @@ const AppLayout: React.FC = () => (
     <AppDialog>
       <QuickSearchForm />
     </AppDialog>
+    <AppFooter />
   </>
 )
 

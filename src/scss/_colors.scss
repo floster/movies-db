@@ -1,0 +1,87 @@
+:root {
+  // SL part of HSL for colors
+  --color-sl-50: 40%, 96%;
+  --color-sl-100: 47%, 91%;
+  --color-sl-200: 56%, 83%;
+  --color-sl-300: 65%, 75%;
+  --color-sl-400: 74%, 85%;
+  --color-sl-500: 82%, 55%;
+  --color-sl-600: 87%, 44%;
+  --color-sl-700: 91%, 35%;
+  --color-sl-800: 95%, 25%;
+  --color-sl-900: 96%, 15%;
+
+  // SL part of HSL for neutrals
+  --neutral-sl-50: 12%, 96%;
+  --neutral-sl-100: 15%, 90%;
+  --neutral-sl-200: 17%, 74%;
+  --neutral-sl-300: 18%, 61%;
+  --neutral-sl-400: 20%, 47%;
+  --neutral-sl-500: 27%, 35%;
+  --neutral-sl-600: 37%, 27%;
+  --neutral-sl-700: 45%, 21%;
+  --neutral-sl-800: 56%, 16%;
+  --neutral-sl-900: 67%, 12%;
+
+  // COLORS
+  // primary
+  --primary-h: 200;
+  --primary-50: hsl(var(--primary-h), var(--color-sl-50));
+  --primary-100: hsl(var(--primary-h), var(--color-sl-100));
+  --primary-200: hsl(var(--primary-h), var(--color-sl-200));
+  --primary-300: hsl(var(--primary-h), var(--color-sl-300));
+  --primary-400: hsl(var(--primary-h), var(--color-sl-400));
+  --primary-500: hsl(var(--primary-h), var(--color-sl-500));
+  --primary-600: hsl(var(--primary-h), var(--color-sl-600));
+  --primary-700: hsl(var(--primary-h), var(--color-sl-700));
+  --primary-800: hsl(var(--primary-h), var(--color-sl-800));
+  --primary-900: hsl(var(--primary-h), var(--color-sl-900));
+
+  // secondary
+  --secondary-h: 350;
+  --secondary-100: hsl(var(--secondary-h), var(--color-sl-100));
+  --secondary-500: hsl(var(--secondary-h), var(--color-sl-500));
+  --secondary-900: hsl(var(--secondary-h), var(--color-sl-900));
+
+  // accent
+  --accent-h: 50;
+  --accent-100: hsl(var(--accent-h), var(--color-sl-100));
+  --accent-500: hsl(var(--accent-h), var(--color-sl-500));
+  --accent-900: hsl(var(--accent-h), var(--color-sl-900));
+
+  // active
+  --active-h: 266;
+  --active-100: hsl(var(--active-h), var(--color-sl-100));
+  --active-500: hsl(var(--active-h), var(--color-sl-500));
+  --active-900: hsl(var(--active-h), var(--color-sl-900));
+
+  --white: #fff;
+
+  --neutral-sl-50: 12%, 96%;
+  --neutral-sl-100: 15%, 90%;
+  --neutral-sl-200: 17%, 74%;
+  --neutral-sl-300: 18%, 61%;
+  --neutral-sl-400: 20%, 47%;
+  --neutral-sl-500: 27%, 35%;
+  --neutral-sl-600: 37%, 27%;
+  --neutral-sl-700: 45%, 21%;
+  --neutral-sl-800: 56%, 16%;
+  --neutral-sl-900: 67%, 12%;
+
+  --neutral-h: 190;
+  // neutrals
+  --grey-50: hsl(var(--neutral-h), var(--neutral-sl-50));
+  --grey-100: hsl(var(--neutral-h), var(--neutral-sl-100));
+  --grey-200: hsl(var(--neutral-h), var(--neutral-sl-200));
+  --grey-300: hsl(var(--neutral-h), var(--neutral-sl-300));
+  --grey-400: hsl(var(--neutral-h), var(--neutral-sl-400));
+  --grey-500: hsl(var(--neutral-h), var(--neutral-sl-500));
+  --grey-600: hsl(var(--neutral-h), var(--neutral-sl-600));
+  --grey-700: hsl(var(--neutral-h), var(--neutral-sl-700));
+  --grey-800: hsl(var(--neutral-h), var(--neutral-sl-800));
+  --grey-900: hsl(var(--neutral-h), var(--neutral-sl-900));
+
+  // colors aliases
+  --color-primary: var(--primary-600);
+  --color-text: var(--grey-700);
+}

@@ -1,5 +1,5 @@
 import FavoritesLink from './Favorites/FavoritesLink'
-import OpenSerachBtn from './UI/BtnOpenSearch'
+import QuickSearchOpenBtn from './QuickSearch/QuickSearchOpenBtn'
 import Logo from './UI/Logo'
 
 const AppHeader: React.FC = () => {
@@ -8,7 +8,7 @@ const AppHeader: React.FC = () => {
       <div className="app-header__inner container">
         <Logo />
         <nav className="app-header__nav">
-          <OpenSerachBtn />
+          <QuickSearchOpenBtn />
           <FavoritesLink />
         </nav>
       </div>

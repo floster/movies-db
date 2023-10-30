@@ -11,7 +11,7 @@ const SvgIcon: React.FC<Props> = ({ icon, extraClass, logo }) => {
 
   return (
     <svg
-      className={`svg-icon ${extraClass}`}
+      className={`svg-icon ${extraClass ? extraClass : ''}`}
       viewBox={viewBox}
       aria-hidden="true">
       <use href={`${sprite}#${icon}`} />
