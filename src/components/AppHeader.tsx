@@ -1,5 +1,6 @@
-import FavoritesLink from './Favorites/FavoritesLink'
-import QuickSearchOpenBtn from './QuickSearch/QuickSearchOpenBtn'
+import FavoritesLink from './Header/FavoritesLink'
+import QuickSearchOpenBtn from './Header/QuickSearchOpenBtn'
+import SelectLocale from './Header/SelectLocale'
 import Logo from './UI/Logo'
 
 const AppHeader: React.FC = () => {
@@ -9,6 +10,7 @@ const AppHeader: React.FC = () => {
         <Logo />
         <nav className="app-header__nav">
           <QuickSearchOpenBtn />
+          <SelectLocale />
           <FavoritesLink />
         </nav>
       </div>

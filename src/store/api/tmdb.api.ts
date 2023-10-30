@@ -1,5 +1,5 @@
 const BEARER_KEY = import.meta.env.VITE_TMDB_BEARER_KEY
-const API_LANGUAGE = 'en-US' //"uk-UA";
+const API_LANGUAGE = localStorage.getItem(LOCALE_LOCAL_STORAGE_KEY) || 'en' //"uk";
 const API_ADULTS = false
 
 // it's important to add prefix /react in import below
@@ -39,6 +39,7 @@ import {
   formatTiles,
 } from '../../utils/formatters'
 import { TMDB_FETCH_OPTIONS } from '../../config'
+import { LOCALE_LOCAL_STORAGE_KEY } from '../../components/Header/SelectLocale'
 
 // set headers for all requests, main goal is to set Authorization header
 const prepareHeaders = (headers: Headers) => {
