@@ -33,9 +33,9 @@
   $color: var(--grey-600),
   $hover-color: var(--color-text),
   $background: var(--grey-50),
-  $hover-background: var(--grey-100),
+  $hover-background: var(--primary-50),
   $border-color: var(--grey-50),
-  $hover-border-color: var(--grey-100)
+  $hover-border-color: var(--primary-50)
 ) {
   background-color: $background;
   border-color: $border-color;
@@ -163,13 +163,8 @@ $button-sizes: (
     }
   }
 
-  .m-show_more {
-    grid-column: 1 / span 2;
-    margin-bottom: var(--gap-sm);
-
-    @include media(md) {
-      grid-column: 1;
-    }
+  &.m-show_more {
+    height: 100%;
   }
 
   &.m-open_favorites {

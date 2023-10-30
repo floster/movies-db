@@ -50,8 +50,13 @@
   // media hero
   --gradient-dark-semi: linear-gradient(
     200deg,
-    rgb(2 50 75 / 85%) 30%,
+    rgb(33 2 75 / 85%) 30%,
     rgb(3 84 124 / 95%) 100%
+  );
+  --gradient-light-semi: linear-gradient(
+    70deg,
+    rgb(187 220 236 / 65%),
+    rgb(2 50 75 / 85%) 40%
   );
 
   --shadow-sm: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),

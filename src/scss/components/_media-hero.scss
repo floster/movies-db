@@ -7,7 +7,7 @@
   // background-attachment: fixed;
 
   @include media(md) {
-    background-image: var(--gradient-dark-semi), var(--backdrop-image);
+    background-image: var(--gradient-light-semi), var(--backdrop-image);
   }
 
   &__inner {
