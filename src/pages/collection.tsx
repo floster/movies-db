@@ -8,6 +8,7 @@ import Error from '../components/UI/Error'
 
 import { useGetCollectionQuery } from '../store/api/tmdb.api'
 import TilesGrid from '../components/Layout/TilesGrid'
+import { useAppSelector } from '../hooks/useRedux'
 
 type CollectionParams = {
   id: string
@@ -17,7 +18,12 @@ const Collection: React.FC = () => {
   const params = useParams<CollectionParams>()
   const collectionId = getIdFromLink(params.id!)
 
-  const { data, isError, isLoading } = useGetCollectionQuery(collectionId)
+  const locale = useAppSelector(state => state.locale.current)
+
+  const { data, isError, isLoading } = useGetCollectionQuery({
+    id: collectionId,
+    locale,
+  })
 
   return (
     <>

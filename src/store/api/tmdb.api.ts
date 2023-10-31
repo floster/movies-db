@@ -1,6 +1,4 @@
 const BEARER_KEY = import.meta.env.VITE_TMDB_BEARER_KEY
-const API_LANGUAGE = localStorage.getItem(LOCALE_LOCAL_STORAGE_KEY) || 'en' //"uk";
-const API_ADULTS = false
 
 // it's important to add prefix /react in import below
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
@@ -28,6 +26,7 @@ import {
   IAvailableFavoritesTypes,
   IRawTv,
   IRawTvSeasonResponse,
+  IAvalableLocales,
 } from '../../types/tmdb.models'
 import {
   formatCollectionNew,
@@ -39,7 +38,8 @@ import {
   formatTiles,
 } from '../../utils/formatters'
 import { TMDB_FETCH_OPTIONS } from '../../config'
-import { LOCALE_LOCAL_STORAGE_KEY } from '../../components/Header/SelectLocale'
+
+const API_ADULTS = false
 
 // set headers for all requests, main goal is to set Authorization header
 const prepareHeaders = (headers: Headers) => {
@@ -51,7 +51,6 @@ const prepareHeaders = (headers: Headers) => {
 // set params for all requests
 // TODO: #locale think about how to set language dynamically
 const prepareParams = (params: Record<string, any>) => {
-  params['language'] = API_LANGUAGE
   params['include_adult'] = API_ADULTS
   return new URLSearchParams(params).toString()
 }
@@ -96,24 +95,29 @@ export const tmdbApi = createApi({
     }),
     getMediaTile: build.query<
       ITile,
-      { type: IAvailableFavoritesTypes; id: number }
+      { type: IAvailableFavoritesTypes; id: number; locale: IAvalableLocales }
     >({
-      query: ({ type, id }) => ({
+      query: ({ type, id, locale }) => ({
         url: `${type}/${id}`,
-        params: prepareParams,
+        params: {
+          language: locale,
+        },
       }),
       transformResponse: (response: IAvailableTileFields) =>
         formatTile(response),
     }),
-    getList: build.query<ITile[], IAvailableListsOptions>({
-      query: (option: IAvailableListsOptions) => {
+    getList: build.query<
+      ITile[],
+      { option: IAvailableListsOptions; locale: IAvalableLocales }
+    >({
+      query: ({ option, locale }) => {
         const type = option.split(':')[0] as 'movie' | 'tv'
         const list = option.split(':')[1] as IAvailableListsTypes
 
         return {
           url: `${type}/${list}`,
           params: {
-            ...prepareParams,
+            language: locale,
           },
         }
       },
@@ -123,63 +127,97 @@ export const tmdbApi = createApi({
     }),
     getMediaHero: build.query<
       IMediaHeroData,
-      { type: IAvailableMediaHeroTypes; id: number }
+      {
+        type: IAvailableMediaHeroTypes
+        id: number
+        locale: IAvalableLocales
+      }
     >({
-      query: ({ type, id }) => ({
+      query: ({ type, id, locale }) => ({
         url: `${type}/${id}`,
-        params: prepareParams,
+        params: {
+          language: locale,
+        },
       }),
       transformResponse: (response: IAvailableMediaHeroFields) =>
         formatMediaHeroData(response),
     }),
-    getTrendings: build.query<ITile[], IAvailableTrendingsTypes>({
-      query: type => ({
+    getTrendings: build.query<
+      ITile[],
+      { type: IAvailableTrendingsTypes; locale: IAvalableLocales }
+    >({
+      query: ({ type, locale }) => ({
         url: `trending/${type}/week`,
-        params: prepareParams,
+        params: {
+          language: locale,
+        },
       }),
       transformResponse: (response: IRawSearchResponse<IAvailableTileFields>) =>
         formatTiles(response.results),
     }),
-    getCollection: build.query<ICollection, number>({
-      query: id => ({
+    getCollection: build.query<
+      ICollection,
+      { id: number; locale: IAvalableLocales }
+    >({
+      query: ({ id, locale }) => ({
         url: `collection/${id}`,
-        params: prepareParams,
+        params: {
+          language: locale,
+        },
       }),
       transformResponse: (response: IRawCollection) =>
         formatCollectionNew(response),
     }),
-    getMovieCredits: build.query<IMovieCreditsNew, number>({
-      query: id => ({
+    getMovieCredits: build.query<
+      IMovieCreditsNew,
+      { id: number; locale: IAvalableLocales }
+    >({
+      query: ({ id, locale }) => ({
         url: `movie/${id}/credits`,
-        params: prepareParams,
+        params: {
+          language: locale,
+        },
       }),
       transformResponse: (response: IRawMovieCredisResponse) =>
         formatMovieCreditsNew(response),
     }),
-    getPersonMovieCredits: build.query<ITile[], number>({
-      query: id => ({
+    getPersonMovieCredits: build.query<
+      ITile[],
+      { id: number; locale: IAvalableLocales }
+    >({
+      query: ({ id, locale }) => ({
         url: `person/${id}/movie_credits`,
-        params: prepareParams,
+        params: {
+          language: locale,
+        },
       }),
       transformResponse: (
         response: IRawPersonCreditsResponse<IRawPersonCreditsMovieCast>
       ) => formatTiles(response.cast as IAvailableTileFields[]),
     }),
-    getPersonTvCredits: build.query<ITile[], number>({
-      query: id => ({
+    getPersonTvCredits: build.query<
+      ITile[],
+      { id: number; locale: IAvalableLocales }
+    >({
+      query: ({ id, locale }) => ({
         url: `person/${id}/tv_credits`,
-        params: prepareParams,
+        params: {
+          language: locale,
+        },
       }),
       transformResponse: (
         response: IRawPersonCreditsResponse<IRawPersonCreditsTvCast>
       ) => formatTiles(response.cast as IAvailableTileFields[]),
     }),
-    getTvEpisodes: build.query<IRawTvSeasonResponse[], number>({
-      queryFn: async (id: number) => {
+    getTvEpisodes: build.query<
+      IRawTvSeasonResponse[],
+      { id: number; locale: IAvalableLocales }
+    >({
+      queryFn: async ({ id, locale }) => {
         // fetch tv series data,
         // just in purpose to check how much episodes the tv series has
         const _tvResponse = await fetch(
-          `https://api.themoviedb.org/3/tv/${id}?language=en-US`,
+          `https://api.themoviedb.org/3/tv/${id}?language=${locale}`,
           TMDB_FETCH_OPTIONS
         )
 
@@ -199,7 +237,7 @@ export const tmdbApi = createApi({
               const _seasonResponse = await fetch(
                 `https://api.themoviedb.org/3/tv/${id}/season/${
                   idx + 1
-                }?language=en-US`,
+                }?language=${locale}`,
                 TMDB_FETCH_OPTIONS
               )
 

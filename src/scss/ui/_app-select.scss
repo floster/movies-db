@@ -78,6 +78,18 @@
     }
   }
 
+  &.m-locale {
+    margin-top: -4px;
+
+    select {
+      appearance: initial;
+      height: var(--control-size-sm);
+      background-color: transparent;
+      padding: 0 var(--gap-xs);
+      color: var(--grey-400);
+    }
+  }
+
   &__arrow {
     position: absolute;
     top: 0;

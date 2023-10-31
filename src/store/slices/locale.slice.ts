@@ -1,13 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { IAvalableLocales } from '../../types/tmdb.models'
 import { LOCALES } from '../../config'
+import { LOCALE_LOCAL_STORAGE_KEY } from '../../components/Header/SelectLocale'
 
 type LocaleState = {
   current: IAvalableLocales
 }
 
 const initialState: LocaleState = {
-  current: LOCALES[0].value,
+  current: JSON.parse(
+    localStorage.getItem(LOCALE_LOCAL_STORAGE_KEY) || LOCALES[0].value
+  ),
 }
 
 export const localeSlice = createSlice({
@@ -15,7 +18,13 @@ export const localeSlice = createSlice({
   initialState,
   reducers: {
     setLocale: (state, action) => {
-      state.current = action.payload
+      {
+        localStorage.setItem(
+          LOCALE_LOCAL_STORAGE_KEY,
+          JSON.stringify(action.payload)
+        )
+        state.current = action.payload
+      }
     },
   },
 })

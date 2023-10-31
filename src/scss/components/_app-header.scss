@@ -18,6 +18,11 @@
     justify-content: space-between;
   }
 
+  &__logo {
+    display: flex;
+    align-items: start;
+  }
+
   &__nav {
     display: flex;
     align-items: center;

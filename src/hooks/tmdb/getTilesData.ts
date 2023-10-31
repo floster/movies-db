@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLazyGetMediaTileQuery } from '../../store/api/tmdb.api'
 import { ITile } from '../../types/tmdb.models'
 import { IAvailableFavoritesTypes } from '../../types/tmdb.models'
+import { useAppSelector } from '../useRedux'
 
 /**
  * A custom hook that fetches and returns a bunch of tiles by its type and given IDs.
@@ -10,6 +11,7 @@ import { IAvailableFavoritesTypes } from '../../types/tmdb.models'
 const useGetTilesData = (type: IAvailableFavoritesTypes, ids: number[]) => {
   const [tiles, setTiles] = useState<ITile[] | []>([])
 
+  const locale = useAppSelector(state => state.locale.current)
   const [getTile, { isError, isLoading }] = useLazyGetMediaTileQuery()
 
   // go through ids and get its data, for that:
@@ -20,7 +22,7 @@ const useGetTilesData = (type: IAvailableFavoritesTypes, ids: number[]) => {
         // 1. went through IDs
         ids.map(async id => {
           // 2. return a promise for each media to get the data
-          const { data } = await getTile({ type, id })
+          const { data } = await getTile({ type, id, locale })
           return data
         })
       )

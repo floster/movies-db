@@ -7,10 +7,12 @@ const AppHeader: React.FC = () => {
   return (
     <header className="app-header">
       <div className="app-header__inner container">
-        <Logo />
+        <div className="app-header__logo">
+          <Logo />
+          <SelectLocale />
+        </div>
         <nav className="app-header__nav">
           <QuickSearchOpenBtn />
-          <SelectLocale />
           <FavoritesLink />
         </nav>
       </div>

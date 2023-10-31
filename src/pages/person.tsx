@@ -11,6 +11,7 @@ import {
   useGetPersonMovieCreditsQuery,
   useGetPersonTvCreditsQuery,
 } from '../store/api/tmdb.api'
+import { useAppSelector } from '../hooks/useRedux'
 
 type PersonParams = {
   id: string
@@ -20,17 +21,18 @@ const Person: React.FC = () => {
   const params = useParams<PersonParams>()
   const personId = getIdFromLink(params.id!)
 
+  const locale = useAppSelector(state => state.locale.current)
   const {
     data: movieCredits,
     isError: isMovieCreditsError,
     isLoading: isMovieCreditsLoading,
-  } = useGetPersonMovieCreditsQuery(personId)
+  } = useGetPersonMovieCreditsQuery({ id: personId, locale })
 
   const {
     data: tvCredits,
     isError: isTvCreditsError,
     isLoading: isTvCreditsLoading,
-  } = useGetPersonTvCreditsQuery(personId)
+  } = useGetPersonTvCreditsQuery({ id: personId, locale })
 
   return (
     <section className="movie-header">
