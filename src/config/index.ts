@@ -58,7 +58,8 @@ export const TILES_QTY_OPTIONS: SelectOption<IAvailableTilesQtyValues>[] = [
 
 type Locale = { title: string; value: IAvalableLocales }
 
-// TODO: #locale refactor all about locales
+export const LOCALE_LOCAL_STORAGE_KEY = 'tmdb-locale'
+
 export const LOCALES: Locale[] = [
   { title: 'US', value: 'en' },
   { title: 'UA', value: 'uk' },

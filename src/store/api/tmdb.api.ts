@@ -49,7 +49,6 @@ const prepareHeaders = (headers: Headers) => {
 }
 
 // set params for all requests
-// TODO: #locale think about how to set language dynamically
 const prepareParams = (params: Record<string, any>) => {
   params['include_adult'] = API_ADULTS
   return new URLSearchParams(params).toString()
