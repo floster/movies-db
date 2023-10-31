@@ -6,6 +6,12 @@ type LocaleState = {
   current: Locales
 }
 
+if (!localStorage.getItem(LOCALE_LOCAL_STORAGE_KEY))
+  localStorage.setItem(
+    LOCALE_LOCAL_STORAGE_KEY,
+    JSON.stringify(LOCALES[0].value)
+  )
+
 const initialState: LocaleState = {
   current: JSON.parse(
     localStorage.getItem(LOCALE_LOCAL_STORAGE_KEY) || LOCALES[0].value
