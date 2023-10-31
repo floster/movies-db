@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { IAvalableLocales } from '../../types/tmdb.models'
+import { Locales } from '../../types/tmdb.models'
 import { LOCALES, LOCALE_LOCAL_STORAGE_KEY } from '../../config'
 
 type LocaleState = {
-  current: IAvalableLocales
+  current: Locales
 }
 
 const initialState: LocaleState = {

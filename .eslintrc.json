@@ -3,10 +3,16 @@
     "browser": true,
     "es2021": true
   },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended"
   ],
@@ -17,6 +23,9 @@
   },
   "plugins": ["@typescript-eslint", "react", "react-refresh"],
   "rules": {
+    // 'children' is missing in props validation ???
+    // even if according type for props is defined...
+    "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
     "prettier/prettier": [
@@ -26,7 +35,7 @@
       }
     ],
     "react-refresh/only-export-components": [
-      "warn",
+      "off",
       { "allowConstantExport": true }
     ]
   }

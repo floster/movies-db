@@ -25,6 +25,7 @@ const SortContext = createContext<ISortContext>({
   currentSort: SORT_OPTIONS[0].value,
   disabled: false,
 })
+
 export const useSectionSortCtx = () => useContext(SortContext)
 
 interface Props {
@@ -70,8 +71,6 @@ const TilesGrid: React.FC<Props> = ({
   defaultSort = SORT_OPTIONS[0].value,
   hasQty = false,
 }) => {
-  if (!tiles) return null
-
   const [currentSort, setCurrentSort] = useState(defaultSort)
   const onSortChange = (option: IAvailableSortValues) => setCurrentSort(option)
 
@@ -80,7 +79,7 @@ const TilesGrid: React.FC<Props> = ({
   )
 
   const [qtyDisabled, setQtyDisabled] = useState(
-    tiles.length <= +TILES_QTY_OPTIONS[0].value
+    (tiles && tiles.length <= +TILES_QTY_OPTIONS[0].value) || true
   )
 
   const handleShowMoreClick = () => {
@@ -92,7 +91,7 @@ const TilesGrid: React.FC<Props> = ({
     setCurrentQty(option)
 
   // 1. Sort tiles
-  const { sortedTiles } = useTilesSort(tiles, currentSort)
+  const { sortedTiles } = useTilesSort(tiles || [], currentSort)
 
   // 2. ...than paginate them
   const { pagesQty, currentPage, currentTiles, handleShowMore } =
@@ -100,12 +99,16 @@ const TilesGrid: React.FC<Props> = ({
 
   const markup = (
     <SortContext.Provider
-      value={{ onSortChange, currentSort, disabled: tiles.length <= 1 }}>
+      value={{
+        onSortChange,
+        currentSort,
+        disabled: !tiles || tiles.length <= 1,
+      }}>
       <QtyContext.Provider
         value={{ onQtyChange, currentQty, disabled: qtyDisabled }}>
         <PageSection
           extraClass="m-movies_list"
-          title={`${title ? title : type + 's'} (${tiles.length})`}
+          title={`${title ? title : type + 's'} (${tiles ? tiles.length : ''})`}
           align="start"
           hasSort={hasSort}
           hasQty={hasQty}>

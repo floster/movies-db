@@ -10,6 +10,11 @@ export type IAvailableSortValues =
 export type IAvailableTilesQtyValues = '5' | '10' | '20' | 'all'
 
 export type IAvalableLocales = 'en' | 'uk' | 'de'
+export enum Locales {
+  en = 'en',
+  uk = 'uk',
+  de = 'de',
+}
 
 export type IAvailableTrendingAndSearchMultiTypes = 'movie' | 'tv' | 'person'
 export type IAvailableFavoritesTypes =

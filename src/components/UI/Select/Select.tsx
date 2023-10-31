@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { SelectOption } from '../../../config'
+import { Locales } from '../../../types/tmdb.models'
 
 interface Props<T> {
   disabled?: boolean
@@ -9,7 +10,7 @@ interface Props<T> {
   extraClass?: string
 }
 
-export const Select = <ValueType extends string>({
+export const Select = <ValueType extends Locales>({
   defaultValue,
   options,
   onChange,

@@ -18,7 +18,8 @@ const TorrentSearch: FC<Props> = ({ term }) => {
       href={url.toString()}
       className="torrent-search"
       title={title}
-      target="_blank">
+      target="_blank"
+      rel="noreferrer">
       <SvgIcon icon="torrent" />
     </a>
   )

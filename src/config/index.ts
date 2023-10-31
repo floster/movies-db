@@ -7,7 +7,7 @@ import {
   IAvailableListsOptions,
   IAvailableSortValues,
   IAvailableFavoritesTypes,
-  IAvalableLocales,
+  Locales,
   IAvailableTilesQtyValues,
 } from '../types/tmdb.models'
 
@@ -56,12 +56,12 @@ export const TILES_QTY_OPTIONS: SelectOption<IAvailableTilesQtyValues>[] = [
   { title: 'all', value: 'all' },
 ]
 
-type Locale = { title: string; value: IAvalableLocales }
+type Locale = { title: string; value: Locales }
 
 export const LOCALE_LOCAL_STORAGE_KEY = 'tmdb-locale'
 
 export const LOCALES: Locale[] = [
-  { title: 'US', value: 'en' },
-  { title: 'UA', value: 'uk' },
-  { title: 'DE', value: 'de' },
+  { title: 'US', value: Locales.en },
+  { title: 'UA', value: Locales.uk },
+  { title: 'DE', value: Locales.de },
 ]

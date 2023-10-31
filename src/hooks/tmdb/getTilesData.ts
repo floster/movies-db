@@ -33,7 +33,7 @@ const useGetTilesData = (type: IAvailableFavoritesTypes, ids: number[]) => {
       )
     }
     getTiles()
-  }, [ids, type, getTile])
+  }, [ids, type, locale, getTile])
 
   return { tiles, isError, isLoading }
 }

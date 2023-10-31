@@ -13,20 +13,20 @@ const TextClamp: React.FC<Props> = ({ text, lines = 4 }) => {
   }
 
   const textRef = useRef<HTMLParagraphElement>(null)
-  const [isClamped, setIsClamped] = useState(
-    textRef.current?.scrollHeight! > textRef.current?.clientHeight!
-  )
+
+  const isTextClamped = () => {
+    if (!textRef.current) return false
+    else return textRef.current.scrollHeight > textRef.current.clientHeight
+  }
+
+  const [isClamped, setIsClamped] = useState(isTextClamped())
   const [showButton, setShowButton] = useState(false)
 
   useEffect(() => {
     if (textRef.current) {
-      setShowButton(
-        textRef.current?.scrollHeight! > textRef.current?.clientHeight!
-      )
+      setShowButton(isTextClamped())
       const resizeObserver = new ResizeObserver(() => {
-        setIsClamped(
-          textRef.current?.scrollHeight! > textRef.current?.clientHeight!
-        )
+        setIsClamped(isTextClamped())
       })
 
       resizeObserver.observe(textRef.current)
