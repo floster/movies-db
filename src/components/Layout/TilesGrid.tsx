@@ -111,7 +111,7 @@ const TilesGrid: React.FC<Props> = ({
           hasQty={hasQty}>
           <TilesLayout type={type} id={type}>
             {currentTiles.map((media, idx) => (
-              <Tile tile={media} key={media.id + idx} />
+              <Tile tile={media} key={media.id * idx} />
             ))}
             {!showAll && (
               <BtnShowMore

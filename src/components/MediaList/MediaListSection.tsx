@@ -7,6 +7,7 @@ import Error from '../UI/Error'
 import Spinner from '../UI/Spinner'
 import MediaListSelect from './MediaListSelect'
 import MediaList from './MediaList'
+import { useAppSelector } from '../../hooks/useRedux'
 
 const MediaListSection: React.FC = () => {
   const [currentListType, setCurrentListType] = useLocalStorage(
@@ -14,7 +15,12 @@ const MediaListSection: React.FC = () => {
     AVAILABLE_LIST_OPTIONS[0]
   )
 
-  const { data, isError, isLoading } = useGetListQuery(currentListType)
+  const locale = useAppSelector(state => state.locale.current)
+
+  const { data, isError, isLoading } = useGetListQuery({
+    option: currentListType,
+    locale,
+  })
 
   const onListTypeChange = (value: IAvailableListsOptions) => {
     setCurrentListType(value)

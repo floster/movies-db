@@ -9,6 +9,7 @@ import Spinner from '../components/UI/Spinner'
 import Error from '../components/UI/Error'
 import MediaHero from '../components/MediaHero'
 import TilesLayout from '../components/Layout/TilesLayout'
+import { useAppSelector } from '../hooks/useRedux'
 
 type TvParams = {
   id: string
@@ -18,7 +19,11 @@ const Tv: React.FC = () => {
   const params = useParams<TvParams>()
   const tvId = getIdFromLink(params.id!)
 
-  const { data, isError, isLoading } = useGetTvEpisodesQuery(tvId)
+  const locale = useAppSelector(state => state.locale.current)
+  const { data, isError, isLoading } = useGetTvEpisodesQuery({
+    id: tvId,
+    locale,
+  })
 
   return (
     <section className="movie-header">

@@ -58,7 +58,7 @@ const Tile: React.FC<Props> = ({ tile, isRow = false, extraLabel }) => {
   )
 
   return (
-    <article className={classes.join(' ')}>
+    <article className={classes.join(' ')} data-id={tile.id}>
       {tileWrapper}
       {isTorrentSearchable && <TorrentSearch term={tile.title} />}
     </article>

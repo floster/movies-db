@@ -22,7 +22,7 @@ const Home: React.FC = () => {
 
           {trendingCarouselsTypes.map(type => (
             <PageSection key={type} title={`trending ${type}s`}>
-              <TrendingsCarousel itemsType={type} />
+              <TrendingsCarousel type={type} />
             </PageSection>
           ))}
         </main>

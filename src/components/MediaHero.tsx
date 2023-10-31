@@ -13,6 +13,7 @@ import { useGetMediaHeroQuery } from '../store/api/tmdb.api'
 import { IAvailableMediaHeroTypes } from '../types/tmdb.models'
 import IconLabeled from './UI/IconLabeled'
 import TextClamp from './UI/TextClamp'
+import { useAppSelector } from '../hooks/useRedux'
 
 interface MediaHeroProps {
   id: number
@@ -21,9 +22,12 @@ interface MediaHeroProps {
 }
 
 const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
+  const locale = useAppSelector(state => state.locale.current)
+
   const { data, isError, isLoading } = useGetMediaHeroQuery({
     type,
     id,
+    locale,
   })
 
   const title = isLoading

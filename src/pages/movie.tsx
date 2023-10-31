@@ -9,6 +9,7 @@ import MovieCrew from '../components/Movie/MovieCrew'
 import TilesGrid from '../components/Layout/TilesGrid'
 
 import { useGetMovieCreditsQuery } from '../store/api/tmdb.api'
+import { useAppSelector } from '../hooks/useRedux'
 
 type MovieParams = {
   id: string
@@ -18,7 +19,11 @@ const Movie: React.FC = () => {
   const params = useParams<MovieParams>()
   const movieId = getIdFromLink(params.id!)
 
-  const { data, isError, isLoading } = useGetMovieCreditsQuery(movieId)
+  const locale = useAppSelector(state => state.locale.current)
+  const { data, isError, isLoading } = useGetMovieCreditsQuery({
+    id: movieId,
+    locale,
+  })
 
   return (
     <section className="movie-header">

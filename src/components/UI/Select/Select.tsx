@@ -6,6 +6,7 @@ interface Props<T> {
   defaultValue: T
   options: SelectOption<T>[]
   onChange: (option: T) => void
+  extraClass?: string
 }
 
 export const Select = <ValueType extends string>({
@@ -13,6 +14,7 @@ export const Select = <ValueType extends string>({
   options,
   onChange,
   disabled = false,
+  extraClass,
 }: Props<ValueType>) => {
   const [currentOption, setCurrentOption] = useState(defaultValue)
 
@@ -22,7 +24,7 @@ export const Select = <ValueType extends string>({
   }
 
   return (
-    <div className="app-select">
+    <div className={`app-select ${extraClass ? extraClass : ''}`}>
       <select
         disabled={disabled}
         value={currentOption}

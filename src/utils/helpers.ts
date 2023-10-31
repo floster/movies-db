@@ -1,8 +1,7 @@
-import { LOCALES } from '../config'
+import { LOCALES, LOCALE_LOCAL_STORAGE_KEY } from '../config'
 import {
   IAvailableSortValues,
   IAvailableTileFields,
-  IAvalableLocales,
   IMediaTypes,
   ITile,
 } from '../types/tmdb.models'
@@ -57,13 +56,15 @@ export const pullTilesWithoutPosterToTheEnd = (tiles: ITile[]): ITile[] => {
 export const getIdFromLink = (link: string): number =>
   parseInt(link.split('-')[0])
 
-// TODO: #locale refactor all about locales
 export const getCurrentLocale = () =>
-  (localStorage.getItem('locale') as IAvalableLocales) ||
-  import.meta.env.VITE_DEFAULT_LOCALE
+  JSON.parse(
+    localStorage.getItem(LOCALE_LOCAL_STORAGE_KEY) ||
+      import.meta.env.VITE_DEFAULT_LOCALE
+  )
 
 export const getLocalCountryCode = () => {
   const currentLocale = getCurrentLocale()
+
   const countryCode = LOCALES.filter(
     locale => locale.value === currentLocale
   )[0].title
@@ -73,7 +74,6 @@ export const getLocalCountryCode = () => {
 /**
  * Formats a date object
  */
-// FIXME: find a better way to store current locale and country code
 export const formatDate = (date: string | null) => {
   if (!date) return { full: '', year: '' }
 
