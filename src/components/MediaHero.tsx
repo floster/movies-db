@@ -28,11 +28,12 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
     id,
     locale,
   })
+  console.log(window.location.pathname)
 
   const title = isLoading
     ? 'loading...'
-    : withLink // FIXME: search for a better way to do this
-    ? 'Movies DB'
+    : window.location.pathname === '/'
+    ? 'Home - Movies DB'
     : data?.title
     ? `${data.title} - Movies DB`
     : `${type} - Movies DB`
@@ -83,11 +84,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
 
           {data.tags && <p className="media-hero__tags">{data.tags}</p>}
 
-          <div className="media-hero__description">
-            {/* TODO: try to use overflow: auto instead of clamping */}
-            {data.description}
-            {/* <TextClamp text={data.description} lines={8} /> */}
-          </div>
+          <div className="media-hero__description">{data.description}</div>
 
           {data.belongs && <MoviePartOf data={data.belongs} />}
         </div>
