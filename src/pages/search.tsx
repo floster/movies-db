@@ -45,7 +45,9 @@ const Search: React.FC = () => {
       </section>
       <div className="l-content container search-results">
         {searchTerm.length === 0 ? (
-          ''
+          <Message
+            message={`No results... Try to search for something above ⤴`}
+          />
         ) : searchTermIsShort() ? (
           <Message
             message={`Enter at least ${SYMBOLS_QTY_TO_SEARCH} symbols to start searching`}

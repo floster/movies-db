@@ -7,18 +7,29 @@ import SvgIcon from '../UI/SvgIcon'
 const OpenSerachBtn: React.FC = () => {
   const { openDialog } = useAppActions()
 
-  useKeyboardShortcut(() => openDialog(), {
+  useKeyboardShortcut(() => handleOpenQuickSearch(), {
     code: 'KeyK',
     metaKey: true,
     shiftKey: true,
   })
 
-  // TODO: recognize if currently on search form and set focus on search input instead of opening dialog
+  const handleOpenQuickSearch = () => {
+    if (document.location.pathname === '/search') {
+      const searchInput = document.getElementById('mainSearchInput')
+      if (searchInput) {
+        searchInput.focus()
+      } else {
+        openDialog()
+      }
+    } else {
+      openDialog()
+    }
+  }
 
   return (
     <button
       type="button"
-      onClick={() => openDialog()}
+      onClick={() => handleOpenQuickSearch()}
       className="quick-search-open-btn">
       <SvgIcon icon="search" />
       <span className="quick-search-open-btn__label">search...</span>

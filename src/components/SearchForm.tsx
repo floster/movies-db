@@ -47,6 +47,7 @@ const SearchForm: React.FC<Props> = ({ searchSubmit, termChange }) => {
         type="text"
         name="search"
         ref={searchInputRef}
+        id="mainSearchInput"
         value={searchTerm}
         onChange={handleChange}
         className="quick-search-form__input"
