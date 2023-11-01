@@ -1,21 +1,21 @@
 import { useState } from 'react'
 import { TILES_QTY_OPTIONS } from '../../../config'
-import { IAvailableTilesQtyValues } from '../../../types/tmdb.models'
+import { ETilesQty } from '../../../types/tmdb.models'
 import { useSectionQtyCtx } from '../../Layout/TilesGrid'
-import Select from './Select'
+import AppSelect from './AppSelect'
 
-export const QtySelect: React.FC = () => {
+export const SelectQty: React.FC = () => {
   const { currentQty, onQtyChange, disabled } = useSectionQtyCtx()
 
   const [currentOption, setCurrentOption] = useState(currentQty)
 
-  const handleOptionChange = (option: IAvailableTilesQtyValues) => {
-    setCurrentOption(option)
-    onQtyChange(option)
+  const handleOptionChange = (value: ETilesQty) => {
+    setCurrentOption(value)
+    onQtyChange(value)
   }
 
   return (
-    <Select
+    <AppSelect<ETilesQty>
       disabled={disabled}
       defaultValue={currentOption}
       onChange={handleOptionChange}
@@ -23,4 +23,4 @@ export const QtySelect: React.FC = () => {
     />
   )
 }
-export default QtySelect
+export default SelectQty

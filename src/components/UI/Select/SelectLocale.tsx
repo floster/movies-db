@@ -1,18 +1,18 @@
-import { LOCALES } from '../../config'
-import { useAppActions, useAppSelector } from '../../hooks/useRedux'
-import { Locales } from '../../types/tmdb.models'
-import Select from '../UI/Select/Select'
+import { LOCALES } from '../../../config'
+import { useAppActions, useAppSelector } from '../../../hooks/useRedux'
+import { ELocales } from '../../../types/tmdb.models'
+import AppSelect from './AppSelect'
 
 const LocaleBtn = () => {
   const locale = useAppSelector(state => state.locale.current)
   const { setLocale } = useAppActions()
 
-  const handleLocaleChange = (locale: Locales) => {
+  const handleLocaleChange = (locale: ELocales) => {
     setLocale(locale)
   }
 
   return (
-    <Select
+    <AppSelect<ELocales>
       options={LOCALES}
       defaultValue={locale}
       onChange={locale => handleLocaleChange(locale)}
