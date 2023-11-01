@@ -42,7 +42,7 @@ const QuickSearchForm: React.FC = () => {
         searchSubmit={handleSearchSubmit}></SearchForm>
       {isError ? (
         <Error
-          error={`Error occured while getting search results by #${searchTerm}`}
+          error={`QuickSearchForm: something went wrong while getting search results for #${searchTerm}`}
         />
       ) : isLoading ? (
         <Spinner />

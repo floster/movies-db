@@ -41,7 +41,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
   if (isError)
     return (
       <Error
-        error={`MediaHero: Error occured while fetching hero data for the ${type} #${id}`}
+        error={`MediaHero: something went wrong while fetching hero data for the ${type} #${id}`}
       />
     )
 

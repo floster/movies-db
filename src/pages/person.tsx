@@ -41,7 +41,7 @@ const Person: React.FC = () => {
       <div className="l-content container">
         {isMovieCreditsError ? (
           <Error
-            error={`Error fetching movie credits for person #${personId}`}
+            error={`Person: something went wrong while fetching movie credits for person #${personId}`}
           />
         ) : isMovieCreditsLoading ? (
           <Spinner />
@@ -55,7 +55,9 @@ const Person: React.FC = () => {
           />
         )}
         {isTvCreditsError ? (
-          <Error error={`Error fetching tv credits for person #${personId}`} />
+          <Error
+            error={`Person: something went wrong while fetching tv credits for person #${personId}`}
+          />
         ) : isTvCreditsLoading ? (
           <Spinner />
         ) : (

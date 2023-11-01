@@ -31,7 +31,7 @@ const Movie: React.FC = () => {
       <MediaHero id={movieId} type={EMediaTypes.Movie} />
       {isError ? (
         <Error
-          error={`Error occured while fetching movie #${movieId} credits`}
+          error={`Movie: something went wrong while fetching movie #${movieId} credits`}
         />
       ) : isLoading ? (
         <Spinner />

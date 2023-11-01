@@ -3,7 +3,7 @@ interface Props {
 }
 
 const Error: React.FC<Props> = ({ error }) => {
-  return <span className="app-error">⚠️ {error} ⚠️</span>
+  return <span className="app-error">⚠️ {error}</span>
 }
 
 export default Error

@@ -13,7 +13,9 @@ const FavoritesGrid: React.FC<Props> = ({ ids, type }) => {
   const { tiles, isError, isLoading } = useGetTilesData(type, ids)
 
   return isError ? (
-    <Error error={`Error occured while getting #${type}s favorites data`} />
+    <Error
+      error={`FavoritesGrid: something went wrong while getting #${type}s favorites data`}
+    />
   ) : isLoading ? (
     <Spinner />
   ) : (

@@ -32,7 +32,7 @@ const Tv: React.FC = () => {
       <>
         {isError ? (
           <Error
-            error={`Error fetching episodes data for tv series #${tvId}`}
+            error={`Tv: something went wrong while fetching episodes data for tv series #${tvId}`}
           />
         ) : (
           <div className="l-content m-tv_seasons container">

@@ -27,7 +27,9 @@ const MediaListSection: React.FC = () => {
   }
 
   return isError ? (
-    <Error error={`Error occured while fetching ${currentListType}`} />
+    <Error
+      error={`MediaListSection: something went wrong while fetching ${currentListType}`}
+    />
   ) : (
     <aside className="sidebar">
       <MediaListSelect

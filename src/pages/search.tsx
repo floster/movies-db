@@ -53,7 +53,9 @@ const Search: React.FC = () => {
             message={`Enter at least ${SYMBOLS_QTY_TO_SEARCH} symbols to start searching`}
           />
         ) : isError ? (
-          <Error error={`Error occured while searching for #${searchTerm}`} />
+          <Error
+            error={`Search: something went wrong while searching for #${searchTerm}`}
+          />
         ) : isLoading ? (
           <Spinner />
         ) : (

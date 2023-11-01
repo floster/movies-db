@@ -15,10 +15,10 @@ const TrendingsCarousel: React.FC<Props> = ({ type }) => {
 
   const { data, isError, isLoading } = useGetTrendingsQuery({ type, locale })
 
-  if (!data && !isLoading) return null
-
-  return isError ? (
-    <Error error={`Error occured while fetching trending ${type}s`} />
+  return isError || !data ? (
+    <Error
+      error={`TrendingsCarousel: something went wrong while fetching trending ${type}s`}
+    />
   ) : (
     <div className="app-carousel has-scroll">
       {isLoading ? (
