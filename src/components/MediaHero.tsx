@@ -28,7 +28,6 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
     id,
     locale,
   })
-  console.log(window.location.pathname)
 
   const title = isLoading
     ? 'loading...'
