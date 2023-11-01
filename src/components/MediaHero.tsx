@@ -45,15 +45,15 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
       />
     )
 
-  if (!data && !isLoading) return null
+  if (!data) return null
 
-  // TODO: #tags make below works
-  // const renderTags = () => {
-  //   const tags = data.tags?.map((genre: IGenre) => (
-  //     <li key={genre.id}>{genre.name}</li>
-  //   ));
-  //   return <ul className="media-hero__tags">{tags}</ul>;
-  // };
+  console.log('MediaHero', data.genres)
+
+  const renderTags = () => {
+    if (!data || !data.genres) return null
+    const tags = data.genres.map(genre => <li key={genre}>{genre}</li>)
+    return <ul className="media-hero__tags">{tags}</ul>
+  }
 
   return isLoading ? (
     <Spinner />
@@ -75,7 +75,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
             <h2 className="media-hero__title">{data.title}</h2>
           )}
 
-          {/* {hasGenres && renderTags()} */}
+          {data && data.genres && renderTags()}
 
           {data.subtitle && (
             <p className="media-hero__subtitle">{data.subtitle}</p>

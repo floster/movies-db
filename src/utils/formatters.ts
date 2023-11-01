@@ -118,6 +118,8 @@ export const formatMediaHeroData = (
     date = ''
   }
 
+  const genres = data.genres ? data.genres.map(genre => genre.name) : null
+
   const partsSeasons = data.parts
     ? `${data.parts.length} parts`
     : data.seasons
@@ -134,6 +136,7 @@ export const formatMediaHeroData = (
     title: data.title || data.name,
     subtitle, // tagline for Movie | place_of_birth for Person
     description: data.overview || data.biography || '',
+    genres,
     poster: getPosterUrl(data.poster_path || data.profile_path),
     backdrop: getBackdropUrl(data.backdrop_path),
     rating, // number | null

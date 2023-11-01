@@ -130,8 +130,7 @@
   }
 
   &__tags {
-    display: none;
-    margin: 0;
+    margin: -0.5rem 0 var(--gap-sm);
     padding: 0;
     list-style-type: none;
     color: var(--grey-300);

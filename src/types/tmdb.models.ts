@@ -115,7 +115,7 @@ export interface IRawMovie {
   backdrop_path: string
   belongs_to_collection: IRawBelongs | null
   budget: number
-  genres: _Genre[]
+  genres: Genre[]
   homepage: string
   id: number
   imdb_id: string
@@ -170,7 +170,7 @@ export interface IRawTv {
   created_by: _CreatedBy[]
   episode_run_time: number[]
   first_air_date: string
-  genres: _Genre[]
+  genres: Genre[]
   homepage: string
   id: number
   in_production: boolean
@@ -207,7 +207,7 @@ interface _CreatedBy {
   profile_path: string
 }
 
-interface _Genre {
+export interface Genre {
   id: number
   name: string
 }
@@ -496,6 +496,7 @@ export interface IMediaHeroData {
   title: string
   subtitle: string | null // tagline for Movie | place_of_birth for Person
   description: string
+  genres: string[] | null
   poster: string
   backdrop: string
   rating: number | null // number | null

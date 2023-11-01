@@ -1,9 +1,10 @@
-import { LOCALES, LOCALE_LOCAL_STORAGE_KEY } from '../config'
+import { GENRES, LOCALES, LOCALE_LOCAL_STORAGE_KEY } from '../config'
 import {
   ESortValues,
   IAvailableTileFields,
   EMediaTypes,
   ITile,
+  Genre,
 } from '../types/tmdb.models'
 
 /**
@@ -147,3 +148,6 @@ export const getBackdropUrl = (path: string): string =>
   path
     ? `url(${import.meta.env.VITE_API_BACKDROP_BASE}${path})`
     : 'var(--gradient-dark)'
+
+export const getGenresByIds = (ids: number[]): Genre[] =>
+  ids.map(id => GENRES.filter(genre => genre.id === id)[0])
