@@ -26,7 +26,7 @@ import {
   IAvailableFavoritesTypes,
   IRawTv,
   IRawTvSeasonResponse,
-  IAvalableLocales,
+  ELocales,
 } from '../../types/tmdb.models'
 import {
   formatCollectionNew,
@@ -94,7 +94,7 @@ export const tmdbApi = createApi({
     }),
     getMediaTile: build.query<
       ITile,
-      { type: IAvailableFavoritesTypes; id: number; locale: IAvalableLocales }
+      { type: IAvailableFavoritesTypes; id: number; locale: ELocales }
     >({
       query: ({ type, id, locale }) => ({
         url: `${type}/${id}`,
@@ -107,7 +107,7 @@ export const tmdbApi = createApi({
     }),
     getList: build.query<
       ITile[],
-      { option: IAvailableListsOptions; locale: IAvalableLocales }
+      { option: IAvailableListsOptions; locale: ELocales }
     >({
       query: ({ option, locale }) => {
         const type = option.split(':')[0] as 'movie' | 'tv'
@@ -129,7 +129,7 @@ export const tmdbApi = createApi({
       {
         type: IAvailableMediaHeroTypes
         id: number
-        locale: IAvalableLocales
+        locale: ELocales
       }
     >({
       query: ({ type, id, locale }) => ({
@@ -143,7 +143,7 @@ export const tmdbApi = createApi({
     }),
     getTrendings: build.query<
       ITile[],
-      { type: IAvailableTrendingsTypes; locale: IAvalableLocales }
+      { type: IAvailableTrendingsTypes; locale: ELocales }
     >({
       query: ({ type, locale }) => ({
         url: `trending/${type}/week`,
@@ -154,10 +154,7 @@ export const tmdbApi = createApi({
       transformResponse: (response: IRawSearchResponse<IAvailableTileFields>) =>
         formatTiles(response.results),
     }),
-    getCollection: build.query<
-      ICollection,
-      { id: number; locale: IAvalableLocales }
-    >({
+    getCollection: build.query<ICollection, { id: number; locale: ELocales }>({
       query: ({ id, locale }) => ({
         url: `collection/${id}`,
         params: {
@@ -169,7 +166,7 @@ export const tmdbApi = createApi({
     }),
     getMovieCredits: build.query<
       IMovieCreditsNew,
-      { id: number; locale: IAvalableLocales }
+      { id: number; locale: ELocales }
     >({
       query: ({ id, locale }) => ({
         url: `movie/${id}/credits`,
@@ -182,7 +179,7 @@ export const tmdbApi = createApi({
     }),
     getPersonMovieCredits: build.query<
       ITile[],
-      { id: number; locale: IAvalableLocales }
+      { id: number; locale: ELocales }
     >({
       query: ({ id, locale }) => ({
         url: `person/${id}/movie_credits`,
@@ -194,10 +191,7 @@ export const tmdbApi = createApi({
         response: IRawPersonCreditsResponse<IRawPersonCreditsMovieCast>
       ) => formatTiles(response.cast as IAvailableTileFields[]),
     }),
-    getPersonTvCredits: build.query<
-      ITile[],
-      { id: number; locale: IAvalableLocales }
-    >({
+    getPersonTvCredits: build.query<ITile[], { id: number; locale: ELocales }>({
       query: ({ id, locale }) => ({
         url: `person/${id}/tv_credits`,
         params: {
@@ -210,7 +204,7 @@ export const tmdbApi = createApi({
     }),
     getTvEpisodes: build.query<
       IRawTvSeasonResponse[],
-      { id: number; locale: IAvalableLocales }
+      { id: number; locale: ELocales }
     >({
       queryFn: async ({ id, locale }) => {
         // fetch tv series data,

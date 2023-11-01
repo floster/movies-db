@@ -1,21 +1,24 @@
 const BEARER_KEY = import.meta.env.VITE_TMDB_BEARER_KEY
 
+export const LOCALE_LOCAL_STORAGE_KEY = 'tmdb-locale'
+
 // The delay time in milliseconds. After this amount of time, the latest value is used.
 export const DEBOUNCE_DELAY = 500
 
 import {
   IAvailableListsOptions,
-  IAvailableSortValues,
+  ESortValues,
   IAvailableFavoritesTypes,
-  Locales,
-  IAvailableTilesQtyValues,
+  ELocales,
+  ETilesQty,
+  EMediaTypes,
 } from '../types/tmdb.models'
 
 export const AVAILABLE_SEARCH_TYPES: IAvailableFavoritesTypes[] = [
-  'collection',
-  'movie',
-  'tv',
-  'person',
+  EMediaTypes.Collection,
+  EMediaTypes.Movie,
+  EMediaTypes.Tv,
+  EMediaTypes.Person,
 ]
 
 export const TMDB_FETCH_OPTIONS = {
@@ -39,29 +42,25 @@ export interface SelectOption<T> {
   value: T
   default?: boolean
 }
-export const SORT_OPTIONS: SelectOption<IAvailableSortValues>[] = [
-  { title: 'default', value: 'default' },
-  { title: 'Year 9-0', value: 'year_desc' },
-  { title: 'Year 0-9', value: 'year_asc' },
-  { title: 'Title A-W', value: 'title_asc' },
-  { title: 'Title W-A', value: 'title_desc' },
-  { title: 'Rtng 9-0', value: 'rating_desc' },
-  { title: 'Rtng 0-9', value: 'rating_asc' },
+export const SORT_OPTIONS: SelectOption<ESortValues>[] = [
+  { title: 'default', value: ESortValues.Default },
+  { title: 'Year 9-0', value: ESortValues.YearDesc },
+  { title: 'Year 0-9', value: ESortValues.YearAsc },
+  { title: 'Title A-W', value: ESortValues.TitleAsc },
+  { title: 'Title W-A', value: ESortValues.TitleDesc },
+  { title: 'Rtng 9-0', value: ESortValues.RatingDesc },
+  { title: 'Rtng 0-9', value: ESortValues.RatingAsc },
 ]
 
-export const TILES_QTY_OPTIONS: SelectOption<IAvailableTilesQtyValues>[] = [
-  { title: '5', value: '5' },
-  { title: '10', value: '10', default: true },
-  { title: '20', value: '20' },
-  { title: 'all', value: 'all' },
+export const TILES_QTY_OPTIONS: SelectOption<ETilesQty>[] = [
+  { title: '5', value: ETilesQty.Five },
+  { title: '10', value: ETilesQty.Ten, default: true },
+  { title: '20', value: ETilesQty.Twenty },
+  { title: 'all', value: ETilesQty.All },
 ]
 
-type Locale = { title: string; value: Locales }
-
-export const LOCALE_LOCAL_STORAGE_KEY = 'tmdb-locale'
-
-export const LOCALES: Locale[] = [
-  { title: 'US', value: Locales.en },
-  { title: 'UA', value: Locales.uk },
-  { title: 'DE', value: Locales.de },
+export const LOCALES: SelectOption<ELocales>[] = [
+  { title: 'US', value: ELocales.en },
+  { title: 'UA', value: ELocales.uk },
+  { title: 'DE', value: ELocales.de },
 ]

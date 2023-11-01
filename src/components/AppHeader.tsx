@@ -1,6 +1,6 @@
 import FavoritesLink from './Header/FavoritesLink'
 import QuickSearchOpenBtn from './Header/QuickSearchOpenBtn'
-import SelectLocale from './Header/SelectLocale'
+import SelectLocale from './UI/Select/SelectLocale'
 import Logo from './UI/Logo'
 
 const AppHeader: React.FC = () => {

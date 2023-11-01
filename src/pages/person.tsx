@@ -12,6 +12,7 @@ import {
   useGetPersonTvCreditsQuery,
 } from '../store/api/tmdb.api'
 import { useAppSelector } from '../hooks/useRedux'
+import { EMediaTypes, ESortValues } from '../types/tmdb.models'
 
 type PersonParams = {
   id: string
@@ -36,7 +37,7 @@ const Person: React.FC = () => {
 
   return (
     <section className="movie-header">
-      <MediaHero id={personId} type="person" />
+      <MediaHero id={personId} type={EMediaTypes.Person} />
       <div className="l-content container">
         {isMovieCreditsError ? (
           <Error
@@ -47,9 +48,9 @@ const Person: React.FC = () => {
         ) : (
           <TilesGrid
             tiles={movieCredits ? movieCredits : []}
-            type="movie"
+            type={EMediaTypes.Movie}
             hasSort={true}
-            defaultSort="year_desc"
+            defaultSort={ESortValues.YearDesc}
             hasQty={true}
           />
         )}
@@ -60,9 +61,9 @@ const Person: React.FC = () => {
         ) : (
           <TilesGrid
             tiles={tvCredits ? tvCredits : []}
-            type="tv"
+            type={EMediaTypes.Tv}
             hasSort={true}
-            defaultSort="year_desc"
+            defaultSort={ESortValues.YearDesc}
             hasQty={true}
           />
         )}

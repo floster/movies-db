@@ -10,6 +10,7 @@ import TilesGrid from '../components/Layout/TilesGrid'
 
 import { useGetMovieCreditsQuery } from '../store/api/tmdb.api'
 import { useAppSelector } from '../hooks/useRedux'
+import { EMediaTypes } from '../types/tmdb.models'
 
 type MovieParams = {
   id: string
@@ -27,7 +28,7 @@ const Movie: React.FC = () => {
 
   return (
     <section className="movie-header">
-      <MediaHero id={movieId} type="movie" />
+      <MediaHero id={movieId} type={EMediaTypes.Movie} />
       {isError ? (
         <Error
           error={`Error occured while fetching movie #${movieId} credits`}
@@ -40,7 +41,7 @@ const Movie: React.FC = () => {
           <div className="l-content container">
             <TilesGrid
               tiles={data?.cast ? data.cast : []}
-              type="person"
+              type={EMediaTypes.Person}
               title="actors"
               hasQty={true}
             />

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { IAvailableTilesQtyValues, ITile } from '../../types/tmdb.models'
+import { ETilesQty, ITile } from '../../types/tmdb.models'
 
 const TILES_QTY_TO_SHOW = +import.meta.env.VITE_TILES_QTY_TO_SHOW as number
 
@@ -17,7 +17,7 @@ interface UseTilesPagination {
  */
 const useTilesPagination = (
   tiles: ITile[] | [],
-  qty?: IAvailableTilesQtyValues
+  qty?: ETilesQty
 ): UseTilesPagination => {
   const [currentPage, setCurrentPage] = useState(1)
   const [currentTiles, setCurrentTiles] = useState<ITile[]>([])

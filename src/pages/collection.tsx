@@ -9,6 +9,7 @@ import Error from '../components/UI/Error'
 import { useGetCollectionQuery } from '../store/api/tmdb.api'
 import TilesGrid from '../components/Layout/TilesGrid'
 import { useAppSelector } from '../hooks/useRedux'
+import { EMediaTypes, ESortValues } from '../types/tmdb.models'
 
 type CollectionParams = {
   id: string
@@ -27,7 +28,7 @@ const Collection: React.FC = () => {
 
   return (
     <>
-      <MediaHero id={collectionId} type="collection" />
+      <MediaHero id={collectionId} type={EMediaTypes.Collection} />
       <div className="l-content container">
         {isError ? (
           <Error
@@ -38,10 +39,10 @@ const Collection: React.FC = () => {
         ) : (
           <TilesGrid
             tiles={data?.parts ? data.parts : []}
-            type={'collection'}
+            type={EMediaTypes.Collection}
             title="parts"
             hasSort={true}
-            defaultSort="year_desc"
+            defaultSort={ESortValues.YearDesc}
             hasQty={true}
           />
         )}

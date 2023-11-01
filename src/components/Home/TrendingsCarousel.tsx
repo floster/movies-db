@@ -3,11 +3,11 @@ import Tile from '../Tile'
 import Spinner from '../UI/Spinner'
 
 import { useGetTrendingsQuery } from '../../store/api/tmdb.api'
-import { IAvailableTrendingAndSearchMultiTypes } from '../../types/tmdb.models'
+import { IAvailableTrendingsTypes } from '../../types/tmdb.models'
 import { useAppSelector } from '../../hooks/useRedux'
 
 interface Props {
-  type: IAvailableTrendingAndSearchMultiTypes
+  type: IAvailableTrendingsTypes
 }
 
 const TrendingsCarousel: React.FC<Props> = ({ type }) => {

@@ -2,14 +2,14 @@ import { useDocumentTitle } from 'usehooks-ts'
 
 import { useAppSelector } from '../hooks/useRedux'
 
-import { IAvailableFavoritesTypes } from '../types/tmdb.models'
+import { EMediaTypes, IAvailableFavoritesTypes } from '../types/tmdb.models'
 import FavoritesGrid from '../components/Favorites/FavoritesGrid'
 
 const AVAILABLE_FAVORITES_TYPES: IAvailableFavoritesTypes[] = [
-  'collection',
-  'movie',
-  'tv',
-  'person',
+  EMediaTypes.Collection,
+  EMediaTypes.Movie,
+  EMediaTypes.Tv,
+  EMediaTypes.Person,
 ]
 
 const Favorites: React.FC = () => {

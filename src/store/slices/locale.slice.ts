@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { Locales } from '../../types/tmdb.models'
+import { ELocales } from '../../types/tmdb.models'
 import { LOCALES, LOCALE_LOCAL_STORAGE_KEY } from '../../config'
 
 type LocaleState = {
-  current: Locales
+  current: ELocales
 }
 
 if (!localStorage.getItem(LOCALE_LOCAL_STORAGE_KEY))

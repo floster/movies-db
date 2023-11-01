@@ -15,7 +15,7 @@ import {
   ISearchResultsMulti,
   IRawSearchResponse,
   IRawCollectionSearch,
-  IMediaTypes,
+  EMediaTypes,
 } from '../types/tmdb.models'
 
 import {
@@ -49,7 +49,7 @@ export const formatSearchTerm = (term: string) => {
 
 export function formatTile<T extends IAvailableTileFields>(
   tile: T,
-  type?: IMediaTypes
+  type?: EMediaTypes
 ): ITile {
   const mediaType = type ? type : realizeMediaType(tile)
 
@@ -90,7 +90,7 @@ export function formatTile<T extends IAvailableTileFields>(
 
 export function formatTiles<T extends IAvailableTileFields>(
   data: T[],
-  type?: IMediaTypes
+  type?: EMediaTypes
 ): ITile[] {
   return data.map(item => formatTile(item, type))
 }
@@ -205,5 +205,5 @@ export const formatSearchResultsCollection = (
 ): ITile[] | [] => {
   if (!results.length) return []
 
-  return formatTiles(results as IAvailableTileFields[], 'collection')
+  return formatTiles(results as IAvailableTileFields[], EMediaTypes.Collection)
 }

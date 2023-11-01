@@ -1,8 +1,8 @@
 import useTilesPagination from '../../hooks/tiles/tilesPagination'
 import {
   IAvailableFavoritesTypes,
-  IAvailableSortValues,
-  IAvailableTilesQtyValues,
+  ESortValues,
+  ETilesQty,
   ITile,
 } from '../../types/tmdb.models'
 import TilesLayout from './TilesLayout'
@@ -16,8 +16,8 @@ import useTilesSort from '../../hooks/tiles/tilesSort'
 
 // Context for sorting
 interface ISortContext {
-  onSortChange: (option: IAvailableSortValues) => void
-  currentSort: IAvailableSortValues
+  onSortChange: (option: ESortValues) => void
+  currentSort: ESortValues
   disabled: boolean
 }
 const SortContext = createContext<ISortContext>({
@@ -37,8 +37,8 @@ interface Props {
 
 // Context for set quantity of tiles per page
 interface IQtyContext {
-  onQtyChange: (option: IAvailableTilesQtyValues) => void
-  currentQty: IAvailableTilesQtyValues
+  onQtyChange: (option: ETilesQty) => void
+  currentQty: ETilesQty
   disabled: boolean
 }
 const QtyContext = createContext<IQtyContext>({
@@ -54,7 +54,7 @@ interface Props {
   title?: string
   showAll?: boolean
   hasSort?: boolean
-  defaultSort?: IAvailableSortValues
+  defaultSort?: ESortValues
   hasQty?: boolean
 }
 
@@ -72,14 +72,16 @@ const TilesGrid: React.FC<Props> = ({
   hasQty = false,
 }) => {
   const [currentSort, setCurrentSort] = useState(defaultSort)
-  const onSortChange = (option: IAvailableSortValues) => setCurrentSort(option)
+  const onSortChange = (option: ESortValues) => setCurrentSort(option)
 
   const [currentQty, setCurrentQty] = useState(
-    showAll ? 'all' : TILES_QTY_OPTIONS.find(option => option.default)!.value
+    showAll
+      ? ETilesQty.All
+      : TILES_QTY_OPTIONS.find(option => option.default)!.value
   )
 
   const [qtyDisabled, setQtyDisabled] = useState(
-    (tiles && tiles.length <= +TILES_QTY_OPTIONS[0].value) || true
+    (tiles && tiles.length <= +TILES_QTY_OPTIONS[0].value) || false
   )
 
   const handleShowMoreClick = () => {
@@ -87,8 +89,7 @@ const TilesGrid: React.FC<Props> = ({
     setQtyDisabled(true)
   }
 
-  const onQtyChange = (option: IAvailableTilesQtyValues) =>
-    setCurrentQty(option)
+  const onQtyChange = (option: ETilesQty) => setCurrentQty(option)
 
   // 1. Sort tiles
   const { sortedTiles } = useTilesSort(tiles || [], currentSort)

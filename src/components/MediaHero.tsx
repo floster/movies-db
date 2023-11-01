@@ -12,7 +12,6 @@ import { useDocumentTitle } from 'usehooks-ts'
 import { useGetMediaHeroQuery } from '../store/api/tmdb.api'
 import { IAvailableMediaHeroTypes } from '../types/tmdb.models'
 import IconLabeled from './UI/IconLabeled'
-import TextClamp from './UI/TextClamp'
 import { useAppSelector } from '../hooks/useRedux'
 
 interface MediaHeroProps {
@@ -85,7 +84,9 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
           {data.tags && <p className="media-hero__tags">{data.tags}</p>}
 
           <div className="media-hero__description">
-            <TextClamp text={data.description} lines={8} />
+            {/* TODO: try to use overflow: auto instead of clamping */}
+            {data.description}
+            {/* <TextClamp text={data.description} lines={8} /> */}
           </div>
 
           {data.belongs && <MoviePartOf data={data.belongs} />}

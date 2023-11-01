@@ -14,6 +14,7 @@ import Message from '../components/UI/Message'
 
 import useSearch from '../hooks/search/search'
 import SearchResultsHeader from '../components/Search/SearchResultsHeader'
+import { ESortValues } from '../types/tmdb.models'
 
 const Search: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -64,7 +65,7 @@ const Search: React.FC = () => {
                     tiles={results[type]}
                     type={type}
                     hasSort={true}
-                    defaultSort="rating_desc"
+                    defaultSort={ESortValues.RatingDesc}
                     showAll
                   />
                 )

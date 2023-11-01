@@ -10,6 +10,7 @@ import Error from '../components/UI/Error'
 import MediaHero from '../components/MediaHero'
 import TilesLayout from '../components/Layout/TilesLayout'
 import { useAppSelector } from '../hooks/useRedux'
+import { EMediaTypes } from '../types/tmdb.models'
 
 type TvParams = {
   id: string
@@ -27,7 +28,7 @@ const Tv: React.FC = () => {
 
   return (
     <section className="movie-header">
-      <MediaHero id={tvId} type="tv" />
+      <MediaHero id={tvId} type={EMediaTypes.Tv} />
       <>
         {isError ? (
           <Error
@@ -39,7 +40,7 @@ const Tv: React.FC = () => {
               <Spinner />
             ) : (
               <PageSection title={`${data.length} seasons`} align="start">
-                <TilesLayout type="tv">
+                <TilesLayout type={EMediaTypes.Tv}>
                   {data.map(season => (
                     <TvSeason season={season} key={season.id} />
                   ))}

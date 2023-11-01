@@ -1,8 +1,8 @@
 import { LOCALES, LOCALE_LOCAL_STORAGE_KEY } from '../config'
 import {
-  IAvailableSortValues,
+  ESortValues,
   IAvailableTileFields,
-  IMediaTypes,
+  EMediaTypes,
   ITile,
 } from '../types/tmdb.models'
 
@@ -21,7 +21,7 @@ export const filterUncredits = (tiles: ITile[]): ITile[] =>
 /**
  * Sorts an array of tile data by a specified property.
  */
-export function tilesSort<T>(tiles: T[], option: IAvailableSortValues): T[] {
+export function tilesSort<T>(tiles: T[], option: ESortValues): T[] {
   if (option === 'default') return tiles
 
   const sortBy = option.split('_')[0] as keyof T
@@ -103,7 +103,7 @@ export const kebabText = (link: string) => {
  * Creates a link string from the provided type, ID, and title.
  */
 export const createLink = (
-  type: IMediaTypes,
+  type: EMediaTypes,
   id: number,
   title: string
 ): string => {
@@ -115,7 +115,7 @@ export const createLink = (
  */
 export const createLinkFromTileData = (
   tile: IAvailableTileFields,
-  type?: IMediaTypes
+  type?: EMediaTypes
 ) => {
   const _type = type || realizeMediaType(tile)
   const _title = tile.title || tile.name
@@ -125,16 +125,16 @@ export const createLinkFromTileData = (
 /**
  * Determines the media type of a given tile based on its properties.
  */
-export const realizeMediaType = (tile: IAvailableTileFields): IMediaTypes => {
+export const realizeMediaType = (tile: IAvailableTileFields): EMediaTypes => {
   return tile.media_type // 'movie' -> exists in ICollectionPart
-    ? (tile.media_type as IMediaTypes)
+    ? (tile.media_type as EMediaTypes)
     : 'first_air_date' in tile // 'tv' -> exists in ITv
-    ? 'tv'
+    ? EMediaTypes.Tv
     : 'parts' in tile // 'collection' -> exists in ICollection
-    ? 'collection'
+    ? EMediaTypes.Collection
     : 'biography' in tile || 'known_for_department' in tile // 'person' -> exists in IPerson
-    ? 'person'
-    : 'movie'
+    ? EMediaTypes.Person
+    : EMediaTypes.Movie
 }
 
 export const getPosterUrl = (posterPath: string): string => {

@@ -1,43 +1,41 @@
-export type IAvailableSortValues =
-  | 'default'
-  | 'year_asc'
-  | 'year_desc'
-  | 'title_asc'
-  | 'title_desc'
-  | 'rating_asc'
-  | 'rating_desc'
+export enum ESortValues {
+  Default = 'default',
+  YearAsc = 'year_asc',
+  YearDesc = 'year_desc',
+  TitleAsc = 'title_asc',
+  TitleDesc = 'title_desc',
+  RatingAsc = 'rating_asc',
+  RatingDesc = 'rating_desc',
+}
 
-export type IAvailableTilesQtyValues = '5' | '10' | '20' | 'all'
+export enum ETilesQty {
+  Five = '5',
+  Ten = '10',
+  Twenty = '20',
+  All = 'all',
+}
 
-export type IAvalableLocales = 'en' | 'uk' | 'de'
-export enum Locales {
+export enum ELocales {
   en = 'en',
   uk = 'uk',
   de = 'de',
 }
 
-export type IAvailableTrendingAndSearchMultiTypes = 'movie' | 'tv' | 'person'
-export type IAvailableFavoritesTypes =
-  | IAvailableTrendingAndSearchMultiTypes
-  | 'collection'
+export type IAvailableFavoritesTypes = Exclude<
+  EMediaTypes,
+  'season' | 'episode'
+>
 
 // all possible media types that comes from TMDB
-export type IMediaTypes =
-  | 'collection'
-  | 'movie'
-  | 'tv'
-  | 'person'
-  | 'season'
-  | 'episode'
 
-// all posible types that comes from TMDB
-export type IAvailableTileTypes =
-  | 'collection'
-  | 'movie'
-  | 'tv'
-  | 'person'
-  | 'season'
-  | 'episode'
+export enum EMediaTypes {
+  Collection = 'collection',
+  Movie = 'movie',
+  Tv = 'tv',
+  Person = 'person',
+  Season = 'season',
+  Episode = 'episode',
+}
 
 export type IAvailableTileFields = IRawListResultMovie &
   IRawListResultTv &
@@ -54,7 +52,7 @@ export type IAvailableTileFields = IRawListResultMovie &
 
 export interface ITile {
   id: number
-  type: IAvailableTileTypes
+  type: EMediaTypes
   link: string | null
   poster: string
   title: string
@@ -343,7 +341,7 @@ export interface IRawSearchMultiResult {
   original_title?: string
   overview?: string
   poster_path?: string
-  media_type: IAvailableTrendingAndSearchMultiTypes
+  media_type: IAvailableTrendingsTypes
   genre_ids?: number[]
   popularity: number
   release_date?: string
@@ -483,7 +481,7 @@ export interface IRawListResultTv {
 /* ********************************* */
 
 export type IAvailableMediaHeroTypes = Exclude<
-  IAvailableTileTypes,
+  EMediaTypes,
   'season' | 'episode'
 >
 
@@ -514,7 +512,7 @@ export interface IMediaHeroData {
 /* ******************************* */
 
 export type IAvailableTrendingsTypes = Exclude<
-  IAvailableTileTypes,
+  EMediaTypes,
   'season' | 'episode' | 'collection'
 >
 

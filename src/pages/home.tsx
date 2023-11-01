@@ -3,13 +3,13 @@ import MediaListSection from '../components/MediaList/MediaListSection'
 import TrendingsCarousel from '../components/Home/TrendingsCarousel'
 import RandomMedia from '../components/Home/RandomMedia'
 
-import { IAvailableTrendingAndSearchMultiTypes } from '../types/tmdb.models'
+import { EMediaTypes, IAvailableTrendingsTypes } from '../types/tmdb.models'
 
 const Home: React.FC = () => {
-  const trendingCarouselsTypes: IAvailableTrendingAndSearchMultiTypes[] = [
-    'movie',
-    'tv',
-    'person',
+  const trendingCarouselsTypes: IAvailableTrendingsTypes[] = [
+    EMediaTypes.Movie,
+    EMediaTypes.Tv,
+    EMediaTypes.Person,
   ]
   return (
     <>
