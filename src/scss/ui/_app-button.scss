@@ -72,6 +72,14 @@ $button-variants: (
     'hover-background': var(--primary-500),
     'hover-border-color': var(--primary-500),
   ),
+  'accent': (
+    'color': var(--accent-900),
+    'background': var(--accent-500),
+    'border-color': var(--accent-500),
+    'hover-color': var(--accent-900),
+    'hover-background': var(--accent-500),
+    'hover-border-color': var(--accent-900),
+  ),
   'outline': (
     'color': var(--grey-400),
     'background': transparent,
@@ -95,11 +103,11 @@ $button-sizes: (
     'height': var(--control-size-md),
     'font-size': var(--font-size-sm),
   ),
-  // 'md': (
-  //   'height': var(--control-size-lg),
-  //   'padding-h': var(--gap-lg),
-  //   'font-size': var(--font-size),
-  // ),
+  'md': (
+    'height': var(--control-size-lg),
+    'padding-h': var(--gap-lg),
+    'font-size': var(--font-size),
+  ),
   // 'lg': (
   //   'height': var(--control-size-xl),
   //   'padding-h': var(--gap-xxl),

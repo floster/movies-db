@@ -2,7 +2,7 @@
   display: flex;
 
   &__svg {
-    height: var(--control-size-sm);
+    height: 1.3rem;
 
     @include media(md) {
       height: var(--control-size-md);

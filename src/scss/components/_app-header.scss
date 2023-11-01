@@ -26,7 +26,11 @@
   &__nav {
     display: flex;
     align-items: center;
-    gap: var(--gap-sm);
+    gap: var(--gap-xs);
+
+    @include media(md) {
+      gap: var(--gap-sm);
+    }
   }
 
   &__locale {
