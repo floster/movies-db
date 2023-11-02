@@ -1,0 +1,11 @@
+.app-input {
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-sm);
+  width: 100%;
+  height: var(--control-size-lg);
+  padding: 0 var(--gap-sm);
+
+  &.m-center {
+    text-align: center;
+  }
+}

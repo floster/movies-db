@@ -1,0 +1,9 @@
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  margin: var(--gap-lg) auto;
+  border-radius: var(--radius);
+  background-color: var(--white);
+}

@@ -8,6 +8,7 @@ import NoMatch from './pages/404'
 import Favorites from './pages/favorites'
 import Tv from './pages/tv'
 import Search from './pages/search'
+import User from './pages/User'
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="favorites/" element={<Favorites />} />
           <Route path="favorites/" element={<Favorites />} />
           <Route path="search/" element={<Search />} />
+          <Route path="user/" element={<User />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>

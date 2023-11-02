@@ -82,7 +82,6 @@ select {
 
   &:invalid {
     outline: 1px solid var(--secondary-500);
-    box-shadow: var(--shadow-md-primary);
   }
 }
 
