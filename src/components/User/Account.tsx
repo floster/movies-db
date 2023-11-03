@@ -11,8 +11,6 @@ const Account: React.FC<Props> = ({ session }) => {
   const [username, setUsername] = useState<string | null>(null)
   const [avatar_url, setAvatarUrl] = useState('')
 
-  console.log('session', session)
-
   useEffect(() => {
     async function getProfile() {
       setLoading(true)

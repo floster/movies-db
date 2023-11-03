@@ -3,7 +3,16 @@
   align-items: center;
   justify-content: center;
   flex-grow: 1;
+  padding: var(--gap-xs) var(--gap-sm);
   margin: var(--gap-lg) auto;
   border-radius: var(--radius);
   background-color: var(--white);
+
+  &__inner {
+    width: 100%;
+
+    @include media(md) {
+      max-width: 24rem;
+    }
+  }
 }

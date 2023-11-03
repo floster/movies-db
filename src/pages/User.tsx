@@ -8,17 +8,22 @@ import Account from '../components/User/Account'
 import { useDocumentTitle } from 'usehooks-ts'
 
 function User() {
-  const [session, setSession] = useState<Session>()
+  // TODO: store session status in store
+  const [session, setSession] = useState<Session | null>()
 
   useDocumentTitle(`${session ? 'Profile' : 'Login'} - Movies DB`)
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session as Session)
-    })
+    supabase.auth
+      // getting session data
+      .getSession()
+      // store session data in state
+      .then(({ data: { session } }) => setSession(session))
+      .catch(() => setSession(null))
 
+    // receive a notification every time an auth event happens
     supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session as Session)
+      setSession(session)
     })
   }, [])
 
