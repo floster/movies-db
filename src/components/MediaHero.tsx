@@ -47,8 +47,6 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
 
   if (!data) return null
 
-  console.log('MediaHero', data.genres)
-
   const renderTags = () => {
     if (!data || !data.genres) return null
     const tags = data.genres.map(genre => <li key={genre}>{genre}</li>)
