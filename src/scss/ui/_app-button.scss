@@ -170,6 +170,15 @@ $button-sizes: (
     }
   }
 
+  &.m-account {
+    width: 30px;
+    height: 30px;
+
+    &:hover {
+      color: var(--accent-500);
+    }
+  }
+
   &.m-show_more {
     height: 100%;
   }
