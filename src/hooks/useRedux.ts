@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { favoritesActions } from '../store/slices/favorites.slice'
 import { dialogActions } from '../store/slices/dialog.slice'
 import { localeActions } from '../store/slices/locale.slice'
+import { accountActions } from '../store/slices/account.slice'
 
 /**
  * A custom hook that wraps the `useSelector` hook from `react-redux` and is used to type the `RootState`.
@@ -21,6 +22,7 @@ const actions = {
   ...favoritesActions,
   ...dialogActions,
   ...localeActions,
+  ...accountActions,
 }
 
 /**
