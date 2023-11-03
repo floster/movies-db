@@ -1,19 +1,14 @@
 .logo {
   display: flex;
+  color: var(--primary-200);
+  font-size: 0;
 
-  &__svg {
-    height: 1.3rem;
+  &__img {
+    height: var(--control-size-sm);
+    width: auto;
 
     @include media(md) {
       height: var(--control-size-md);
-    }
-
-    .app-footer & {
-      height: var(--control-size-xs);
-
-      @include media(md) {
-        height: var(--control-size-sm);
-      }
     }
   }
 }
