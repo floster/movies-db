@@ -3,7 +3,7 @@ import Avvvatars from 'avvvatars-react'
 import SvgIcon from '../UI/SvgIcon'
 import { Link } from 'react-router-dom'
 
-const AccountLink: React.FC = () => (
+const UserLink: React.FC = () => (
   <Link to="user">
     {true ? (
       <Avvvatars
@@ -21,4 +21,4 @@ const AccountLink: React.FC = () => (
   </Link>
 )
 
-export default AccountLink
+export default UserLink

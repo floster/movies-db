@@ -4,7 +4,7 @@ import { supabase } from '../supabase/client'
 import { Session } from '@supabase/gotrue-js/src/lib/types'
 
 import Auth from '../components/User/Auth'
-import Account from '../components/User/Account'
+import Profile from '../components/User/Profile'
 import { useDocumentTitle } from 'usehooks-ts'
 
 function User() {
@@ -28,15 +28,18 @@ function User() {
   }, [])
 
   return (
-    <div className="container user">
+    <section className="container user">
+      <header className="user__header">
+        <h2 className="user__title">{session ? 'Profile' : 'Login'}</h2>
+      </header>
       <div className="user__inner">
         {!session ? (
           <Auth />
         ) : (
-          <Account key={session.user.id} session={session} />
+          <Profile key={session.user.id} session={session} />
         )}
       </div>
-    </div>
+    </section>
   )
 }
 

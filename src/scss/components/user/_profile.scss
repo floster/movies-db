@@ -1,0 +1,22 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  padding: var(--gap-md) 0;
+
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-sm);
+
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @include media(md) {
+      justify-content: flex-start;
+    }
+  }
+}
