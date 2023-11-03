@@ -5,13 +5,10 @@ import { Session } from '@supabase/gotrue-js/src/lib/types'
 
 import Auth from '../components/User/Auth'
 import Profile from '../components/User/Profile'
-import { useDocumentTitle } from 'usehooks-ts'
 
 function User() {
   // TODO: store session status in store
   const [session, setSession] = useState<Session | null>()
-
-  useDocumentTitle(`${session ? 'Profile' : 'Login'} - Movies DB`)
 
   useEffect(() => {
     supabase.auth
