@@ -1,0 +1,13 @@
+.avatar {
+  display: grid;
+  place-items: center;
+  width: var(--control-size-md);
+  height: var(--control-size-md);
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
