@@ -4,7 +4,8 @@ import { supabase } from '../../supabase/client'
 
 const Login = () => (
   <Auth
-    magicLink={true}
+    magicLink={false}
+    onlyThirdPartyProviders={true}
     supabaseClient={supabase}
     providers={['google', 'github']}
     appearance={{ theme: ThemeSupa }}

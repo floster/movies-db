@@ -1,11 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { ISupabaseUserMeta } from '../../types/supabase.models'
 
 type AccountState = {
   isAuthorized: boolean
+  session: ISupabaseUserMeta | null
 }
 
 const initialState: AccountState = {
   isAuthorized: false,
+  session: null,
 }
 
 export const accountSlice = createSlice({
@@ -14,6 +17,9 @@ export const accountSlice = createSlice({
   reducers: {
     setAuthorized: (state, { payload }) => {
       state.isAuthorized = payload
+    },
+    setSession: (state, { payload }) => {
+      state.session = payload
     },
   },
 })

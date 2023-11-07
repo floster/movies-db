@@ -1,22 +1,17 @@
 import { supabase } from '../../supabase/client'
-import { Session } from '@supabase/gotrue-js/src/lib/types'
 
-import Avvvatars from 'avvvatars-react'
+import { ISupabaseUserMeta } from '../../types/supabase.models'
+import UserIcon from '../Header/UserIcon'
 
 type Props = {
-  session: Session
+  session: ISupabaseUserMeta
 }
 
 const Profile: React.FC<Props> = ({ session }) => {
   return (
     <div className="profile">
       <header className="profile__header">
-        <Avvvatars
-          value="valera.osadchuk@gmail.com"
-          displayValue="MF"
-          shadow={true}
-        />{' '}
-        {session.user.email}
+        <UserIcon /> {session.username}
       </header>
       <form className="auth__form app-form">
         <footer className="app-form__footer">
