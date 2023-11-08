@@ -13,6 +13,7 @@ import {
   ETilesQty,
   EMediaTypes,
   Genre,
+  IFavoritesState,
 } from '../types/tmdb.models'
 
 export const AVAILABLE_SEARCH_TYPES: IAvailableFavoritesTypes[] = [
@@ -37,6 +38,13 @@ export const AVAILABLE_LIST_OPTIONS: IAvailableListsOptions[] = [
   'tv:popular',
   'tv:top_rated',
 ]
+
+export const INITIAL_FAVORITES_STATE: IFavoritesState = {
+  collection: [],
+  movie: [],
+  person: [],
+  tv: [],
+}
 
 export interface SelectOption<T> {
   title: string

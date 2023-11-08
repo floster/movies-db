@@ -11,7 +11,7 @@ interface Props {
 }
 
 const FavoriteBtn: React.FC<Props> = ({ type, id, title }) => {
-  const { toggle } = useAppActions()
+  const { toggleFavorite } = useAppActions()
   const favorites = useAppSelector(state => state.favorites)
 
   const isAlreadyFavorite = useMemo(() => {
@@ -21,7 +21,7 @@ const FavoriteBtn: React.FC<Props> = ({ type, id, title }) => {
   const [checkedState, setCheckedState] = useState(isAlreadyFavorite)
 
   const handleChange = () => {
-    toggle({ type, id })
+    toggleFavorite({ type, id })
     setCheckedState(isAlreadyFavorite)
   }
 

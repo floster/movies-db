@@ -26,6 +26,10 @@ export type IAvailableFavoritesTypes = Exclude<
   'season' | 'episode'
 >
 
+export type IFavoritesState = {
+  [key in IAvailableFavoritesTypes]: number[]
+}
+
 // all possible media types that comes from TMDB
 
 export enum EMediaTypes {
