@@ -13,6 +13,7 @@ export interface IRawSupabaseUserMeta {
 }
 
 export interface ISupabaseAccountMeta {
+  id: string
   avatar_url: string
   email: string
   email_verified: boolean

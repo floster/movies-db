@@ -50,6 +50,7 @@ const useGetSession = () => {
       const rawMeta = session.user.user_metadata as IRawSupabaseUserMeta
       const user: ISupabaseAccountMeta = {
         ...rawMeta,
+        id: session.user.id,
         username: getUserName(rawMeta),
       }
       setUser(user)
