@@ -31,18 +31,9 @@ const useGetSession = () => {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session }, error }) => {
-      console.log('session', session)
+      // console.log('session', session)
       setSession(session)
       setError(error)
-
-      if (session !== null) {
-        const rawMeta = session.user.user_metadata as IRawSupabaseUserMeta
-        const user: ISupabaseAccountMeta = {
-          ...rawMeta,
-          username: getUserName(rawMeta),
-        }
-        setUser(user)
-      }
     })
 
     const {
@@ -53,6 +44,19 @@ const useGetSession = () => {
 
     return () => subscription.unsubscribe()
   }, [])
+
+  useEffect(() => {
+    if (session !== null) {
+      const rawMeta = session.user.user_metadata as IRawSupabaseUserMeta
+      const user: ISupabaseAccountMeta = {
+        ...rawMeta,
+        username: getUserName(rawMeta),
+      }
+      setUser(user)
+    } else {
+      setUser(null)
+    }
+  }, [session])
 
   return { session, user, error }
 }

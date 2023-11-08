@@ -4,6 +4,7 @@ import AppFavorite from './UI/FavoriteBtn'
 import AppPicture from './UI/AppPicture'
 import AppProgress from './UI/Rating'
 import TorrentSearch from './UI/TorrentSearch'
+import { useAppSelector } from '../hooks/useRedux'
 
 interface Props {
   tile: ITile
@@ -15,6 +16,8 @@ const Tile: React.FC<Props> = ({ tile, isRow = false, extraLabel }) => {
   const classes = ['app-tile']
   if (tile.type) classes.push(`m-${tile.type}`)
   if (isRow) classes.push('m-row')
+
+  const isAuthorized = useAppSelector(state => state.account.isAuthorized)
 
   const isLink = !!tile.link
   const isTorrentSearchable =
@@ -32,7 +35,7 @@ const Tile: React.FC<Props> = ({ tile, isRow = false, extraLabel }) => {
         )}
       </div>
 
-      {true && (
+      {isAuthorized && (
         <AppFavorite
           type={tile.type as IAvailableFavoritesTypes}
           id={tile.id}
@@ -60,7 +63,9 @@ const Tile: React.FC<Props> = ({ tile, isRow = false, extraLabel }) => {
   return (
     <article className={classes.join(' ')} data-id={tile.id}>
       {tileWrapper}
-      {isTorrentSearchable && <TorrentSearch term={tile.title} />}
+      {isAuthorized && isTorrentSearchable && (
+        <TorrentSearch term={tile.title} />
+      )}
     </article>
   )
 }

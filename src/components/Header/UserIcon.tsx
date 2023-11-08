@@ -6,8 +6,9 @@ import Avatar from '../User/Avatar'
 
 const UserIcon: React.FC = () => {
   const session = useAppSelector(state => state.account.account)
+  const isAuthorized = useAppSelector(state => state.account.isAuthorized)
 
-  if (!session)
+  if (!isAuthorized || !session)
     return (
       <span
         className="button m-icon m-account"

@@ -22,6 +22,7 @@ interface MediaHeroProps {
 
 const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
   const locale = useAppSelector(state => state.locale.current)
+  const isAuthorized = useAppSelector(state => state.account.isAuthorized)
 
   const { data, isError, isLoading } = useGetMediaHeroQuery({
     type,
@@ -86,7 +87,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
           {data.belongs && <MoviePartOf data={data.belongs} />}
         </div>
         <footer className="media-hero__footer">
-          <Favorite type={type} id={id} title={data.title} />
+          {isAuthorized && <Favorite type={type} id={id} title={data.title} />}
 
           {data.date && data.date !== '' && (
             <IconLabeled icon="calendar" label={data.date} />
@@ -96,7 +97,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
             <IconLabeled icon="stack" label={data.partsSeasons} />
           )}
 
-          {data.torrent && <TorrentSearch term={data.title} />}
+          {isAuthorized && data.torrent && <TorrentSearch term={data.title} />}
 
           {data.belongs && <MoviePartOf data={data.belongs} />}
         </footer>
