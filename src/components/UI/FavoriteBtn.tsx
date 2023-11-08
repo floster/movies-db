@@ -13,6 +13,7 @@ interface Props {
 const FavoriteBtn: React.FC<Props> = ({ type, id, title }) => {
   const { toggleFavorite } = useAppActions()
   const favorites = useAppSelector(state => state.favorites)
+  const userId = useAppSelector(state => state.account.account?.id!)
 
   const isAlreadyFavorite = useMemo(() => {
     return favorites[type].some(item => item === id)
@@ -21,7 +22,7 @@ const FavoriteBtn: React.FC<Props> = ({ type, id, title }) => {
   const [checkedState, setCheckedState] = useState(isAlreadyFavorite)
 
   const handleChange = () => {
-    toggleFavorite({ type, id })
+    toggleFavorite({ type, id, userId })
     setCheckedState(isAlreadyFavorite)
   }
 

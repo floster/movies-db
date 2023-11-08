@@ -5,30 +5,31 @@ import {
   IFavoritesState,
 } from '../../types/tmdb.models'
 import { INITIAL_FAVORITES_STATE } from '../../config'
-
-const LS_FAVORITES_KEY = 'rtk_favorites'
+import { updateFavorites } from '../../supabase/client'
 
 type FavoriteTogglePayload = {
   type: IAvailableFavoritesTypes
   id: number
+  userId: string
 }
 
-// Check if the local storage has the favorites key, if not, set it to the initial state
-if (localStorage.getItem(LS_FAVORITES_KEY) === null) {
-  localStorage.setItem(
-    LS_FAVORITES_KEY,
-    JSON.stringify(INITIAL_FAVORITES_STATE)
-  )
-}
-
-const initialState: IFavoritesState = JSON.parse(
-  localStorage.getItem(LS_FAVORITES_KEY) || '{}'
-)
+const initialState = INITIAL_FAVORITES_STATE
 
 export const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,
   reducers: {
+    setInitialFavorites: (
+      state,
+      { payload }: PayloadAction<IFavoritesState>
+    ) => {
+      console.log('setInitialFavorites', payload)
+      Object.keys(payload).forEach(key => {
+        state[key as IAvailableFavoritesTypes] =
+          payload[key as IAvailableFavoritesTypes]
+      })
+      console.log('state', state)
+    },
     toggleFavorite: (
       state,
       { payload }: PayloadAction<FavoriteTogglePayload>
@@ -40,7 +41,7 @@ export const favoritesSlice = createSlice({
           item => item !== payload.id
         )
       }
-      localStorage.setItem(LS_FAVORITES_KEY, JSON.stringify(state))
+      updateFavorites(state, payload.userId)
     },
   },
 })

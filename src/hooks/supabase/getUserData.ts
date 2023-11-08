@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import { supabase } from '../../supabase/client'
 
 const useGetUserData = () => {
-  const { setAuthorized, setAccount, setFavorites } = useAppActions()
+  const { setAuthorized, setAccount, setInitialFavorites } = useAppActions()
   const { user, error } = useGetSession()
 
   useEffect(() => {
@@ -23,7 +23,12 @@ const useGetUserData = () => {
             console.error(error)
             return
           }
-          setFavorites(JSON.parse(data[0][FAVS_COLUMN] ?? data[1][FAVS_COLUMN]))
+
+          const _fetchedFavorites = JSON.parse(
+            data[0][FAVS_COLUMN] ?? data[1][FAVS_COLUMN]
+          )
+
+          setInitialFavorites(_fetchedFavorites)
         })
     }
   }, [user])
