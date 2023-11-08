@@ -23,12 +23,10 @@ export const favoritesSlice = createSlice({
       state,
       { payload }: PayloadAction<IFavoritesState>
     ) => {
-      console.log('setInitialFavorites', payload)
       Object.keys(payload).forEach(key => {
         state[key as IAvailableFavoritesTypes] =
           payload[key as IAvailableFavoritesTypes]
       })
-      console.log('state', state)
     },
     toggleFavorite: (
       state,

@@ -5,6 +5,7 @@ import useGetSession from './getSession'
 import { useAppActions } from '../useRedux'
 import { useEffect } from 'react'
 import { supabase } from '../../supabase/client'
+import { INITIAL_FAVORITES_STATE } from '../../config'
 
 const useGetUserData = () => {
   const { setAuthorized, setAccount, setInitialFavorites } = useAppActions()
@@ -24,9 +25,12 @@ const useGetUserData = () => {
             return
           }
 
-          const _fetchedFavorites = JSON.parse(
-            data[0][FAVS_COLUMN] ?? data[1][FAVS_COLUMN]
-          )
+          const _fetchedFavorites =
+            data && data[0] && data[0][FAVS_COLUMN]
+              ? JSON.parse(data[0][FAVS_COLUMN])
+              : data && data[1] && data[1][FAVS_COLUMN]
+              ? JSON.parse(data[1][FAVS_COLUMN])
+              : INITIAL_FAVORITES_STATE
 
           setInitialFavorites(_fetchedFavorites)
         })
