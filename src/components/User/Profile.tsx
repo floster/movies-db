@@ -1,10 +1,10 @@
 import { supabase } from '../../supabase/client'
 
-import { ISupabaseUserMeta } from '../../types/supabase.models'
+import { ISupabaseAccountMeta } from '../../types/supabase.models'
 import UserIcon from '../Header/UserIcon'
 
 type Props = {
-  session: ISupabaseUserMeta
+  session: ISupabaseAccountMeta
 }
 
 const Profile: React.FC<Props> = ({ session }) => {

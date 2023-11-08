@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/useRedux'
 import Avatar from '../User/Avatar'
 
 const UserIcon: React.FC = () => {
-  const session = useAppSelector(state => state.account.session)
+  const session = useAppSelector(state => state.account.account)
 
   if (!session)
     return (

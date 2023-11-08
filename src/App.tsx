@@ -15,13 +15,13 @@ import { useAppActions } from './hooks/useRedux'
 import { useEffect } from 'react'
 
 export default function App() {
-  const { setAuthorized, setSession } = useAppActions()
-  const { session, meta, error } = useGetSession()
+  const { setAuthorized, setAccount } = useAppActions()
+  const { user, error } = useGetSession()
 
   useEffect(() => {
-    setAuthorized(session)
-    if (!error) setSession(meta)
-  }, [session])
+    setAuthorized(!!user)
+    if (!error && user) setAccount(user)
+  }, [user])
 
   return (
     <BrowserRouter>

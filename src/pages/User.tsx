@@ -4,7 +4,7 @@ import { useAppSelector } from '../hooks/useRedux'
 
 function User() {
   const isAuthorized = useAppSelector(state => state.account.isAuthorized)
-  const session = useAppSelector(state => state.account.session)
+  const session = useAppSelector(state => state.account.account)
 
   return (
     <section className="container user">
