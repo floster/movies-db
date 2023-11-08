@@ -10,18 +10,10 @@ import Tv from './pages/tv'
 import Search from './pages/search'
 import User from './pages/User'
 
-import useGetSession from './hooks/supabase/getSession'
-import { useAppActions } from './hooks/useRedux'
-import { useEffect } from 'react'
+import useGetUserData from './hooks/supabase/getUserData'
 
 export default function App() {
-  const { setAuthorized, setAccount } = useAppActions()
-  const { user, error } = useGetSession()
-
-  useEffect(() => {
-    setAuthorized(!!user)
-    if (!error && user) setAccount(user)
-  }, [user])
+  useGetUserData()
 
   return (
     <BrowserRouter>
