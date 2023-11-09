@@ -18,6 +18,7 @@ const Tile: React.FC<Props> = ({ tile, isRow = false, extraLabel }) => {
   if (isRow) classes.push('m-row')
 
   const isAuthorized = useAppSelector(state => state.account.isAuthorized)
+  const isGod = useAppSelector(state => state.account.isGod)
 
   const isLink = !!tile.link
   const isTorrentSearchable =
@@ -63,7 +64,7 @@ const Tile: React.FC<Props> = ({ tile, isRow = false, extraLabel }) => {
   return (
     <article className={classes.join(' ')} data-id={tile.id}>
       {tileWrapper}
-      {isAuthorized && isTorrentSearchable && (
+      {isAuthorized && isGod && isTorrentSearchable && (
         <TorrentSearch term={tile.title} />
       )}
     </article>

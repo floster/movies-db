@@ -13,8 +13,9 @@ import { store } from './store/store.ts'
 // [ ] TODO: animation for tiles when 'show more' clicked | sorting changed
 // [ ] TODO: dynamic IDs for RandomCollection
 // [ ] TODO: link to Wikipedia for persons (maybe use link preview)
-// [ ] TODO: store favorites in Firebase for loged in users (but take a look at Supabase)
-// [ ] TODO: TorrentSearch only for god_mode users
+// [x] TODO: store favorites in Firebase for loged in users (but take a look at Supabase)
+// [x] TODO: show favorites icon only for logged in users
+// [x] TODO: TorrentSearch only for god_mode users
 // [ ] TODO: AI-driven recommendations/search
 // [ ] TODO: Footer with links to TMDB, GitHub, etc.
 // [ ] TODO: update README.md\ in the end

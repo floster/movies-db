@@ -3,11 +3,13 @@ import { ISupabaseAccountMeta } from '../../types/supabase.models'
 
 type AccountState = {
   isAuthorized: boolean
+  isGod: boolean
   account: ISupabaseAccountMeta | null
 }
 
 const initialState: AccountState = {
   isAuthorized: false,
+  isGod: false,
   account: null,
 }
 
@@ -17,6 +19,9 @@ export const accountSlice = createSlice({
   reducers: {
     setAuthorized: (state, { payload }) => {
       state.isAuthorized = payload
+    },
+    setGod: (state, { payload }) => {
+      state.isGod = payload
     },
     setAccount: (state, { payload }) => {
       state.account = payload

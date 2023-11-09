@@ -23,6 +23,7 @@ interface MediaHeroProps {
 const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
   const locale = useAppSelector(state => state.locale.current)
   const isAuthorized = useAppSelector(state => state.account.isAuthorized)
+  const isGod = useAppSelector(state => state.account.isGod)
 
   const { data, isError, isLoading } = useGetMediaHeroQuery({
     type,
@@ -97,7 +98,9 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
             <IconLabeled icon="stack" label={data.partsSeasons} />
           )}
 
-          {isAuthorized && data.torrent && <TorrentSearch term={data.title} />}
+          {isAuthorized && isGod && data.torrent && (
+            <TorrentSearch term={data.title} />
+          )}
 
           {data.belongs && <MoviePartOf data={data.belongs} />}
         </footer>
