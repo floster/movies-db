@@ -11,7 +11,7 @@ const TvEpisode: React.FC<Props> = ({ episode }) => {
     <div className="tv-episode">
       <span className="tv-episode__count">{episode.episode_number}</span>
       <AppPicture
-        img={getPosterUrl(episode.still_path)}
+        img={getPosterUrl(episode.still_path).path}
         alt={episode.name + ' poster'}
       />
       <div className="tv-episode__content">

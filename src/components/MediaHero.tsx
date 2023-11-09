@@ -18,9 +18,15 @@ interface MediaHeroProps {
   id: number
   type: IAvailableMediaHeroTypes
   withLink?: boolean
+  noPictureEvent?: (id: number) => void
 }
 
-const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
+const MediaHero: FC<MediaHeroProps> = ({
+  type,
+  id,
+  withLink = false,
+  noPictureEvent,
+}) => {
   const locale = useAppSelector(state => state.locale.current)
 
   const { data, isError, isLoading } = useGetMediaHeroQuery({
@@ -47,8 +53,6 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
 
   if (!data) return null
 
-  console.log('MediaHero', data.genres)
-
   const renderTags = () => {
     if (!data || !data.genres) return null
     const tags = data.genres.map(genre => <li key={genre}>{genre}</li>)
@@ -60,10 +64,10 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
   ) : (
     <div
       className="media-hero"
-      style={{ '--backdrop-image': data.backdrop } as React.CSSProperties}>
+      style={{ '--backdrop-image': data.backdrop.path } as React.CSSProperties}>
       <div className="media-hero__inner container">
         <div className="media-hero__picture">
-          <Picture img={data.poster} alt={data.title} />
+          <Picture img={data.poster.path} alt={data.title} />
           {data.rating && <Rating value={data.rating} />}
         </div>
         <div className="media-hero__content">

@@ -26,7 +26,7 @@ const Tile: React.FC<Props> = ({ tile, isRow = false, extraLabel }) => {
   const tileInner = (
     <>
       <div className="app-tile__picture">
-        <AppPicture img={tile.poster} alt={tile.title + ' poster'} />
+        <AppPicture img={tile.poster.path} alt={tile.title + ' poster'} />
         {extraLabel && (
           <span className="app-tile__extraLabel">{tile[extraLabel]}</span>
         )}

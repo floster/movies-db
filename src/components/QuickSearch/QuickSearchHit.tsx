@@ -9,7 +9,7 @@ type Props = {
 const QuickSearchHit: React.FC<Props> = ({ hit }) => {
   return (
     <li className="quick-search-hits__item" key={hit.id}>
-      <AppPicture img={hit.poster} alt={hit.title} hasLoading={false} />
+      <AppPicture img={hit.poster.path} alt={hit.title} hasLoading={false} />
       <div className="quick-search-hits__content">
         <a href={hit.link!} className="quick-search-hits__link">
           {hit.title}
