@@ -5,13 +5,14 @@ import {
   EMediaTypes,
   ITile,
   Genre,
+  IPosterObject,
 } from '../types/tmdb.models'
 
 /**
  * Filters an array of tile data to remove any tiles with a placeholder image.
  */
 export const filterNoImage = (tiles: ITile[]): ITile[] =>
-  tiles.filter(tile => tile.poster.includes('via.placeholder.com') === false)
+  tiles.filter(tile => tile.poster.exists)
 
 /**
  * Filters an array of tile data to remove any tiles with an 'uncredited' label.
@@ -38,12 +39,8 @@ export function tilesSort<T>(tiles: T[], option: ESortValues): T[] {
  * Filters an array of tile data to pull any tiles with a placeholder image to the end.
  */
 export const pullTilesWithoutPosterToTheEnd = (tiles: ITile[]): ITile[] => {
-  const withPoster = tiles.filter(tile =>
-    tile.poster.includes('image.tmdb.org')
-  )
-  const withoutPoster = tiles.filter(
-    tile => tile.poster.includes('image.tmdb.org') === false
-  )
+  const withPoster = tiles.filter(tile => tile.poster.exists)
+  const withoutPoster = tiles.filter(tile => !tile.poster.exists)
 
   return [...withPoster, ...withoutPoster]
 }
@@ -138,16 +135,22 @@ export const realizeMediaType = (tile: IAvailableTileFields): EMediaTypes => {
     : EMediaTypes.Movie
 }
 
-export const getPosterUrl = (posterPath: string): string => {
+export const getPosterUrl = (posterPath: string): IPosterObject => {
   return posterPath
-    ? `${import.meta.env.VITE_API_POSTER_BASE}${posterPath}`
-    : import.meta.env.VITE_POSTER_NO_IMAGE
+    ? {
+        path: `${import.meta.env.VITE_API_POSTER_BASE}${posterPath}`,
+        exists: true,
+      }
+    : { path: import.meta.env.VITE_POSTER_NO_IMAGE, exists: false }
 }
 
-export const getBackdropUrl = (path: string): string =>
+export const getBackdropUrl = (path: string): IPosterObject =>
   path
-    ? `url(${import.meta.env.VITE_API_BACKDROP_BASE}${path})`
-    : 'var(--gradient-dark)'
+    ? {
+        path: `url(${import.meta.env.VITE_API_BACKDROP_BASE}${path})`,
+        exists: true,
+      }
+    : { path: 'var(--gradient-dark)', exists: false }
 
 export const getGenresByIds = (ids: number[]): Genre[] =>
   ids.map(id => GENRES.filter(genre => genre.id === id)[0])

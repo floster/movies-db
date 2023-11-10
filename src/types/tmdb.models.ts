@@ -54,11 +54,16 @@ export type IAvailableTileFields = IRawListResultMovie &
   IRawSearchMultiResult &
   IRawCollectionSearch
 
+export interface IPosterObject {
+  path: string
+  exists: boolean
+}
+
 export interface ITile {
   id: number
   type: EMediaTypes
   link: string | null
-  poster: string
+  poster: IPosterObject
   title: string
   label: string
   votes: { average: number; count: number } | null
@@ -90,8 +95,8 @@ export interface ICollection {
   id: number
   title: string
   overview: string
-  poster: string
-  backdrop: string
+  poster: IPosterObject
+  backdrop: IPosterObject
   parts: ITile[]
 }
 
@@ -501,8 +506,8 @@ export interface IMediaHeroData {
   subtitle: string | null // tagline for Movie | place_of_birth for Person
   description: string
   genres: string[] | null
-  poster: string
-  backdrop: string
+  poster: IPosterObject
+  backdrop: IPosterObject
   rating: number | null // number | null
   link: string | null // string | null
   tags: string | null // department for Person

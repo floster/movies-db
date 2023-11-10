@@ -1,13 +1,25 @@
-import { COLLECTIONS } from '../../config/dummy'
+import { useState } from 'react'
+import { COLLECTIONS } from '../../config/collections'
 import { EMediaTypes } from '../../types/tmdb.models'
 import MediaHero from '../MediaHero'
 
 const RandomMedia: React.FC = () => {
-  const id = COLLECTIONS[Math.floor(Math.random() * COLLECTIONS.length)]
+  const generateRandomID = () =>
+    COLLECTIONS[Math.floor(Math.random() * COLLECTIONS.length)]
+
+  const [collectionID, setCollectionID] = useState<number>(() =>
+    generateRandomID()
+  )
+
+  const generateNewID = () => setCollectionID(generateRandomID())
 
   return (
-    <div className="random-media">
-      <MediaHero type={EMediaTypes.Collection} id={id} withLink={true} />
+    <div className="random-media" onClick={generateNewID}>
+      <MediaHero
+        type={EMediaTypes.Collection}
+        id={collectionID}
+        withLink={true}
+      />
     </div>
   )
 }

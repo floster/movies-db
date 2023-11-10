@@ -14,7 +14,7 @@ const TvSeason: React.FC<Props> = ({ season }) => {
       <figure className="tv-season__picture">
         <span className="tv-season__count">{season.season_number}</span>
         <AppPicture
-          img={getPosterUrl(season.poster_path)}
+          img={getPosterUrl(season.poster_path).path}
           alt={season.name + ' poster'}
         />
         <AppProgress value={season.vote_average} />

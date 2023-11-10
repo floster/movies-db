@@ -60,10 +60,10 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
   ) : (
     <div
       className="media-hero"
-      style={{ '--backdrop-image': data.backdrop } as React.CSSProperties}>
+      style={{ '--backdrop-image': data.backdrop.path } as React.CSSProperties}>
       <div className="media-hero__inner container">
         <div className="media-hero__picture">
-          <Picture img={data.poster} alt={data.title} />
+          <Picture img={data.poster.path} alt={data.title} />
           {data.rating && <Rating value={data.rating} />}
         </div>
         <div className="media-hero__content">
