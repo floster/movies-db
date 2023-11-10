@@ -18,15 +18,9 @@ interface MediaHeroProps {
   id: number
   type: IAvailableMediaHeroTypes
   withLink?: boolean
-  noPictureEvent?: (id: number) => void
 }
 
-const MediaHero: FC<MediaHeroProps> = ({
-  type,
-  id,
-  withLink = false,
-  noPictureEvent,
-}) => {
+const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
   const locale = useAppSelector(state => state.locale.current)
 
   const { data, isError, isLoading } = useGetMediaHeroQuery({
