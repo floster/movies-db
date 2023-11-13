@@ -16,6 +16,7 @@ const TorrentSearch: FC<Props> = ({ term }) => {
   return (
     <a
       href={url.toString()}
+      onClick={e => e.stopPropagation()}
       className="torrent-search"
       title={title}
       target="_blank"

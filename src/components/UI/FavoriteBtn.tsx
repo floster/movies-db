@@ -32,7 +32,10 @@ const FavoriteBtn: React.FC<Props> = ({ type, id, title }) => {
 
   return (
     <>
-      <label className="app-favorite" aria-label={`add ${title} to favorites`}>
+      <label
+        className="app-favorite"
+        aria-label={`add ${title} to favorites`}
+        onClick={e => e.stopPropagation()}>
         <input
           type="checkbox"
           name="toggleFavoriteCheckbox"

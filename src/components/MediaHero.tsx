@@ -10,7 +10,7 @@ import { FC } from 'react'
 
 import { useDocumentTitle } from 'usehooks-ts'
 import { useGetMediaHeroQuery } from '../store/api/tmdb.api'
-import { IAvailableMediaHeroTypes } from '../types/tmdb.models'
+import { EMediaTypes, IAvailableMediaHeroTypes } from '../types/tmdb.models'
 import IconLabeled from './UI/IconLabeled'
 import { useAppSelector } from '../hooks/useRedux'
 
@@ -101,9 +101,10 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
             <IconLabeled icon="stack" label={data.partsSeasons} />
           )}
 
-          {isAuthorized && isGod && data.torrent && (
-            <TorrentSearch term={data.title} />
-          )}
+          {isAuthorized &&
+            isGod &&
+            type !== EMediaTypes.Collection &&
+            data.torrent && <TorrentSearch term={data.title} />}
 
           {data.belongs && <MoviePartOf data={data.belongs} />}
         </footer>

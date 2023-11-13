@@ -75,6 +75,8 @@
 
   &.m-collection,
   &.m-tvshow {
+    overflow: initial;
+
     &::before,
     &::after {
       content: '';
@@ -124,6 +126,7 @@
     flex-direction: column;
     height: 100%;
     background-color: var(--white);
+    border-radius: var(--radius);
   }
 
   &__picture {
