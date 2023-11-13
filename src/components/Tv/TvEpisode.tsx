@@ -1,4 +1,4 @@
-import { formatDate, getPosterUrl } from '../../utils/helpers'
+import { formatDate } from '../../utils/helpers'
 import { IRawTvEpisode } from '../../types/tmdb.models'
 import AppPicture from '../UI/AppPicture'
 
@@ -10,10 +10,7 @@ const TvEpisode: React.FC<Props> = ({ episode }) => {
   return (
     <div className="tv-episode">
       <span className="tv-episode__count">{episode.episode_number}</span>
-      <AppPicture
-        img={getPosterUrl(episode.still_path).path}
-        alt={episode.name + ' poster'}
-      />
+      <AppPicture img={episode.still_path} alt={episode.name + ' poster'} />
       <div className="tv-episode__content">
         <span className="tv-episode__release">
           {formatDate(episode.air_date).full}

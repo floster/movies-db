@@ -5,7 +5,6 @@ import {
   EMediaTypes,
   ITile,
   Genre,
-  IPosterObject,
 } from '../types/tmdb.models'
 
 /**
@@ -135,22 +134,22 @@ export const realizeMediaType = (tile: IAvailableTileFields): EMediaTypes => {
     : EMediaTypes.Movie
 }
 
-export const getPosterUrl = (posterPath: string): IPosterObject => {
-  return posterPath
-    ? {
-        path: `${import.meta.env.VITE_API_POSTER_BASE}${posterPath}`,
-        exists: true,
-      }
-    : { path: import.meta.env.VITE_POSTER_NO_IMAGE, exists: false }
-}
+// export const getPosterUrl = (posterPath: string): IPosterObject => {
+//   return posterPath
+//     ? {
+//         path: `${import.meta.env.VITE_API_POSTER_BASE}${posterPath}`,
+//         exists: true,
+//       }
+//     : { path: import.meta.env.VITE_POSTER_NO_IMAGE, exists: false }
+// }
 
-export const getBackdropUrl = (path: string): IPosterObject =>
-  path
-    ? {
-        path: `url(${import.meta.env.VITE_API_BACKDROP_BASE}${path})`,
-        exists: true,
-      }
-    : { path: 'var(--gradient-dark)', exists: false }
+// export const getBackdropUrl = (path: string): IPosterObject =>
+//   path
+//     ? {
+//         path: `url(${import.meta.env.VITE_API_BACKDROP_BASE}${path})`,
+//         exists: true,
+//       }
+//     : { path: 'var(--gradient-dark)', exists: false }
 
 export const getGenresByIds = (ids: number[]): Genre[] =>
   ids.map(id => GENRES.filter(genre => genre.id === id)[0])

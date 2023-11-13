@@ -23,8 +23,6 @@ import {
   filterNoImage,
   filterUncredits,
   formatDate,
-  getBackdropUrl,
-  getPosterUrl,
   realizeMediaType,
 } from './helpers'
 
@@ -58,7 +56,10 @@ export function formatTile<T extends IAvailableTileFields>(
   const { year } = formatDate(
     tile.release_date ? tile.release_date : tile.first_air_date
   )
-  const poster = getPosterUrl(tile.poster_path || tile.profile_path)
+  const poster = {
+    path: tile.poster_path || tile.profile_path,
+    exists: !!(tile.poster_path || tile.profile_path),
+  }
 
   const ratingAvg = tile.vote_average ? +tile.vote_average.toFixed(1) : 0
 
@@ -137,7 +138,10 @@ export const formatMediaHeroData = (
     subtitle, // tagline for Movie | place_of_birth for Person
     description: data.overview || data.biography || '',
     genres,
-    poster: getPosterUrl(data.poster_path || data.profile_path),
+    poster: {
+      path: data.poster_path || data.profile_path,
+      exists: !!(data.poster_path || data.profile_path),
+    },
     backdrop: { path: data.backdrop_path, exists: !!data.backdrop_path },
     rating, // number | null
     link, // string | null
@@ -158,8 +162,11 @@ export const formatCollectionNew = (
     id: collection.id,
     title: collection.name,
     overview: collection.overview,
-    poster: getPosterUrl(collection.poster_path),
-    backdrop: getBackdropUrl(collection.backdrop_path),
+    poster: { path: collection.poster_path, exists: !!collection.poster_path },
+    backdrop: {
+      path: collection.backdrop_path,
+      exists: !!collection.backdrop_path,
+    },
     parts: formatTiles(collection.parts as IAvailableTileFields[]),
   }
 }

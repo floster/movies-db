@@ -2,7 +2,7 @@ import AppPicture from '../UI/AppPicture'
 import AppProgress from '../UI/Rating'
 import TvEpisode from './TvEpisode'
 import { IRawTvSeasonResponse } from '../../types/tmdb.models'
-import { formatDate, getPosterUrl } from '../../utils/helpers'
+import { formatDate } from '../../utils/helpers'
 
 interface Props {
   season: IRawTvSeasonResponse
@@ -13,10 +13,7 @@ const TvSeason: React.FC<Props> = ({ season }) => {
     <section className="tv-season">
       <figure className="tv-season__picture">
         <span className="tv-season__count">{season.season_number}</span>
-        <AppPicture
-          img={getPosterUrl(season.poster_path).path}
-          alt={season.name + ' poster'}
-        />
+        <AppPicture img={season.poster_path} alt={season.name + ' poster'} />
         <AppProgress value={season.vote_average} />
       </figure>
       <div className="tv-season__content">
