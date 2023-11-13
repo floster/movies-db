@@ -1,13 +1,46 @@
 .media-hero {
   position: relative;
+
+  display: grid;
+
   background-image: var(--gradient-dark);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  // background-attachment: fixed;
 
   @include media(md) {
     background-image: var(--gradient-light-semi), var(--backdrop-image);
+  }
+
+  &__background,
+  &__inner {
+    grid-area: 1 / -1;
+  }
+
+  &__background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
+      background-image: var(--gradient-light-semi);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
   }
 
   &__inner {

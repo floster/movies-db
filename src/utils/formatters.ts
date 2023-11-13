@@ -138,7 +138,7 @@ export const formatMediaHeroData = (
     description: data.overview || data.biography || '',
     genres,
     poster: getPosterUrl(data.poster_path || data.profile_path),
-    backdrop: getBackdropUrl(data.backdrop_path),
+    backdrop: { path: data.backdrop_path, exists: !!data.backdrop_path },
     rating, // number | null
     link, // string | null
     tags, // department for Person
