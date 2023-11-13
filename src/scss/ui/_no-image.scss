@@ -1,0 +1,29 @@
+.no-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-50);
+  color: var(--primary-100);
+  border-radius: var(--radius);
+
+  .app-tile &,
+  .quick-search-hits & {
+    aspect-ratio: 2 / 3;
+  }
+
+  .quick-search-hits & {
+    width: 4rem;
+  }
+
+  .svg-icon {
+    width: var(--control-size-xxl);
+    height: var(--control-size-xxl);
+  }
+
+  &.m-small {
+    .svg-icon {
+      width: var(--control-size-lg);
+      height: var(--control-size-lg);
+    }
+  }
+}

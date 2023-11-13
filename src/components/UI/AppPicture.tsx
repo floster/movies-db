@@ -3,9 +3,10 @@ const TMDB_MEDIA_BASE = import.meta.env.VITE_TMDB_MEDIA_BASE
 import { useState } from 'react'
 import Spinner from './Spinner'
 import { EPosterSizes } from '../../types/tmdb.models'
+import NoImage from './NoImage'
 
 interface Props {
-  img: string
+  img: string | undefined
   alt: string
   isLazy?: boolean
   isSmall?: boolean
@@ -17,9 +18,13 @@ const AppPicture: React.FC<Props> = ({
   isLazy = true,
   isSmall = false,
 }) => {
+  if (!img) return <NoImage isSmall={isSmall} />
+
   const [isLoaded, setIsLoaded] = useState(true)
 
   const pictureLoading = () => setIsLoaded(false)
+
+  console.log('AppPicture', img)
 
   return (
     <>
@@ -39,6 +44,8 @@ const AppPicture: React.FC<Props> = ({
           className="app-picture__img"
           src={`${TMDB_MEDIA_BASE}/${EPosterSizes.w342}${img}`}
           alt={alt}
+          width={280}
+          height={420}
           loading={
             isLazy && import.meta.env.VITE_LAZY_LOADING === 'true'
               ? 'lazy'
