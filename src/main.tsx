@@ -11,7 +11,7 @@ import { store } from './store/store.ts'
 // [x] TODO: improve mobile layout
 // [x] TODO: 404 page
 // [ ] TODO: animation for tiles when 'show more' clicked | sorting changed
-// [ ] TODO: dynamic IDs for RandomCollection
+// [x] TODO: dynamic IDs for RandomCollection
 // [ ] TODO: link to Wikipedia for persons (maybe use link preview)
 // [x] TODO: store favorites in Firebase for loged in users (but take a look at Supabase)
 // [x] TODO: show favorites icon only for logged in users

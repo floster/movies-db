@@ -68,7 +68,10 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
         </div>
         <div className="media-hero__content">
           {withLink && data.link ? (
-            <a href={data.link} className="media-hero__link">
+            <a
+              href={data.link}
+              onClick={e => e.stopPropagation()}
+              className="media-hero__link">
               {data.title}
             </a>
           ) : (
