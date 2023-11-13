@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { COLLECTIONS } from '../../config/collections'
 import { EMediaTypes } from '../../types/tmdb.models'
-import MediaHero from '../MediaHero'
+import MediaHero from '../MediaHero/MediaHero'
 
 const RandomMedia: React.FC = () => {
   const generateRandomID = () =>

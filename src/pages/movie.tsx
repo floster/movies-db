@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 
 import { getIdFromLink } from '../utils/helpers'
 
-import MediaHero from '../components/MediaHero'
+import MediaHero from '../components/MediaHero/MediaHero'
 import Spinner from '../components/UI/Spinner'
 import Error from '../components/UI/Error'
 import MovieCrew from '../components/Movie/MovieCrew'
