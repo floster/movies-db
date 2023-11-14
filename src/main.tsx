@@ -10,7 +10,7 @@ import { store } from './store/store.ts'
 // [x] TODO: small search field instead of icon with hint about shortcut
 // [x] TODO: improve mobile layout
 // [x] TODO: 404 page
-// [ ] TODO: store collections IDs in Supabase
+// [-] TODO: store collections IDs in Supabase
 // [x] TODO: get rid of avvvatars library
 // [ ] TODO: investigate AppPicture optimization
 // [ ] TODO: animation for tiles when 'show more' clicked | sorting changed
