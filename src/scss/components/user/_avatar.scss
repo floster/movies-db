@@ -6,6 +6,11 @@
   border-radius: 50%;
   overflow: hidden;
 
+  &.m-icon {
+    border-radius: 0;
+    color: var(--color-primary);
+  }
+
   img {
     width: 100%;
     height: auto;
