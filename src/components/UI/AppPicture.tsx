@@ -24,8 +24,6 @@ const AppPicture: React.FC<Props> = ({
 
   const pictureLoading = () => setIsLoaded(false)
 
-  console.log('AppPicture', img)
-
   return (
     <>
       <Spinner visible={isLoaded} />

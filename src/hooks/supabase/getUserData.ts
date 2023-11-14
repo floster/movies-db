@@ -24,8 +24,6 @@ const useGetUserData = () => {
         .select('*')
         .then(
           ({ data, error }: PostgrestSingleResponse<IRawSupabaseProfile[]>) => {
-            console.log('* data', data)
-
             if (error) {
               console.error(error)
               return

@@ -1,11 +1,18 @@
+import SvgIcon from '../UI/SvgIcon'
+
 type Props = {
-  picture: string
+  picture?: string
+  icon?: boolean
 }
 
-const Avatar = ({ picture }: Props) => {
+const Avatar = ({ picture, icon }: Props) => {
   return (
-    <picture className="avatar">
-      <img src={picture} alt="user avatar" />
+    <picture className={`avatar ${icon && 'm-icon'}`}>
+      {icon ? (
+        <SvgIcon icon="logged_in" />
+      ) : (
+        <img src={picture} alt="user avatar" />
+      )}
     </picture>
   )
 }
