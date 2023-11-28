@@ -1,0 +1,16 @@
+.wiki-page {
+  display: flex;
+  opacity: 0.35;
+  color: var(--primary-100);
+
+  &:hover,
+  &:active {
+    opacity: 0.9;
+    color: var(--secondary-500);
+  }
+
+  .svg-icon {
+    height: var(--control-size-sm);
+    width: var(--control-size-sm);
+  }
+}

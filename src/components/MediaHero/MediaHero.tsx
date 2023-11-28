@@ -14,6 +14,7 @@ import { EMediaTypes, IAvailableMediaHeroTypes } from '../../types/tmdb.models'
 import IconLabeled from '../UI/IconLabeled'
 import { useAppSelector } from '../../hooks/useRedux'
 import MediaHeroBackground from './MediaHeroBackground'
+import WikiPage from '../UI/WikiPage'
 
 interface MediaHeroProps {
   id: number
@@ -57,7 +58,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
   }
 
   return isLoading ? (
-    <Spinner />
+    <Spinner relative />
   ) : (
     <div className="media-hero">
       <MediaHeroBackground path={data.backdrop.path} />
@@ -75,7 +76,10 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
               {data.title}
             </a>
           ) : (
-            <h2 className="media-hero__title">{data.title}</h2>
+            <header className="media-hero__header">
+              <h2 className="media-hero__title">{data.title}</h2>
+              {type === EMediaTypes.Person && <WikiPage term={data.title} />}
+            </header>
           )}
 
           {data && data.genres && renderTags()}

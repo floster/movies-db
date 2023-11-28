@@ -10,9 +10,15 @@ interface Props {
   tile: ITile
   isRow?: boolean
   extraLabel?: 'year' | 'type'
+  attributes?: {}
 }
 
-const Tile: React.FC<Props> = ({ tile, isRow = false, extraLabel }) => {
+const Tile: React.FC<Props> = ({
+  tile,
+  isRow = false,
+  extraLabel,
+  attributes,
+}) => {
   const classes = ['app-tile']
   if (tile.type) classes.push(`m-${tile.type}`)
   if (isRow) classes.push('m-row')
@@ -66,7 +72,7 @@ const Tile: React.FC<Props> = ({ tile, isRow = false, extraLabel }) => {
   )
 
   return (
-    <article className={classes.join(' ')} data-id={tile.id}>
+    <article className={classes.join(' ')} data-id={tile.id} {...attributes}>
       {tileWrapper}
       {isAuthorized && isGod && isTorrentSearchable && (
         <TorrentSearch term={tile.title} />

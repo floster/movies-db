@@ -1,19 +1,21 @@
-.app-loader {
+.app-spinner {
   --loader-size: 3rem;
 
   display: none;
   width: var(--loader-size);
   height: var(--loader-size);
+  margin: auto;
   border-radius: 50%;
   animation: rotate 1s linear infinite;
 
-  position: absolute;
-  right: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  z-index: 10;
+  &:not(.m-relative) {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+  }
 
   &::before,
   &::after {

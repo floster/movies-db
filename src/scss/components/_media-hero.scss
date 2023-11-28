@@ -115,6 +115,12 @@
     }
   }
 
+  &__header {
+    display: flex;
+    align-items: center;
+    column-gap: var(--gap-xs);
+  }
+
   &__date {
     color: var(--grey-500);
     margin-bottom: calc(var(--gap-xs) * -1);
