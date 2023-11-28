@@ -58,7 +58,7 @@ const MediaHero: FC<MediaHeroProps> = ({ type, id, withLink = false }) => {
   }
 
   return isLoading ? (
-    <Spinner />
+    <Spinner relative />
   ) : (
     <div className="media-hero">
       <MediaHeroBackground path={data.backdrop.path} />

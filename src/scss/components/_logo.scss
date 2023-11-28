@@ -14,7 +14,9 @@
 }
 
 .tmdb-logo {
-  &__img {
+  display: flex;
+
+  &__svg {
     height: var(--control-size-sm);
 
     @include media(md) {

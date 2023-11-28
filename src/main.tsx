@@ -12,13 +12,15 @@ import { store } from './store/store.ts'
 // [x] TODO: 404 page
 // [-] TODO: store collections IDs in Supabase
 // [x] TODO: get rid of avvvatars library
-// [ ] TODO: investigate AppPicture optimization
+// [x] TODO: investigate AppPicture optimization
 // [ ] TODO: animation for tiles when 'show more' clicked | sorting changed
 // [x] TODO: dynamic IDs for RandomCollection
-// [ ] TODO: link to Wikipedia for persons (maybe use link preview)
+// [x] TODO: link to Wikipedia for persons (maybe use link preview)
 // [x] TODO: store favorites in Firebase for loged in users (but take a look at Supabase)
 // [x] TODO: show favorites icon only for logged in users
 // [x] TODO: TorrentSearch only for god_mode users
+// [x] TODO: possibility to search with prefix (e.g. "p matt damon" for persons etc.)
+// [ ] TODO: generate and store movies embeddings in Supabase on getting movies from TMDB
 // [ ] TODO: AI-driven recommendations/search
 // [ ] TODO: Footer with links to TMDB, GitHub, etc.
 // [ ] TODO: update README.md\ in the end
