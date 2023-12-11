@@ -1,19 +1,20 @@
 <template>
-  <div class="grid min-h-screen gap-8">
-    <UButton
-      icon="i-heroicons-pencil-square"
-      size="xl"
-      color="sky"
-      variant="soft"
-      label="get movie"
-      :trailing="false"
-    />
-
-    <pre>{{ data }}</pre>
+  <div class="grid grid-cols-5 gap-8">
+    <TheTile :movie="movie!" />
+    <TheTile :movie="movie!" />
+    <TheTile :movie="movie!" />
+    <TheTile :movie="movie!" />
+    <TheTile :movie="movie!" />
   </div>
 </template>
 
 <script setup lang="ts">
-const { data } = useFetch("/api/movie/155");
-console.log("data", data);
+const { data: movie } = useFetch("/api/movie/155");
+
+if (!movie) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Movie not found",
+  });
+}
 </script>
