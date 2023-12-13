@@ -249,6 +249,9 @@ interface _TvEpisodeGuestStar {
   profile_path: string;
 }
 
+/********************
+  search
+********************/
 export type TRawSearchResponse<T> = {
   page: number;
   results: T[];
@@ -256,9 +259,6 @@ export type TRawSearchResponse<T> = {
   total_results: number;
 };
 
-/********************
-  search
-********************/
 export type TAvailableTrendingsTypes = Exclude<
   EMediaTypes,
   "season" | "episode" | "collection"

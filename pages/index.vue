@@ -1,28 +1,29 @@
 <template>
-  <SearchForm />
-  <!-- <TilesGrid :tiles="movies" /> -->
+  <SearchForm @search="onSearch" />
+  <span v-if="noResults"
+    >No results found for
+    <mark class="bg-yellow-400">{{ currentQuery }}</mark></span
+  >
+  <TilesGrid v-else :tiles="results" />
 </template>
 
 <script setup lang="ts">
 import type { TRawMovie } from "~/types/tmdb-raw.types";
 
-const { data: movie } = useFetch("/api/movie/155");
+const results = ref([] as TRawMovie[]);
+const noResults = ref(false);
+const currentQuery = ref("");
 
-const movies = ref([] as TRawMovie[]);
-if (movie.value) {
-  movies.value.push(movie.value);
-  movies.value.push(movie.value);
-  movies.value.push(movie.value);
-  movies.value.push(movie.value);
-  movies.value.push(movie.value);
-  movies.value.push(movie.value);
-  movies.value.push(movie.value);
-}
+const onSearch = (data: TRawMovie[], query: string) => {
+  currentQuery.value = query;
 
-if (!movie) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: "Movie not found",
+  if (data.length === 0) {
+    noResults.value = true;
+    return;
+  }
+
+  data.forEach((movie) => {
+    results.value.push(movie);
   });
-}
+};
 </script>
