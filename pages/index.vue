@@ -1,5 +1,6 @@
 <template>
-  <TilesGrid :tiles="movies" />
+  <SearchForm />
+  <!-- <TilesGrid :tiles="movies" /> -->
 </template>
 
 <script setup lang="ts">
