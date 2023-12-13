@@ -1,8 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  app: {
+    head: {
+      title: "MovieXplore",
+      meta: [
+        { charset: "utf-8" },
+        { name: "viewport", content: "width=device-width,initial-scale=1" },
+      ],
+    },
+  },
   modules: [
-    "@nuxt/ui",
+    "@nuxtjs/tailwindcss",
     "@nuxt/image",
     [
       "@nuxtjs/google-fonts",

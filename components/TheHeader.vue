@@ -1,9 +1,7 @@
 <template>
-  <header
-    class="bg-gradient-to-r from-sky-600 to-sky-900 text-white mb-8 shadow-xl shadow-slate-400 dark:shadow-slate-800"
-  >
-    <div class="container px-2 h-20 mx-auto flex items-center">
-      this is the header
+  <header class="bg-header to-transparent from-indigo-950 text-white mb-8">
+    <div class="container px-3 h-20 mx-auto flex items-center">
+      <NuxtImg src="/mdb-logo.svg" alt="Movies DB Logo" class="h-8" />
     </div>
   </header>
 </template>
