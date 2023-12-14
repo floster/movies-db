@@ -34,6 +34,13 @@ export enum EPosterSizes {
   original = "original",
 }
 
+export enum EAvailableSearchTypes {
+  Movie = "movie",
+  Tv = "tv",
+  Person = "person",
+  All = "multi",
+}
+
 // all possible media types that comes from TMDB
 export enum EMediaTypes {
   Collection = "collection",

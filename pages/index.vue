@@ -1,29 +1,38 @@
 <template>
-  <SearchForm @search="onSearch" />
-  <span v-if="noResults"
+  <SearchForm
+    v-model="state.query"
+    v-model:searchType="state.searchType"
+    @search-submit="handleSearchSubmit"
+    @clear-search-query="handleClearSearchQuery"
+  />
+  <!-- <span v-if="noResults"
     >No results found for
-    <mark class="bg-yellow-400">{{ currentQuery }}</mark></span
-  >
-  <TilesGrid v-else :tiles="results" />
+    <mark class="bg-yellow-400">{{ state.query }}</mark></span
+  > -->
+  <!-- <TilesGrid v-else :tiles="results" /> -->
+  <pre>type: {{ state.searchType }}</pre>
+  <pre>query: {{ state.query }}</pre>
 </template>
 
 <script setup lang="ts">
 import type { TRawMovie } from "~/types/tmdb-raw.types";
+import { EAvailableSearchTypes } from "~/types/tmdb.types";
 
-const results = ref([] as TRawMovie[]);
-const noResults = ref(false);
-const currentQuery = ref("");
+const state = reactive({
+  query: "",
+  searchType: EAvailableSearchTypes.Movie,
+  // results: [] as TRawMovie[],
+});
 
-const onSearch = (data: TRawMovie[], query: string) => {
-  currentQuery.value = query;
+// const noResults = computed(() => state.results.length);
 
-  if (data.length === 0) {
-    noResults.value = true;
-    return;
-  }
+const handleSearchSubmit = () => {
+  console.log("search submit", state.query);
+};
 
-  data.forEach((movie) => {
-    results.value.push(movie);
-  });
+const handleClearSearchQuery = () => {
+  console.log("clear search query");
+
+  state.query = "";
 };
 </script>

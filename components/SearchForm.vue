@@ -1,30 +1,71 @@
 <script setup lang="ts">
-const state = reactive({
-  isDynamicSearch: false,
-  query: "",
-});
+/*
+  imports
+*/
+import { EAvailableSearchTypes } from "~/types/tmdb.types";
 
-const emit = defineEmits(["search"]);
+/*
+  consts
+*/
+interface ISearchType {
+  label: string;
+  value: EAvailableSearchTypes;
+}
+const AvailableSearchTypes: ISearchType[] = [
+  { label: "all", value: EAvailableSearchTypes.All },
+  { label: "movies", value: EAvailableSearchTypes.Movie },
+  { label: "tvs", value: EAvailableSearchTypes.Tv },
+  { label: "people", value: EAvailableSearchTypes.Person },
+] as const;
 
+/*
+  props
+*/
+const props = defineProps<{
+  modelValue: string;
+  searchType: EAvailableSearchTypes;
+}>();
+
+/*
+  emits
+*/
+const emit = defineEmits([
+  "search-submit",
+  "clear-search-query",
+  "update:model-value",
+  "update:search-type",
+]);
+
+/*
+  refs
+*/
+const isDynamicSearch = ref(false);
 const searchInput = ref<HTMLInputElement | null>(null);
 
-const onSubmit = async () => {
-  const { data } = await useFetch(`/api/search/${state.query}`);
-
-  if (data) {
-    emit("search", data.value, state.query);
-  }
+/*
+  functions
+*/
+const onQueryChange = (e: Event) => {
+  const query = (e.target as HTMLInputElement).value;
+  emit("update:model-value", query);
 };
 
-const clearQuery = () => {
-  state.query = "";
-  searchInput.value?.focus();
+const onSearchTypeChange = (e: Event) => {
+  const query = (e.target as HTMLSelectElement).value as EAvailableSearchTypes;
+  emit("update:search-type", query);
+};
+
+const submitSearch = () => {
+  emit("search-submit");
 };
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit" class="flex flex-col gap-y-3 w-full mb-8">
-    <div class="flex items-center">
+  <form
+    @submit.prevent="submitSearch"
+    class="flex flex-col gap-y-3 w-full mb-8"
+  >
+    <div class="flex items-center flex-wrap md:flex-nowrap gap-y-2">
       <!-- search field -->
       <div class="relative grow">
         <input
@@ -33,45 +74,40 @@ const clearQuery = () => {
           type="text"
           name="search-term"
           placeholder="start search here..."
-          v-model="state.query"
+          :value="modelValue"
+          @input="onQueryChange"
+          @keydown.enter.prevent="submitSearch"
         />
         <button
-          class="btn btn-ghost btn-square btn-sm opacity-40 hover:opacity-80 absolute right-4 top-1/2 transform -translate-y-1/2"
-          @click="clearQuery"
+          class="btn btn-ghost btn-sm opacity-40 hover:opacity-80 absolute z-10 right-4 top-1/2 transform -translate-y-1/2 hover:active:-translate-y-1/2"
+          @click.self="emit('clear-search-query')"
+          v-if="modelValue"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+          clear
         </button>
       </div>
       <select
-        class="select select-bordered select-md md:select-lg rounded-none"
+        :value="searchType"
+        @change="onSearchTypeChange"
+        class="select select-bordered select-md md:select-lg rounded-none max-sm:rounded-tr-xl max-sm:rounded-br-xl"
         :class="{
-          'rounded-tr-xl rounded-br-xl': state.isDynamicSearch,
+          'md:rounded-tr-xl md:rounded-br-xl': isDynamicSearch,
         }"
       >
-        <option value="all">All</option>
-        <option value="movies">Movies</option>
-        <option value="tv-shows">TV Shows</option>
-        <option value="people">People</option>
+        <option
+          v-for="searchType in AvailableSearchTypes"
+          :value="searchType.value"
+          :key="searchType.value"
+        >
+          {{ searchType.label }}
+        </option>
       </select>
       <button
-        v-if="!state.isDynamicSearch"
-        class="btn btn-accent btn-md md:btn-lg rounded-xl rounded-tl-none rounded-bl-none"
+        v-if="!isDynamicSearch"
+        class="btn btn-accent btn-md md:btn-lg max-sm:w-full rounded-xl md:rounded-tl-none md:rounded-bl-none"
         type="submit"
       >
-        Search
+        search
       </button>
     </div>
     <!-- /search field -->
@@ -79,9 +115,8 @@ const clearQuery = () => {
     <div class="form-control w-fit">
       <label class="cursor-pointer label gap-x-2">
         <input
-          v-model="state.isDynamicSearch"
+          v-model="isDynamicSearch"
           type="checkbox"
-          checked
           class="checkbox checkbox-warning"
         />
         <span class="label-text">dynamic search</span>
