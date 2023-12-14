@@ -1,8 +1,5 @@
 import { TRawSearchResponse } from "~/types/tmdb-raw.types";
-import {
-  TAvailableSearchsFields,
-  EAvailableSearchTypes,
-} from "~/types/tmdb.types";
+import { TAvailableSearchsFields } from "~/types/tmdb.types";
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
@@ -11,8 +8,9 @@ export default defineEventHandler(async (event) => {
   const { query, page } = getQuery(event);
 
   const response: TRawSearchResponse<TAvailableSearchsFields> = await $fetch(
-    `${config.public.tmdbBaseUrl}/search/${type}`,
+    `/search/${type}`,
     {
+      baseURL: config.public.tmdbBaseUrl,
       params: {
         query,
         page,

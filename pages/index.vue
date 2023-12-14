@@ -27,7 +27,13 @@ const noResults = computed(
 
 const handleSearchSubmit = async () => {
   const { data, error, pending } = await useFetch(
-    `/api/search/${state.searchType}?query=${state.query}}&page=${state.currentPage}`
+    `/api/search/${state.searchType}`,
+    {
+      params: {
+        query: state.query,
+        page: state.currentPage,
+      },
+    }
   );
 
   state.error = error.value;
