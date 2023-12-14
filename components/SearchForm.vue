@@ -55,6 +55,11 @@ const onSearchTypeChange = (e: Event) => {
   emit("update:search-type", query);
 };
 
+const handleClearSearchQuery = () => {
+  emit("clear-search-query");
+  searchInput.value?.focus();
+};
+
 const submitSearch = () => {
   emit("search-submit");
 };
@@ -80,7 +85,7 @@ const submitSearch = () => {
         />
         <button
           class="btn btn-ghost btn-sm opacity-40 hover:opacity-80 absolute z-10 right-4 top-1/2 transform -translate-y-1/2 hover:active:-translate-y-1/2"
-          @click.self="emit('clear-search-query')"
+          @click.self="handleClearSearchQuery"
           v-if="modelValue"
         >
           clear

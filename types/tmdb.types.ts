@@ -66,6 +66,9 @@ export type TAvailableTileFields = TRawListResultMovie &
 
 export type TAvailableTrendingsFields = TRawMovie & TRawTv & TRawPerson;
 
+export type TAvailableSearchsFields = TAvailableTrendingsFields &
+  TRawCollection;
+
 /********************
   general
 ********************/
