@@ -14,6 +14,7 @@ interface ISearchType {
 const AvailableSearchTypes: ISearchType[] = [
   { label: "all", value: EAvailableSearchTypes.All },
   { label: "movies", value: EAvailableSearchTypes.Movie },
+  { label: "collection", value: EAvailableSearchTypes.Collection },
   { label: "tvs", value: EAvailableSearchTypes.Tv },
   { label: "people", value: EAvailableSearchTypes.Person },
 ] as const;

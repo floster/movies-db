@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { TRawMovie, TRawSearchResponse } from "~/types/tmdb-raw.types";
+import type { TRawSearchResponse } from "~/types/tmdb-raw.types";
+import type { TAvailableSearchsFields } from "~/types/tmdb.types";
 import { EAvailableSearchTypes } from "~/types/tmdb.types";
 import type { FetchError } from "ofetch";
 
@@ -7,7 +8,7 @@ interface ISearchState {
   query: string;
   searchType: EAvailableSearchTypes;
   currentPage: number;
-  response: TRawSearchResponse<TRawMovie> | null;
+  response: TRawSearchResponse<TAvailableSearchsFields> | null;
   error: FetchError | null;
   pending: boolean;
 }

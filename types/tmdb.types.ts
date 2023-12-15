@@ -39,6 +39,7 @@ export enum EAvailableSearchTypes {
   Tv = "tv",
   Person = "person",
   All = "multi",
+  Collection = "collection",
 }
 
 // all possible media types that comes from TMDB
@@ -66,8 +67,17 @@ export type TAvailableTileFields = TRawListResultMovie &
 
 export type TAvailableTrendingsFields = TRawMovie & TRawTv & TRawPerson;
 
-export type TAvailableSearchsFields = TAvailableTrendingsFields &
-  TRawCollection;
+export type TAvailableSearchsFields = Exclude<
+  TAvailableTileFields,
+  | TRawListResultMovie
+  | TRawListResultTv
+  | TRawCollectionPart
+  | TRawMovieCast
+  | TRawPersonCreditsMovieCast
+  | TRawPersonCreditsTvCast
+  | TRawSearchMultiResult
+  | TRawCollectionSearch
+>;
 
 /********************
   general
