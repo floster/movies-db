@@ -43,6 +43,12 @@ const handleSearchSubmit = async () => {
   state.response = data.value ?? null;
 };
 
+watch(
+  () => state.searchType,
+  () => handleSearchSubmit(),
+  { immediate: true }
+);
+
 const handleClearSearchQuery = () => {
   state.query = "";
   state.currentPage = 1;
