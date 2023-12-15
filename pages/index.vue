@@ -40,12 +40,16 @@ const handleSearchSubmit = async () => {
   state.error = error.value;
   state.pending = pending.value;
 
+  console.log("data:", state.currentPage, data.value);
+
   state.response = data.value ?? null;
 };
 
 watch(
-  () => state.searchType,
-  () => handleSearchSubmit(),
+  [() => state.searchType, () => state.currentPage],
+  () => {
+    if (state.query) handleSearchSubmit();
+  },
   { immediate: true }
 );
 
@@ -64,16 +68,18 @@ const handleClearSearchQuery = () => {
     @search-submit="handleSearchSubmit"
     @clear-search-query="handleClearSearchQuery"
   />
+
   <pre>type: {{ state.searchType }}</pre>
   <pre>query: {{ state.query }}</pre>
-  <pre
-    >{{ state.currentPage }} / {{ state.response?.total_pages }}, results: {{
-      state.response?.total_results
-    }}</pre
-  >
+  <ThePagination
+    v-if="state.response?.total_pages && state.response.total_pages > 1"
+    v-model="state.currentPage"
+    :qty="state.response?.total_pages"
+  />
   <span v-if="state.pending">pending data...</span>
-  <span v-if="state.error">error: {{ state.error.message }}</span>
-  <span v-if="noResults"
+  <span v-else-if="state.error">error: {{ state.error.message }}</span>
+  <span v-else-if="!state.response">start searching... </span>
+  <span v-else-if="!state.response?.results && !state.pending && !state.error"
     >No results found for
     <mark class="bg-yellow-400">{{ state.query }}</mark></span
   >
