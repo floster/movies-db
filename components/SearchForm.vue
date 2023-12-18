@@ -22,7 +22,7 @@ const AvailableSearchTypes: ISearchType[] = [
 /*
   props
 */
-const props = defineProps<{
+defineProps<{
   modelValue: string;
   searchType: EAvailableSearchTypes;
 }>();
@@ -117,7 +117,7 @@ const submitSearch = () => {
       </button>
     </div>
     <!-- /search field -->
-
+    <!-- 
     <div class="form-control w-fit">
       <label class="cursor-pointer label gap-x-2">
         <input
@@ -128,5 +128,6 @@ const submitSearch = () => {
         <span class="label-text">dynamic search</span>
       </label>
     </div>
+     -->
   </form>
 </template>

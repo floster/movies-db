@@ -10,7 +10,7 @@ interface ISearchState {
   currentPage: number;
   response: TRawSearchResponse<TAvailableSearchsFields> | null;
   error: FetchError | null;
-  pending: boolean;
+  loading: boolean;
 }
 
 const state = reactive<ISearchState>({
@@ -19,32 +19,28 @@ const state = reactive<ISearchState>({
   currentPage: 1,
   response: null,
   error: null,
-  pending: false,
+  loading: false,
 });
 
-const noResults = computed(
-  () => !state.pending && state.response?.results.length === 0
-);
-
 const handleSearchSubmit = async () => {
-  const { data, error, pending } = await useFetch(
-    `/api/search/${state.searchType}`,
-    {
-      params: {
-        query: state.query,
-        page: state.currentPage,
-      },
-    }
-  );
+  resetSearch();
+  state.loading = true;
+  const { data, error } = await useFetch(`/api/search/${state.searchType}`, {
+    params: {
+      query: state.query,
+      page: state.currentPage,
+    },
+  });
 
   state.error = error.value;
-  state.pending = pending.value;
-
-  console.log("data:", state.currentPage, data.value);
-
   state.response = data.value ?? null;
+  state.loading = false;
 };
 
+/** Perform new search on:
+ * - search type change
+ * - current page change
+ */
 watch(
   [() => state.searchType, () => state.currentPage],
   () => {
@@ -53,11 +49,31 @@ watch(
   { immediate: true }
 );
 
-const handleClearSearchQuery = () => {
-  state.query = "";
+/* 
+  computed
+*/
+
+const hasResults = computed(() => {
+  return state.response && state.response?.results.length > 0;
+});
+
+const noResults = computed(() => {
+  return state.response && state.response?.results.length === 0;
+});
+
+const hasPagination = computed(() => {
+  return state.response && state.response.total_pages > 1;
+});
+
+const resetSearch = () => {
   state.currentPage = 1;
   state.response = null;
   state.error = null;
+};
+
+const resetSearchAndClearQuery = () => {
+  state.query = "";
+  resetSearch();
 };
 </script>
 
@@ -66,22 +82,22 @@ const handleClearSearchQuery = () => {
     v-model="state.query"
     v-model:searchType="state.searchType"
     @search-submit="handleSearchSubmit"
-    @clear-search-query="handleClearSearchQuery"
+    @clear-search-query="resetSearchAndClearQuery"
   />
-
-  <pre>type: {{ state.searchType }}</pre>
-  <pre>query: {{ state.query }}</pre>
+  <UITheMessage
+    v-if="state.error"
+    :message="state.error.message || ''"
+    type="error"
+  />
+  <UITheSpinner v-if="state.loading" />
   <ThePagination
-    v-if="state.response?.total_pages && state.response.total_pages > 1"
+    v-if="hasPagination"
     v-model="state.currentPage"
-    :qty="state.response?.total_pages"
+    :qty="state.response?.total_pages!"
   />
-  <span v-if="state.pending">pending data...</span>
-  <span v-else-if="state.error">error: {{ state.error.message }}</span>
-  <span v-else-if="!state.response">start searching... </span>
-  <span v-else-if="!state.response?.results && !state.pending && !state.error"
-    >No results found for
-    <mark class="bg-yellow-400">{{ state.query }}</mark></span
-  >
-  <TilesGrid v-if="state.response?.results" :tiles="state.response?.results!" />
+  <TilesGrid v-if="hasResults" :tiles="state.response?.results!" />
+  <UITheMessage
+    v-if="noResults"
+    :message="`No results found for ${state.query}`"
+  />
 </template>
