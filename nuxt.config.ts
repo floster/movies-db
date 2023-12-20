@@ -18,8 +18,7 @@ export default defineNuxtConfig({
       "@nuxtjs/google-fonts",
       {
         families: {
-          Afacad: true,
-          "Crimson Pro": true,
+          "Merriweather Sans": true,
         },
       },
     ],

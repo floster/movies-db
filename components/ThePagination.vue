@@ -1,8 +1,8 @@
 <template>
-  <div class="join">
+  <div class="join mb-4 overflow-x-auto max-w-full">
     <button
       v-for="num in qty"
-      class="join-item btn btn-md"
+      class="join-item btn btn-ghost btn-md"
       :class="{ 'btn-active': modelValue === num }"
       :key="num"
       @click="() => emit('update:modelValue', num)"
