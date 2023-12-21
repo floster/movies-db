@@ -6,12 +6,12 @@
       <NuxtImg
         src="/mdb-logo-dark.svg"
         alt="Movies DB Logo"
-        class="h-6 dark:hidden"
+        class="h-7 dark:hidden"
       />
       <NuxtImg
         src="/mdb-logo.svg"
         alt="Movies DB Logo"
-        class="h-6 hidden dark:block"
+        class="h-7 hidden dark:block"
       />
       <div class="ml-auto">
         <UIThemeSwitcher />

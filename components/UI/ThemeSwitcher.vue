@@ -4,13 +4,17 @@
       <Icon
         :name="`ph:sun-dim-${isDarkMode ? 'light' : 'fill'}`"
         size="24"
-        class="text-amber-400"
+        :class="`${
+          !isDarkMode ? 'text-amber-400' : 'text-slate-300 dark:text-gray-600'
+        }`"
       />
       <input v-model="isDarkMode" type="checkbox" class="toggle toggle-sm" />
       <Icon
         :name="`ph:moon-stars-${isDarkMode ? 'fill' : 'light'}`"
         size="24"
-        class="text-sky-600"
+        :class="`${
+          isDarkMode ? 'text-sky-600' : 'text-slate-300 dark:text-gray-600'
+        }`"
       />
     </label>
   </div>
