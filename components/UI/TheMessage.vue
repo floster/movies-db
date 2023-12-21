@@ -12,7 +12,7 @@
       size="24"
       class="text-rose-300"
     />
-    <span class="text-rose-200">{{ message }}</span>
+    <span class="font-thin" :class="alertTextClass">{{ message }}</span>
   </div>
 </template>
 
@@ -27,5 +27,9 @@ const props = withDefaults(defineProps<Props>(), {
 
 const alertClass = computed(() => {
   return props.type === "error" ? "alert-error" : "";
+});
+
+const alertTextClass = computed(() => {
+  return props.type === "error" ? "text-rose-200" : "text-amber-100";
 });
 </script>

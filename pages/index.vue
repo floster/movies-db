@@ -1,84 +1,48 @@
 <script setup lang="ts">
-import type { TRawSearchResponse } from "~/types/tmdb-raw.types";
-import type { TAvailableSearchsFields } from "~/types/tmdb.types";
-import { EAvailableSearchTypes } from "~/types/tmdb.types";
-import type { FetchError } from "ofetch";
+import { useSearchStore } from "~/stores/search";
 
-interface ISearchState {
-  query: string;
-  searchType: EAvailableSearchTypes;
-  currentPage: number | null;
-  response: TRawSearchResponse<TAvailableSearchsFields> | null;
-  error: FetchError | null;
-  loading: boolean;
-}
+// store
+const store = useSearchStore();
 
-const state = reactive<ISearchState>({
-  query: "",
-  searchType: EAvailableSearchTypes.Movie,
-  currentPage: null,
-  response: null,
-  error: null,
-  loading: false,
-});
-
-const handleSearchSubmit = async () => {
-  resetSearch();
-  state.loading = true;
-  const { data, error } = await useFetch(`/api/search/${state.searchType}`, {
-    params: {
-      query: state.query,
-      page: state.currentPage,
-    },
-  });
-
-  state.error = error.value;
-  state.response = data.value ?? null;
-  state.loading = false;
-};
+const { results, error, loading, type, page, query } = storeToRefs(store);
 
 /** Perform new search on:
  * - search type change
  * - current page change
  */
 watch(
-  [() => state.searchType, () => state.currentPage],
+  () => type.value,
   () => {
-    if (state.query) handleSearchSubmit();
-  },
-  { immediate: true }
+    store.resetSearch();
+    store.search();
+  }
+);
+watch(
+  () => page.value,
+  () => store.search()
 );
 
-const resetSearch = () => {
-  state.currentPage = 1;
-  state.response = null;
-  state.error = null;
-};
-
-const resetSearchAndClearQuery = () => {
-  state.query = "";
-  resetSearch();
-};
+/** reset search if query is empty */
+watch(
+  () => query.value,
+  () => {
+    if (!query.value) {
+      store.resetSearch();
+    }
+  }
+);
 </script>
 
 <template>
   <NuxtLayout name="search">
-    {{ state.currentPage }}
-    <SearchForm
-      v-model="state.query"
-      v-model:searchType="state.searchType"
-      @search-submit="handleSearchSubmit"
-      @clear-search-query="resetSearchAndClearQuery"
-    />
+    <SearchForm @submit="store.search" />
+    <UITheMessage v-if="error" :message="error.message || ''" type="error" />
+    <UITheSpinner v-if="loading" />
+    <TilesGridPaginated v-if="results" :tiles="results.results" />
     <UITheMessage
-      v-if="state.error"
-      :message="state.error.message || ''"
-      type="error"
-    />
-    <UITheSpinner v-if="state.loading" />
-    <TheTiles
-      v-if="state.response && state.currentPage"
-      :results="state.response"
+      v-if="results && results.results.length === 0"
+      :message="`no results for '${query}' found`"
+      type="info"
     />
   </NuxtLayout>
 </template>

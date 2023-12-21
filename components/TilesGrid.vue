@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import type { TAvailableTileFields } from "~/types/tmdb.types";
+
+defineProps<{
+  tiles: TAvailableTileFields[];
+}>();
+</script>
+
 <template>
   <div
     v-if="tiles.length"
@@ -6,14 +14,3 @@
     <TheTile v-for="tile in tiles" :key="tile.id" :data="tile" />
   </div>
 </template>
-
-<script setup lang="ts">
-import type { TAvailableTileFields } from "~/types/tmdb.types";
-
-defineProps({
-  tiles: {
-    type: Array as PropType<TAvailableTileFields[]>,
-    required: true,
-  },
-});
-</script>

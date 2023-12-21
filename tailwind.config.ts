@@ -4,7 +4,7 @@ export default <Partial<Config>>{
   content: ["docs/content/**/*.md"],
   theme: {
     fontFamily: {
-      sans: ["Merriweather Sans", "sans-serif"],
+      sans: ["Open Sans", "sans-serif"],
     },
     extend: {
       backgroundImage: {

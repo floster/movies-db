@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
+    "@pinia/nuxt",
     "@nuxtjs/tailwindcss",
     "@nuxt/image",
     "nuxt-icon",
@@ -18,7 +19,7 @@ export default defineNuxtConfig({
       "@nuxtjs/google-fonts",
       {
         families: {
-          "Merriweather Sans": true,
+          "Open Sans": [300, 400, 700],
         },
       },
     ],
