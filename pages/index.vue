@@ -7,7 +7,7 @@ import type { FetchError } from "ofetch";
 interface ISearchState {
   query: string;
   searchType: EAvailableSearchTypes;
-  currentPage: number;
+  currentPage: number | null;
   response: TRawSearchResponse<TAvailableSearchsFields> | null;
   error: FetchError | null;
   loading: boolean;
@@ -16,7 +16,7 @@ interface ISearchState {
 const state = reactive<ISearchState>({
   query: "",
   searchType: EAvailableSearchTypes.Movie,
-  currentPage: 1,
+  currentPage: null,
   response: null,
   error: null,
   loading: false,
@@ -49,22 +49,6 @@ watch(
   { immediate: true }
 );
 
-/* 
-  computed
-*/
-
-const hasResults = computed(() => {
-  return state.response && state.response?.results.length > 0;
-});
-
-const noResults = computed(() => {
-  return state.response && state.response?.results.length === 0;
-});
-
-const hasPagination = computed(() => {
-  return state.response && state.response.total_pages > 1;
-});
-
 const resetSearch = () => {
   state.currentPage = 1;
   state.response = null;
@@ -79,6 +63,7 @@ const resetSearchAndClearQuery = () => {
 
 <template>
   <NuxtLayout name="search">
+    {{ state.currentPage }}
     <SearchForm
       v-model="state.query"
       v-model:searchType="state.searchType"
@@ -91,15 +76,9 @@ const resetSearchAndClearQuery = () => {
       type="error"
     />
     <UITheSpinner v-if="state.loading" />
-    <ThePagination
-      v-if="hasPagination"
-      v-model="state.currentPage"
-      :qty="state.response?.total_pages!"
-    />
-    <TilesGrid v-if="hasResults" :tiles="state.response?.results!" />
-    <UITheMessage
-      v-if="noResults"
-      :message="`No results found for ${state.query}`"
+    <TheTiles
+      v-if="state.response && state.currentPage"
+      :results="state.response"
     />
   </NuxtLayout>
 </template>

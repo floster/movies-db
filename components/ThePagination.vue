@@ -1,5 +1,5 @@
 <template>
-  <div class="join mb-4 overflow-x-auto max-w-full">
+  <div class="join overflow-x-auto max-w-full">
     <button
       v-for="num in qty"
       class="join-item btn btn-ghost btn-md"
@@ -25,6 +25,4 @@ defineProps({
 });
 
 const emit = defineEmits(["update:modelValue"]);
-
-const handleClick = () => {};
 </script>
