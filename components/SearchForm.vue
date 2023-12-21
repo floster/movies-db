@@ -67,10 +67,7 @@ const submitSearch = () => {
 </script>
 
 <template>
-  <form
-    @submit.prevent="submitSearch"
-    class="flex flex-col gap-y-3 w-full mb-8"
-  >
+  <form @submit.prevent="submitSearch" class="flex flex-col gap-y-3 w-full">
     <div class="flex items-center flex-wrap md:flex-nowrap gap-y-2">
       <!-- search field -->
       <div class="relative grow">

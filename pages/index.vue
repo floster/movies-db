@@ -78,26 +78,28 @@ const resetSearchAndClearQuery = () => {
 </script>
 
 <template>
-  <SearchForm
-    v-model="state.query"
-    v-model:searchType="state.searchType"
-    @search-submit="handleSearchSubmit"
-    @clear-search-query="resetSearchAndClearQuery"
-  />
-  <UITheMessage
-    v-if="state.error"
-    :message="state.error.message || ''"
-    type="error"
-  />
-  <UITheSpinner v-if="state.loading" />
-  <ThePagination
-    v-if="hasPagination"
-    v-model="state.currentPage"
-    :qty="state.response?.total_pages!"
-  />
-  <TilesGrid v-if="hasResults" :tiles="state.response?.results!" />
-  <UITheMessage
-    v-if="noResults"
-    :message="`No results found for ${state.query}`"
-  />
+  <NuxtLayout name="search">
+    <SearchForm
+      v-model="state.query"
+      v-model:searchType="state.searchType"
+      @search-submit="handleSearchSubmit"
+      @clear-search-query="resetSearchAndClearQuery"
+    />
+    <UITheMessage
+      v-if="state.error"
+      :message="state.error.message || ''"
+      type="error"
+    />
+    <UITheSpinner v-if="state.loading" />
+    <ThePagination
+      v-if="hasPagination"
+      v-model="state.currentPage"
+      :qty="state.response?.total_pages!"
+    />
+    <TilesGrid v-if="hasResults" :tiles="state.response?.results!" />
+    <UITheMessage
+      v-if="noResults"
+      :message="`No results found for ${state.query}`"
+    />
+  </NuxtLayout>
 </template>

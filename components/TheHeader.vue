@@ -1,7 +1,5 @@
 <template>
-  <header
-    class="text-white mb-12 shadow-lg shadow-slate-300 dark:shadow-slate-950"
-  >
+  <header class="text-white shadow-lg shadow-slate-300 dark:shadow-slate-950">
     <div class="container px-3 h-16 mx-auto flex items-center">
       <NuxtImg
         src="/mdb-logo-dark.svg"

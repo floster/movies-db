@@ -1,5 +1,6 @@
 <template>
-  <div class="container mx-auto px-3">
+  <div class="bg-body-light dark:bg-body-dark min-h-screen flex flex-col gap-8">
+    <TheHeader />
     <slot />
   </div>
 </template>
