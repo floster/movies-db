@@ -30,6 +30,8 @@ const alertClass = computed(() => {
 });
 
 const alertTextClass = computed(() => {
-  return props.type === "error" ? "text-rose-200" : "text-amber-100";
+  return props.type === "error"
+    ? "text-rose-200"
+    : "text-amber-600 dark:text-amber-100";
 });
 </script>

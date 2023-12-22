@@ -13,20 +13,60 @@ const AvailableSearchOptions: ISearchType[] = [
   { label: "people", value: EAvailableSearchTypes.Person },
 ] as const;
 
-const emit = defineEmits(["submit"]);
-
 const store = useSearchStore();
 
+const router = useRouter();
+
 const searchInput = ref<HTMLInputElement | null>(null);
+
+const onTypeChange = (e: Event) => {
+  const target = e.target as HTMLSelectElement;
+  store.type = target.value as EAvailableSearchTypes;
+  router.push({
+    name: "search-type",
+    params: {
+      type: store.type,
+    },
+    query: {
+      q: store.query,
+    },
+  });
+};
+
+const queryValue = ref<string>(store.query);
+
+const onSubmit = (e: Event) => {
+  // store.search();
+  store.query = queryValue.value;
+  router.push({
+    name: "search-type",
+    params: {
+      type: store.type,
+    },
+    query: {
+      q: store.query,
+    },
+  });
+};
 
 const handleClearSearchQuery = () => {
   store.query = "";
   searchInput.value?.focus();
 };
+
+/** Focus search input on mount */
+onMounted(() => {
+  searchInput.value?.focus();
+});
 </script>
 
 <template>
-  <form @submit.prevent="emit('submit')" class="flex flex-col gap-y-3 w-full">
+  <ul>
+    <li>query: {{ store.query }}</li>
+    <li>type: {{ store.type }}</li>
+    <li>qty: {{ store.results?.results.length }}</li>
+  </ul>
+  <form @submit.prevent="onSubmit" class="flex flex-col gap-y-3 w-full">
     <div class="flex items-center flex-wrap md:flex-nowrap gap-y-2">
       <div class="relative grow">
         <input
@@ -35,19 +75,20 @@ const handleClearSearchQuery = () => {
           type="text"
           name="search-term"
           placeholder="start search here..."
-          v-model="store.query"
-          @keydown.enter.prevent="emit('submit')"
+          v-model="queryValue"
+          @keydown.enter.prevent="onSubmit"
         />
         <button
           class="btn btn-ghost btn-sm opacity-40 hover:opacity-80 absolute z-10 right-4 top-1/2 transform -translate-y-1/2 hover:active:-translate-y-1/2"
           @click.self="handleClearSearchQuery"
-          v-if="store.query"
+          v-if="queryValue"
         >
           clear
         </button>
       </div>
       <select
-        v-model="store.type"
+        :value="store.type"
+        @change="onTypeChange"
         class="select select-bordered select-md md:select-lg rounded-none max-sm:rounded-tr-xl max-sm:rounded-br-xl"
       >
         <option

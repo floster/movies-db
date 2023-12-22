@@ -48,7 +48,8 @@ export const useSearchStore = defineStore("search", {
      * @returns void
      */
     async search() {
-      if (!this.query) return;
+      if (!this.query) throw createError("Search query is not defined");
+      if (!this.type) throw createError("Search type is not defined");
 
       this.loading = true;
       const { data, error } = await useFetch(`/api/search/${this.type}`, {
